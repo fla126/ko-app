@@ -1,9 +1,9 @@
 <template>
   <div class="wrap">
     <transition enter-active-class="animated short slideInRight" leave-active-class="animated short slideOutLeft">
-      <router-view></router-view>
+      <router-view style="overflow-y: auto;" :style="{height:height}"></router-view>
     </transition>
-    <comp-footer></comp-footer>
+    <comp-footer id="footer"></comp-footer>
   </div>
 </template>
 
@@ -17,14 +17,14 @@ export default {
   name:'index',
   data(){
     return {
-      
+      height:'auto'
     }
   },
   created(){
     
   },
   mounted(){
-    
+    this.height = (window.innerHeight - $('#footer').height())+'px'
   },
   updated(){
     
