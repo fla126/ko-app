@@ -1,7 +1,9 @@
 module.exports={
   message: {
-    hello: '你好',
-    about: '关于',
-    welcome: "欢迎"
+    compFooter:{
+    	wallet:"钱包",
+    	command:"口令",
+    	ucenter:"我的"
+    }
   }
 }

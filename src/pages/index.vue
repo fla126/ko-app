@@ -1,8 +1,8 @@
 <template>
   <div class="wrap">
-    {{ $t("message.hello") }}
-    <loading :show="showLoading"></loading>
-    <div style="height: 200vh;"></div>
+    <transition enter-active-class="animated short slideInRight" leave-active-class="animated short slideOutLeft">
+      <router-view></router-view>
+    </transition>
     <comp-footer></comp-footer>
   </div>
 </template>
@@ -17,7 +17,7 @@ export default {
   name:'index',
   data(){
     return {
-      showLoading:false,      
+      
     }
   },
   created(){

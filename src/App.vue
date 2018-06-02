@@ -1,7 +1,7 @@
 <template>
-  <div id="app" class="h100">
-      <transition enter-active-class="animated slideInRight" leave-active-class="animated slideOutRight">
-      <router-view></router-view>
+  <div id="app">
+      <transition enter-active-class="animated short slideInRight" leave-active-class="animated short slideOutLeft">
+      	<router-view></router-view>
       </transition>
   </div>
 </template>

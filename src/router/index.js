@@ -2,6 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import store from '@/store'
 import index from '@/pages/index'
+import wallet from '@/pages/wallet'
+import command from '@/pages/command'
+import ucenter from '@/pages/ucenter'
 
 
 Vue.use(Router)
@@ -35,7 +38,12 @@ const router = new Router({
   routes: [{
       path: '/',
       name: index.name,
-      component: index
+      component: index,
+      children:[
+        { path: 'wallet', name:wallet.name, component: wallet },
+        { path: 'command', name:command.name, component: command },
+        { path: 'ucenter', name:ucenter.name, component: ucenter },
+      ]
     },
     /*{
       path:'/introduce',
