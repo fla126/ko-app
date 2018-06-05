@@ -1,5 +1,5 @@
 <template>
-  <div>command</div>
+  <div class="page">command</div>
 </template>
 <script>
 import Vue from 'vue'
@@ -9,14 +9,14 @@ export default {
   name:'page-command',
   data(){
     return {
-      
+
     }
   },
   mounted(){
-    
+
   },
   methods:{
-    
+
   },
 }
 

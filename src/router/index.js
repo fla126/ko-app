@@ -5,7 +5,7 @@ import index from '@/pages/index'
 import wallet from '@/pages/wallet'
 import command from '@/pages/command'
 import ucenter from '@/pages/ucenter'
-
+import uinfo from '@/pages/mycenter/uinfo'
 
 Vue.use(Router)
 
@@ -43,6 +43,7 @@ const router = new Router({
         { path: 'wallet', name:wallet.name, component: wallet },
         { path: 'command', name:command.name, component: command },
         { path: 'ucenter', name:ucenter.name, component: ucenter },
+        { path: 'uinfo', name:uinfo.name, component: uinfo } // 个人信息
       ]
     },
     /*{

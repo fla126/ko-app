@@ -16,7 +16,6 @@
       {{ $t("message.compFooter.ucenter") }}
     </mt-tab-item>
   </mt-tabbar>
-
 </template>
 <script>
 import Vue from 'vue'
@@ -34,7 +33,7 @@ export default {
     }
   },
   mounted(){
-    
+
   },
   watch:{
     $route(){
@@ -47,7 +46,7 @@ export default {
       if(this.$route.name.indexOf('ucenter')>-1){
         this.selected = 'ucenter'
       }
-      
+
     }
   },
   methods:{
@@ -85,11 +84,11 @@ export default {
         display: block;
       }
     }
-    .mint-tab-item-label {    
+    .mint-tab-item-label {
       font-size: 0.24rem;
     }
   }
-  
+
 }
 
 </style>
