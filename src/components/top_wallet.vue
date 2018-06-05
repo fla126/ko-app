@@ -6,8 +6,8 @@
   	<transition enter-active-class="animated short fadeInUp" leave-active-class="animated short fadeOutUp">
     <div class="connect-status" v-show="$store.state.usbkeyStatus"><span class="active"></span>{{$t("message.usbkeyStatus.connected")}}</div>
 	</transition>
-    <span class="scanning"></span>
-    <span class="setting"></span>
+    <span class="scanning" v-tap="{methods:scanning}"></span>
+    <span class="setting" v-tap="{methods:setting}"></span>
   </div>
 </template>
 <script>
@@ -21,7 +21,12 @@ export default {
   	}
   },
   methods:{
-  	
+  	scanning(args){
+
+  	},
+  	setting(args){
+
+  	},
   }
 
   
