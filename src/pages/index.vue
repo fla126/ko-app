@@ -40,6 +40,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .wrap {
+  height:-webkit-calc(~"100vh - 1.02rem");
   height: calc(~"100vh - 1.02rem");
 }
 </style>

@@ -1,8 +1,12 @@
 <template>
-  <div>wallet</div>
+  <div class="page">
+    <comp-wallet-top>wallet</comp-wallet-top>
+    <div class="page-main"></div>
+  </div>
 </template>
 <script>
 import Vue from 'vue'
+import compWalletTop from '@/components/top_wallet'
 
 
 export default {
@@ -18,10 +22,13 @@ export default {
   methods:{
     
   },
+  components:{
+    compWalletTop,
+  }
 }
 
 </script>
-<style type="text/css" lang="less">
+<style lang="less" scoped>
 
 
 </style>
