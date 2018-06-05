@@ -1,5 +1,5 @@
 <template>
-  <div>ucenter</div>
+  <div>command</div>
 </template>
 <script>
 import Vue from 'vue'

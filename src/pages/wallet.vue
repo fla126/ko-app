@@ -1,5 +1,5 @@
 <template>
-  <div></div>
+  <div>wallet</div>
 </template>
 <script>
 import Vue from 'vue'

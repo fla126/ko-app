@@ -64,6 +64,7 @@ export default {
   background-color: #fff;
   > .mint-tab-item {
     color: #666666;
+    padding: 0.14rem 0;
     .mint-tab-item-icon {
       width: 0.5rem;
       height: 0.5rem;

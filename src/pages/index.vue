@@ -1,7 +1,7 @@
 <template>
   <div class="wrap">
     <transition enter-active-class="animated short slideInRight" leave-active-class="animated short slideOutLeft">
-      <router-view class="auto-scroll"  :style="{height:height}"></router-view>
+      <router-view></router-view>
     </transition>
     <comp-footer id="footer"></comp-footer>
   </div>
@@ -17,23 +17,20 @@ export default {
   name:'index',
   data(){
     return {
-      height:'auto'
+      
     }
   },
   created(){
     
   },
   mounted(){
-    this.setHeight()
-    $(window).on('resize',this.setHeight)
+    
   },
   updated(){
     
   },
   methods:{
-    setHeight(){
-      this.height = (window.innerHeight - $('#footer').height())+'px'
-    },
+    
   },
   components:{    
     compFooter,
@@ -42,5 +39,7 @@ export default {
 
 </script>
 <style lang="less" scoped>
-.auto-scroll {overflow: auto;}
+.wrap {
+  height: calc(~"100vh - 1.02rem");
+}
 </style>
