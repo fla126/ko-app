@@ -1,17 +1,22 @@
 <template>
   <div class="page">
     <comp-wallet-top>wallet</comp-wallet-top>
-    <div class="page-main" id="walletScroll">
+    <transition enter-active-class="animated short fadeIn">
+      <div class="search-container fixed" v-show="isSearchFixed">
+        <input type="search" :class="{active:currencySearchText.length}" :placeholder="$t('message.currencySearch')" v-model="currencySearchTopText">
+      </div>
+    </transition>
+    <div class="page-main" id="walletScroll" @click="setBlur($event)">
       <div>
         <div class="amount-container">
           <h2>{{$t('message.amount')}}</h2>
           <h1>45658<span> BTC </span><i></i></h1>
           <p>≈ ￥512,1464.22</p>
         </div>
-        <div class="search-container">
-          <input type="text" :class="{active:currencySearchText.length}" :placeholder="$t('message.currencySearch')" v-model="currencySearchText">
+        <div class="search-container" id="searchContainer">
+          <input type="search" :class="{active:currencySearchText.length, hidden:isSearchFixed}"  :placeholder="$t('message.currencySearch')" v-model="currencySearchText">
         </div>
-        <ul class="currency-list" style="height: 200vh">
+        <ul class="currency-list">
           <li>
             <div><img src="../assets/img/BTC-alt@3x.png"><strong>BTC</strong></div>
             <div><span>266</span><br /><span>426,1234</span></div>
@@ -51,7 +56,6 @@
 </template>
 <script>
 import Vue from 'vue'
-import IScroll from 'iscroll'
 import compWalletTop from '@/components/top_wallet'
 
 
@@ -60,18 +64,46 @@ export default {
   data(){
     return {
       currencySearchText:'',
+      currencySearchTopText:'',
+      currencyInitSearchPos:0,
+      currencyCurrentSearchPos:0,
       walletScroll:false,
     }
   },
   mounted(){
+    this.currencyInitSearchPos = $('#searchContainer').position().top + $('#searchContainer').height()
     this.initScroll();
+  },
+  watch:{
+    currencySearchTopText(_new,_old){
+      this.currencySearchText = _new
+    }
+  },
+  computed:{
+    isSearchFixed(){
+      console.log(Math.abs(this.currencyCurrentSearchPos)>this.currencyInitSearchPos ? true:false)
+      return Math.abs(this.currencyCurrentSearchPos)>this.currencyInitSearchPos ? true:false
+    }
   },
   methods:{
     initScroll(){
+      var self = this
       this.walletScroll = new IScroll('#walletScroll',{
-        mouseWheel: true,
-        tap:true
+        mouseWheel:true,
+        click:true,
+        probeType:2,
       });
+      this.walletScroll.on('scroll',function(){
+        self.currencyCurrentSearchPos = this.y
+      })
+      this.walletScroll.on('scrollEnd',function(){
+        self.currencyCurrentSearchPos = this.y
+      })
+    },
+    setBlur(e){
+      if(e.target.tagName!='input'){
+        $('.search-container input').blur()
+      }
     },
     
   },
@@ -146,6 +178,7 @@ export default {
 
 .search-container {
   padding: 0.2rem 0.3rem 0.15rem 0.3rem;
+  background-color: #fff;
   input {
     width: 100%;
     text-align: center;
@@ -160,7 +193,16 @@ export default {
     }
     &.active {
       background: transparent;
-    };
+    }
+    &.hidden {
+      visibility: hidden;
+    }
+  }
+  &.fixed {
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 1000;
   }
 }
 .currency-list {

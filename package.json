@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "axios": "^0.16.2",
-    "iscroll": "^5.2.0",
     "mint-ui": "^2.2.13",
     "v-tap": "^3.0.2",
     "vue": "^2.3.3",
