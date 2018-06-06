@@ -8,9 +8,13 @@
 
 <script>
 import Vue from 'vue'
-import Loading from '@/components/common/loading'
 
-Vue.component(Loading.name,Loading);
+// 注册一个全局自定义指令 `v-focus`
+Vue.directive('focus', {
+  inserted: function (el) {
+    el.focus()
+  }
+})
 
 export default {
   name: 'app',

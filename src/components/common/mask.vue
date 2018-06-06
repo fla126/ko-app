@@ -1,5 +1,5 @@
 <template>
-  <div class="mask" :class="{gray:isgray}" v-show="show">
+  <div class="mask" :class="{gray:isgray}" v-if="show" @click.self="$emit('hide')">
     <slot></slot>
   </div>
 </template>
@@ -16,11 +16,14 @@ export default {
       type: Boolean,
       default:false
     }
+  },
+  methods:{
+    
   }
 }
 
 </script>
-<style type="text/css" lang="less">
+<style type="text/css" lang="less" scoped="">
 .mask {
     position: fixed;
     top: 0;

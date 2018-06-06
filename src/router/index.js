@@ -6,7 +6,9 @@ import wallet from '@/pages/wallet'
 import command from '@/pages/command'
 import ucenter from '@/pages/ucenter'
 import walletDetail from '@/pages/wallet_detail'
-import walletTransfer from '@/pages/wallet_transfer'
+import walletPayment from '@/pages/wallet_payment'
+import walletPaymentConfirm from '@/pages/wallet_payment_confirm'
+import walletGather from '@/pages/wallet_gather'
 import uinfo from '@/pages/mycenter/uinfo'
 
 Vue.use(Router)
@@ -55,16 +57,26 @@ const router = new Router({
       component: walletDetail
     },
     {
-      path: '/wallet-transfer', //钱包转账
-      name: walletTransfer.name,
-      component: walletTransfer
+      path: '/wallet-payment', //钱包转账
+      name: walletPayment.name,
+      component: walletPayment
+    },
+    {
+      path: '/wallet-payment-confirm', //钱包转账确认
+      name: walletPaymentConfirm.name,
+      component: walletPaymentConfirm
+    },
+    {
+      path: '/wallet-gather', //钱包收款
+      name: walletGather.name,
+      component: walletGather
     },
     /*{
       path: '/recordDetail/:rid',
       name: recordDetail.name,
       component: recordDetail
     },
-    {
+    /*{
       path: '/prizeResult',
       name: prizeResult.name,
       component: prizeResult

@@ -16,7 +16,7 @@ import compTopBack from '@/components/common/top_back'
 
 
 export default {
-  name:'page-wallet-transfer',
+  name:'page-wallet-gather',
   data(){
     return {
       scroll:false,

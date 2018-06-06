@@ -8,9 +8,9 @@
         <h1>45658<span> BTC </span></h1>
         <p>≈ ￥512,1464.22</p>
         <ul class="actions">
-          <li v-tap="{methods:routeTo, to:'page-wallet-transfer'}"><i></i>转账</li>
+          <li v-tap="{methods:routeTo, to:'page-wallet-payment'}"><i></i>转账</li>
           <li><span class="line"></span></li>
-          <li><i></i>收款</li>
+          <li v-tap="{methods:routeTo, to:'page-wallet-gather'}"><i></i>收款</li>
         </ul>
       </div>
       <div class="trans-records-title">最新交易记录</div>
@@ -172,8 +172,10 @@ export default {
     text-align: center;
   }
   .actions {
+    position: relative;
+    z-index: 1;
     display: flex;
-    margin-top: 0.2rem;
+    margin-top: 0.3rem;
     width: 100%;
     font-size: 0.32rem;
     font-weight: bold;
@@ -181,14 +183,14 @@ export default {
       list-style: none;
       flex: 5;
       text-align: center;
-      line-height: 1rem;
+      line-height: 0.8rem;
       &:nth-of-type(2){
         flex: 1;
       }
       .line {
         display: inline-block;
         border-left: 1px solid #fff;
-        height: 1rem;
+        height: 0.8rem;
       }
       i {
         display: inline-block;
