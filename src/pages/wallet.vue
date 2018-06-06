@@ -6,9 +6,9 @@
         <input type="search" :class="{active:currencySearchText.length}" :placeholder="$t('message.currencySearch')" v-model="currencySearchTopText">
       </div>
     </transition>
-    <div class="page-main" id="walletScroll" @click="setBlur($event)">
+    <div class="page-main" id="scroll" @click="setBlur($event)">
       <div>
-        <div class="amount-container">
+        <div class="amount-container" v-tap="{methods:routeTo, to:'page-wallet-detail'}">
           <h2>{{$t('message.amount')}}</h2>
           <h1>45658<span> BTC </span><i></i></h1>
           <p>≈ ￥512,1464.22</p>
@@ -67,12 +67,12 @@ export default {
       currencySearchTopText:'',
       currencyInitSearchPos:0,
       currencyCurrentSearchPos:0,
-      walletScroll:false,
+      scroll:false,
     }
   },
   mounted(){
     this.currencyInitSearchPos = $('#searchContainer').position().top + $('#searchContainer').height()
-    this.initScroll();
+    setTimeout(this.initScroll,700)
   },
   watch:{
     currencySearchTopText(_new,_old){
@@ -81,22 +81,21 @@ export default {
   },
   computed:{
     isSearchFixed(){
-      console.log(Math.abs(this.currencyCurrentSearchPos)>this.currencyInitSearchPos ? true:false)
       return Math.abs(this.currencyCurrentSearchPos)>this.currencyInitSearchPos ? true:false
     }
   },
   methods:{
     initScroll(){
       var self = this
-      this.walletScroll = new IScroll('#walletScroll',{
+      this.scroll = new IScroll('#scroll',{
         mouseWheel:true,
         click:true,
         probeType:2,
       });
-      this.walletScroll.on('scroll',function(){
+      this.scroll.on('scroll',function(){
         self.currencyCurrentSearchPos = this.y
       })
-      this.walletScroll.on('scrollEnd',function(){
+      this.scroll.on('scrollEnd',function(){
         self.currencyCurrentSearchPos = this.y
       })
     },
@@ -105,7 +104,9 @@ export default {
         $('.search-container input').blur()
       }
     },
-    
+    routeTo(args){
+     this.$router.push({ name: args.to})
+    }
   },
   components:{
     compWalletTop,

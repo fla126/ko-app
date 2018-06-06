@@ -5,6 +5,8 @@ import index from '@/pages/index'
 import wallet from '@/pages/wallet'
 import command from '@/pages/command'
 import ucenter from '@/pages/ucenter'
+import walletDetail from '@/pages/wallet_detail'
+import walletTransfer from '@/pages/wallet_transfer'
 import uinfo from '@/pages/mycenter/uinfo'
 
 Vue.use(Router)
@@ -40,23 +42,24 @@ const router = new Router({
       name: index.name,
       component: index,
       children:[
+        { path: '',  redirect:{ name: 'page-wallet' }},
         { path: 'wallet', name:wallet.name, component: wallet },
         { path: 'command', name:command.name, component: command },
         { path: 'ucenter', name:ucenter.name, component: ucenter },
         { path: 'uinfo', name:uinfo.name, component: uinfo } // 个人信息
       ]
     },
+    {
+      path:'/wallet-detail', //钱包详情
+      name: walletDetail.name,
+      component: walletDetail
+    },
+    {
+      path: '/wallet-transfer', //钱包转账
+      name: walletTransfer.name,
+      component: walletTransfer
+    },
     /*{
-      path:'/introduce',
-      name: introduce.name,
-      component: introduce
-    },
-    {
-      path: '/record',
-      name: record.name,
-      component: record
-    },
-    {
       path: '/recordDetail/:rid',
       name: recordDetail.name,
       component: recordDetail

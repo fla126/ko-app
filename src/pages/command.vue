@@ -21,7 +21,7 @@ export default {
 }
 
 </script>
-<style type="text/css" lang="less">
+<style type="text/css" lang="less" scoped="">
 
 
 </style>
