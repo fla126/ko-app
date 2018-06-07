@@ -1,16 +1,8 @@
 <template>
   <mask-layer :isgray="true" :show="show" @hide="hideFunction">
-    <div class="pwconfirm-layer" v-tap="{methods:setBlur}">
-      <input type="password" id="password" v-model="password" maxlength="6" v-focus>
+    <div class="pwconfirm-layer" >
       <h3>请输入付款密码</h3>
-      <ul class="password-display" v-tap="{methods:setFocus}">
-        <li>∗</li>
-        <li>∗</li>
-        <li>3</li>
-        <li>4</li>
-        <li>5</li>
-        <li>6</li>
-      </ul>
+      <input type="password" id="password" v-model="password"  v-focus>
       <div class="step-next">
         <mt-button type="primary" size="large" v-tap="{methods:pwconfirm}">确认</mt-button>
       </div>
@@ -37,7 +29,7 @@ export default {
     }
   },
   mounted(){
-    
+
   },
   methods:{
     routeTo(args){
@@ -80,24 +72,19 @@ export default {
   text-align: center;
   box-shadow: 0 0.05rem 0.1rem 0.01rem #6c6c6c;
   input {
-    position: absolute;
-    left: -100000px;
-    width: 1px;
+    margin: 0.35rem auto;
+    width: 3.4rem;
+    border:none;
+    background-color: transparent;
+    border-bottom: 1px solid #333;
+    line-height: 0.5rem;
+    font-size: 0.32rem;
+    &:focus {
+      outline: none;
+    }
   }
   h3 {
     font-size: 0.32rem;
-  }
-  .password-display {
-    margin: 0.35rem auto;
-    width: 3.4rem;
-    display: flex;
-    justify-content:space-between;
-    li {
-      width: 0.35rem;
-      border-bottom: 2px solid #333;
-      font-size: 0.32rem;
-      text-align: center;
-    }
   }
 }
 .step-next {

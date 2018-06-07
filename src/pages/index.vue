@@ -1,7 +1,7 @@
 <template>
   <div class="wrap">
     <transition enter-active-class="animated short slideInRight" leave-active-class="animated short slideOutLeft">
-      <router-view></router-view>
+      <router-view :class="['frames']"></router-view>
     </transition>
     <comp-footer id="footer"></comp-footer>
   </div>
@@ -39,7 +39,7 @@ export default {
 
 </script>
 <style lang="less" scoped>
-.wrap {
+.frames {
   height:-webkit-calc(~"100vh - 1.02rem");
   height: calc(~"100vh - 1.02rem");
 }

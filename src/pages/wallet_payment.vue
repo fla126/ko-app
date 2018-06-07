@@ -47,7 +47,7 @@ export default {
     
   },
   mounted(){
-    this.cointype = this.$route.query.type
+    this.cointype = this.$route.query.type || 'btc'
   },
   updated(){
     
