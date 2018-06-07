@@ -1,8 +1,9 @@
 <template>
   <mask-layer :isgray="true" :show="show" @hide="hideFunction">
     <div class="pwconfirm-layer" >
+      <i class="close" v-tap="{methods:hideFunction}">×</i>
       <h3>请输入付款密码</h3>
-      <input type="password" id="password" v-model="password"  v-focus>
+      <input type="password" id="password" v-model="password" @keydown="checkInput($event)" v-focus>
       <div class="step-next">
         <mt-button type="primary" size="large" v-tap="{methods:pwconfirm}">确认</mt-button>
       </div>
@@ -38,13 +39,9 @@ export default {
     pwconfirm(){
       this.routeTo({to:'page-wallet-detail'})
     },
-    setFocus(){
-      $('#password').focus()
-    },
-    setBlur(args){
-      var $tar = $(args.event.target)
-      if(!($tar.parents('.password-display').length || $tar.hasClass('password-display'))){
-        $('#password').blur()
+    checkInput(event){
+      if(event.keyCode == 13){
+        this.pwconfirm()
       }
     }
   },
@@ -68,7 +65,7 @@ export default {
   padding-top: 0.25rem;
   background-color: #fff;
   border-radius: 0.1rem;
-  overflow: hidden;
+  // overflow: hidden;
   text-align: center;
   box-shadow: 0 0.05rem 0.1rem 0.01rem #6c6c6c;
   input {
@@ -86,6 +83,20 @@ export default {
   h3 {
     font-size: 0.32rem;
   }
+  .close {
+    position: absolute;
+    width: 0.5rem;
+    height: 0.5rem;
+    right: -0.2rem;
+    top: -0.2rem;
+    background-color: rgba(0,0,0,.5);
+    border-radius: 50%;
+    font-size: 0.5rem;
+    color: rgba(255,255,255,.5);
+    line-height: 0.5rem;
+    text-align: center;
+    font-style: normal;
+  }
 }
 .step-next {
   position: absolute;
@@ -94,6 +105,8 @@ export default {
   bottom: 0;
   .mint-button {
     border-radius: 0;
+    border-bottom-left-radius: 0.1rem;
+    border-bottom-right-radius: 0.1rem;
   }
 }
 </style>

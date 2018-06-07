@@ -48,7 +48,7 @@
   Vue.component(Field.name, Field);
   Vue.component(Checklist.name, Checklist);
   export default {
-    name:'page-ucenter',
+    name:'page-ucenter-setup',
     data(){
       return {
         captcha:'',

@@ -1,14 +1,14 @@
 <template>
   <div class="page">
     <comp-top-back>
-      <span class="selected-title">BTC01</span></span>
+      <span class="selected-title"></span></span>
     </comp-top-back>
     <div class="page-main">
       <ul class="pament-detail">
         <li>
           <h1>BTC收款<span>BTC01</span></h1>
           <p>收款金额</p>
-          <p><input placeholder="请输入收款金额" type="number" v-model="amount"></p>
+          <p><input id="gatherInput" placeholder="请输入收款金额" type="number" v-model="amount"></p>
         </li>
         <li class="text-center">
           <p>{{address}}</p>
@@ -16,7 +16,7 @@
         </li>
         
       </ul>
-      <div class="step-next">
+      <div class="step-next" :class="{fixed:collapsed}">
         <mt-button type="primary" size="large" v-tap="{methods:copyAddress}">复制地址</mt-button>
       </div>
     </div>
@@ -38,7 +38,8 @@ export default {
   data(){
     return {
       amount:'',
-      address:'1MzziGBa7tNNzMwVJMPEjAfM1wRcvSGZu5'
+      address:'1MzziGBa7tNNzMwVJMPEjAfM1wRcvSGZu5',
+      collapsed:true
     }
   },
   created(){
@@ -54,7 +55,14 @@ export default {
     }, function (error) {
       if (error) console.error(error)
     })
-    
+    $('#gatherInput').focus(()=>{
+      this.collapsed = false
+    })
+    $('#gatherInput').blur(()=>{
+      setTimeout(()=>{
+        this.collapsed = true
+      },100)
+    })
   },
   updated(){
     
@@ -165,10 +173,20 @@ function copyTextToClipboard(text) {
  }
 
 .step-next {
-  position: absolute;
-  left: 0.3rem;
-  right: 0.3rem;
-  bottom: 0.3rem;
+  margin-top: 0.3rem;
+  margin-left: 0.3rem;
+  margin-right: 0.3rem;
+  background-color: #f9f9f9;
+  padding-bottom: 0.3rem;
+  &.fixed {
+    position: fixed;
+    left: 0.3rem;
+    right: 0.3rem;
+    bottom: 0rem;
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
+  }
 }
 
 </style>

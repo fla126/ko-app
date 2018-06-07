@@ -7,7 +7,7 @@
     <div class="connect-status" v-show="$store.state.usbkeyStatus"><span class="active"></span>{{$t("message.usbkeyStatus.connected")}}</div>
 	</transition>
     <span class="scanning" v-tap="{methods:scanning}"></span>
-    <span class="setting" v-tap="{methods:setting}"></span>
+    <span class="setting" v-tap="{methods:routeTo, to:'page-ucenter-setup'}"></span>
   </div>
 </template>
 <script>
@@ -29,9 +29,9 @@ export default {
   	scanning(args){
 
   	},
-  	setting(args){
-
-  	},
+  	routeTo(args){
+     this.$router.push({ name: args.to, query:args.params})
+    }
   }
 
   

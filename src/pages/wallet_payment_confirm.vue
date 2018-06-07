@@ -2,7 +2,7 @@
   <div class="page">
     <comp-top-back></comp-top-back>
     <div class="page-main">
-      <ul class="pament-detail" v-if="$route.query.type=='btc'">
+      <ul class="pament-detail">
         <li>
           <h1>{{cointype | uppercase}}转账确认</h1>
           <p>收款方地址</p>
@@ -21,27 +21,7 @@
           <div>矿工费<span>0.002456 BTC</span></div>
           <h3>合计<span>12.24568 BTC</span></h3>
         </li>
-      </ul>
-      <ul class="pament-detail" v-else>
-        <li>
-          <h1>ETH转账确认</h1>
-          <p>收款方地址</p>
-          <p>1MzziGBa7tNNzMwVJMPEjAfM1wRcvSGZu5</p>
-        </li>
-        <li>
-          <p>付款方地址</p>
-          <p>1MzziGBa7tNNzMwVJMPEjAfM1wRcvSGZu5</p>
-        </li>
-        <li>
-          <p>矿工费</p>
-          <p>12.04568</p>
-        </li>
-        <li>
-          <div>转账金额<span>0.002456 BTC</span></div>
-          <div>矿工费<span>0.002456 BTC</span></div>
-          <h3>合计<span>12.24568 BTC</span></h3>
-        </li>
-      </ul>
+      </ul>      
       <div class="step-next">
         <mt-button type="primary" size="large" v-tap="{methods:pwconfirm}">确定</mt-button>
       </div>
@@ -152,9 +132,11 @@ export default {
  }
 
 .step-next {
-  position: absolute;
+  position: fixed;
   left: 0.3rem;
   right: 0.3rem;
-  bottom: 0.3rem;
+  bottom: 0rem;
+  padding-bottom: 0.3rem;
+  background-color: #f9f9f9;
 }
 </style>
