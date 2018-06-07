@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '@/store'
+import guide from '@/pages/guide'
 import index from '@/pages/index'
 import wallet from '@/pages/wallet'
 import command from '@/pages/command'
@@ -51,7 +52,6 @@ const router = new Router({
       name: index.name,
       component: index,
       children:[
-        { path: '',  redirect:{ name: 'page-wallet' }},
         { path: 'wallet', name:wallet.name, component: wallet },
         { path: 'command', name:command.name, component: command },
         { path: 'ucenter', name:ucenter.name, component: ucenter },
@@ -65,6 +65,11 @@ const router = new Router({
         { path: 'help', name:help.name, component: help  }, // 个人中心--帮助
         { path: 'about', name:about.name, component: about  }, // 个人中心--关于我们
       ]
+    },
+    {
+      path:'/guide', //引导页面
+      name: guide.name,
+      component: guide
     },
     {
       path:'/wallet-detail', //钱包详情

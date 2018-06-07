@@ -23,6 +23,14 @@ Vue.filter('uppercase', function (value) {
 
 export default {
   name: 'app',
+  created(){
+    let isfirst = localStorage.getItem('firstWallet')
+    if(!isfirst){
+      this.$router.push({name:'guide'})
+    } else {
+      this.$router.push({name:'page-wallet'})
+    }
+  },
   components:{
 
   }
