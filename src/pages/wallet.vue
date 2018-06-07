@@ -17,35 +17,35 @@
           <input type="search" :class="{active:currencySearchText.length, hidden:isSearchFixed}"  :placeholder="$t('message.currencySearch')" v-model="currencySearchText">
         </div>
         <ul class="currency-list">
-          <li>
+          <li v-tap="{methods:routeTo, to:'page-wallet-payment',params:{type:'btc'}}">
             <div><img src="../assets/img/BTC-alt@3x.png"><strong>BTC</strong></div>
             <div><span>266</span><br /><span>426,1234</span></div>
           </li>
-          <li>
+          <li v-tap="{methods:routeTo, to:'page-wallet-payment',params:{type:'eth'}}">
             <div><img src="../assets/img/ETH@3x.png"><strong>ETH</strong></div>
             <div><span>646</span><br /><span>426,1234</span></div>
           </li>
-          <li>
+          <li v-tap="{methods:routeTo, to:'page-wallet-payment',params:{type:'btc'}}">
             <div><img src="../assets/img/BTC-alt@3x.png"><strong>BTC</strong></div>
             <div><span>266</span><br /><span>426,1234</span></div>
           </li>
-          <li>
+          <li v-tap="{methods:routeTo, to:'page-wallet-payment',params:{type:'eth'}}">
             <div><img src="../assets/img/ETH@3x.png"><strong>ETH</strong></div>
             <div><span>646</span><br /><span>426,1234</span></div>
           </li>
-          <li>
+          <li v-tap="{methods:routeTo, to:'page-wallet-payment',params:{type:'btc'}}">
             <div><img src="../assets/img/BTC-alt@3x.png"><strong>BTC</strong></div>
             <div><span>266</span><br /><span>426,1234</span></div>
           </li>
-          <li>
+          <li v-tap="{methods:routeTo, to:'page-wallet-payment',params:{type:'eth'}}">
             <div><img src="../assets/img/ETH@3x.png"><strong>ETH</strong></div>
             <div><span>646</span><br /><span>426,1234</span></div>
           </li>
-          <li>
+          <li v-tap="{methods:routeTo, to:'page-wallet-payment',params:{type:'btc'}}">
             <div><img src="../assets/img/BTC-alt@3x.png"><strong>BTC</strong></div>
             <div><span>266</span><br /><span>426,1234</span></div>
           </li>
-          <li>
+          <li v-tap="{methods:routeTo, to:'page-wallet-payment',params:{type:'eth'}}">
             <div><img src="../assets/img/ETH@3x.png"><strong>ETH</strong></div>
             <div><span>646</span><br /><span>426,1234</span></div>
           </li>
@@ -105,7 +105,7 @@ export default {
       }
     },
     routeTo(args){
-     this.$router.push({ name: args.to})
+     this.$router.push({ name: args.to, query:args.params})
     }
   },
   components:{

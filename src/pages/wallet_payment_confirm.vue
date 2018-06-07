@@ -2,9 +2,29 @@
   <div class="page">
     <comp-top-back></comp-top-back>
     <div class="page-main">
-      <ul class="pament-detail">
+      <ul class="pament-detail" v-if="$route.query.type=='btc'">
         <li>
-          <h1>BTC转账确认</h1>
+          <h1>{{cointype | uppercase}}转账确认</h1>
+          <p>收款方地址</p>
+          <p>1MzziGBa7tNNzMwVJMPEjAfM1wRcvSGZu5</p>
+        </li>
+        <li>
+          <p>付款方地址</p>
+          <p>1MzziGBa7tNNzMwVJMPEjAfM1wRcvSGZu5</p>
+        </li>
+        <li>
+          <p>矿工费</p>
+          <p>12.04568</p>
+        </li>
+        <li>
+          <div>转账金额<span>0.002456 BTC</span></div>
+          <div>矿工费<span>0.002456 BTC</span></div>
+          <h3>合计<span>12.24568 BTC</span></h3>
+        </li>
+      </ul>
+      <ul class="pament-detail" v-else>
+        <li>
+          <h1>ETH转账确认</h1>
           <p>收款方地址</p>
           <p>1MzziGBa7tNNzMwVJMPEjAfM1wRcvSGZu5</p>
         </li>
@@ -44,27 +64,28 @@ export default {
   name:'page-wallet-payment-confirm',
   data(){
     return {
-      showPWCLayer:true,
+      showPWCLayer:false,
+      cointype:''
     }
   },
   created(){
     
   },
   mounted(){
-    
+    this.cointype = this.$route.query.type
   },
   updated(){
     
   },
   methods:{
     routeTo(args){
-     this.$router.push({ name: args.to})
+     this.$router.push({ name: args.to, query:args.params})
     },
     pwconfirm(){
       this.showPWCLayer = true
     },
     hidePWCLayer(){
-      alert(11)
+      this.showPWCLayer = false
     }
   },
   components:{    

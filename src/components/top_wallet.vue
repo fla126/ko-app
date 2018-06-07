@@ -20,6 +20,11 @@ export default {
   		
   	}
   },
+  mounted(){
+  	setTimeout(()=>{
+  		this.$store.commit('updateUsbkeyStatus',true)
+  	},2000)
+  },
   methods:{
   	scanning(args){
 

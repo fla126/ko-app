@@ -99,7 +99,7 @@ export default {
       });
     },
     routeTo(args){
-     this.$router.push({ name: args.to})
+     this.$router.push({ name: args.to, query:args.params})
     }
   },
   components:{    

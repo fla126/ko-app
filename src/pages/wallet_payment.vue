@@ -4,7 +4,7 @@
     <div class="page-main">
       <ul class="pament-detail">
         <li>
-          <h1>BTC转账</h1>
+          <h1>{{cointype | uppercase}}转账</h1>
           <p>收款人钱包地址</p>
           <p>1MzziGBa7tNNzMwVJMPEjAfM1wRcvSGZu5<i class="scanning" v-tap="{methods:scanning}"></i></p>
         </li>
@@ -21,7 +21,7 @@
         </li>
       </ul>
       <div class="step-next">
-        <mt-button type="primary" size="large" v-tap="{methods:routeTo, to:'page-wallet-payment-confirm'}">下一步</mt-button>
+        <mt-button type="primary" size="large" v-tap="{methods:routeTo, to:'page-wallet-payment-confirm',params:{type:cointype}}">下一步</mt-button>
       </div>
     </div>
   </div>
@@ -40,14 +40,14 @@ export default {
   name:'page-wallet-payment',
   data(){
     return {
-
+      cointype:''
     }
   },
   created(){
     
   },
   mounted(){
-    
+    this.cointype = this.$route.query.type
   },
   updated(){
     
@@ -57,7 +57,7 @@ export default {
 
     },
     routeTo(args){
-     this.$router.push({ name: args.to})
+     this.$router.push({ name: args.to, query:args.params})
     }
   },
   components:{    

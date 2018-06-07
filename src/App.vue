@@ -16,6 +16,11 @@ Vue.directive('focus', {
   }
 })
 
+//小写转大写过滤器
+Vue.filter('uppercase', function (value) {
+  return value.toUpperCase()
+})
+
 export default {
   name: 'app',
   components:{
