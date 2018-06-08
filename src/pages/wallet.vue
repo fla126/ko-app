@@ -16,39 +16,39 @@
         <div class="search-container" id="searchContainer">
           <input type="search" :class="{active:currencySearchText.length, hidden:isSearchFixed}"  :placeholder="$t('message.currencySearch')" v-model="currencySearchText">
         </div>
-        <ul class="currency-list">
-          <li v-tap="{methods:routeTo, to:'page-wallet-detail',params:{type:'btc'}}">
+        <ul class="currency-list" v-tap="{methods:goWalletDetail}">
+          <li data-type="btc">
             <div><img src="../assets/img/BTC-alt@3x.png"><strong>BTC</strong></div>
             <div><span>266</span><br /><span>426,1234</span></div>
           </li>
-          <li v-tap="{methods:routeTo, to:'page-wallet-detail',params:{type:'eth'}}">
+          <li data-type="eth">
             <div><img src="../assets/img/ETH@3x.png"><strong>ETH</strong></div>
             <div><span>646</span><br /><span>426,1234</span></div>
           </li>
-          <li v-tap="{methods:routeTo, to:'page-wallet-detail',params:{type:'btc'}}">
+          <li data-type="btc">
             <div><img src="../assets/img/BTC-alt@3x.png"><strong>BTC</strong></div>
             <div><span>266</span><br /><span>426,1234</span></div>
           </li>
-          <li v-tap="{methods:routeTo, to:'page-wallet-detail',params:{type:'eth'}}">
+          <li data-type="eth">
             <div><img src="../assets/img/ETH@3x.png"><strong>ETH</strong></div>
             <div><span>646</span><br /><span>426,1234</span></div>
-          </li>
-          <li v-tap="{methods:routeTo, to:'page-wallet-detail',params:{type:'btc'}}">
+          </li>  
+          <li data-type="btc">
             <div><img src="../assets/img/BTC-alt@3x.png"><strong>BTC</strong></div>
             <div><span>266</span><br /><span>426,1234</span></div>
           </li>
-          <li v-tap="{methods:routeTo, to:'page-wallet-detail',params:{type:'eth'}}">
+          <li data-type="eth">
             <div><img src="../assets/img/ETH@3x.png"><strong>ETH</strong></div>
             <div><span>646</span><br /><span>426,1234</span></div>
-          </li>
-          <li v-tap="{methods:routeTo, to:'page-wallet-detail',params:{type:'btc'}}">
+          </li>  
+          <li data-type="btc">
             <div><img src="../assets/img/BTC-alt@3x.png"><strong>BTC</strong></div>
             <div><span>266</span><br /><span>426,1234</span></div>
           </li>
-          <li v-tap="{methods:routeTo, to:'page-wallet-detail',params:{type:'eth'}}">
+          <li data-type="eth">
             <div><img src="../assets/img/ETH@3x.png"><strong>ETH</strong></div>
             <div><span>646</span><br /><span>426,1234</span></div>
-          </li>
+          </li>  
         </ul>
       </div>
     </div>
@@ -104,9 +104,10 @@ export default {
         $('.search-container input').blur()
       }
     },
-    routeTo(args){
-     this.$router.push({ name: args.to, query:args.params})
-    }
+    goWalletDetail(args){
+      var _type = $(args.event.target).parents('li').data('type')
+      this.$router.push({ name: 'page-wallet-detail', query:{type:_type}})
+    },
   },
   components:{
     compWalletTop,

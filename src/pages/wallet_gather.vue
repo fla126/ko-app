@@ -70,9 +70,6 @@ export default {
     
   },
   methods:{
-    routeTo(args){
-     this.$router.push({ name: args.to, query:args.params})
-    },
     copyAddress(args){
       copyTextToClipboard(this.address)
     }

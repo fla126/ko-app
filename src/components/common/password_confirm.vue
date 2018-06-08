@@ -33,9 +33,6 @@ export default {
 
   },
   methods:{
-    routeTo(args){
-     this.$router.push({ name: args.to, query:args.params})
-    },
     pwconfirm(){
       this.routeTo({to:'page-wallet-detail'})
     },

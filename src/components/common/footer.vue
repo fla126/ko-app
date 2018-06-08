@@ -1,16 +1,16 @@
 <template>
   <mt-tabbar v-model="selected" :fixed="true">
-    <mt-tab-item id="wallet" v-tap="{methods:routeTo, to:'page-wallet'}">
+    <mt-tab-item id="wallet" v-tap="{methods:$root.routeTo, to:'page-wallet'}">
       <img slot="icon" src="../../assets/img/qianbao_weixz@3x.png">
       <img slot="icon" src="../../assets/img/qianbao_xuanz@3x.png">
       {{ $t("message.compFooter.wallet") }}
     </mt-tab-item>
-    <mt-tab-item id="command" v-tap="{methods:routeTo, to:'page-command'}">
+    <mt-tab-item id="command" v-tap="{methods:$root.routeTo, to:'page-command'}">
       <img slot="icon" src="../../assets/img/kouling_weixz@3x.png">
       <img slot="icon" src="../../assets/img/kouling_xuanz@3x.png">
       {{ $t("message.compFooter.command") }}
     </mt-tab-item>
-    <mt-tab-item id="ucenter" v-tap="{methods:routeTo, to:'page-ucenter'}">
+    <mt-tab-item id="ucenter" v-tap="{methods:$root.routeTo, to:'page-ucenter'}">
       <img slot="icon" src="../../assets/img/my_weixz@3x.png">
       <img slot="icon" src="../../assets/img/my_xuanz@3x.png">
       {{ $t("message.compFooter.ucenter") }}
@@ -50,9 +50,6 @@ export default {
     }
   },
   methods:{
-    routeTo(args){
-     this.$router.push({ name: args.to, query:args.params})
-    }
   },
 }
 

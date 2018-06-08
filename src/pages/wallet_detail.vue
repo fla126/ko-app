@@ -1,16 +1,16 @@
 <template>
   <div class="page">
     <comp-top-back>
-      <span class="selected-title">{{cointype | uppercase}}01</span>
+      <span class="selected-title" v-tap="{methods:showWalletList}">{{cointype | uppercase}}01</span>
     </comp-top-back>
     <div class="page-main">
       <div class="amount-container">
         <h1>45658<span> {{cointype | uppercase}} </span></h1>
         <p>≈ ￥512,1464.22</p>
         <ul class="actions">
-          <li v-tap="{methods:routeTo, to:'page-wallet-payment',params:{type:cointype}}"><i></i>转账</li>
+          <li v-tap="{methods:$root.routeTo, to:'page-wallet-payment',params:{type:cointype}}"><i></i>转账</li>
           <li><span class="line"></span></li>
-          <li v-tap="{methods:routeTo, to:'page-wallet-gather',params:{type:cointype}}"><i></i>收款</li>
+          <li v-tap="{methods:$root.routeTo, to:'page-wallet-gather',params:{type:cointype}}"><i></i>收款</li>
         </ul>
       </div>
       <div class="trans-records-title">最新交易记录</div>
@@ -64,10 +64,12 @@
         </ul>
       </div>
     </div>
-    <mask-layer :isgray="true" :show="show" @hide="hideFunction">
-      <div class="wallet-list" >
-        
-      </div>
+    <mask-layer :isgray="true" :show="show" @hide="hideFunction" :style="{top: '0.9rem'}">
+      <ul class="wallet-list" v-tap="{methods:changeWallet}">
+        <li>{{cointype | uppercase}}02</li>
+        <li>{{cointype | uppercase}}03</li>
+        <li>{{cointype | uppercase}}04</li>
+      </ul>
     </mask-layer>
   </div>
 </template>
@@ -84,7 +86,7 @@ export default {
     return {
       scroll:false,
       cointype:'',
-      show:true,
+      show:false,
     }
   },
   created(){
@@ -106,11 +108,14 @@ export default {
         tap:true
       });
     },
-    routeTo(args){
-     this.$router.push({ name: args.to, query:args.params})
+    showWalletList(args){
+      this.show = true
     },
     hideFunction(){
-
+      this.show = false
+    },
+    changeWallet(args){
+      this.show = false
     }
   },
   components:{    
@@ -292,4 +297,22 @@ export default {
     }
   }
  }
+
+.wallet-list {
+  width: 50%;
+  margin:auto;
+  li {
+    line-height: 0.9rem;
+    background-color: #fff;
+    font-size: 0.32rem;
+    text-align: center;
+    border-bottom: 1px solid #CCC;
+    &:hover {
+      background-color: #E5E5E5;
+    }
+    &:last-of-type {
+      border-bottom: none;
+    }
+  }
+}
 </style>

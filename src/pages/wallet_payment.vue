@@ -53,7 +53,7 @@
         </li>
       </ul>
       <div class="step-next" :class="{fixed:collapsed}">
-        <mt-button type="primary" size="large" v-tap="{methods:routeTo, to:'page-wallet-payment-confirm',params:{type:cointype}}">下一步</mt-button>
+        <mt-button type="primary" size="large" v-tap="{methods:$root.routeTo, to:'page-wallet-payment-confirm',params:{type:cointype}}">下一步</mt-button>
       </div>
     </div>
   </div>
@@ -92,9 +92,6 @@ export default {
     collapse(args){
       this.collapsed = !this.collapsed
     },
-    routeTo(args){
-     this.$router.push({ name: args.to, query:args.params})
-    }
   },
   components:{    
     compTopBack,
