@@ -34,7 +34,7 @@ export default {
   },
   methods:{
     pwconfirm(){
-      this.routeTo({to:'page-wallet-detail'})
+      this.$root.routeTo({to:'page-wallet-detail'})
     },
     checkInput(event){
       if(event.keyCode == 13){
