@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import store from '@/store'
 import guide from '@/pages/guide'
 import login from '@/pages/login'
+import register from '@/pages/register'
+import resetPassword from '@/pages/reset_password'
 import index from '@/pages/index'
 import wallet from '@/pages/wallet'
 import command from '@/pages/command'
@@ -81,9 +83,19 @@ const router = new Router({
       component: guide
     },
     {
-      path:'/login', //注册页面
+      path:'/login', //登录页面
       name: login.name,
       component: login
+    },
+    {
+      path:'/register', //注册页面
+      name: register.name,
+      component: register
+    },
+    {
+      path:'/reset-password', //重置密码页面
+      name: resetPassword.name,
+      component: resetPassword
     },
     {
       path:'/wallet-detail', //钱包详情

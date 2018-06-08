@@ -1,8 +1,6 @@
 <template>
   <div class="page">
-    <comp-top-back>
-      <span class="selected-title"></span>
-    </comp-top-back>
+    <comp-top-back></comp-top-back>
     <div class="page-main">
       <ul class="pament-detail">
         <li>
