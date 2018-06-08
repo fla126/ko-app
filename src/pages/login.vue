@@ -2,13 +2,13 @@
   <div class="page">
     <div class="login-top"><i></i></div>
     <div class="login-form">
-      <form>
+      <div>
         <p><i class="mobile"></i><input type="tel" name="mobile" placeholder="输入手机号......"></p>
         <p><i class="password"></i><input type="password" name="password" placeholder="输入密码"><i class="clear-password"></i></p>
         <div class="findpw"><router-link :to="{name:'reset-password'}" tag="span">忘记密码？</router-link></div>
-        <div class="login-btn"><mt-button type="primary" size="large">登录</mt-button></div>
+        <div class="login-btn"><mt-button type="primary" size="large" v-tap="{methods:$root.routeTo, to:'page-wallet'}">登录</mt-button></div>
         <div class="reg-btn">没有账号? <router-link :to="{name:'register'}">点击注册</router-link></div>
-      </form>
+      </div>
     </div>
   </div>
 </template>

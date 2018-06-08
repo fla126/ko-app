@@ -57,7 +57,7 @@ const router = new Router({
       name: index.name,
       component: index,
       children:[
-        { path: '',  redirect:{ name: 'page-wallet' }},
+        // { path: '',  redirect:{ name: 'page-wallet' }},
         { path: 'wallet', name:wallet.name, component: wallet },
         { path: 'command', name:command.name, component: command },
         { path: 'ucenter', name:ucenter.name, component: ucenter },
