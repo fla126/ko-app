@@ -1,11 +1,10 @@
 <template>
   <div id="uinfo" class="page">
-    <mt-header class="uinfo-header" title="消息">
+    <mt-header class="common-mt-header" title="消息">
       <router-link to="/ucenter" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
       <mt-button class="f30"  slot="right">全部</mt-button>
-
     </mt-header>
 
     <div class="w-content m-box1">
@@ -34,8 +33,6 @@
         </section>
       </div>
     </div>
-
-
   </div>
 </template>
 
@@ -52,31 +49,7 @@
     }
 </script>
 
-<style type="text/css" >
- #uinfo .uinfo-header{
-    height: .95rem;
-background: white;
-    border-bottom:.01rem solid #e4e5e7;
-  }
-  .uinfo-header .right img{
-    width: .4rem;
-    height: .4rem;
-  }
- .uinfo-header h1{
-    font-size: .36rem;
-    color: #333333;
-    font-weight: 600;
- }
-
- .uinfo-header .mintui-back{
-   font-size: 0.4rem;
-   color: #7f7f7f;
- }
- .uinfo-header .mint-button-text{
-   font-size: .3rem;
-   color: #333333;
- }
-
+<style type="text/css" scoped >
   .m-box1,.m-box2{
     background-color:white;
   }

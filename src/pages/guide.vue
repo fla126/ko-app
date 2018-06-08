@@ -26,13 +26,13 @@ export default {
     }
   },
   created(){
-    
+
   },
   mounted(){
-    
+
   },
   updated(){
-    
+
   },
   methods:{
     handleChange(index) {
@@ -45,8 +45,8 @@ export default {
      this.$router.replace({ name: 'page-wallet'})
     }
   },
-  components:{    
-    
+  components:{
+
   }
 }
 

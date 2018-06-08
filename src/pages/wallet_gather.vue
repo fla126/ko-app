@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <comp-top-back>
-      <span class="selected-title"></span></span>
+      <span class="selected-title"></span>
     </comp-top-back>
     <div class="page-main">
       <ul class="pament-detail">
@@ -14,7 +14,7 @@
           <p>{{address}}</p>
           <p><canvas id="canvas"></canvas></p>
         </li>
-        
+
       </ul>
       <div class="step-next" :class="{fixed:collapsed}">
         <mt-button type="primary" size="large" v-tap="{methods:copyAddress}">复制地址</mt-button>
@@ -44,7 +44,7 @@ export default {
     }
   },
   created(){
-    
+
   },
   mounted(){
     this.cointype = this.$route.query.type || 'btc'
@@ -67,14 +67,14 @@ export default {
     })
   },
   updated(){
-    
+
   },
   methods:{
     copyAddress(args){
       copyTextToClipboard(this.address)
     }
   },
-  components:{    
+  components:{
     compTopBack,
   }
 }
@@ -151,7 +151,7 @@ function copyTextToClipboard(text) {
       &:last-of-type {
         color: #666666;
       }
-    }    
+    }
     &:last-of-type {
       border-bottom: none;
     }
