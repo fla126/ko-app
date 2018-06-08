@@ -8,7 +8,7 @@
         <li>
           <h1>{{cointype | uppercase}}收款<span>{{cointype | uppercase}}01</span></h1>
           <p>收款金额</p>
-          <p><input id="gatherInput" placeholder="请输入收款金额" type="number" v-model="amount"></p>
+          <p><input id="gatherInput" placeholder="请输入收款金额" type="tel" v-model="amount"></p>
         </li>
         <li class="text-center">
           <p>{{address}}</p>
@@ -163,7 +163,7 @@ function copyTextToClipboard(text) {
     font-size: 0.24rem;
     color: #666;
     &:focus{
-      outline: none;
+      
     }
   }
   input::placeholder {

@@ -19,7 +19,7 @@ import Data from '@/api/data'
 
 
 export default {
-  name:'login',
+  name:'register',
   data(){
   	return {
   		

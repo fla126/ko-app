@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import store from '@/store'
 import guide from '@/pages/guide'
+import login from '@/pages/login'
 import index from '@/pages/index'
 import wallet from '@/pages/wallet'
 import command from '@/pages/command'
@@ -70,6 +71,11 @@ const router = new Router({
       path:'/guide', //引导页面
       name: guide.name,
       component: guide
+    },
+    {
+      path:'/login', //注册页面
+      name: login.name,
+      component: login
     },
     {
       path:'/wallet-detail', //钱包详情
