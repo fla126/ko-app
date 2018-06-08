@@ -1,7 +1,7 @@
 <template>
   <!-- 记录 -->
   <div id="record" class="page">
-    <mt-header class="all-header" title="记录">
+    <mt-header class="common-mt-header" title="记录">
       <router-link to="/ucenter" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
@@ -118,7 +118,7 @@
   }
 
 </script>
-<style type="text/css" lang="less"  >
+<style type="text/css" lang="less" scoped  >
 
   .re-box>.inner{
     padding: 0 .2rem;

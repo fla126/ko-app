@@ -5,7 +5,7 @@
         <mt-button icon="back"></mt-button>
       </router-link>
 
-      <router-link class="right" to="/addwallet" slot="right">
+      <router-link class="u-icon-right" to="/addwallet" slot="right">
         <img src="../../assets/img/mycenter/i_nav_add.png"/>
       </router-link>
     </mt-header>

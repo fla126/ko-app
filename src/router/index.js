@@ -5,6 +5,7 @@ import guide from '@/pages/guide'
 import index from '@/pages/index'
 import wallet from '@/pages/wallet'
 import command from '@/pages/command'
+import commandAdd from '@/pages/command/cmd_add'
 import ucenter from '@/pages/ucenter'
 import walletDetail from '@/pages/wallet_detail'
 import walletPayment from '@/pages/wallet_payment'
@@ -19,6 +20,7 @@ import uwallet  from '@/pages/mycenter/uwallet '
 import addwallet  from '@/pages/mycenter/addwallet '
 import help  from '@/pages/mycenter/help'
 import about  from '@/pages/mycenter/about'
+import pwd  from '@/pages/pwd/pwd_index'
 Vue.use(Router)
 
 // const Foo = r => require.ensure([], ()=>r(require('../components/foo.vue')), 'group-foo')
@@ -52,6 +54,7 @@ const router = new Router({
       name: index.name,
       component: index,
       children:[
+        { path: '',  redirect:{ name: 'page-wallet' }},
         { path: 'wallet', name:wallet.name, component: wallet },
         { path: 'command', name:command.name, component: command },
         { path: 'ucenter', name:ucenter.name, component: ucenter },
@@ -65,6 +68,11 @@ const router = new Router({
         { path: 'help', name:help.name, component: help  }, // 个人中心--帮助
         { path: 'about', name:about.name, component: about  }, // 个人中心--关于我们
       ]
+    },
+      {
+      path:'/command-add', //口令
+      name: commandAdd.name,
+      component: commandAdd
     },
     {
       path:'/guide', //引导页面
