@@ -1,16 +1,16 @@
 <template>
   <div class="page">
     <comp-top-back>
-      <span class="selected-title">BTC01</span></span>
+      <span class="selected-title">{{cointype | uppercase}}01</span>
     </comp-top-back>
     <div class="page-main">
       <div class="amount-container">
-        <h1>45658<span> BTC </span></h1>
+        <h1>45658<span> {{cointype | uppercase}} </span></h1>
         <p>≈ ￥512,1464.22</p>
         <ul class="actions">
-          <li v-tap="{methods:routeTo, to:'page-wallet-payment'}"><i></i>转账</li>
+          <li v-tap="{methods:routeTo, to:'page-wallet-payment',params:{type:cointype}}"><i></i>转账</li>
           <li><span class="line"></span></li>
-          <li v-tap="{methods:routeTo, to:'page-wallet-gather'}"><i></i>收款</li>
+          <li v-tap="{methods:routeTo, to:'page-wallet-gather',params:{type:cointype}}"><i></i>收款</li>
         </ul>
       </div>
       <div class="trans-records-title">最新交易记录</div>
@@ -64,6 +64,11 @@
         </ul>
       </div>
     </div>
+    <mask-layer :isgray="true" :show="show" @hide="hideFunction">
+      <div class="wallet-list" >
+        
+      </div>
+    </mask-layer>
   </div>
 </template>
 
@@ -71,13 +76,15 @@
 
 import data from '@/api/data'
 import compTopBack from '@/components/common/top_back'
-
+import maskLayer from '@/components/common/mask'
 
 export default {
   name:'page-wallet-detail',
   data(){
     return {
       scroll:false,
+      cointype:'',
+      show:true,
     }
   },
   created(){
@@ -85,6 +92,7 @@ export default {
   },
   mounted(){
     setTimeout(this.initScroll,700)
+    this.cointype = this.$route.query.type || 'btc'
     
   },
   updated(){
@@ -100,10 +108,14 @@ export default {
     },
     routeTo(args){
      this.$router.push({ name: args.to, query:args.params})
+    },
+    hideFunction(){
+
     }
   },
   components:{    
     compTopBack,
+    maskLayer,
   }
 }
 

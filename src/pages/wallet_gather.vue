@@ -6,7 +6,7 @@
     <div class="page-main">
       <ul class="pament-detail">
         <li>
-          <h1>BTC收款<span>BTC01</span></h1>
+          <h1>{{cointype | uppercase}}收款<span>{{cointype | uppercase}}01</span></h1>
           <p>收款金额</p>
           <p><input id="gatherInput" placeholder="请输入收款金额" type="number" v-model="amount"></p>
         </li>
@@ -39,13 +39,15 @@ export default {
     return {
       amount:'',
       address:'1MzziGBa7tNNzMwVJMPEjAfM1wRcvSGZu5',
-      collapsed:true
+      collapsed:true,
+      cointype:'',
     }
   },
   created(){
     
   },
   mounted(){
+    this.cointype = this.$route.query.type || 'btc'
     QRCode.toCanvas(document.getElementById('canvas'), this.address, {
       color: {
         dark: '#000',  // Black dots

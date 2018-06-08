@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <comp-wallet-top>wallet</comp-wallet-top>
+    <comp-wallet-top></comp-wallet-top>
     <transition enter-active-class="animated short fadeIn">
       <div class="search-container fixed" v-show="isSearchFixed">
         <input type="search" :class="{active:currencySearchText.length}" :placeholder="$t('message.currencySearch')" v-model="currencySearchTopText">
@@ -8,7 +8,7 @@
     </transition>
     <div class="page-main" id="scroll" @click="setBlur($event)">
       <div>
-        <div class="amount-container" v-tap="{methods:routeTo, to:'page-wallet-detail'}">
+        <div class="amount-container">
           <h2>{{$t('message.amount')}}</h2>
           <h1>45658<span> BTC </span><i></i></h1>
           <p>≈ ￥512,1464.22</p>
@@ -17,35 +17,35 @@
           <input type="search" :class="{active:currencySearchText.length, hidden:isSearchFixed}"  :placeholder="$t('message.currencySearch')" v-model="currencySearchText">
         </div>
         <ul class="currency-list">
-          <li v-tap="{methods:routeTo, to:'page-wallet-payment',params:{type:'btc'}}">
+          <li v-tap="{methods:routeTo, to:'page-wallet-detail',params:{type:'btc'}}">
             <div><img src="../assets/img/BTC-alt@3x.png"><strong>BTC</strong></div>
             <div><span>266</span><br /><span>426,1234</span></div>
           </li>
-          <li v-tap="{methods:routeTo, to:'page-wallet-payment',params:{type:'eth'}}">
+          <li v-tap="{methods:routeTo, to:'page-wallet-detail',params:{type:'eth'}}">
             <div><img src="../assets/img/ETH@3x.png"><strong>ETH</strong></div>
             <div><span>646</span><br /><span>426,1234</span></div>
           </li>
-          <li v-tap="{methods:routeTo, to:'page-wallet-payment',params:{type:'btc'}}">
+          <li v-tap="{methods:routeTo, to:'page-wallet-detail',params:{type:'btc'}}">
             <div><img src="../assets/img/BTC-alt@3x.png"><strong>BTC</strong></div>
             <div><span>266</span><br /><span>426,1234</span></div>
           </li>
-          <li v-tap="{methods:routeTo, to:'page-wallet-payment',params:{type:'eth'}}">
+          <li v-tap="{methods:routeTo, to:'page-wallet-detail',params:{type:'eth'}}">
             <div><img src="../assets/img/ETH@3x.png"><strong>ETH</strong></div>
             <div><span>646</span><br /><span>426,1234</span></div>
           </li>
-          <li v-tap="{methods:routeTo, to:'page-wallet-payment',params:{type:'btc'}}">
+          <li v-tap="{methods:routeTo, to:'page-wallet-detail',params:{type:'btc'}}">
             <div><img src="../assets/img/BTC-alt@3x.png"><strong>BTC</strong></div>
             <div><span>266</span><br /><span>426,1234</span></div>
           </li>
-          <li v-tap="{methods:routeTo, to:'page-wallet-payment',params:{type:'eth'}}">
+          <li v-tap="{methods:routeTo, to:'page-wallet-detail',params:{type:'eth'}}">
             <div><img src="../assets/img/ETH@3x.png"><strong>ETH</strong></div>
             <div><span>646</span><br /><span>426,1234</span></div>
           </li>
-          <li v-tap="{methods:routeTo, to:'page-wallet-payment',params:{type:'btc'}}">
+          <li v-tap="{methods:routeTo, to:'page-wallet-detail',params:{type:'btc'}}">
             <div><img src="../assets/img/BTC-alt@3x.png"><strong>BTC</strong></div>
             <div><span>266</span><br /><span>426,1234</span></div>
           </li>
-          <li v-tap="{methods:routeTo, to:'page-wallet-payment',params:{type:'eth'}}">
+          <li v-tap="{methods:routeTo, to:'page-wallet-detail',params:{type:'eth'}}">
             <div><img src="../assets/img/ETH@3x.png"><strong>ETH</strong></div>
             <div><span>646</span><br /><span>426,1234</span></div>
           </li>

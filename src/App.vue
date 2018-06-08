@@ -28,7 +28,9 @@ export default {
     if(!isfirst){
       this.$router.push({name:'guide'})
     } else {
-      this.$router.push({name:'page-wallet'})
+      if(this.$route.name == 'index'){
+        this.$router.push({name:'page-wallet'})
+      }
     }
   },
   components:{

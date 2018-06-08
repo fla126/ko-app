@@ -42,7 +42,7 @@ export default {
     },
     start(args){
      localStorage.setItem('firstWallet',1)
-     this.$router.push({ name: 'page-wallet'})
+     this.$router.replace({ name: 'page-wallet'})
     }
   },
   components:{    
