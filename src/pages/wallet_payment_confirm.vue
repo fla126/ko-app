@@ -2,6 +2,7 @@
   <div class="page">
     <comp-top-back></comp-top-back>
     <div class="page-main">
+      
       <ul class="pament-detail">
         <li>
           <h1>{{cointype | uppercase}}转账确认</h1>

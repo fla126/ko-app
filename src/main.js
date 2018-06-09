@@ -8,6 +8,7 @@ import store from './store' // 状态管理
 import vueTap from 'v-tap'
 import VueI18n from 'vue-i18n' //多语言处理模块
 import commonMethods from './api/methods'
+import VConsole   from 'vconsole'
 
 import LangEn from './lang/en' //英文包
 import LangZhCHS from './lang/zhCHS' //简体中文包
@@ -15,6 +16,8 @@ import LangZhCHT from './lang/zhCHT' //繁体中文包
 
 Vue.use(vueTap)
 Vue.use(VueI18n)
+
+var vConsole = new VConsole()
 
 //请求加入随机参数
 var $ajax = axios.create({
