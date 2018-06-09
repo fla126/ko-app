@@ -29,7 +29,7 @@ export default {
       this.$router.push({name:'guide'})
     } else {
       if(this.$route.name == 'index'){
-        this.$router.push({name:'page-wallet'})
+        this.$router.push({name:'login'})
       }
     }
   },

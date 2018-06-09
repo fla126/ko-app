@@ -38,10 +38,10 @@
           <p>矿工费<i class="collapse" :class="{active:!collapsed}" v-tap="{methods:collapse}"></i></p>
           <ul v-show="!collapsed">
             <li>
-              <p><input type="number" placeholder="Gas price："><span>gwei</span></p>
+              <p><input type="tel" placeholder="Gas price："><span>gwei</span></p>
             </li>
             <li>
-              <p><input type="number" placeholder="Gas number："></p>
+              <p><input type="tel" placeholder="Gas number："></p>
             </li>
             <li>
               <textarea placeholder="十六进制数据" res></textarea>
@@ -145,7 +145,7 @@ export default {
         border: none;
         color: #666666;
         &:focus {
-          outline: none;
+          
         }
       }
       input::placeholder {
@@ -174,7 +174,7 @@ export default {
       height: 1.5rem;
       resize:none;
       &:focus {
-        outline: none;
+        
       }
     }
   }

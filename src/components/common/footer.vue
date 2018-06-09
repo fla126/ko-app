@@ -55,7 +55,7 @@ export default {
 
 </script>
 <style type="text/css" lang="less">
-.mint-tabbar {
+.wrap .mint-tabbar {
   border-top: 1px solid #ecf1ee;
   background-color: #fff;
   > .mint-tab-item {

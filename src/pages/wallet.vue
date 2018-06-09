@@ -191,7 +191,7 @@ export default {
     background: url('../assets/img/sousuo@3x.png') no-repeat center top;
     background-size: auto 0.5rem;
     &:focus {
-      outline: none;
+      
     }
     &.active {
       background: transparent;

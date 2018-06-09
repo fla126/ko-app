@@ -74,7 +74,7 @@ export default {
     line-height: 0.5rem;
     font-size: 0.32rem;
     &:focus {
-      outline: none;
+      
     }
   }
   h3 {
