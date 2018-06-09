@@ -1,18 +1,18 @@
 <template>
-  <div id="uwallet" class="page">
-    <mt-header class="all-header common-mt-header" title="钱包">
-      <router-link to="/ucenter" slot="left">
+  <div  class="page">
+    <mt-header class="common-mt-header" title="钱包">
+      <a  slot="left" v-tap="{methods:routeTo, to:'page-ucenter'}">
         <mt-button icon="back"></mt-button>
-      </router-link>
-
-      <router-link class="u-icon-right" to="/addwallet" slot="right">
-        <img src="../../assets/img/mycenter/i_nav_add.png"/>
-      </router-link>
+      </a>
+        <!--<mt-button v-tap="{methods:routeTo, to:'page-ucenter'}" icon="back" ></mt-button>-->
+       <a slot="right" class="right">
+        <img v-tap="{methods:routeTo, to:'page-addwallet'}" class="uwallet-right-img" src="../../assets/img/mycenter/i_nav_add.png"/>
+       </a>
     </mt-header>
 
 
     <div class="uwallet-box ">
-      <h1 class="uwallet-h1 mt25">ETH</h1>
+      <h1 class="uwallet-h1 mt25 f30">BTC</h1>
       <div class="uwallet-content w-content m-box1 mt25 f24">
         <div class="inner">
           <section class="one">
@@ -35,7 +35,7 @@
     </div>
 
     <div class="uwallet-box">
-      <h1 class="uwallet-h1 mt25">ETH</h1>
+      <h1 class="uwallet-h1 mt25 f30">ETH</h1>
       <div class="uwallet-content w-content m-box1 mt25 f24">
         <div class="inner">
           <section class="one">
@@ -70,20 +70,35 @@
   Vue.component(Header.name, Header);
   Vue.component(Cell.name, Cell);
     export default {
-        name: "page-uwallet"
+        name: "page-uwallet",  data(){
+        return {
+
+        }
+      },
+      mounted(){
+
+      },
+        methods:{
+          routeTo(args){
+            this.$router.push({ name: args.to})
+          }
+        }
     }
 </script>
 
 <style type="text/css" scoped >
-
   .uwallet-content .one{
     display: flex;
     justify-content: space-between;
-    border-bottom: .01rem solid #ecedee;
+    border-bottom:.05rem solid #f9f9f9;
     padding: 0.2rem 0rem;
   }
   .uwallet-content .one span{
-     line-height: 33px;
+     line-height: .6rem;
+  }
+
+  .uwallet-content .one:last-child{
+    border-bottom: 0;
   }
   .m-box1,.m-box2{
     background-color:white;

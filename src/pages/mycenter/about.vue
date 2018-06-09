@@ -14,15 +14,24 @@
       </div>
     </div>
 
-    <div  class="common-content bg-white mt100">
-       <div class="inner">
-         <mt-cell class="common-mt-cell ft-c-gray" title="用户协议"></mt-cell>
-         <mt-cell class="common-mt-cell ft-c-gray" title="隐私条款"></mt-cell>
-         <mt-cell class="common-mt-cell ft-c-gray" title="加入我们"></mt-cell>
-         <mt-cell class="common-mt-cell ft-c-gray" title="检查版本"></mt-cell>
-       </div>
-    </div>
 
+
+    <div class="common-content bg-white mt40 ft-c-gray">
+      <div class="inner">
+        <div class="box-cont " >
+          <div class="item"><span class="f30">用户协议</span></div>
+        </div>
+        <div class="box-cont " >
+          <div class="item"><span class="f30">隐私条款</span></div>
+        </div>
+        <div class="box-cont " >
+          <div class="item"><span class="f30">加入我们</span></div>
+        </div>
+        <div class="box-cont " >
+          <div class="item"><span class="f30">检查版本</span></div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -44,6 +53,26 @@
   width: 1.25rem;
   height: 1.24rem;
   display: inline-block;
+}
+
+.box-cont{
+  display: flex;
+  align-items: center;
+  height: .85rem;
+  border-bottom: .05rem solid #f9f9f9;
+.item:first-child{
+  width: .4rem;
+}
+.item{
+  height: .4rem;
+span{
+  line-height: .4rem;
+  margin-left: .3rem;
+}
+}
+}
+.box-cont:last-child{
+  border-bottom:0;
 }
 
 </style>

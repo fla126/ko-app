@@ -6,17 +6,25 @@
       </router-link>
     </mt-header>
 
-    <div class="common-content bg-white">
+    <div class="common-content bg-white mt40 ft-c-gray">
       <div class="inner">
-        <mt-cell class="common-mt-cell ft-c-gray"  title="云备份"   is-link ></mt-cell>
-        <mt-cell class="common-mt-cell ft-c-gray"  title="二维码备份"   is-link ></mt-cell>
-        <mt-cell class="common-mt-cell ft-c-gray"  title="ABKEY备份"   is-link ></mt-cell>
+        <div class="box-cont " v-tap="{methods:routeTo, to:'page-msg'}">
+          <div class="item"><span class="f30">云备份</span></div>
+        </div>
+        <div class="box-cont " v-tap="{methods:routeTo, to:'page-record'}">
+          <div class="item"><span class="f30">二维码备份</span></div>
+        </div>
+        <div class="box-cont " v-tap="{methods:routeTo, to:'page-uwallet'}">
+          <div class="item"><span class="f30">ABKEY备份</span></div>
+        </div>
       </div>
     </div>
-    <div class="common-content bg-white mt60">
+
+    <div class="common-content bg-white mt40 ft-c-gray">
       <div class="inner">
-        <mt-cell class="common-mt-cell ft-c-gray" title="修改交易密码"  >
-        </mt-cell>
+        <div class="box-cont " >
+          <div class="item"><span class="f30 ft-c-blue">修改交易密码</span></div>
+        </div>
       </div>
     </div>
 
@@ -44,7 +52,12 @@
   Vue.component(Header.name, Header);
   Vue.component(Cell.name, Cell);
   export default {
-    name: "page-msg"
+    name: "page-backup",
+    methods:{
+      routeTo(args){
+        this.$router.push({ name: args.to})
+      }
+    }
   }
 </script>
 
@@ -53,4 +66,24 @@
   .m-box3>.inner{padding: 0 .2rem;}
   .m-box3 h1{font-size: .24rem;color:#666666}
   .m-box3 ul li{font-size: .22rem;color:#999999;line-height: .5rem;}
+
+  .box-cont{
+    display: flex;
+    align-items: center;
+    height: .85rem;
+    border-bottom: .05rem solid #f9f9f9;
+    .item:first-child{
+      width: .4rem;
+    }
+    .item{
+      height: .4rem;
+      span{
+        line-height: .4rem;
+        margin-left: .3rem;
+      }
+    }
+   }
+  .box-cont:last-child{
+    border-bottom:0;
+  }
 </style>

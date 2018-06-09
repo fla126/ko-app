@@ -14,7 +14,6 @@
           <p>{{address}}</p>
           <p><canvas id="canvas"></canvas></p>
         </li>
-
       </ul>
       <div class="step-next" :class="{fixed:collapsed}">
         <mt-button type="primary" size="large" v-tap="{methods:copyAddress}">复制地址</mt-button>

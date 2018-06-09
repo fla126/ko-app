@@ -1,52 +1,52 @@
 <template>
   <div id="ucenter">
-    <mt-header class="all-header" title="个人中心">
-      <!--<router-link to="/" slot="left">
-        <mt-button icon="back">返回</mt-button>
-      </router-link>-->
-      <router-link class="right" to="/setup" slot="right">
-        <img src="../assets/img/mycenter/i_right.png"/>
+    <mt-header class="common-mt-header" title="个人中心">
+      <router-link  to="/setup" slot="right">
+        <img class="ucenter-img" src="../assets/img/mycenter/i_right.png"/>
       </router-link>
     </mt-header>
 
-    <mt-cell class="wallet-cell"
-             title="Vivining"
-             to="/uinfo"
-             label="硬件：usbtkey123456"
-             is-link
-             value="">
-      <img slot="icon" src="../assets/img/mycenter/i_b_000.png" width="24" height="24">
-    </mt-cell>
+    <div class="common-content u-box1 mt40">
+           <div class="inner" v-tap="{methods:routeTo, to:'page-uinfo'}">
+                <ul >
+                  <li><img src="../assets/img/mycenter/i_b_000.png"/></li>
+                  <li><span class="f36">Vivining</span> <span class="f24">硬件: usbtkey123456</span></li>
+                  <li><img  src="../assets/img/mycenter/i_right_nav.png"/></li>
+                </ul>
+           </div>
+    </div>
 
-    <div class="w-content m-box1 ft-c-gray">
+    <div class="common-content bg-white mt40">
       <div class="inner">
-          <mt-cell class="w-item w-box1" title="消息"   is-link   to="/message" >
-            <img slot="icon" src="../assets/img/mycenter/i_b_002.png" width="24" height="24">
-          </mt-cell>
-          <mt-cell class="w-item w-box2" title="记录" is-link   to="/record" >
-            <img slot="icon" src="../assets/img/mycenter/i_b_003.png" width="24" height="24">
-          </mt-cell>
-          <mt-cell class="w-item w-box3" title="钱包" is-link   to="/uwallet" >
-            <img slot="icon" src="../assets/img/mycenter/i_b_004.png" width="24" height="24">
-          </mt-cell>
-
-          <mt-cell class="w-item w-box4" title="备份" is-link   to="/backup"  >
-            <img slot="icon" src="../assets/img/mycenter/i_b_005.png" width="24" height="24">
-          </mt-cell>
-
+        <div class="box-cont " v-tap="{methods:routeTo, to:'page-msg'}">
+          <div class="item"><img class="left1"  src="../assets/img/mycenter/i_b_002.png" ></div>
+          <div class="item"><span class="f30">消息</span></div>
+        </div>
+        <div class="box-cont " v-tap="{methods:routeTo, to:'page-record'}">
+          <div class="item"><img class="left2"  src="../assets/img/mycenter/i_b_003.png" ></div>
+          <div class="item"><span class="f30">记录</span></div>
+        </div>
+        <div class="box-cont " v-tap="{methods:routeTo, to:'page-uwallet'}">
+          <div class="item"><img class="left3"  src="../assets/img/mycenter/i_b_004.png" ></div>
+          <div class="item"><span class="f30">钱包</span></div>
+        </div>
+        <div class="box-cont " v-tap="{methods:routeTo, to:'page-backup'}">
+          <div class="item"><img class="left4"  src="../assets/img/mycenter/i_b_005.png" ></div>
+          <div class="item"><span class="f30">备份</span></div>
+        </div>
       </div>
     </div>
 
-    <div class="w-space"></div>
-
-    <div class="w-content m-box2 ft-c-gray">
+    <div class="common-content bg-white mt40">
       <div class="inner">
-        <mt-cell class="w-item w-box5" title="帮助"  is-link   to="/help" >
-          <img slot="icon" src="../assets/img/mycenter/i_b_006.png" width="24" height="24">
-        </mt-cell>
-        <mt-cell class="w-item w-box6" title="关于我们"  is-link   to="/about" >
-          <img slot="icon" src="../assets/img/mycenter/i_b_007.png" width="24" height="24">
-        </mt-cell>
+        <div class="box-cont " v-tap="{methods:routeTo, to:'page-help'}">
+          <div class="item"><img class="left5"  src="../assets/img/mycenter/i_b_006.png" ></div>
+          <div class="item"><span class="f30">帮助</span></div>
+        </div>
+        <div class="box-cont " v-tap="{methods:routeTo, to:'page-about'}">
+          <div class="item"><img class="left6"  src="../assets/img/mycenter/i_b_007.png" ></div>
+          <div class="item"><span class="f30">关于我们</span></div>
+        </div>
       </div>
     </div>
 
@@ -71,103 +71,89 @@ export default {
 
   },
   methods:{
-
-  },
+    routeTo(args){
+      this.$router.push({ name: args.to})
+    }
+  }
 }
 
 </script>
-<style type="text/css" lang="less"  >
- #ucenter .all-header{
-    height: .95rem;
-    background-color: white;
-    border-bottom:.01rem solid #e4e5e7;
+<style type="text/css" lang="less"  scoped >
+
+   img.left1{
+    width: .4rem;
+    height: .3rem;
   }
- #ucenter .all-header .right img{
-   width: .4rem;
-  height: .4rem;
-}
- #ucenter .all-header h1{
-  font-size: .36rem;
-  color: #333333;
-}
- #ucenter  .m-box1,.m-box2{
-    background-color:white;
+ img.left2{
+    width: .34rem;
+    height: .34rem;
   }
- #ucenter .m-box2{
-  margin-top: .4rem;
-}
- #ucenter .w-content>.inner{
-  padding: 0 .2rem;
-}
- #ucenter .wallet-cell {
-    margin-top: .4rem;
-    min-height: 1.8rem;
-    background-color: #4D7BF3;
-    color: white;
+  img.left3{
+    width: .4rem;
+    height: .34rem;
+  }
+  img.left4{
+    width: .34rem;
+    height: .34rem;
+  }
+  img.left5{
+    width: .32rem;
+    height: .38rem;
+  }
+  img.left6{
+    width: .34rem;
+    height: .36rem;
   }
 
- #ucenter .wallet-cell .mint-cell-title img{
+  .box-cont{
+    display: flex;
+    align-items: center;
+    height: .85rem;
+    border-bottom: .05rem solid #f9f9f9;
+    .item:first-child{
+      width: .4rem;
+    }
+    .item{
+         height: .4rem;
+      span{
+        line-height: .4rem;
+        margin-left: .3rem;
+      }
+    }
+  }
+  .box-cont:last-child{
+    border-bottom:0;
+  }
+.u-box1 {
+  background-color: #4d7bf3;
+  ul{
+     display: flex;
+     padding: .55rem 0;
+     justify-content: space-between;
+  }
+  li{
+      height: .75rem;
+    }
+  li:nth-child(1) img{
+    margin-top: .2rem;
     width: .54rem;
     height: .46rem;
   }
- #ucenter  .wallet-cell .mint-cell-title .mint-cell-text{
-    font-size: .36rem;
+  li:nth-child(2){
+    width: 5rem;
+    height: .75rem;
+    span:nth-child(1){
+       color: #ffffff;
+    }
+    span:nth-child(2){
+      color: #becffa;
+      display: block;
+    }
   }
- #ucenter .wallet-cell .mint-cell-title .mint-cell-label{
-    font-size: .24rem;
+  li:nth-child(3) img{
+    margin-top: .2rem;
+    width: .22rem;
+    height: .42rem;
   }
- #ucenter .mint-cell-title  .mint-cell-label{
-   color: #becffa;
-  }
- #ucenter .wallet-cell .mint-cell-allow-right::after{
-  width: .31rem;
-  height: .31rem;
-  border-color: white;
 }
- #ucenter .w-content a.w-box1{
-    margin-top: .4rem;
-  }
-
- #ucenter  .w-content a.w-box1 .mint-cell-title img{
-    height:.3rem;
-    width: .4rem;
-  }
- #ucenter  .w-content  a.w-box2 .mint-cell-title img{
-    height:.34rem;
-    width: .34rem;
-  }
- #ucenter .w-content a.w-box3 .mint-cell-title img{
-    height:.34rem;
-    width: .4rem;
-  }
- #ucenter .w-content a.w-box4 .mint-cell-title img{
-    height:.34rem;
-    width: .34rem;
-  }
-
-
-
-  /*帮助*/
-  .w-content a.w-box5 .mint-cell-title img{
-    height:.38rem;
-    width: .32rem;
-  }
-  .w-content a.w-box6 .mint-cell-title img{
-    height:.36rem;
-    width: .34rem;
-  }
-
-.w-content .mint-cell-title .mint-cell-text{
-  margin-left: .3rem;
-}
-
-.w-item .mint-cell-title .mint-cell-text{
-  font-size: .3rem;
-}
-
- .w-content .mint-cell{
-    min-height: .85rem;
-    border-bottom: .01rem solid #ecedee;
-  }
-
 </style>

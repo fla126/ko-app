@@ -85,7 +85,7 @@
   Vue.component(Field.name, Field);
   Vue.component(Checklist.name, Checklist);
   export default {
-    name:'page-ucenter',
+    name:'page-record',
     data(){
       return {
         captcha:'',
@@ -129,7 +129,8 @@
  #record .all-header{
     height: .95rem;
     background-color: white;
-    border-bottom:.01rem solid #e4e5e7;
+    color:#333333;
+    border-bottom:.01rem solid #ececec;
   }
 
   #record .all-header .mintui-back{
@@ -148,7 +149,7 @@
  #record .rec-select{
    width: 6.1rem;
    height: .5rem;
-   border: .01rem solid #c7c7c7a8;
+   border: .01rem solid #ececec;
    background: #f9f9f9;
  }
  #record .m-box1,.m-box2{
@@ -157,6 +158,13 @@
  #record .m-box2{
     margin-top: .4rem;
   }
+
+ .m-box2{
+   img{
+     width: .38rem;
+     height: .38rem;
+   }
+ }
 .m-box2 ul{
   padding: .3rem .1rem;
   display: flex;
