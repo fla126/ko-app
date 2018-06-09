@@ -6,22 +6,32 @@
       </router-link>
     </mt-header>
 
-    <div class="common-content   bg-white mt40">
+
+    <div class="common-content bg-white mt40 ft-c-gray">
       <div class="inner">
-        <mt-cell class="common-mt-cell ft-c-gray"  title="新手必读"   is-link ></mt-cell>
-        <mt-cell class="common-mt-cell ft-c-gray"  title="钱包备份"   is-link ></mt-cell>
-        <mt-cell class="common-mt-cell ft-c-gray"  title="钱包使用"   is-link ></mt-cell>
+        <div class="box-cont " >
+          <div class="item"><span class="f30">新手必读</span></div>
+        </div>
+        <div class="box-cont " >
+          <div class="item"><span class="f30">钱包备份</span></div>
+        </div>
+        <div class="box-cont " >
+          <div class="item"><span class="f30">钱包使用</span></div>
+        </div>
       </div>
     </div>
 
 
-    <div class="common-content  bg-white mt40">
+    <div class="common-content bg-white mt40 ft-c-gray">
       <div class="inner">
-        <mt-cell class="common-mt-cell ft-c-gray" title="常见问题"  > </mt-cell>
-        <mt-cell class="common-mt-cell ft-c-gray" title="联系我们"  > </mt-cell>
+        <div class="box-cont " >
+          <div class="item"><span class="f30">常见问题</span></div>
+        </div>
+        <div class="box-cont " >
+          <div class="item"><span class="f30">联系我们</span></div>
+        </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -34,10 +44,28 @@
   Vue.component(Header.name, Header);
   Vue.component(Cell.name, Cell);
   export default {
-    name: "page-msg"
+    name: "page-help"
   }
 </script>
 
 <style type="text/css"  scoped>
-
+  .box-cont{
+    display: flex;
+    align-items: center;
+    height: .85rem;
+    border-bottom: .05rem solid #f9f9f9;
+  .item:first-child{
+    width: .4rem;
+  }
+  .item{
+    height: .4rem;
+  span{
+    line-height: .4rem;
+    margin-left: .3rem;
+  }
+  }
+  }
+  .box-cont:last-child{
+    border-bottom:0;
+  }
 </style>

@@ -1,9 +1,9 @@
 <template>
-  <div id="uwallet" class="page">
-    <mt-header class="all-header common-mt-header" title="添加钱包">
-      <router-link to="/uwallet" slot="left">
-        <mt-button icon="back"></mt-button>
-      </router-link>
+  <div  class="page">
+    <mt-header class=" common-mt-header" title="添加钱包">
+      <a  slot="left" v-tap="{methods:routeTo, to:'page-uwallet'}">
+        <mt-button v-tap="{methods:routeTo, to:'page-uwallet'}" icon="back"></mt-button>
+      </a>
     </mt-header>
 
     <div class="common-content mt10">
@@ -33,7 +33,7 @@
 
         <div class="common-content footer mt100">
            <div class="inner">
-              <p class="f20">提示：为了创建钱包,你需要连接高清设备。</p>
+              <p class="f20 ft-red">提示：为了创建钱包,你需要连接高清设备。</p>
               <mt-button class="mt20" size="large" type="primary" >添加</mt-button>
            </div>
         </div>
@@ -51,8 +51,11 @@
   Vue.component(Header.name, Header);
   Vue.component(Cell.name, Cell);
     export default {
-        name: "page-uwallet",
+        name: "page-addwallet",
       methods:{
+        routeTo(args){
+          this.$router.push({ name: args.to})
+        }
       },
     }
 </script>

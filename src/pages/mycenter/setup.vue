@@ -1,17 +1,17 @@
 <template>
   <div id="setup" class="page">
-    <mt-header class="all-header common-mt-header" title="设置">
+    <mt-header class="common-mt-header" title="设置">
       <router-link to="/ucenter" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>
     <div class="common-content bg-white">
-      <div class="inner">
-        <mt-cell class="common-mt-cell ft-c-gray" title="多语言"   is-link   to="/message" >
+      <div class="mt-cell-inner">
+        <mt-cell class="common-mt-cell mt-clear-padding ft-c-gray" title="多语言"   is-link   to="/message" >
         </mt-cell>
-        <mt-cell class="common-mt-cell ft-c-gray" title="货币单位"  >
+        <mt-cell class="common-mt-cell mt-clear-padding ft-c-gray" title="货币单位"  >
         </mt-cell>
-        <mt-cell class="common-mt-cell ft-c-gray" title="WEB3"  >
+        <mt-cell class="common-mt-cell mt-clear-padding ft-c-gray" title="WEB3"  >
         </mt-cell>
       </div>
     </div>
