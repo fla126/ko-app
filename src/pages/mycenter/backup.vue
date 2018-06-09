@@ -10,12 +10,15 @@
       <div class="inner">
         <div class="box-cont " v-tap="{methods:routeTo, to:'page-msg'}">
           <div class="item"><span class="f30">云备份</span></div>
+          <div class="item"><img class="nav_right" src="../../assets/img/mycenter/i_question.png"/></div>
         </div>
         <div class="box-cont " v-tap="{methods:routeTo, to:'page-record'}">
           <div class="item"><span class="f30">二维码备份</span></div>
+          <div class="item"><img class="nav_right" src="../../assets/img/mycenter/i_question.png"/></div>
         </div>
         <div class="box-cont " v-tap="{methods:routeTo, to:'page-uwallet'}">
           <div class="item"><span class="f30">ABKEY备份</span></div>
+          <div class="item"><img class="nav_right" src="../../assets/img/mycenter/i_question.png"/></div>
         </div>
       </div>
     </div>
@@ -61,7 +64,7 @@
   }
 </script>
 
-<style type="text/css" scoped  >
+<style type="text/css" lang="less" scoped  >
   .m-box3{margin-top: .45rem;}
   .m-box3>.inner{padding: 0 .2rem;}
   .m-box3 h1{font-size: .24rem;color:#666666}
@@ -72,17 +75,17 @@
     align-items: center;
     height: .85rem;
     border-bottom: .05rem solid #f9f9f9;
-    .item:first-child{
-      width: .4rem;
-    }
     .item{
-      height: .4rem;
-      span{
-        line-height: .4rem;
-        margin-left: .3rem;
+      width: 50%;
+    }
+    .item:nth-child(2){
+      text-align: right;
+      img.nav_right{
+        width: .26rem;
+        height: .26rem;
       }
     }
-   }
+  }
   .box-cont:last-child{
     border-bottom:0;
   }

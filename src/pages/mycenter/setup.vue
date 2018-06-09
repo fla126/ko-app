@@ -5,14 +5,17 @@
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>
-    <div class="common-content bg-white">
-      <div class="mt-cell-inner">
-        <mt-cell class="common-mt-cell mt-clear-padding ft-c-gray" title="多语言"   is-link   to="/message" >
-        </mt-cell>
-        <mt-cell class="common-mt-cell mt-clear-padding ft-c-gray" title="货币单位"  >
-        </mt-cell>
-        <mt-cell class="common-mt-cell mt-clear-padding ft-c-gray" title="WEB3"  >
-        </mt-cell>
+    <div class="common-content bg-white mt40 ft-c-gray">
+      <div class="inner">
+        <div class="box-cont " >
+          <div class="item"><span class="f30">多语言</span></div>
+        </div>
+        <div class="box-cont " >
+          <div class="item"><span class="f30">货币单位</span></div>
+        </div>
+        <div class="box-cont " >
+          <div class="item"><span class="f30">WEB3</span></div>
+        </div>
       </div>
     </div>
 
@@ -82,5 +85,24 @@
 
 </script>
 <style type="text/css" lang="less" scoped >
+  .box-cont{
+    display: flex;
+    align-items: center;
+    height: .85rem;
+    border-bottom: .05rem solid #f9f9f9;
+    .item{
+      width: 50%;
+    }
+    .item:nth-child(2){
+      text-align: right;
+      img.nav_right{
+        width: .17rem;
+        height: .32rem;
+      }
+    }
+  }
 
+  .box-cont:last-child{
+    border-bottom:0;
+  }
 </style>

@@ -28,7 +28,8 @@
           <div class="item"><span class="f30">加入我们</span></div>
         </div>
         <div class="box-cont " >
-          <div class="item"><span class="f30">检查版本</span></div>
+          <div class="item"><span class="f30">检查版本</span><img class="nav_right" src="../../assets/img/mycenter/i_question.png"/></div>
+          <div class="item"></div>
         </div>
       </div>
     </div>
@@ -48,7 +49,7 @@
   }
 </script>
 
-<style type="text/css" scoped>
+<style type="text/css" lang="less" scoped>
 .box1 img{
   width: 1.25rem;
   height: 1.24rem;
@@ -60,19 +61,22 @@
   align-items: center;
   height: .85rem;
   border-bottom: .05rem solid #f9f9f9;
-.item:first-child{
-  width: .4rem;
-}
 .item{
-  height: .4rem;
-span{
-  line-height: .4rem;
-  margin-left: .3rem;
+  width: 50%;
 }
+.item:nth-child(1){
+  img.nav_right{
+    width: .26rem;
+    height: .26rem;
+    margin-left: .1rem;
+  }
 }
 }
 .box-cont:last-child{
   border-bottom:0;
 }
+
+
+
 
 </style>
