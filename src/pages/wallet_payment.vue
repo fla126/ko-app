@@ -2,7 +2,7 @@
   <div class="page">
     <comp-top-back></comp-top-back>
     <div class="page-main">
-      <ul class="pament-detail"  v-if="cointype=='btc'">
+      <ul class="payment-detail"  v-if="cointype=='btc'">
         <li>
           <h1>{{cointype | uppercase}}转账</h1>
           <p>收款人钱包地址</p>
@@ -10,17 +10,17 @@
         </li>
         <li>
           <p>转账金额</p>
-          <p>12.04568</p>
+          <p><input type="tel"></p>
         </li>
         <li>
           <p>矿工费</p>
-          <p>12.04568</p>
+          <p><input type="tel"></p>
         </li>
         <li>
           <h3>合计<span>12.24568 BTC</span></h3>
         </li>
       </ul>
-      <ul class="pament-detail"  v-else>
+      <ul class="payment-detail"  v-else>
         <li>
           <h1>{{cointype | uppercase}}转账</h1>
           <p>收款人钱包地址</p>
@@ -28,11 +28,11 @@
         </li>
         <li>
           <p>转账金额</p>
-          <p>12.04568</p>
+          <p><input type="tel"></p>
         </li>
         <li>
           <p>标签</p>
-          <p>标签一,&nbsp;&nbsp;标签二</p>
+          <p><input type="tel"></p>
         </li>
         <li>
           <p>矿工费<i class="collapse" :class="{active:!collapsed}" v-tap="{methods:collapse}"></i></p>
@@ -52,7 +52,7 @@
           <h3>合计<span>12.24568 BTC</span></h3>
         </li>
       </ul>
-      <div class="step-next" :class="{fixed:collapsed}">
+      <div class="step-next" :class="{fixed:collapsed && isBlur}">
         <mt-button type="primary" size="large" v-tap="{methods:$root.routeTo, to:'page-wallet-payment-confirm',params:{type:cointype}}">下一步</mt-button>
       </div>
     </div>
@@ -73,7 +73,8 @@ export default {
   data(){
     return {
       cointype:'',
-      collapsed:true
+      collapsed:true,
+      isBlur:true,
     }
   },
   created(){
@@ -81,6 +82,12 @@ export default {
   },
   mounted(){
     this.cointype = this.$route.query.type || 'btc'
+    $('.payment-detail input,.payment-detail textarea').focus(()=>{
+      this.isBlur = false
+    })
+    $('.payment-detail input,.payment-detail textarea').blur(()=>{
+      this.isBlur = true
+    })
   },
   updated(){
     
@@ -103,7 +110,7 @@ export default {
 .page-main {
   background-color: #f9f9f9;
 }
-.pament-detail {
+.payment-detail {
    border-top: 1px solid #e4e5e7;
   li {
     margin-left: 0.3rem;
