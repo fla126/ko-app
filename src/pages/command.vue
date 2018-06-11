@@ -67,18 +67,17 @@
         </ul>
         <transition enter-active-class="animated short fadeIn" leave-active-class="animated short fadeOut">
         <ul class="control-panel" id="controlPanel" v-show="showCP">
-          <li>编辑</li>
-          <li>删除</li>
+          <li v-tap="{methods:showRecordEditor}">编辑</li>
+          <li v-tap="{methods:delRecord}">删除</li>
         </ul>
         </transition>
       </div>
     </div>
+    <command-editor :show="showEditorLayer" :hideFunction="hideEditorLayer" :cname="cname"></command-editor>
   </div>
 </template>
 <script>
-  import Vue from 'vue'
-  
-
+import commandEditor from '@/components/common/command_editor'
 
   export default {
     name:'page-command',
@@ -86,7 +85,9 @@
       return {
         scroll:false,
         loop:0,
-        showCP:false
+        showCP:false,
+        showEditorLayer:false,
+        cname:'Sjafh3793rdkgvf'
       }
     },
     mounted(){
@@ -103,22 +104,46 @@
       showControlButton(event) {
           clearInterval(this.loop);//再次清空定时器，防止重复注册定时器
           this.loop=setTimeout(()=>{
-              var $container = $(event.target).parents('li').eq(0), $tar = $('#controlPanel')
-              $tar.css('top',$container.position().top-this.scroll.y+'px')
+              var $container = $(event.target).parents('li:first'), $tar = $('#controlPanel')
+              $tar.data('tar',$container).css('top',Math.round($container.position().top+$container.height()))
               $container.siblings('.active').removeClass('active')
               $container.addClass('active')
               this.showCP = true
-          },1000);
+          },500);
       },
       clearLoop(args) {
           clearInterval(this.loop);
       },
       hideCP(){
         this.showCP = false
-      }
+      },
+      showRecordEditor(args){ //编辑操作
+        var self = this
+        var _tar = $('#controlPanel').data('tar')
+        this.hideCP()
+        this.showEditorLayer = true
+      },
+      delRecord(args){ //删除操作
+        this.hideCP()
+        if(confirm('确定要删除此项口令吗？')){
+          var self = this
+          var _tar = $('#controlPanel').data('tar')
+          _tar.slideUp(function(){
+            this.remove()
+            self.scroll.refresh()
+          })
+        }
+      },
+      hideEditorLayer(cname){ //隐藏编辑对话框
+        this.showEditorLayer = false
+        if(cname && typeof(cname)=='string'){
+          // 回传编辑数据
+          console.log(cname)
+        }
+      },
     },
     components:{
-      
+      commandEditor,
     }
   }
 

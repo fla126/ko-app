@@ -1,11 +1,11 @@
 <template>
   <mask-layer :isgray="true" :show="show" @hide="hideFunction">
-    <div class="pwconfirm-layer" >
+    <div class="mconfirm-layer" >
       <i class="close" v-tap="{methods:hideFunction}">×</i>
-      <h3>请输入付款密码</h3>
-      <input type="password"  v-model="password" @keydown="checkInput($event)" v-focus>
+      <h3>修改名称</h3>
+      <input type="text" id="cname" v-model="commandName" @keydown="checkInput($event)" @focus="focusAc($event)">
       <div class="step-next">
-        <mt-button type="primary" size="large" v-tap="{methods:pwconfirm}">确认</mt-button>
+        <mt-button type="primary" size="large" v-tap="{methods:mconfirm}">确认</mt-button>
       </div>
     </div>
   </mask-layer>
@@ -14,7 +14,7 @@
 import maskLayer from '@/components/common/mask';
 
 export default {
-  name:'comp-password-confirm',
+  name:'comp-command-editor',
   props:{
     show:{
       type: Boolean,
@@ -22,24 +22,30 @@ export default {
     },
     hideFunction:{
       type: Function
+    },
+    cname:{
+      type:String
     }
   },
   data(){
     return {
-      password:''
+      commandName:''
     }
   },
-  mounted(){
-
+  created(){
+    this.commandName = this.cname
   },
   methods:{
-    pwconfirm(){
-      this.$root.routeTo({to:'page-wallet-detail'})
+    mconfirm(){
+      this.hideFunction(this.commandName)
     },
     checkInput(event){
       if(event.keyCode == 13){
-        this.pwconfirm()
+        this.mconfirm()
       }
+    },
+    focusAc(event){
+      event.currentTarget.select()
     }
   },
   components:{  
@@ -49,7 +55,7 @@ export default {
 
 </script>
 <style type="text/css" lang="less" scoped="">
-.pwconfirm-layer {
+.mconfirm-layer {
   display: block;
   position: absolute;
   left: 0;
@@ -62,15 +68,15 @@ export default {
   padding-top: 0.25rem;
   background-color: #fff;
   border-radius: 0.1rem;
-  // overflow: hidden;
   text-align: center;
   box-shadow: 0 0.05rem 0.1rem 0.01rem #6c6c6c;
   input {
     margin: 0.35rem auto;
-    width: 3.4rem;
+    width: 4.8rem;
     border:none;
+    text-align: center;
     background-color: transparent;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid #EAEBEC;
     line-height: 0.5rem;
     font-size: 0.32rem;
     &:focus {
