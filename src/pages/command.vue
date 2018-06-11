@@ -313,14 +313,14 @@ function copyTextToClipboard(text) { //复制到剪贴板函数
           }
         }
         span:nth-of-type(4) {
-          width: 0.44rem;
-          height: 0.44rem;
-          left: 0.08rem;
-          top: 0.08rem;
+          width: 0.48rem;
+          height: 0.48rem;
+          left: 0.044rem;
+          top: 0.06rem;
           background-color: #f9f9f9;
           color: #00CC33;
           text-align: center;
-          line-height: 0.44rem;
+          line-height: 0.5rem;
           font-size: 0.24rem;
         }
       }
