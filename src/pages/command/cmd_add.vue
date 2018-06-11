@@ -26,6 +26,8 @@
     data(){
       return {
         collapsed:true,
+        account:'',
+        key:''
       }
     },
     mounted(){

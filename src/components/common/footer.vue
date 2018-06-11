@@ -60,9 +60,11 @@ export default {
 .wrap .mint-tabbar {
   border-top: 1px solid #ecf1ee;
   background-color: #fff;
+  background-image: none;
   > .mint-tab-item {
     color: #666666;
     padding: 0.14rem 0;
+    background-color: #fff;
     .mint-tab-item-icon {
       width: 0.5rem;
       height: 0.5rem;

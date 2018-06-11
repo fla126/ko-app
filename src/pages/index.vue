@@ -40,7 +40,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .frames {
-  height:-webkit-calc(~"100vh - 1.02rem");
-  height: calc(~"100vh - 1.02rem");
+  height:-webkit-calc(~"100vh - 1.14rem");
+  height: calc(~"100vh - 1.14rem");
 }
 </style>

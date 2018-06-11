@@ -8,63 +8,61 @@
         </div>
         <ul class="command-list unselected mt40">
           <li @touchstart="showControlButton($event)" @touchend="clearLoop" v-tap="{methods:hideCP}">
-            <div><img src="../assets/img/i_com_number.png"></div>
-            <div><span class="f28 ft-c-gray">Sjafh3793rdkgvf</span></div>
-            <div><img src="../assets/img/i_block.png"><span class="f36">&nbsp;&nbsp;123 456</span></div>
-            <div><img src="../assets/img/i_copy.png"></div>
-          </li>
-
-          <li @touchstart="showControlButton($event)" @touchend="clearLoop" v-tap="{methods:hideCP}">
-            <div><img src="../assets/img/i_com_number15.png"></div>
-            <div><span class="f28 ft-c-gray">Sjafh3793rdkgvf</span></div>
-            <div><img src="../assets/img/i_block.png"><span class="f36">&nbsp;&nbsp;123 456</span></div>
-            <div><img src="../assets/img/i_copy.png"></div>
+            <div class="progress"><span></span><span class="left"></span><span class="right"></span><span>{{timer%30}}</span></div>
+            <div>Sjafh3793rdkgvf</div>
+            <div><i></i><span class="f36">123 456</span></div>
+            <div v-tap="{methods:setCopy}"><i></i></div>
           </li>
           <li @touchstart="showControlButton($event)" @touchend="clearLoop" v-tap="{methods:hideCP}">
-            <div><img src="../assets/img/i_com_number.png"></div>
-            <div><span class="f28 ft-c-gray">Sjafh3793rdkgvf</span></div>
-            <div><img src="../assets/img/i_block.png"><span class="f36">&nbsp;&nbsp;123 456</span></div>
-            <div><img src="../assets/img/i_copy.png"></div>
+            <div class="progress"><span></span><span class="left"></span><span class="right"></span><span>{{timer%30}}</span></div>
+            <div>Sjafh3793rdkgvf</div>
+            <div><i></i><span class="f36">123 456</span></div>
+            <div v-tap="{methods:setCopy}"><i></i></div>
           </li>
           <li @touchstart="showControlButton($event)" @touchend="clearLoop" v-tap="{methods:hideCP}">
-            <div><img src="../assets/img/i_com_number.png"></div>
-            <div><span class="f28 ft-c-gray">Sjafh3793rdkgvf</span></div>
-            <div><img src="../assets/img/i_block.png"><span class="f36">&nbsp;&nbsp;123 456</span></div>
-            <div><img src="../assets/img/i_copy.png"></div>
-          </li>
-
-          <li @touchstart="showControlButton($event)" @touchend="clearLoop" v-tap="{methods:hideCP}">
-            <div><img src="../assets/img/i_com_number15.png"></div>
-            <div><span class="f28 ft-c-gray">Sjafh3793rdkgvf</span></div>
-            <div><img src="../assets/img/i_block.png"><span class="f36">&nbsp;&nbsp;123 456</span></div>
-            <div><img src="../assets/img/i_copy.png"></div>
+            <div class="progress"><span></span><span class="left"></span><span class="right"></span><span>{{timer%30}}</span></div>
+            <div>Sjafh3793rdkgvf</div>
+            <div><i></i><span class="f36">123 456</span></div>
+            <div v-tap="{methods:setCopy}"><i></i></div>
           </li>
           <li @touchstart="showControlButton($event)" @touchend="clearLoop" v-tap="{methods:hideCP}">
-            <div><img src="../assets/img/i_com_number.png"></div>
-            <div><span class="f28 ft-c-gray">Sjafh3793rdkgvf</span></div>
-            <div><img src="../assets/img/i_block.png"><span class="f36">&nbsp;&nbsp;123 456</span></div>
-            <div><img src="../assets/img/i_copy.png"></div>
+            <div class="progress"><span></span><span class="left"></span><span class="right"></span><span>{{timer%30}}</span></div>
+            <div>Sjafh3793rdkgvf</div>
+            <div><i></i><span class="f36">123 456</span></div>
+            <div v-tap="{methods:setCopy}"><i></i></div>
           </li>
           <li @touchstart="showControlButton($event)" @touchend="clearLoop" v-tap="{methods:hideCP}">
-            <div><img src="../assets/img/i_com_number.png"></div>
-            <div><span class="f28 ft-c-gray">Sjafh3793rdkgvf</span></div>
-            <div><img src="../assets/img/i_block.png"><span class="f36">&nbsp;&nbsp;123 456</span></div>
-            <div><img src="../assets/img/i_copy.png"></div>
-          </li>
-
-          <li @touchstart="showControlButton($event)" @touchend="clearLoop" v-tap="{methods:hideCP}">
-            <div><img src="../assets/img/i_com_number15.png"></div>
-            <div><span class="f28 ft-c-gray">Sjafh3793rdkgvf</span></div>
-            <div><img src="../assets/img/i_block.png"><span class="f36">&nbsp;&nbsp;123 456</span></div>
-            <div><img src="../assets/img/i_copy.png"></div>
+            <div class="progress"><span></span><span class="left"></span><span class="right"></span><span>{{timer%30}}</span></div>
+            <div>Sjafh3793rdkgvf</div>
+            <div><i></i><span class="f36">123 456</span></div>
+            <div v-tap="{methods:setCopy}"><i></i></div>
           </li>
           <li @touchstart="showControlButton($event)" @touchend="clearLoop" v-tap="{methods:hideCP}">
-            <div><img src="../assets/img/i_com_number.png"></div>
-            <div><span class="f28 ft-c-gray">Sjafh3793rdkgvf</span></div>
-            <div><img src="../assets/img/i_block.png"><span class="f36">&nbsp;&nbsp;123 456</span></div>
-            <div><img src="../assets/img/i_copy.png"></div>
+            <div class="progress"><span></span><span class="left"></span><span class="right"></span><span>{{timer%30}}</span></div>
+            <div>Sjafh3793rdkgvf</div>
+            <div><i></i><span class="f36">123 456</span></div>
+            <div v-tap="{methods:setCopy}"><i></i></div>
+          </li>
+          <li @touchstart="showControlButton($event)" @touchend="clearLoop" v-tap="{methods:hideCP}">
+            <div class="progress"><span></span><span class="left"></span><span class="right"></span><span>{{timer%30}}</span></div>
+            <div>Sjafh3793rdkgvf</div>
+            <div><i></i><span class="f36">123 456</span></div>
+            <div v-tap="{methods:setCopy}"><i></i></div>
+          </li>
+          <li @touchstart="showControlButton($event)" @touchend="clearLoop" v-tap="{methods:hideCP}">
+            <div class="progress"><span></span><span class="left"></span><span class="right"></span><span>{{timer%30}}</span></div>
+            <div>Sjafh3793rdkgvf</div>
+            <div><i></i><span class="f36">123 456</span></div>
+            <div v-tap="{methods:setCopy}"><i></i></div>
+          </li>
+          <li @touchstart="showControlButton($event)" @touchend="clearLoop" v-tap="{methods:hideCP}">
+            <div class="progress"><span></span><span class="left"></span><span class="right"></span><span>{{timer%30}}</span></div>
+            <div>Sjafh3793rdkgvf</div>
+            <div><i></i><span class="f36">123 456</span></div>
+            <div v-tap="{methods:setCopy}"><i></i></div>
           </li>
         </ul>
+        <div class="pb40"></div>
         <transition enter-active-class="animated short fadeIn" leave-active-class="animated short fadeOut">
         <ul class="control-panel" id="controlPanel" v-show="showCP">
           <li v-tap="{methods:showRecordEditor}">编辑</li>
@@ -78,6 +76,7 @@
 </template>
 <script>
 import commandEditor from '@/components/common/command_editor'
+import { Toast } from 'mint-ui'
 
   export default {
     name:'page-command',
@@ -87,11 +86,18 @@ import commandEditor from '@/components/common/command_editor'
         loop:0,
         showCP:false,
         showEditorLayer:false,
-        cname:'Sjafh3793rdkgvf'
+        cname:'Sjafh3793rdkgvf',
+        timer:0,
       }
     },
     mounted(){
-      setTimeout(this.initScroll,700) 
+      setInterval(()=>{
+        this.timer += 1
+      },1000)
+      setTimeout(this.initScroll,700)
+      $('.progress').each((index,ele)=>{
+        this.startProgress(ele)
+      })
     },
     methods:{
       initScroll(){
@@ -124,6 +130,7 @@ import commandEditor from '@/components/common/command_editor'
         this.showEditorLayer = true
       },
       delRecord(args){ //删除操作
+        var self = this
         this.hideCP()
         if(confirm('确定要删除此项口令吗？')){
           var self = this
@@ -141,11 +148,44 @@ import commandEditor from '@/components/common/command_editor'
           console.log(cname)
         }
       },
+      setCopy(arg){
+        copyTextToClipboard('hahahahhahaha')
+      },
+      startProgress(ele){
+        var _right = $(ele).find('.right'), _left = $(ele).find('.left')
+        _right.addClass('active')
+        _right.one('animationend',()=>{
+          _left.addClass('active')
+          _left.one('animationend',()=>{
+            _right.removeClass('active')
+            _left.removeClass('active')
+            setTimeout(()=>{
+              this.startProgress(ele)
+            },0)
+          })
+        })
+
+      }
     },
     components:{
       commandEditor,
     }
   }
+
+function copyTextToClipboard(text) { //复制到剪贴板函数
+  var textArea = document.createElement("textarea")
+  textArea.style.position = 'fixed'
+  textArea.style.top = '-100vh'
+  textArea.value = text
+  document.body.appendChild(textArea)
+  textArea.select()
+  try { var msg = document.execCommand('copy') ? '成功' : '失败'
+    Toast('复制内容 ' + msg)
+  } catch (err) {
+    Toast('不能使用这种方法复制内容')
+  }
+  document.body.removeChild(textArea)
+}
 
 </script>
 <style lang="less" scoped>
@@ -227,48 +267,90 @@ import commandEditor from '@/components/common/command_editor'
       }
       &:hover, &.active  {
         background-color: #ebeff7;
+        > div:first-child span:last-of-type {
+          background-color: #ebeff7;
+        }
       }
       >div:first-child {
-        &:last-of-type {
-          text-align: right;
-        }
-        img {
+        width: 0.6rem;
+        margin-right: 0.3rem;
+        position: relative;
+        span:nth-of-type(1),span:nth-of-type(2),span:nth-of-type(3),span:nth-of-type(4) {
+          position: absolute;
           width: 0.6rem;
           height: 0.6rem;
-          margin-right: 0.3rem;
-          object-fit: contain;
-          object-position: center;
-          vertical-align: bottom;
+          left: 0;
+          top: 0;
+          border-radius: 50%;
         }
-        span:first-of-type {
-          color: #333;
-          font-size: 0.32rem;
+        span:nth-of-type(2),span:nth-of-type(3) {
+          &:after {
+            position: absolute;
+            content: '';
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: #ddd;            
+          }
+          &.active:after{
+            animation: progress 15000ms linear;
+            animation-fill-mode: forwards;
+          }
         }
-        span:last-of-type {
-          color: #98999C;
+        span:nth-of-type(1) {
+          background-color: #00CC33;
+        }
+        span:nth-of-type(2) {
+          clip:rect(0,0.3rem,auto,0);
+          &:after {
+            clip:rect(0,0.3rem,auto,0);
+          }
+        }
+        span:nth-of-type(3) {
+          clip:rect(0,auto,auto,0.3rem);
+          &:after {
+            clip:rect(0,auto,auto,0.3rem);
+          }
+        }
+        span:nth-of-type(4) {
+          width: 0.44rem;
+          height: 0.44rem;
+          left: 0.08rem;
+          top: 0.08rem;
+          background-color: #f9f9f9;
+          color: #00CC33;
+          text-align: center;
+          line-height: 0.44rem;
           font-size: 0.24rem;
         }
       }
       >div:nth-child(2) {
-        span {
-          line-height: .7rem;
-        }
+        font-size: 0.28rem;
+        color: #666;
+        line-height: 0.7rem;
       }
       >div:nth-child(3) {
         color: #00CC33;
-        img{
+        i{
+          display: inline-block;
           width: .28rem;
           height: .28rem;
           margin-top: .2rem;
           margin-left: 1rem;
+          margin-right: 0.2rem;
+          background: url('../assets/img/i_block.png') no-repeat center;
+          background-size: contain;
         }
       }
       >div:nth-child(4) {
-        img{
+        i{
+          display: inline-block;
           width: .31rem;
           height: .39rem;
           margin-top: .1rem;
           margin-left: .8rem;
+          background: url('../assets/img/i_copy.png') no-repeat center;
+          background-size: contain;
         }
       }
     }
@@ -303,6 +385,15 @@ import commandEditor from '@/components/common/command_editor'
       &:last-of-type {
         background-image: url('../assets/img/del-icon@3x.png');
       }
+    }
+  }
+
+  @keyframes progress {
+    from {
+      transform: rotate(-360deg);
+    }
+    to {
+      transform: rotate(-180deg);
     }
   }
 </style>
