@@ -1,5 +1,5 @@
 <template>
-  <div  class="page">
+  <div  class="page wrap">
     <mt-header class=" common-mt-header" title="添加钱包">
       <a  slot="left" v-tap="{methods:routeTo, to:'page-uwallet'}">
         <mt-button v-tap="{methods:routeTo, to:'page-uwallet'}" icon="back"></mt-button>
@@ -91,6 +91,9 @@
   }
 
   .footer {
+    position: fixed;
+    width: 100%;
+    bottom: .3rem;
     text-align: center;
   }
 .footer button{

@@ -1,5 +1,5 @@
 <template>
-  <div id="uinfo" class="page">
+  <div id="uinfo" class="page wrap">
     <mt-header class="common-mt-header" title="个人信息">
       <router-link to="/ucenter" slot="left">
         <mt-button icon="back"></mt-button>
@@ -60,7 +60,7 @@
     display: flex;
     align-items: center;
     height: .85rem;
-    border-bottom: .05rem solid #f9f9f9;
+    border-bottom: .02rem solid #ecedee;
     .item{
       width: 50%;
     }

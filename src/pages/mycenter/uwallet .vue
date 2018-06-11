@@ -1,5 +1,5 @@
 <template>
-  <div  class="page">
+  <div  class="page wrap">
     <mt-header class="common-mt-header" title="钱包">
       <a  slot="left" v-tap="{methods:routeTo, to:'page-ucenter'}">
         <mt-button icon="back"></mt-button>
@@ -9,7 +9,6 @@
         <img v-tap="{methods:routeTo, to:'page-addwallet'}" class="uwallet-right-img" src="../../assets/img/mycenter/i_nav_add.png"/>
        </a>
     </mt-header>
-
 
     <div class="uwallet-box ">
       <h1 class="uwallet-h1 mt25 f30">BTC</h1>
@@ -86,11 +85,11 @@
     }
 </script>
 
-<style type="text/css" scoped >
+<style type="text/css" lang="less" scoped >
   .uwallet-content .one{
     display: flex;
     justify-content: space-between;
-    border-bottom:.05rem solid #f9f9f9;
+    border-bottom:.02rem solid #ecedee;
     padding: 0.2rem 0rem;
   }
   .uwallet-content .one span{

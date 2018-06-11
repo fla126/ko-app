@@ -1,9 +1,9 @@
 <template>
   <div id="ucenter">
     <mt-header class="common-mt-header" title="个人中心">
-      <router-link  to="/setup" slot="right">
+        <a slot="right" v-tap="{methods:$root.routeTo, to:'page-ucenter-setup'}">
         <img class="ucenter-img" src="../assets/img/mycenter/i_right.png"/>
-      </router-link>
+        </a>
     </mt-header>
 
     <div class="common-content u-box1 mt40">
@@ -109,7 +109,7 @@ export default {
     display: flex;
     align-items: center;
     height: .85rem;
-    border-bottom: .05rem solid #f9f9f9;
+    border-bottom:.02rem solid #ecedee;
     .item:first-child{
       width: .4rem;
     }
