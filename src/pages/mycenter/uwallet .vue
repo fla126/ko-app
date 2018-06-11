@@ -10,7 +10,6 @@
        </a>
     </mt-header>
 
-
     <div class="uwallet-box ">
       <h1 class="uwallet-h1 mt25 f30">BTC</h1>
       <div class="uwallet-content w-content m-box1 mt25 f24">

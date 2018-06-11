@@ -91,6 +91,9 @@
   }
 
   .footer {
+    position: fixed;
+    width: 100%;
+    bottom: .3rem;
     text-align: center;
   }
 .footer button{
