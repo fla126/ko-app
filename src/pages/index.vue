@@ -17,22 +17,21 @@ export default {
   name:'index',
   data(){
     return {
-      
+
     }
   },
   created(){
-    
   },
   mounted(){
-    
+
   },
   updated(){
-    
+
   },
   methods:{
-    
+
   },
-  components:{    
+  components:{
     compFooter,
   }
 }

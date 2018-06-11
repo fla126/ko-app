@@ -1,9 +1,9 @@
 <template>
   <div id="ucenter">
     <mt-header class="common-mt-header" title="个人中心">
-      <router-link  to="/setup" slot="right">
+        <a slot="right" v-tap="{methods:$root.routeTo, to:'page-ucenter-setup'}">
         <img class="ucenter-img" src="../assets/img/mycenter/i_right.png"/>
-      </router-link>
+        </a>
     </mt-header>
 
     <div class="common-content u-box1 mt40">

@@ -60,18 +60,18 @@ const router = new Router({
         // { path: '',  redirect:{ name: 'page-wallet' }},
         { path: 'wallet', name:wallet.name, component: wallet },
         { path: 'command', name:command.name, component: command },
-        { path: 'ucenter', name:ucenter.name, component: ucenter },
-        { path: 'uinfo', name:uinfo.name, component: uinfo }, // 个人中心--信息
-        { path: 'message', name:message.name, component: message }, // 个人中心--消息
-        { path: 'backup', name:backup.name, component: backup }, // 个人中心--备份
-        { path: 'setup', name:setup.name, component: setup }, // 个人中心--设置
-        { path: 'record', name:record.name, component: record }, // 个人中心--记录
-        { path: 'uwallet', name:uwallet.name, component: uwallet  }, // 个人中心--钱包
-        { path: 'addwallet', name:addwallet.name, component: addwallet  }, // 个人中心--钱包
-        { path: 'help', name:help.name, component: help  }, // 个人中心--帮助
-        { path: 'about', name:about.name, component: about  }, // 个人中心--关于我们
+        { path: 'ucenter', name:ucenter.name, component: ucenter }
       ]
     },
+    { path: 'uinfo', name:uinfo.name, component: uinfo }, // 个人中心--信息
+    { path: 'message', name:message.name, component: message }, // 个人中心--消息
+    { path: 'backup', name:backup.name, component: backup }, // 个人中心--备份
+    { path: 'setup', name:setup.name, component: setup }, // 个人中心--设置
+    { path: 'record', name:record.name, component: record }, // 个人中心--记录
+    { path: 'uwallet', name:uwallet.name, component: uwallet  }, // 个人中心--钱包
+    { path: 'addwallet', name:addwallet.name, component: addwallet  }, // 个人中心--添加钱包
+    { path: 'help', name:help.name, component: help  }, // 个人中心--帮助
+    { path: 'about', name:about.name, component: about  }, // 个人中心--关于我们
       {
       path:'/command-add', //添加口令
       name: commandAdd.name,

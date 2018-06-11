@@ -1,5 +1,5 @@
 <template>
-  <div id="setup" class="page">
+  <div id="setup" class="page wrap">
     <mt-header class="common-mt-header" title="设置">
       <router-link to="/ucenter" slot="left">
         <mt-button icon="back"></mt-button>
@@ -26,7 +26,7 @@
         <mt-field class="common-mt-field"   placeholder="管理币种" v-model="captcha">
           <img class="i-search" src="../../assets/img/mycenter/i_search.png" >
         </mt-field>
-        <mt-checklist
+        <mt-checklist class="common-clear-style"
           align="right"
           v-model="value"
           :options="options">
@@ -76,6 +76,9 @@
       }
     },
     mounted(){
+      $(".common-clear-style").find(".mint-cell-wrapper:last").css('border-bottom','none')
+    },
+    created(e){
 
     },
     methods:{
@@ -89,7 +92,7 @@
     display: flex;
     align-items: center;
     height: .85rem;
-    border-bottom: .05rem solid #f9f9f9;
+    border-bottom: .02rem solid #ecedee;
     .item{
       width: 50%;
     }

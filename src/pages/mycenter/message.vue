@@ -1,5 +1,5 @@
 <template>
-  <div id="uinfo" class="page">
+  <div id="uinfo" class="page wrap">
     <mt-header class="common-mt-header" title="消息">
       <router-link to="/ucenter" slot="left">
         <mt-button icon="back"></mt-button>
@@ -26,6 +26,41 @@
     </div>
 
     <div class="w-content m-box1">
+      <div class="inner">
+        <section class="item">
+          <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
+          <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
+        </section>
+      </div>
+    </div><div class="w-content m-box1">
+      <div class="inner">
+        <section class="item">
+          <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
+          <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
+        </section>
+      </div>
+    </div><div class="w-content m-box1">
+      <div class="inner">
+        <section class="item">
+          <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
+          <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
+        </section>
+      </div>
+    </div><div class="w-content m-box1">
+      <div class="inner">
+        <section class="item">
+          <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
+          <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
+        </section>
+      </div>
+    </div><div class="w-content m-box1">
+      <div class="inner">
+        <section class="item">
+          <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
+          <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
+        </section>
+      </div>
+    </div><div class="w-content m-box1">
       <div class="inner">
         <section class="item">
           <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>

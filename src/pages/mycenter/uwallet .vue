@@ -1,5 +1,5 @@
 <template>
-  <div  class="page">
+  <div  class="page wrap">
     <mt-header class="common-mt-header" title="钱包">
       <a  slot="left" v-tap="{methods:routeTo, to:'page-ucenter'}">
         <mt-button icon="back"></mt-button>

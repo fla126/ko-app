@@ -1,6 +1,6 @@
 <template>
   <!-- 记录 -->
-  <div id="record" class="page">
+  <div id="record" class="page wrap">
     <mt-header class="common-mt-header" title="记录">
       <router-link to="/ucenter" slot="left">
         <mt-button icon="back"></mt-button>

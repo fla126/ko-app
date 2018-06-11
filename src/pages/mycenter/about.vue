@@ -1,5 +1,5 @@
 <template>
-  <div  class="page">
+  <div  class="page wrap">
     <mt-header class="all-header common-mt-header" title="关于我们">
       <router-link to="/ucenter" slot="left">
         <mt-button icon="back"></mt-button>

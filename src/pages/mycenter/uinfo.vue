@@ -1,5 +1,5 @@
 <template>
-  <div id="uinfo" class="page">
+  <div id="uinfo" class="page wrap">
     <mt-header class="common-mt-header" title="个人信息">
       <router-link to="/ucenter" slot="left">
         <mt-button icon="back"></mt-button>
