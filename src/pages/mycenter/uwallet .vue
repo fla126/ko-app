@@ -86,11 +86,11 @@
     }
 </script>
 
-<style type="text/css" scoped >
+<style type="text/css" lang="less" scoped >
   .uwallet-content .one{
     display: flex;
     justify-content: space-between;
-    border-bottom:.05rem solid #f9f9f9;
+    border-bottom:.02rem solid #ecedee;
     padding: 0.2rem 0rem;
   }
   .uwallet-content .one span{

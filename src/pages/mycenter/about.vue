@@ -7,16 +7,14 @@
     </mt-header>
 
 
-    <div  class="common-content box1 mt80">
+    <div  class="common-content box1 mt90">
       <div class="inner co-text-center">
          <img  src="../../assets/img/mycenter/i_logo.png"/>
-        <p class="f30 ft-c-gray">软件介绍</p>
+        <p class="f30 ft-c-gray mt30">软件介绍</p>
       </div>
     </div>
 
-
-
-    <div class="common-content bg-white mt40 ft-c-gray">
+    <div class="common-content bg-white mt190 ft-c-gray">
       <div class="inner">
         <div class="box-cont " >
           <div class="item"><span class="f30">用户协议</span></div>
@@ -60,7 +58,7 @@
   display: flex;
   align-items: center;
   height: .85rem;
-  border-bottom: .05rem solid #f9f9f9;
+  border-bottom: .02rem solid #ecedee;
 .item{
   width: 50%;
 }

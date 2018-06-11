@@ -53,7 +53,7 @@
     display: flex;
     align-items: center;
     height: .85rem;
-    border-bottom: .05rem solid #f9f9f9;
+    border-bottom: .02rem solid #ecedee;
   .item:first-child{
     width: .4rem;
   }
