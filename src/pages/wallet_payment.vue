@@ -62,7 +62,7 @@
 <script>
 import Vue from 'vue'
 import data from '@/api/data'
-import compTopBack from '@/components/common/top_back'
+
 import { Button } from 'mint-ui';
 
 Vue.component(Button.name, Button);
@@ -101,7 +101,7 @@ export default {
     },
   },
   components:{    
-    compTopBack,
+    
   }
 }
 

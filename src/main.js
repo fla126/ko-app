@@ -14,8 +14,12 @@ import LangEn from './lang/en' //英文包
 import LangZhCHS from './lang/zhCHS' //简体中文包
 import LangZhCHT from './lang/zhCHT' //繁体中文包
 
+import compTopBack from '@/components/common/top_back'
+
 Vue.use(vueTap)
 Vue.use(VueI18n)
+
+Vue.component(compTopBack.name, compTopBack);
 
 var vConsole = new VConsole()
 

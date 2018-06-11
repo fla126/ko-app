@@ -1,6 +1,6 @@
 <template>
   <div class="page-top">
-  	<span class="btn-back" v-tap="{methods:goBack}"></span>
+  	<span class="btn-back" v-tap="{methods:goBack}" v-if="back"></span>
     <slot></slot>
   </div>
 </template>
@@ -8,6 +8,12 @@
 
 export default {
   name:'comp-top-back',
+  props:{
+    back:{
+      type: Boolean,
+      default:true
+    },
+  },
   methods:{
   	goBack(){
       this.$router.back()
@@ -20,6 +26,10 @@ export default {
 .page-top {
   text-align: center;
   line-height: 0.5rem;
+  font-size: .36rem;
+  &.line {
+    border-bottom: 1px solid #E4E5E7;
+  }
   .btn-back {
     position: absolute;
     width: 0.5rem;

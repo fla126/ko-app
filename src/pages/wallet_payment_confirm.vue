@@ -34,7 +34,7 @@
 <script>
 import Vue from 'vue'
 import data from '@/api/data'
-import compTopBack from '@/components/common/top_back'
+
 import { Button } from 'mint-ui';
 import passwordConfirm from '@/components/common/password_confirm';
 
@@ -67,7 +67,7 @@ export default {
     }
   },
   components:{    
-    compTopBack,
+    
     passwordConfirm,
   }
 }

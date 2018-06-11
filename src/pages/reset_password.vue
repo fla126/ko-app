@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import compTopBack from '@/components/common/top_back'
+
 import Data from '@/api/data'
 
 
@@ -38,7 +38,7 @@ export default {
   methods:{
   },
   components:{    
-   compTopBack,
+   
   }
 }
 

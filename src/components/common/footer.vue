@@ -33,23 +33,25 @@ export default {
     }
   },
   mounted(){
-
+    this.setTab()
   },
   watch:{
     $route(){
-      if(this.$route.name.indexOf('wallet')>-1){
-        this.selected = 'wallet'
-      }
-      if(this.$route.name.indexOf('command')>-1){
-        this.selected = 'command'
-      }
-      if(this.$route.name.indexOf('ucenter')>-1){
-        this.selected = 'ucenter'
-      }
-
+      this.setTab()
     }
   },
   methods:{
+    setTab(){
+      if(this.$route.path.indexOf('wallet')>-1){
+        this.selected = 'wallet'
+      }
+      if(this.$route.path.indexOf('command')>-1){
+        this.selected = 'command'
+      }
+      if(this.$route.path.indexOf('ucenter')>-1){
+        this.selected = 'ucenter'
+      }
+    }
   },
 }
 

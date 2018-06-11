@@ -77,7 +77,7 @@
 <script>
 
 import data from '@/api/data'
-import compTopBack from '@/components/common/top_back'
+
 import maskLayer from '@/components/common/mask'
 
 export default {
@@ -119,7 +119,7 @@ export default {
     }
   },
   components:{    
-    compTopBack,
+    
     maskLayer,
   }
 }

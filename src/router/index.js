@@ -73,7 +73,7 @@ const router = new Router({
       ]
     },
       {
-      path:'/command-add', //口令
+      path:'/command-add', //添加口令
       name: commandAdd.name,
       component: commandAdd
     },

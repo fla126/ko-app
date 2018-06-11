@@ -1,10 +1,6 @@
 <template>
   <div  class="page">
-    <mt-header class="all-header common-mt-header" >
-      <router-link to="/command" slot="left">
-        <mt-button icon="back"></mt-button>
-      </router-link>
-    </mt-header>
+    <comp-top-back :class="'line'"></comp-top-back>
     <div class="common-content common-content-bg-gray">
       <div class="inner">
         <h1 class="f36 font-blod pt45">添加动态口令</h1>
@@ -37,13 +33,11 @@
   import Vue from 'vue'
   import { Button } from 'mint-ui';
   import { Cell } from 'mint-ui';
-  import { Header } from 'mint-ui';
   import { Field } from 'mint-ui';
   import { Checklist } from 'mint-ui';
 
 
   Vue.component(Button.name, Button);
-  Vue.component(Header.name, Header);
   Vue.component(Cell.name, Cell);
   Vue.component(Field.name, Field);
   Vue.component(Checklist.name, Checklist);
