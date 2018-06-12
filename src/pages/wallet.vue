@@ -72,7 +72,7 @@ export default {
   },
   mounted(){
     this.currencyInitSearchPos = $('#searchContainer').position().top + $('#searchContainer').height()
-    setTimeout(this.initScroll,700)
+    setTimeout(this.initScroll,1000)
   },
   watch:{
     currencySearchTopText(_new,_old){

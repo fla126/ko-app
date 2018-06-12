@@ -76,7 +76,8 @@ import { Toast } from 'mint-ui'
       setInterval(()=>{
         this.timer += 1
       },1000)
-      setTimeout(this.initScroll,700)
+      setTimeout(this.initScroll,1000)
+      //初始化倒计时进度圆环
       $('.progress').each((index,ele)=>{
         var _right = $(ele).find('.right i'), _left = $(ele).find('.left i'), _second = $(ele).data('second')
         if(_second<=15){

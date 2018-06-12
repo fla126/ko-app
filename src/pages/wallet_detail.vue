@@ -93,7 +93,7 @@ export default {
     
   },
   mounted(){
-    setTimeout(this.initScroll,700)
+    setTimeout(this.initScroll,1000)
     this.cointype = this.$route.query.type || 'btc'
     
   },
