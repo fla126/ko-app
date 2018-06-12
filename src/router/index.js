@@ -117,16 +117,7 @@ const router = new Router({
       name: walletGather.name,
       component: walletGather
     },
-    /*{
-      path: '/recordDetail/:rid',
-      name: recordDetail.name,
-      component: recordDetail
-    },
-    /*{
-      path: '/prizeResult',
-      name: prizeResult.name,
-      component: prizeResult
-    }*/
+    
   ]
 })
 

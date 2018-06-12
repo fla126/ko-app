@@ -1,29 +1,34 @@
 <template>
   <div class="page">
     <comp-top-back></comp-top-back>
-    <div class="resetpassword-form">
-      <h1 class="resetpassword-top">重置密码</h1>
+    <div class="register-form">
+      <h1 class="register-top">重置密码</h1>
       <div class="form">
-        <p><i class="mobile"></i><input type="tel" name="mobile" placeholder="输入手机号"></p>
-        <p><i class="password"></i><input type="password" name="password" placeholder="输入密码"><i class="clear-password"></i></p>
-        <p><i class="password"></i><input type="password" name="confirmPassword" placeholder="确认密码"></p>
-        <p><i class="code"></i><input type="tel" name="code" placeholder="输入验证码" maxlength="6"><mt-button type="primary" size="small">获取验证码</mt-button></p>
-        <div class="resetpassword-btn"><mt-button type="primary" size="large">重置密码</mt-button></div>
+        <p><i class="mobile"></i><input type="tel" name="mobile" v-model="account" maxlength="11" placeholder="输入手机号"></p>
+        <p><i class="password"></i><input type="password" name="password" v-model="password" maxlength="16" placeholder="输入密码,6-16位英文或数字"><i class="clear-password" v-tap="{methods:resetPW}"></i></p>
+        <p><i class="password"></i><input type="password" name="password2" v-model="password2" maxlength="16" placeholder="请再次输入密码"></p>
+        <p><i class="code"></i><input type="tel" name="code" v-model="smsCode" placeholder="请输入验证码" maxlength="6"><mt-button type="primary" size="small">获取验证码</mt-button></p>
+        <div class="register-btn"><mt-button type="primary" size="large" v-tap="{methods:register}">重置密码</mt-button></div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-
+import maskLayer from '@/components/common/mask'
 import Data from '@/api/data'
 
 
 export default {
-  name:'reset-password',
+  name:'register',
   data(){
   	return {
-  		
+  		password: "",
+      password2: "",
+      account: "",
+      smsCode: "",
+      disabled: false,
+      maskShow:false,
   	}
   },
   created(){
@@ -36,20 +41,34 @@ export default {
   	
   },
   methods:{
+    toggleAgreement(){
+      //显示用户协议
+      this.maskShow = true
+    },
+    register(args){
+      //注册处理函数
+
+    },
+    hideFunction(){
+      this.maskShow = false
+    },
+    resetPW(){
+      this.password = ''
+    }
   },
   components:{    
-   
+   maskLayer,
   }
 }
 
 </script>
 <style lang="less" scoped>
 
-.resetpassword-top {
+.register-top {
   margin-top: 0.5rem;
   font-size: 0.6rem;
 }
-.resetpassword-form {
+.register-form {
   padding-left: 0.45rem;
   padding-right: 0.45rem;
   .form {
@@ -114,7 +133,7 @@ export default {
       margin-top: 0.9rem;
     }
   }
-  .resetpassword-btn {
+  .register-btn {
     margin-top: 1.3rem;
 
   }
