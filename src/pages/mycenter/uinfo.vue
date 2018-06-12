@@ -21,14 +21,22 @@
           <div class="item"><span class="f30">钱包数量</span></div>
           <div class="item"><span class="f30">27</span></div>
         </div>
-        <div class="box-cont " >
+        <div class="box-cont " @click="isdown=!isdown" >
           <div class="item"><span class="f30">常用地址</span><img class="nav_right" src="../../assets/img/mycenter/i_question.png"/></div>
-          <div class="item"><img class="nav_right" src="../../assets/img/mycenter/i_nav_right.png"/></div>
+          <div class="item" > <img  :class="[{nav_right:true},{isdown:isdown}]" src="../../assets/img/mycenter/i_nav_right.png"/></div>
+
         </div>
+
       </div>
     </div>
-
-    <div  class="common-content bg-white mt50 ft-c-gray">
+    <transition enter-active-class="animated short fadeIn">
+        <ul v-show="isdown" class="address_ul f24 mt10" >
+          <li><span>大壳子</span><span>BTC2</span><span>dweyfwef......sd123456</span></li>
+          <li><span>大壳子</span><span>BTC2</span><span>dweyfwef......sd123456</span></li>
+          <li><span>大壳子</span><span>BTC2</span><span>dweyfwef......sd123456</span></li>
+        </ul>
+    </transition>
+    <div  class="common-content bg-white  ft-c-gray " :class="[isdown ? 'mt10' : 'mt40']">
       <div class="inner">
         <div class="box-cont " >
           <div class="item"><span class="f30 ft-c-blue">修改登录密码</span></div>
@@ -51,11 +59,30 @@
   Vue.component(Header.name, Header);
   Vue.component(Cell.name, Cell);
     export default {
-        name: "page-uinfo"
+        name: "page-uinfo",
+       data(){
+          return {
+            isdown:false,
+          }
+       },
+      methods:{
+       /* isdownFun(){
+
+        }*/
+      }
     }
 </script>
 
 <style type="text/css" lang="less" scoped >
+  img{}
+  img.isdown{
+    transform: rotate(90deg);
+    transform-origin: 25% 50%;
+    transition: transform .2s ease-in;
+  }
+
+
+
   .box-cont{
     display: flex;
     align-items: center;
@@ -74,6 +101,8 @@
     .item:nth-child(2){
       text-align: right;
       img.nav_right{
+        transform-origin: 25% 50%;
+        transition: transform .2s ease-in;
         width: .17rem;
         height: .32rem;
       }
@@ -81,6 +110,20 @@
   }
   .box-cont:last-child{
     border-bottom:0;
+  }
+
+  .address_ul{
+    padding: 0 .3rem;
+
+    li{
+      display: flex;
+      justify-content: space-between;
+
+      span{
+        line-height: .45rem;
+      }
+    }
+
   }
 
 </style>
