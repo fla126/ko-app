@@ -11,37 +11,37 @@
             <div class="progress" data-second="5"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+5)%30}}</span></div>
             <div>Sjafh3793rdkgvf</div>
             <div><i></i><span class="f36">123 456</span></div>
-            <div v-tap="{methods:setCopy}"><i></i></div>
+            <div class="btn-copy" :data-clipboard-text="'i love you '"><i></i></div>
           </li>
           <li @touchstart="showControlButton($event)" @touchend="clearLoop" v-tap="{methods:hideCP}">
             <div class="progress" data-second="18"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+18)%30}}</span></div>
             <div>Sjafh3793rdkgvf</div>
             <div><i></i><span class="f36">123 456</span></div>
-            <div v-tap="{methods:setCopy}"><i></i></div>
+            <div class="btn-copy" :data-clipboard-text="'i love you '"><i></i></div>
           </li>
           <li @touchstart="showControlButton($event)" @touchend="clearLoop" v-tap="{methods:hideCP}">
             <div class="progress" data-second="10"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+10)%30}}</span></div>
             <div>Sjafh3793rdkgvf</div>
             <div><i></i><span class="f36">123 456</span></div>
-            <div v-tap="{methods:setCopy}"><i></i></div>
+            <div class="btn-copy" :data-clipboard-text="'i love you '"><i></i></div>
           </li>
           <li @touchstart="showControlButton($event)" @touchend="clearLoop" v-tap="{methods:hideCP}">
             <div class="progress" data-second="2"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+2)%30}}</span></div>
             <div>Sjafh3793rdkgvf</div>
             <div><i></i><span class="f36">123 456</span></div>
-            <div v-tap="{methods:setCopy}"><i></i></div>
+            <div class="btn-copy" :data-clipboard-text="'i love you '"><i></i></div>
           </li>
           <li @touchstart="showControlButton($event)" @touchend="clearLoop" v-tap="{methods:hideCP}">
             <div class="progress" data-second="8"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+8)%30}}</span></div>
             <div>Sjafh3793rdkgvf</div>
             <div><i></i><span class="f36">123 456</span></div>
-            <div v-tap="{methods:setCopy}"><i></i></div>
+            <div class="btn-copy" :data-clipboard-text="'i love you '"><i></i></div>
           </li>
           <li @touchstart="showControlButton($event)" @touchend="clearLoop" v-tap="{methods:hideCP}">
             <div class="progress" data-second="25"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+25)%30}}</span></div>
             <div>Sjafh3793rdkgvf</div>
             <div><i></i><span class="f36">123 456</span></div>
-            <div v-tap="{methods:setCopy}"><i></i></div>
+            <div class="btn-copy" :data-clipboard-text="'i love you '"><i></i></div>
           </li>
         </ul>
         <div class="pb40"></div>
@@ -58,6 +58,7 @@
 </template>
 <script>
 import commandEditor from '@/components/common/command_editor'
+import ClipboardJS from 'clipboard'
 import { Toast } from 'mint-ui'
 
   export default {
@@ -76,25 +77,17 @@ import { Toast } from 'mint-ui'
       setInterval(()=>{
         this.timer += 1
       },1000)
+      this.initCountDown()
+      this.initCopy()
       setTimeout(this.initScroll,1000)
-      //初始化倒计时进度圆环
-      $('.progress').each((index,ele)=>{
-        var _right = $(ele).find('.right i'), _left = $(ele).find('.left i'), _second = $(ele).data('second')
-        if(_second<=15){
-          _right.css({'-webkit-animation-delay':-_second+'s','animation-delay':-_second+'s'})
-        } else {
-          _right.parent().addClass('full')
-          _left.css({'-webkit-animation-delay':-(_second-15)+'s','animation-delay':-(_second-15)+'s'})
-        }
-        this.startProgress(ele)
-      })
     },
     methods:{
       initScroll(){
         var self = this
         this.scroll = new IScroll('#scroll',{
           mouseWheel:true,
-          tap:true
+          tap:true,
+          click:true
         });
       },
       showControlButton(event) {
@@ -138,10 +131,34 @@ import { Toast } from 'mint-ui'
           console.log(cname)
         }
       },
-      setCopy(arg){
-        copyTextToClipboard('hahahahhahaha')
+      initCopy(){
+        //初始化复制按钮
+        var clipboard = new ClipboardJS('.btn-copy')
+        clipboard.on('success', function(e) {
+          Toast('复制内容 成功')
+          e.clearSelection();
+        });
+
+        clipboard.on('error', function(e) {
+          Toast('不能使用这种方法复制内容')
+        });
+
       },
-      startProgress(ele){
+      initCountDown(){
+        //初始化倒计时进度圆环
+        $('.progress').each((index,ele)=>{
+          var _right = $(ele).find('.right i'), _left = $(ele).find('.left i'), _second = $(ele).data('second')
+          if(_second<=15){
+            _right.css({'-webkit-animation-delay':-_second+'s','animation-delay':-_second+'s'})
+          } else {
+            _right.parent().addClass('full')
+            _left.css({'-webkit-animation-delay':-(_second-15)+'s','animation-delay':-(_second-15)+'s'})
+          }
+          this.startProgress(ele,_second)
+        })
+      },
+      startProgress(ele,second){
+        //倒计时圆环循环函数
         var _right = $(ele).find('.right'), _left = $(ele).find('.left')
         if(!_right.hasClass('full')){
           _right.addClass('active')
@@ -153,9 +170,6 @@ import { Toast } from 'mint-ui'
             _left.one('webkitAnimationEnd animationend',()=>{
               _right.removeClass('full')
               _left.removeClass('active')
-              setTimeout(()=>{
-                this.startProgress(ele)
-              },0)
             })
           })
         } else {
@@ -164,34 +178,17 @@ import { Toast } from 'mint-ui'
             _right.removeClass('full')
             _left.find('i').removeAttr('style')
             _left.removeClass('active')
-            setTimeout(()=>{
-              this.startProgress(ele)
-            },0)
           })
         }
-        
-
+        setTimeout(()=>{
+          this.startProgress(ele,0)
+        },30-second)
       }
     },
     components:{
       commandEditor,
     }
   }
-
-function copyTextToClipboard(text) { //复制到剪贴板函数
-  var textArea = document.createElement("textarea")
-  textArea.style.position = 'fixed'
-  textArea.style.top = '-100vh'
-  textArea.value = text
-  document.body.appendChild(textArea)
-  textArea.select()
-  try { var msg = document.execCommand('copy') ? '成功' : '失败'
-    Toast('复制内容 ' + msg)
-  } catch (err) {
-    Toast('不能使用这种方法复制内容')
-  }
-  document.body.removeChild(textArea)
-}
 
 </script>
 <style lang="less" scoped>

@@ -14,7 +14,7 @@
         </li>
       </ul>
       <div class="step-next" :class="{fixed:collapsed}">
-        <mt-button type="primary" size="large" v-tap="{methods:copyAddress}">复制地址</mt-button>
+        <mt-button type="primary" size="large" :class="'btn-copy'" :data-clipboard-text="address">复制地址</mt-button>
       </div>
     </div>
   </div>
@@ -23,7 +23,7 @@
 <script>
 import Vue from 'vue'
 import data from '@/api/data'
-
+import ClipboardJS from 'clipboard'
 import QRCode from 'qrcode'
 import { Toast } from 'mint-ui'
 
@@ -43,50 +43,53 @@ export default {
   },
   mounted(){
     this.cointype = this.$route.query.type || 'btc'
-    QRCode.toCanvas(document.getElementById('canvas'), this.address, {
-      color: {
-        dark: '#000',  // Black dots
-        light: '#0000' // Transparent background
-      },
-      width:Math.round(window.innerWidth*0.6)
-    }, function (error) {
-      if (error) console.error(error)
-    })
-    $('#gatherInput').focus(()=>{
-      this.collapsed = false
-    })
-    $('#gatherInput').blur(()=>{
-      setTimeout(()=>{
-        this.collapsed = true
-      },100)
-    })
+    this.initQRCode()
+    this.initCopy()
+    this.initFocusEvent()
   },
   updated(){
 
   },
   methods:{
-    copyAddress(args){
-      copyTextToClipboard(this.address)
-    }
+    initCopy(){
+      //初始化复制按钮
+      var clipboard = new ClipboardJS('.btn-copy')
+      clipboard.on('success', function(e) {
+        Toast('复制内容 成功')
+        e.clearSelection();
+      });
+
+      clipboard.on('error', function(e) {
+        Toast('不能使用这种方法复制内容')
+      });
+
+    },
+    initQRCode(){
+      //初始化二维码
+      QRCode.toCanvas(document.getElementById('canvas'), this.address, {
+        color: {
+          dark: '#000',  // Black dots
+          light: '#0000' // Transparent background
+        },
+        width:Math.round(window.innerWidth*0.6)
+      }, function (error) {
+        if (error) console.error(error)
+      })
+    },
+    initFocusEvent(){
+      $('#gatherInput').focus(()=>{
+        this.collapsed = false
+      })
+      $('#gatherInput').blur(()=>{
+        setTimeout(()=>{
+          this.collapsed = true
+        },100)
+      })
+    },
   },
   components:{
     
   }
-}
-
-function copyTextToClipboard(text) { //复制到剪贴板函数
-  var textArea = document.createElement("textarea")
-  textArea.style.position = 'fixed'
-  textArea.style.top = '-100vh'
-  textArea.value = text
-  document.body.appendChild(textArea)
-  textArea.select()
-  try { var msg = document.execCommand('copy') ? '成功' : '失败'
-    Toast('复制内容 ' + msg)
-  } catch (err) {
-    Toast('不能使用这种方法复制内容')
-  }
-  document.body.removeChild(textArea)
 }
 
 </script>
