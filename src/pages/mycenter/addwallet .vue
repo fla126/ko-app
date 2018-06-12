@@ -16,7 +16,9 @@
                <option>ETH</option>
                <option>BARK</option>
              </select>
+
          </section>
+         <div class="hr"></div>
        </div>
     </div>
 
@@ -26,11 +28,11 @@
           <h2 class="f24 mt40 ft-c-gray30">钱包名</h2>
           <input class="common-input-default f30 mt30"  placeholder="请输入要增加的信息" />
         </section>
+        <div class="hr"></div>
       </div>
     </div>
 
     <footer>
-
         <div class="common-content footer mt100">
            <div class="inner">
               <p class="f20 ft-red">提示：为了创建钱包,你需要连接高清设备。</p>
@@ -60,8 +62,12 @@
     }
 </script>
 
-<style type="text/css" scoped >
-
+<style type="text/css" lang="less" scoped >
+.common-content{
+  .hr{
+    border-top: .01rem solid #eaebec;
+  }
+}
 
 .select{
   width:100%;
@@ -87,7 +93,7 @@
 }
 
   .item{
-    border-bottom: .01rem solid #e4e5e7;
+    border-bottom: .01rem solid #fff;
   }
 
   .footer {

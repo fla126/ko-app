@@ -32,7 +32,7 @@
           <li data-type="eth">
             <div><img src="../assets/img/ETH@3x.png"><strong>ETH</strong></div>
             <div><span>646</span><br /><span>426,1234</span></div>
-          </li>  
+          </li>
           <li data-type="btc">
             <div><img src="../assets/img/BTC-alt@3x.png"><strong>BTC</strong></div>
             <div><span>266</span><br /><span>426,1234</span></div>
@@ -40,7 +40,7 @@
           <li data-type="eth">
             <div><img src="../assets/img/ETH@3x.png"><strong>ETH</strong></div>
             <div><span>646</span><br /><span>426,1234</span></div>
-          </li>  
+          </li>
           <li data-type="btc">
             <div><img src="../assets/img/BTC-alt@3x.png"><strong>BTC</strong></div>
             <div><span>266</span><br /><span>426,1234</span></div>
@@ -48,7 +48,7 @@
           <li data-type="eth">
             <div><img src="../assets/img/ETH@3x.png"><strong>ETH</strong></div>
             <div><span>646</span><br /><span>426,1234</span></div>
-          </li>  
+          </li>
         </ul>
       </div>
     </div>
@@ -72,6 +72,7 @@ export default {
   },
   mounted(){
     this.currencyInitSearchPos = $('#searchContainer').position().top + $('#searchContainer').height()
+    console.log("坐标为："+this.currencyInitSearchPos);
     setTimeout(this.initScroll,1000)
   },
   watch:{
@@ -165,7 +166,7 @@ export default {
       background-position: center;
       background-repeat: no-repeat;
       background-size: auto 100%;
-      background-image:url('../assets/img/buxianshijine@3x.png'); 
+      background-image:url('../assets/img/buxianshijine@3x.png');
       margin-bottom: -0.08rem;
     }
   }
@@ -191,7 +192,7 @@ export default {
     background: url('../assets/img/sousuo@3x.png') no-repeat center top;
     background-size: auto 0.5rem;
     &:focus {
-      
+
     }
     &.active {
       background: transparent;
