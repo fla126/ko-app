@@ -10,51 +10,173 @@
        </a>
     </mt-header>
 
-    <div class="uwallet-box ">
-      <h1 class="uwallet-h1 mt25 f30">BTC</h1>
-      <div class="uwallet-content w-content m-box1 mt25 f24">
-        <div class="inner">
-          <section class="one">
-              <span >VIVINING</span>
-              <span>V6237WTGDEIVINING</span>
-              <span><mt-button size="small" type="danger">冻结</mt-button></span>
-          </section>
-          <section class="one">
-            <span >VIVINING</span>
-            <span>V6237WTGDEIVINING</span>
-            <span><mt-button size="small" type="primary">解冻</mt-button></span>
-          </section>
-          <section class="one">
-            <span >VIVINING</span>
-            <span>V6237WTGDEIVINING</span>
-            <span><mt-button size="small" type="danger">冻结</mt-button></span>
-          </section>
+    <div class="page-main" id="scroll">
+      <section>
+            <div class="uwallet-box ">
+              <h1 class="uwallet-h1 mt25 f30">BTC</h1>
+              <div class="uwallet-content w-content m-box1 mt25 f24">
+                <div class="inner">
+                  <section class="one">
+                    <span >VIVINING</span>
+                    <span>V6237WTGDEIVINING</span>
+                    <span><mt-button size="small" type="danger">冻结</mt-button></span>
+                  </section>
+                  <section class="one">
+                    <span >VIVINING</span>
+                    <span>V6237WTGDEIVINING</span>
+                    <span><mt-button size="small" type="primary">解冻</mt-button></span>
+                  </section>
+                  <section class="one">
+                    <span >VIVINING</span>
+                    <span>V6237WTGDEIVINING</span>
+                    <span><mt-button size="small" type="danger">冻结</mt-button></span>
+                  </section>
+                </div>
+              </div>
+            </div>
+
+            <div class="uwallet-box">
+              <h1 class="uwallet-h1 mt25 f30">ETH</h1>
+              <div class="uwallet-content w-content m-box1 mt25 f24">
+                <div class="inner">
+                  <section class="one">
+                    <span >VIVINING</span>
+                    <span>V6237WTGDEIVINING</span>
+                    <span><mt-button size="small" type="danger">冻结</mt-button></span>
+                  </section>
+                  <section class="one">
+                    <span >VIVINING</span>
+                    <span>V6237WTGDEIVINING</span>
+                    <span><mt-button size="small" type="primary">解冻</mt-button></span>
+                  </section>
+                  <section class="one">
+                    <span >VIVINING</span>
+                    <span>V6237WTGDEIVINING</span>
+                    <span><mt-button size="small" type="danger">冻结</mt-button></span>
+                  </section>
+                </div>
+              </div>
+            </div>
+
+
+        <div class="uwallet-box">
+          <h1 class="uwallet-h1 mt25 f30">BARK</h1>
+          <div class="uwallet-content w-content m-box1 mt25 f24">
+            <div class="inner">
+              <section class="one">
+                <span >VIVINING</span>
+                <span>V6237WTGDEIVINING</span>
+                <span><mt-button size="small" type="danger">冻结</mt-button></span>
+              </section>
+              <section class="one">
+                <span >VIVINING</span>
+                <span>V6237WTGDEIVINING</span>
+                <span><mt-button size="small" type="primary">解冻</mt-button></span>
+              </section>
+              <section class="one">
+                <span >VIVINING</span>
+                <span>V6237WTGDEIVINING</span>
+                <span><mt-button size="small" type="danger">冻结</mt-button></span>
+              </section>
+            </div>
+          </div>
         </div>
-      </div>
+
+        <div class="uwallet-box">
+          <h1 class="uwallet-h1 mt25 f30">ETC</h1>
+          <div class="uwallet-content w-content m-box1 mt25 f24">
+            <div class="inner">
+              <section class="one">
+                <span >VIVINING</span>
+                <span>V6237WTGDEIVINING</span>
+                <span><mt-button size="small" type="danger">冻结</mt-button></span>
+              </section>
+              <section class="one">
+                <span >VIVINING</span>
+                <span>V6237WTGDEIVINING</span>
+                <span><mt-button size="small" type="primary">解冻</mt-button></span>
+              </section>
+              <section class="one">
+                <span >VIVINING</span>
+                <span>V6237WTGDEIVINING</span>
+                <span><mt-button size="small" type="danger">冻结</mt-button></span>
+              </section>
+            </div>
+          </div>
+        </div>
+        <div class="uwallet-box">
+          <h1 class="uwallet-h1 mt25 f30">ETH</h1>
+          <div class="uwallet-content w-content m-box1 mt25 f24">
+            <div class="inner">
+              <section class="one">
+                <span >VIVINING</span>
+                <span>V6237WTGDEIVINING</span>
+                <span><mt-button size="small" type="danger">冻结</mt-button></span>
+              </section>
+              <section class="one">
+                <span >VIVINING</span>
+                <span>V6237WTGDEIVINING</span>
+                <span><mt-button size="small" type="primary">解冻</mt-button></span>
+              </section>
+              <section class="one">
+                <span >VIVINING</span>
+                <span>V6237WTGDEIVINING</span>
+                <span><mt-button size="small" type="danger">冻结</mt-button></span>
+              </section>
+            </div>
+          </div>
+        </div>
+
+        <div class="uwallet-box">
+          <h1 class="uwallet-h1 mt25 f30">ETH</h1>
+          <div class="uwallet-content w-content m-box1 mt25 f24">
+            <div class="inner">
+              <section class="one">
+                <span >VIVINING</span>
+                <span>V6237WTGDEIVINING</span>
+                <span><mt-button size="small" type="danger">冻结</mt-button></span>
+              </section>
+              <section class="one">
+                <span >VIVINING</span>
+                <span>V6237WTGDEIVINING</span>
+                <span><mt-button size="small" type="primary">解冻</mt-button></span>
+              </section>
+              <section class="one">
+                <span >VIVINING</span>
+                <span>V6237WTGDEIVINING</span>
+                <span><mt-button size="small" type="danger">冻结</mt-button></span>
+              </section>
+            </div>
+          </div>
+        </div>
+
+        <div class="uwallet-box">
+          <h1 class="uwallet-h1 mt25 f30">ETH</h1>
+          <div class="uwallet-content w-content m-box1 mt25 f24">
+            <div class="inner">
+              <section class="one">
+                <span >VIVINING</span>
+                <span>V6237WTGDEIVINING</span>
+                <span><mt-button size="small" type="danger">冻结</mt-button></span>
+              </section>
+              <section class="one">
+                <span >VIVINING</span>
+                <span>V6237WTGDEIVINING</span>
+                <span><mt-button size="small" type="primary">解冻</mt-button></span>
+              </section>
+              <section class="one">
+                <span >VIVINING</span>
+                <span>V6237WTGDEIVINING</span>
+                <span><mt-button size="small" type="danger">冻结</mt-button></span>
+              </section>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
 
-    <div class="uwallet-box">
-      <h1 class="uwallet-h1 mt25 f30">ETH</h1>
-      <div class="uwallet-content w-content m-box1 mt25 f24">
-        <div class="inner">
-          <section class="one">
-            <span >VIVINING</span>
-            <span>V6237WTGDEIVINING</span>
-            <span><mt-button size="small" type="danger">冻结</mt-button></span>
-          </section>
-          <section class="one">
-            <span >VIVINING</span>
-            <span>V6237WTGDEIVINING</span>
-            <span><mt-button size="small" type="primary">解冻</mt-button></span>
-          </section>
-          <section class="one">
-            <span >VIVINING</span>
-            <span>V6237WTGDEIVINING</span>
-            <span><mt-button size="small" type="danger">冻结</mt-button></span>
-          </section>
-        </div>
-      </div>
-    </div>
+
+
 
 
   </div>
@@ -71,13 +193,20 @@
     export default {
         name: "page-uwallet",  data(){
         return {
-
+          scroll:false
         }
       },
       mounted(){
-
+        setTimeout(this.initScroll,700)
       },
         methods:{
+          initScroll(){
+            var self = this
+            this.scroll = new IScroll('#scroll',{
+              mouseWheel:true,
+              tap:true
+            });
+           },
           routeTo(args){
             this.$router.push({ name: args.to})
           }
@@ -86,6 +215,10 @@
 </script>
 
 <style type="text/css" lang="less" scoped >
+  .page-main{
+    overflow-y: hidden;
+    background-color: #F9F9F9;
+  }
   .uwallet-content .one{
     display: flex;
     justify-content: space-between;
@@ -108,10 +241,10 @@
   }
 
   .uwallet-box h1{
-    padding-left: .2rem;
+    padding-left: .3rem;
   }
   .w-content>.inner{
-    padding: 0 .2rem;
+    padding: 0 .3rem;
   }
 
   .w-content a.w-box1{
