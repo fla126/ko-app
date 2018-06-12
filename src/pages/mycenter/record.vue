@@ -6,68 +6,208 @@
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>
-    <div class="re-box">
-      <div class="inner">
-        <section class="re-top">
-          <label class=" f24 ft-c-gray">钱包</label>
-          <select class="rec-select f24">
-            <option>BTC</option>
-            <option>ETH</option>
-            <option>BARK</option>
-          </select>
-        </section>
+
+    <div class="page-main" id="scroll">
+      <div>
+          <div class="re-box">
+            <div class="inner">
+              <section class="re-top">
+                <label class=" f24 ft-c-gray">钱包</label>
+                <select class="rec-select f24">
+                  <option>BTC</option>
+                  <option>ETH</option>
+                  <option>BARK</option>
+                </select>
+              </section>
+            </div>
+          </div>
+
+          <div class="w-content m-box2 f24">
+            <div class="inner">
+               <ul >
+                 <li><img src="../../assets/img/mycenter/i_add.png"/></li>
+                 <li> <section class="w-c-center">
+                   <p>1MzziGBa7tNN.......wRcvSGZu5</p>
+                   <p>2018.04.23</p>
+                 </section>
+                 </li>
+                 <li>
+                   <span>+0.4567BTC</span>
+                 </li>
+               </ul>
+            </div>
+          </div>
+
+          <div class="w-content m-box2 f24">
+            <div class="inner">
+              <ul >
+                <li><img src="../../assets/img/mycenter/i_reduction.png"/></li>
+                <li> <section class="w-c-center">
+                  <p>1MzziGBa7tNN.......wRcvSGZu5</p>
+                  <p>2018.04.23</p>
+                </section>
+                </li>
+                <li>
+                  <span>+0.4567BTC</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="w-content m-box2 f24">
+            <div class="inner">
+              <ul >
+                <li><img src="../../assets/img/mycenter/i_error.png"/></li>
+                <li> <section class="w-c-center">
+                  <p>1MzziGBa7tNN.......wRcvSGZu5</p>
+                  <p>2018.04.23</p>
+                </section>
+                </li>
+                <li>
+                  <span>+0.4567BTC</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+        <div class="w-content m-box2 f24">
+          <div class="inner">
+            <ul >
+              <li><img src="../../assets/img/mycenter/i_error.png"/></li>
+              <li> <section class="w-c-center">
+                <p>1MzziGBa7tNN.......wRcvSGZu5</p>
+                <p>2018.04.23</p>
+              </section>
+              </li>
+              <li>
+                <span>+0.4567BTC</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="w-content m-box2 f24">
+          <div class="inner">
+            <ul >
+              <li><img src="../../assets/img/mycenter/i_error.png"/></li>
+              <li> <section class="w-c-center">
+                <p>1MzziGBa7tNN.......wRcvSGZu5</p>
+                <p>2018.04.23</p>
+              </section>
+              </li>
+              <li>
+                <span>+0.4567BTC</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="w-content m-box2 f24">
+          <div class="inner">
+            <ul >
+              <li><img src="../../assets/img/mycenter/i_error.png"/></li>
+              <li> <section class="w-c-center">
+                <p>1MzziGBa7tNN.......wRcvSGZu5</p>
+                <p>2018.04.23</p>
+              </section>
+              </li>
+              <li>
+                <span>+0.4567BTC</span>
+              </li>
+            </ul>
+          </div>
+        </div>  <div class="w-content m-box2 f24">
+        <div class="inner">
+          <ul >
+            <li><img src="../../assets/img/mycenter/i_error.png"/></li>
+            <li> <section class="w-c-center">
+              <p>1MzziGBa7tNN.......wRcvSGZu5</p>
+              <p>2018.04.23</p>
+            </section>
+            </li>
+            <li>
+              <span>+0.4567BTC</span>
+            </li>
+          </ul>
+        </div>
+      </div>  <div class="w-content m-box2 f24">
+        <div class="inner">
+          <ul >
+            <li><img src="../../assets/img/mycenter/i_error.png"/></li>
+            <li> <section class="w-c-center">
+              <p>1MzziGBa7tNN.......wRcvSGZu5</p>
+              <p>2018.04.23</p>
+            </section>
+            </li>
+            <li>
+              <span>+0.4567BTC</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+        <div class="w-content m-box2 f24">
+          <div class="inner">
+            <ul >
+              <li><img src="../../assets/img/mycenter/i_error.png"/></li>
+              <li> <section class="w-c-center">
+                <p>1MzziGBa7tNN.......wRcvSGZu5</p>
+                <p>2018.04.23</p>
+              </section>
+              </li>
+              <li>
+                <span>+0.4567BTC</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="w-content m-box2 f24">
+          <div class="inner">
+            <ul >
+              <li><img src="../../assets/img/mycenter/i_error.png"/></li>
+              <li> <section class="w-c-center">
+                <p>1MzziGBa7tNN.......wRcvSGZu5</p>
+                <p>2018.04.23</p>
+              </section>
+              </li>
+              <li>
+                <span>+0.4567BTC</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="w-content m-box2 f24">
+          <div class="inner">
+            <ul >
+              <li><img src="../../assets/img/mycenter/i_error.png"/></li>
+              <li> <section class="w-c-center">
+                <p>1MzziGBa7tNN.......wRcvSGZu5</p>
+                <p>2018.04.23</p>
+              </section>
+              </li>
+              <li>
+                <span>+0.4567BTC</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="w-content m-box2 f24">
+          <div class="inner">
+            <ul >
+              <li><img src="../../assets/img/mycenter/i_error.png"/></li>
+              <li> <section class="w-c-center">
+                <p>1MzziGBa7tNN.......wRcvSGZu5</p>
+                <p>2018.04.23</p>
+              </section>
+              </li>
+              <li>
+                <span>+0.4567BTC</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+
+
       </div>
     </div>
-
-    <div class="w-content m-box2 f24">
-      <div class="inner">
-         <ul >
-           <li><img src="../../assets/img/mycenter/i_add.png"/></li>
-           <li> <section class="w-c-center">
-             <p>1MzziGBa7tNN.......wRcvSGZu5</p>
-             <p>2018.04.23</p>
-           </section>
-           </li>
-           <li>
-             <span>+0.4567BTC</span>
-           </li>
-         </ul>
-      </div>
-    </div>
-
-    <div class="w-content m-box2 f24">
-      <div class="inner">
-        <ul >
-          <li><img src="../../assets/img/mycenter/i_reduction.png"/></li>
-          <li> <section class="w-c-center">
-            <p>1MzziGBa7tNN.......wRcvSGZu5</p>
-            <p>2018.04.23</p>
-          </section>
-          </li>
-          <li>
-            <span>+0.4567BTC</span>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="w-content m-box2 f24">
-      <div class="inner">
-        <ul >
-          <li><img src="../../assets/img/mycenter/i_error.png"/></li>
-          <li> <section class="w-c-center">
-            <p>1MzziGBa7tNN.......wRcvSGZu5</p>
-            <p>2018.04.23</p>
-          </section>
-          </li>
-          <li>
-            <span>+0.4567BTC</span>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-
   </div>
 </template>
 <script>
@@ -90,6 +230,7 @@
       return {
         captcha:'',
         value:[],
+        scroll:false,
         options : [
           {
             label: 'BTC',
@@ -110,16 +251,25 @@
       }
     },
     mounted(){
-
+      setTimeout(this.initScroll,700)
     },
     methods:{
-
-    },
+      initScroll(){
+        var self = this
+        this.scroll = new IScroll('#scroll',{
+          mouseWheel:true,
+          tap:true
+        });
+      }
+    }
   }
 
 </script>
 <style type="text/css" lang="less" scoped  >
-
+  .page-main{
+    overflow-y: hidden;
+    background-color: #F9F9F9;
+  }
   .re-box>.inner{
     padding: 0 .2rem;
   }

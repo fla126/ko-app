@@ -7,67 +7,110 @@
       <mt-button class="f30"  slot="right">全部</mt-button>
     </mt-header>
 
-    <div class="w-content m-box1">
-      <div class="inner">
+    <div class="page-main" id="scroll"> <!--content start-->
+       <div>
+        <div class="w-content m-box1">
+          <div class="inner">
+                 <section class="item">
+                      <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
+                      <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
+                 </section>
+          </div>
+        </div>
+
+        <div class="w-content m-box1">
+          <div class="inner">
+            <section class="item">
+              <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
+              <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
+            </section>
+          </div>
+        </div>
+
+        <div class="w-content m-box1">
+          <div class="inner">
+            <section class="item">
+              <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
+              <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
+            </section>
+          </div>
+        </div>
+          <div class="w-content m-box1">
+          <div class="inner">
+            <section class="item">
+              <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
+              <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
+            </section>
+          </div>
+        </div>
+          <div class="w-content m-box1">
+          <div class="inner">
+            <section class="item">
+              <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
+              <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
+            </section>
+          </div>
+        </div>
+          <div class="w-content m-box1">
+          <div class="inner">
+            <section class="item">
+              <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
+              <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
+            </section>
+          </div>
+        </div>
+          <div class="w-content m-box1">
+          <div class="inner">
+            <section class="item">
+              <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
+              <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
+            </section>
+          </div>
+        </div>
+       <div class="w-content m-box1">
+          <div class="inner">
+            <section class="item">
+              <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
+              <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
+            </section>
+          </div>
+        </div>
+
+         <div class="w-content m-box1">
+           <div class="inner">
              <section class="item">
-                  <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
-                  <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
+               <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
+               <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
              </section>
-      </div>
-    </div>
+           </div>
+         </div>
+         <div class="w-content m-box1">
+           <div class="inner">
+             <section class="item">
+               <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
+               <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
+             </section>
+           </div>
+         </div>
+         <div class="w-content m-box1">
+           <div class="inner">
+             <section class="item">
+               <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
+               <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
+             </section>
+           </div>
+         </div>
+         <div class="w-content m-box1">
+           <div class="inner">
+             <section class="item">
+               <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
+               <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
+             </section>
+           </div>
+         </div>
 
-    <div class="w-content m-box1">
-      <div class="inner">
-        <section class="item">
-          <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
-          <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
-        </section>
-      </div>
     </div>
-
-    <div class="w-content m-box1">
-      <div class="inner">
-        <section class="item">
-          <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
-          <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
-        </section>
-      </div>
-    </div><div class="w-content m-box1">
-      <div class="inner">
-        <section class="item">
-          <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
-          <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
-        </section>
-      </div>
-    </div><div class="w-content m-box1">
-      <div class="inner">
-        <section class="item">
-          <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
-          <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
-        </section>
-      </div>
-    </div><div class="w-content m-box1">
-      <div class="inner">
-        <section class="item">
-          <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
-          <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
-        </section>
-      </div>
-    </div><div class="w-content m-box1">
-      <div class="inner">
-        <section class="item">
-          <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
-          <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
-        </section>
-      </div>
-    </div><div class="w-content m-box1">
-      <div class="inner">
-        <section class="item">
-          <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
-          <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
-        </section>
-      </div>
-    </div>
+    </div> <!-- content end -->
   </div>
 </template>
 
@@ -80,11 +123,32 @@
   Vue.component(Header.name, Header);
   Vue.component(Cell.name, Cell);
     export default {
-        name: "page-msg"
+         name: "page-msg",
+         data(){
+          return {
+            scroll:false
+          }
+          },
+      mounted(){
+        setTimeout(this.initScroll,700)
+      },
+      methods:{
+        initScroll(){
+          var self = this
+          this.scroll = new IScroll('#scroll',{
+            mouseWheel:true,
+            tap:true
+          });
+        }
+      }
     }
 </script>
 
-<style type="text/css" scoped >
+<style type="text/css" lang="less" scoped >
+  .page-main{
+    overflow-y: hidden;
+    background-color: #F9F9F9;
+  }
   .m-box1,.m-box2{
     background-color:white;
   }
@@ -99,7 +163,6 @@
   }
   .m-box1 .item .left{
     font-size: .24rem;
-    font-weight: bold;
     line-height: .4rem;
   }
  .m-box1 .item .right{
