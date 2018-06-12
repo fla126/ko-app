@@ -8,55 +8,37 @@
         </div>
         <ul class="command-list unselected mt40">
           <li @touchstart="showControlButton($event)" @touchend="clearLoop" v-tap="{methods:hideCP}">
-            <div class="progress"><span></span><span class="left"></span><span class="right"></span><span>{{timer%30}}</span></div>
+            <div class="progress" data-second="5"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+5)%30}}</span></div>
             <div>Sjafh3793rdkgvf</div>
             <div><i></i><span class="f36">123 456</span></div>
             <div v-tap="{methods:setCopy}"><i></i></div>
           </li>
           <li @touchstart="showControlButton($event)" @touchend="clearLoop" v-tap="{methods:hideCP}">
-            <div class="progress"><span></span><span class="left"></span><span class="right"></span><span>{{timer%30}}</span></div>
+            <div class="progress" data-second="18"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+18)%30}}</span></div>
             <div>Sjafh3793rdkgvf</div>
             <div><i></i><span class="f36">123 456</span></div>
             <div v-tap="{methods:setCopy}"><i></i></div>
           </li>
           <li @touchstart="showControlButton($event)" @touchend="clearLoop" v-tap="{methods:hideCP}">
-            <div class="progress"><span></span><span class="left"></span><span class="right"></span><span>{{timer%30}}</span></div>
+            <div class="progress" data-second="10"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+10)%30}}</span></div>
             <div>Sjafh3793rdkgvf</div>
             <div><i></i><span class="f36">123 456</span></div>
             <div v-tap="{methods:setCopy}"><i></i></div>
           </li>
           <li @touchstart="showControlButton($event)" @touchend="clearLoop" v-tap="{methods:hideCP}">
-            <div class="progress"><span></span><span class="left"></span><span class="right"></span><span>{{timer%30}}</span></div>
+            <div class="progress" data-second="2"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+2)%30}}</span></div>
             <div>Sjafh3793rdkgvf</div>
             <div><i></i><span class="f36">123 456</span></div>
             <div v-tap="{methods:setCopy}"><i></i></div>
           </li>
           <li @touchstart="showControlButton($event)" @touchend="clearLoop" v-tap="{methods:hideCP}">
-            <div class="progress"><span></span><span class="left"></span><span class="right"></span><span>{{timer%30}}</span></div>
+            <div class="progress" data-second="8"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+8)%30}}</span></div>
             <div>Sjafh3793rdkgvf</div>
             <div><i></i><span class="f36">123 456</span></div>
             <div v-tap="{methods:setCopy}"><i></i></div>
           </li>
           <li @touchstart="showControlButton($event)" @touchend="clearLoop" v-tap="{methods:hideCP}">
-            <div class="progress"><span></span><span class="left"></span><span class="right"></span><span>{{timer%30}}</span></div>
-            <div>Sjafh3793rdkgvf</div>
-            <div><i></i><span class="f36">123 456</span></div>
-            <div v-tap="{methods:setCopy}"><i></i></div>
-          </li>
-          <li @touchstart="showControlButton($event)" @touchend="clearLoop" v-tap="{methods:hideCP}">
-            <div class="progress"><span></span><span class="left"></span><span class="right"></span><span>{{timer%30}}</span></div>
-            <div>Sjafh3793rdkgvf</div>
-            <div><i></i><span class="f36">123 456</span></div>
-            <div v-tap="{methods:setCopy}"><i></i></div>
-          </li>
-          <li @touchstart="showControlButton($event)" @touchend="clearLoop" v-tap="{methods:hideCP}">
-            <div class="progress"><span></span><span class="left"></span><span class="right"></span><span>{{timer%30}}</span></div>
-            <div>Sjafh3793rdkgvf</div>
-            <div><i></i><span class="f36">123 456</span></div>
-            <div v-tap="{methods:setCopy}"><i></i></div>
-          </li>
-          <li @touchstart="showControlButton($event)" @touchend="clearLoop" v-tap="{methods:hideCP}">
-            <div class="progress"><span></span><span class="left"></span><span class="right"></span><span>{{timer%30}}</span></div>
+            <div class="progress" data-second="25"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+25)%30}}</span></div>
             <div>Sjafh3793rdkgvf</div>
             <div><i></i><span class="f36">123 456</span></div>
             <div v-tap="{methods:setCopy}"><i></i></div>
@@ -96,6 +78,13 @@ import { Toast } from 'mint-ui'
       },1000)
       setTimeout(this.initScroll,700)
       $('.progress').each((index,ele)=>{
+        var _right = $(ele).find('.right i'), _left = $(ele).find('.left i'), _second = $(ele).data('second')
+        if(_second<=15){
+          _right.css({'-webkit-animation-delay':-_second+'s','animation-delay':-_second+'s'})
+        } else {
+          _right.parent().addClass('full')
+          _left.css({'-webkit-animation-delay':-(_second-15)+'s','animation-delay':-(_second-15)+'s'})
+        }
         this.startProgress(ele)
       })
     },
@@ -153,17 +142,33 @@ import { Toast } from 'mint-ui'
       },
       startProgress(ele){
         var _right = $(ele).find('.right'), _left = $(ele).find('.left')
-        _right.addClass('active')
-        _right.one('animationend',()=>{
-          _left.addClass('active')
-          _left.one('animationend',()=>{
+        if(!_right.hasClass('full')){
+          _right.addClass('active')
+          _right.one('webkitAnimationEnd animationend',()=>{
             _right.removeClass('active')
+            _right.find('i').removeAttr('style')
+            _right.addClass('full')
+            _left.addClass('active')
+            _left.one('webkitAnimationEnd animationend',()=>{
+              _right.removeClass('full')
+              _left.removeClass('active')
+              setTimeout(()=>{
+                this.startProgress(ele)
+              },0)
+            })
+          })
+        } else {
+          _left.addClass('active')
+          _left.one('webkitAnimationEnd animationend',()=>{
+            _right.removeClass('full')
+            _left.find('i').removeAttr('style')
             _left.removeClass('active')
             setTimeout(()=>{
               this.startProgress(ele)
             },0)
           })
-        })
+        }
+        
 
       }
     },
@@ -284,17 +289,19 @@ function copyTextToClipboard(text) { //复制到剪贴板函数
           border-radius: 50%;
         }
         span:nth-of-type(2),span:nth-of-type(3) {
-          &:after {
+          i {
             position: absolute;
-            content: '';
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            background-color: #ddd;            
+            background-color: #ddd;
           }
-          &.active:after{
+          &.active i{
             animation: progress 15000ms linear;
             animation-fill-mode: forwards;
+          }
+          &.full i{
+            transform: rotate(-180deg);
           }
         }
         span:nth-of-type(1) {
@@ -302,13 +309,13 @@ function copyTextToClipboard(text) { //复制到剪贴板函数
         }
         span:nth-of-type(2) {
           clip:rect(0,0.3rem,auto,0);
-          &:after {
+          i {
             clip:rect(0,0.3rem,auto,0);
           }
         }
         span:nth-of-type(3) {
           clip:rect(0,auto,auto,0.3rem);
-          &:after {
+          i {
             clip:rect(0,auto,auto,0.3rem);
           }
         }
