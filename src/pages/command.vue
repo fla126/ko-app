@@ -315,7 +315,7 @@ function copyTextToClipboard(text) { //复制到剪贴板函数
         span:nth-of-type(4) {
           width: 0.48rem;
           height: 0.48rem;
-          left: 0.044rem;
+          left: 0.06rem;
           top: 0.06rem;
           background-color: #f9f9f9;
           color: #00CC33;
