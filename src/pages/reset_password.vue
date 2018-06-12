@@ -20,7 +20,7 @@ import Data from '@/api/data'
 
 
 export default {
-  name:'register',
+  name:'reset-password',
   data(){
   	return {
   		password: "",
