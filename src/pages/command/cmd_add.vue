@@ -4,17 +4,17 @@
     <div class="page-main">
       <ul class="addcmd-detail">
         <li>
-          <h1>添加动态口令</h1>
-          <p>账号名</p>
-          <p><input id="account" placeholder="请输入账号名" type="text" v-model="account"></p>
+          <h1>{{$t('message.cmd.addPasscode')}}</h1>
+          <p>{{$t('message.cmd.account')}}</p>
+          <p><input id="account" :placeholder="$t('message.cmd.inputAmount')" type="text" v-model="account"></p>
         </li>
         <li>
-          <p>钥匙</p>
-          <p><input id="key" placeholder="请输入钥匙" type="text" v-model="key"></p>
+          <p>{{$t('message.cmd.privateKey')}}</p>
+          <p><input id="key" :placeholder="$t('message.cmd.inputKey')" type="text" v-model="key"></p>
         </li>
       </ul>
       <div class="step-next" :class="{fixed:collapsed}">
-        <mt-button type="primary" size="large" v-tap="{methods:addCmd}">添加</mt-button>
+        <mt-button type="primary" size="large" v-tap="{methods:addCmd}">{{$t('message.cmd.add')}}</mt-button>
       </div>
     </div>
   </div>

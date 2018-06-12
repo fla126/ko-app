@@ -34,7 +34,7 @@ Vue.prototype.$ajax = $ajax
 Vue.config.productionTip = false
 
 const i18n = new VueI18n({
-  locale: 'zhCHS',
+  locale: 'en',
   messages: {
     'en': LangEn,
     'zhCHS': LangZhCHS,

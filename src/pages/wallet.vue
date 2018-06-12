@@ -3,18 +3,18 @@
     <comp-wallet-top></comp-wallet-top>
     <transition enter-active-class="animated short fadeIn">
       <div class="search-container fixed" v-show="isSearchFixed">
-        <input type="search" :class="{active:currencySearchText.length}" :placeholder="$t('message.currencySearch')" v-model="currencySearchTopText">
+        <input type="search" :class="{active:currencySearchText.length}" :placeholder="$t('message.wallet.currencySearch')" v-model="currencySearchTopText">
       </div>
     </transition>
     <div class="page-main" id="scroll" @click="setBlur($event)">
       <div>
         <div class="amount-container">
-          <h2>{{$t('message.amount')}}</h2>
+          <h2>{{$t('message.wallet.amount')}}</h2>
           <h1>45658<span> BTC </span><i></i></h1>
           <p>≈ ￥512,1464.22</p>
         </div>
         <div class="search-container" id="searchContainer">
-          <input type="search" :class="{active:currencySearchText.length, hidden:isSearchFixed}"  :placeholder="$t('message.currencySearch')" v-model="currencySearchText">
+          <input type="search" :class="{active:currencySearchText.length, hidden:isSearchFixed}"  :placeholder="$t('message.wallet.currencySearch')" v-model="currencySearchText">
         </div>
         <ul class="currency-list" v-tap="{methods:goWalletDetail}">
           <li data-type="btc">

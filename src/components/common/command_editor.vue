@@ -2,10 +2,10 @@
   <mask-layer :isgray="true" :show="show" @hide="hideFunction">
     <div class="mconfirm-layer" >
       <i class="close" v-tap="{methods:hideFunction}">×</i>
-      <h3>修改名称</h3>
+      <h3>{{$t('message.cmd.modifyName')}}</h3>
       <input type="text" id="cname" v-model="commandName" @keydown="checkInput($event)" @focus="focusAc($event)">
       <div class="step-next">
-        <mt-button type="primary" size="large" v-tap="{methods:mconfirm}">确认</mt-button>
+        <mt-button type="primary" size="large" v-tap="{methods:mconfirm}">{{$t('message.cmd.ok')}}</mt-button>
       </div>
     </div>
   </mask-layer>

@@ -2,10 +2,10 @@
   <mask-layer :isgray="true" :show="show" @hide="hideFunction">
     <div class="pwconfirm-layer" >
       <i class="close" v-tap="{methods:hideFunction}">×</i>
-      <h3>请输入付款密码</h3>
+      <h3>{{$t('message.walletDetail.payPassword')}}</h3>
       <input type="password"  v-model="password" @keydown="checkInput($event)" v-focus>
       <div class="step-next">
-        <mt-button type="primary" size="large" v-tap="{methods:pwconfirm}">确认</mt-button>
+        <mt-button type="primary" size="large" v-tap="{methods:pwconfirm}">{{$t('message.walletDetail.ok')}}</mt-button>
       </div>
     </div>
   </mask-layer>

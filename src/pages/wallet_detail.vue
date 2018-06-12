@@ -8,12 +8,12 @@
         <h1>45658<span> {{cointype | uppercase}} </span></h1>
         <p>≈ ￥512,1464.22</p>
         <ul class="actions">
-          <li v-tap="{methods:$root.routeTo, to:'page-wallet-payment',params:{type:cointype}}"><i></i>转账</li>
+          <li v-tap="{methods:$root.routeTo, to:'page-wallet-payment',params:{type:cointype}}"><i></i>{{$t('message.walletDetail.send')}}</li>
           <li><span class="line"></span></li>
-          <li v-tap="{methods:$root.routeTo, to:'page-wallet-gather',params:{type:cointype}}"><i></i>收款</li>
+          <li v-tap="{methods:$root.routeTo, to:'page-wallet-gather',params:{type:cointype}}"><i></i>{{$t('message.walletDetail.receive')}}</li>
         </ul>
       </div>
-      <div class="trans-records-title">最新交易记录</div>
+      <div class="trans-records-title">{{$t('message.walletDetail.lastRecord')}}</div>
       <div class="trans-records-scroll" id="scroll">
         <ul class="trans-records-list">
           <li class="in">
@@ -29,7 +29,7 @@
           <li class="error">
             <div><i></i></div>
             <div>1MzziGBa7tNN.......wRcvSGZu5<br /><span>2018.04.23</span></div>
-            <div><span>打包失败</span></div>
+            <div><span>{{$t('message.walletDetail.zipedFailed')}}</span></div>
           </li>
           <li class="in">
             <div><i></i></div>
@@ -44,7 +44,7 @@
           <li class="error">
             <div><i></i></div>
             <div>1MzziGBa7tNN.......wRcvSGZu5<br /><span>2018.04.23</span></div>
-            <div><span>打包失败</span></div>
+            <div><span>{{$t('message.walletDetail.zipedFailed')}}</span></div>
           </li>
           <li class="in">
             <div><i></i></div>
@@ -59,7 +59,7 @@
           <li class="error">
             <div><i></i></div>
             <div>1MzziGBa7tNN.......wRcvSGZu5<br /><span>2018.04.23</span></div>
-            <div><span>打包失败</span></div>
+            <div><span>{{$t('message.walletDetail.zipedFailed')}}</span></div>
           </li>
         </ul>
       </div>

@@ -4,38 +4,40 @@
     <div class="page-main">
       <ul class="payment-detail"  v-if="cointype=='btc'">
         <li>
-          <h1>{{cointype | uppercase}}转账</h1>
-          <p>收款人钱包地址</p>
+          <h1 v-if="$i18n.locale=='en'">{{$t('message.walletDetail.send')}} {{cointype | uppercase}}</h1>
+          <h1 v-if="$i18n.locale=='zhCHS'">{{cointype | uppercase}}{{$t('message.walletDetail.send')}}</h1>
+          <p>{{$t('message.walletDetail.receiverAddress')}}</p>
           <p>1MzziGBa7tNNzMwVJMPEjAfM1wRcvSGZu5<i class="scanning" v-tap="{methods:scanning}"></i></p>
         </li>
         <li>
-          <p>转账金额</p>
+          <p>{{$t('message.walletDetail.amount')}}</p>
+          <p><input type="tel" :placeholder="$t('message.walletDetail.maxUsableAmount')+135.12342"></p>
+        </li>
+        <li>
+          <p>{{$t('message.walletDetail.miningFee')}}</p>
           <p><input type="tel"></p>
         </li>
         <li>
-          <p>矿工费</p>
-          <p><input type="tel"></p>
-        </li>
-        <li>
-          <h3>合计<span>12.24568 BTC</span></h3>
+          <h3>{{$t('message.walletDetail.total')}}<span>12.24568 BTC</span></h3>
         </li>
       </ul>
       <ul class="payment-detail"  v-else>
         <li>
-          <h1>{{cointype | uppercase}}转账</h1>
-          <p>收款人钱包地址</p>
+          <h1 v-if="$i18n.locale=='en'">{{$t('message.walletDetail.send')}} {{cointype | uppercase}}</h1>
+          <h1 v-if="$i18n.locale=='zhCHS'">{{cointype | uppercase}}{{$t('message.walletDetail.send')}}</h1>
+          <p>{{$t('message.walletDetail.receiverAddress')}}</p>
           <p>1MzziGBa7tNNzMwVJMPEjAfM1wRcvSGZu5<i class="scanning" v-tap="{methods:scanning}"></i></p>
         </li>
         <li>
-          <p>转账金额</p>
+          <p>{{$t('message.walletDetail.amount')}}</p>
+          <p><input type="tel" :placeholder="$t('message.walletDetail.maxUsableAmount')+' '+135.12342"></p>
+        </li>
+        <li>
+          <p>{{$t('message.walletDetail.tag')}}</p>
           <p><input type="tel"></p>
         </li>
         <li>
-          <p>标签</p>
-          <p><input type="tel"></p>
-        </li>
-        <li>
-          <p>矿工费<i class="collapse" :class="{active:!collapsed}" v-tap="{methods:collapse}"></i></p>
+          <p>{{$t('message.walletDetail.miningFee')}}<i class="collapse" :class="{active:!collapsed}" v-tap="{methods:collapse}"></i></p>
           <ul v-show="!collapsed">
             <li>
               <p><input type="tel" placeholder="Gas price："><span>gwei</span></p>
@@ -44,16 +46,16 @@
               <p><input type="tel" placeholder="Gas number："></p>
             </li>
             <li>
-              <textarea placeholder="十六进制数据" res></textarea>
+              <textarea :placeholder="$t('message.walletDetail.sixteenDecimalData')"></textarea>
             </li>
           </ul>
         </li>
         <li>          
-          <h3>合计<span>12.24568 BTC</span></h3>
+          <h3>{{$t('message.walletDetail.total')}}<span>12.24568 BTC</span></h3>
         </li>
       </ul>
       <div class="step-next" :class="{fixed:collapsed && isBlur}">
-        <mt-button type="primary" size="large" v-tap="{methods:$root.routeTo, to:'page-wallet-payment-confirm',params:{type:cointype}}">下一步</mt-button>
+        <mt-button type="primary" size="large" v-tap="{methods:$root.routeTo, to:'page-wallet-payment-confirm',params:{type:cointype}}">{{$t('message.walletDetail.next')}}</mt-button>
       </div>
     </div>
   </div>

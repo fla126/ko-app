@@ -5,26 +5,27 @@
       
       <ul class="pament-detail">
         <li>
-          <h1>{{cointype | uppercase}}转账确认</h1>
-          <p>收款方地址</p>
+          <h1 v-if="$i18n.locale=='en'">{{$t('message.walletDetail.review')}} {{cointype | uppercase}}</h1>
+          <h1 v-if="$i18n.locale=='zhCHS'">{{cointype | uppercase}}{{$t('message.walletDetail.review')}}</h1>
+          <p>{{$t('message.walletDetail.receiverAddress')}}</p>
           <p>1MzziGBa7tNNzMwVJMPEjAfM1wRcvSGZu5</p>
         </li>
         <li>
-          <p>付款方地址</p>
+          <p>{{$t('message.walletDetail.senderAddress')}}</p>
           <p>1MzziGBa7tNNzMwVJMPEjAfM1wRcvSGZu5</p>
         </li>
         <li>
-          <p>矿工费</p>
+          <p>{{$t('message.walletDetail.miningFee')}}</p>
           <p>12.04568</p>
         </li>
         <li>
-          <div>转账金额<span>0.002456 BTC</span></div>
-          <div>矿工费<span>0.002456 BTC</span></div>
-          <h3>合计<span>12.24568 BTC</span></h3>
+          <div>{{$t('message.walletDetail.amount')}}<span>0.002456 BTC</span></div>
+          <div>{{$t('message.walletDetail.miningFee')}}<span>0.002456 BTC</span></div>
+          <h3>{{$t('message.walletDetail.total')}}<span>12.24568 BTC</span></h3>
         </li>
       </ul>      
       <div class="step-next">
-        <mt-button type="primary" size="large" v-tap="{methods:pwconfirm}">确定</mt-button>
+        <mt-button type="primary" size="large" v-tap="{methods:pwconfirm}">{{$t('message.walletDetail.ok')}}</mt-button>
       </div>
     </div>
     <password-confirm :show="showPWCLayer" :hideFunction="hidePWCLayer"></password-confirm>

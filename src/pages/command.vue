@@ -1,10 +1,10 @@
 <template>
   <div class="page">
-    <comp-top-back :class="'line'" :back="false">口令</comp-top-back>
+    <comp-top-back :class="'line'" :back="false">{{$t('message.cmd.passcode')}}</comp-top-back>
     <div class="page-main" id="scroll">
       <div>
         <div class="command-container" v-tap="{methods:$root.routeTo, to:'page-command-add'}">
-          <h1><i></i><span>二次身份验证</span><i>+ 添加</i></h1>
+          <h1><i></i><span>{{$t('message.cmd.twofa')}}</span><i>+ {{$t('message.cmd.add')}}</i></h1>
         </div>
         <ul class="command-list unselected mt40">
           <li @touchstart="showControlButton($event)" @touchend="clearLoop" v-tap="{methods:hideCP}">
@@ -47,8 +47,8 @@
         <div class="pb40"></div>
         <transition enter-active-class="animated short fadeIn" leave-active-class="animated short fadeOut">
         <ul class="control-panel" id="controlPanel" v-show="showCP">
-          <li v-tap="{methods:showRecordEditor}">编辑</li>
-          <li v-tap="{methods:delRecord}">删除</li>
+          <li v-tap="{methods:showRecordEditor}">{{$t('message.cmd.edit')}}</li>
+          <li v-tap="{methods:delRecord}">{{$t('message.cmd.delete')}}</li>
         </ul>
         </transition>
       </div>
@@ -115,8 +115,7 @@ import { Toast } from 'mint-ui'
       delRecord(args){ //删除操作
         var self = this
         this.hideCP()
-        if(confirm('确定要删除此项口令吗？')){
-          var self = this
+        if(confirm(this.$t('message.cmd.deleteConfirm'))){
           var _tar = $('#controlPanel').data('tar')
           _tar.slideUp(function(){
             this.remove()
@@ -133,14 +132,15 @@ import { Toast } from 'mint-ui'
       },
       initCopy(){
         //初始化复制按钮
+        var self = this
         var clipboard = new ClipboardJS('.btn-copy')
         clipboard.on('success', function(e) {
-          Toast('复制内容 成功')
+          Toast(self.$t('message.walletDetail.copySuccess'))
           e.clearSelection();
         });
 
         clipboard.on('error', function(e) {
-          Toast('不能使用这种方法复制内容')
+          Toast(self.$t('message.walletDetail.copyFailure'))
         });
 
       },

@@ -4,9 +4,10 @@
     <div class="page-main">
       <ul class="pament-detail">
         <li>
-          <h1>{{cointype | uppercase}}收款<span>{{cointype | uppercase}}01</span></h1>
-          <p>收款金额</p>
-          <p><input id="gatherInput" placeholder="请输入收款金额" type="tel" v-model="amount"></p>
+          <h1 v-if="$i18n.locale=='en'">{{$t('message.walletDetail.receive')}} {{cointype | uppercase}}<span>{{cointype | uppercase}}01</span></h1>
+          <h1 v-if="$i18n.locale=='zhCHS'">{{cointype | uppercase}}{{$t('message.walletDetail.receive')}}<span>{{cointype | uppercase}}01</span></h1>
+          <p>{{$t('message.walletDetail.receiveAmount')}}</p>
+          <p><input id="gatherInput" :placeholder="$t('message.walletDetail.enterAmount')" type="tel" v-model="amount"></p>
         </li>
         <li class="text-center">
           <p>{{address}}</p>
@@ -14,7 +15,7 @@
         </li>
       </ul>
       <div class="step-next" :class="{fixed:collapsed}">
-        <mt-button type="primary" size="large" :class="'btn-copy'" :data-clipboard-text="address">复制地址</mt-button>
+        <mt-button type="primary" size="large" :class="'btn-copy'" :data-clipboard-text="address">{{$t('message.walletDetail.copyAddress')}}</mt-button>
       </div>
     </div>
   </div>
@@ -53,14 +54,15 @@ export default {
   methods:{
     initCopy(){
       //初始化复制按钮
+      var self = this
       var clipboard = new ClipboardJS('.btn-copy')
       clipboard.on('success', function(e) {
-        Toast('复制内容 成功')
+        Toast(self.$t('message.walletDetail.copySuccess'))
         e.clearSelection();
       });
 
       clipboard.on('error', function(e) {
-        Toast('不能使用这种方法复制内容')
+        Toast(self.$t('message.walletDetail.copyFailure'))
       });
 
     },
