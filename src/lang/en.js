@@ -13,6 +13,13 @@ module.exports={
     wallet:{
 	    amount:'Total',
 	    currencySearch:'Search Token',
+      frozen:'Frozen',
+      unfrozen:'Unfrozen',
+      token:'Token',
+      walletName:'Wallet Name',
+      add:'Add',
+      topInfo:'Tip: You need get Tinkey connected befor creating a new  wallet.',
+      addWallet:'Add Wallet'
 	},
 	walletDetail:{
 	    send:'Send',
@@ -86,15 +93,6 @@ module.exports={
     },
     rec:{
       record:'Record'
-    },
-    wallet:{
-      frozen:'Frozen',
-      unfrozen:'Unfrozen',
-      token:'Token',
-      walletName:'Wallet Name',
-      add:'Add',
-      topInfo:'Tip: You need get Tinkey connected befor creating a new  wallet.',
-      addWallet:'Add Wallet'
     },
     backup:{
       backupName:'Backup',

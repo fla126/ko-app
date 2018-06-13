@@ -11,8 +11,15 @@ module.exports={
     	disconnect:'Tinkey未连接'
     },
     wallet:{
-        amount:'总额',
-        currencySearch:'币种搜索',
+      amount:'总额',
+      currencySearch:'币种搜索',
+      frozen:'冻结',
+      unfrozen:'解冻',
+      token:'币种',
+      walletName:'钱包名',
+      add:'添加',
+      topInfo:'提示：为了创建钱包，你需要连接Tinkey',
+      addWallet:'添加钱包'
     },
     walletDetail:{
         send:'转账',
@@ -85,15 +92,6 @@ module.exports={
     },
     rec:{/* 记录 */
       record:'记录'
-    },
-    wallet:{
-      frozen:'冻结',
-      unfrozen:'解冻',
-      token:'币种',
-      walletName:'钱包名',
-      add:'添加',
-      topInfo:'提示：为了创建钱包，你需要连接Tinkey',
-      addWallet:'添加钱包'
     },
     backup:{
       backupName:'备份',
