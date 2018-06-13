@@ -1,5 +1,6 @@
 module.exports={
   message: {
+    start:"马上开始",
     compFooter:{
     	wallet:"钱包",
     	command:"口令",

@@ -8,7 +8,7 @@
         <p><i class="password"></i><input type="password" name="password" v-model="password" maxlength="16" placeholder="输入密码,6-16位英文或数字"><i class="clear-password" v-tap="{methods:resetPW}"></i></p>
         <p><i class="password"></i><input type="password" name="password2" v-model="password2" maxlength="16" placeholder="请再次输入密码"></p>
         <p><i class="code"></i><input type="tel" name="code" v-model="smsCode" placeholder="请输入验证码" maxlength="6"><mt-button type="primary" size="small">获取验证码</mt-button></p>
-        <div class="register-btn"><mt-button type="primary" size="large" v-tap="{methods:register}">重置密码</mt-button></div>
+        <div class="register-btn"><mt-button type="primary" size="large" v-tap="{methods:register}">确定</mt-button></div>
       </div>
     </div>
   </div>

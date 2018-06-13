@@ -1,12 +1,12 @@
 <template>
   <div class="wrap">
-    <mt-swipe :auto="0" :continuous="false" class="guide" @change="handleChange">
+    <mt-swipe :auto="0" :continuous="false" class="guide" :class="{en:$i18n.locale=='en'}"  @change="handleChange">
       <mt-swipe-item></mt-swipe-item>
       <mt-swipe-item></mt-swipe-item>
       <mt-swipe-item></mt-swipe-item>
     </mt-swipe>
     <transition enter-active-class="animated fadeInUp">
-      <mt-button type="primary" size="large" v-show="isBtn" v-tap="{methods:start}">马上开始</mt-button>
+      <mt-button type="primary" size="large" v-show="isBtn" v-tap="{methods:start}">{{$t('message.start')}}</mt-button>
     </transition>
   </div>
 </template>
@@ -76,6 +76,17 @@ export default {
   }
   &:nth-of-type(3) {
     background-image: url('../assets/img/guide_3.jpg');
+  }
+}
+.guide.en .mint-swipe-item {
+  &:nth-of-type(1) {
+    background-image: url('../assets/img/guide_en_1.jpg');
+  }
+  &:nth-of-type(2) {
+    background-image: url('../assets/img/guide_en_2.jpg');
+  }
+  &:nth-of-type(3) {
+    background-image: url('../assets/img/guide_en_3.jpg');
   }
 }
 .guide .mint-swipe-indicators {

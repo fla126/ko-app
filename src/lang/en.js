@@ -1,5 +1,6 @@
 module.exports={
   message: {
+  	start:"Let's Start",
     compFooter:{
     	wallet:"Wallet",
     	command:"Passcode",
