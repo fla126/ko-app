@@ -34,6 +34,36 @@ a:hover,input:hover,button:hover,textarea:hover,a:focus,input:focus,button:focus
     background-color: #fff;
   }
 }
+
+.tip {
+  position: fixed;
+  z-index: 99999;
+  left: 0;
+  right: 0;
+  top: 0;
+  padding: 0.2rem 0.3rem;
+  font-size: 0.28rem;
+  text-align: center;
+  transform: translateY(-100%);
+  transition: transform 500ms;
+  &.tip-success {
+    color: #3c763d;
+    background-color: #dff0d8;
+  }
+  &.tip-info {
+    color: #31708f;
+    background-color: #d9edf7;
+  }
+  &.tip-warning {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+  }
+  &.tip-danger {
+    color: #a94442;
+    background-color: #f2dede;
+  }
+}
+
 .pull-left{float: left;}
 .pull-right{float: right;}
 .clearfix:before, .clearfix:after{display: table;content: " ";}

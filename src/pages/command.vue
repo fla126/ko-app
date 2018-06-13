@@ -6,7 +6,7 @@
         <div class="command-container" v-tap="{methods:$root.routeTo, to:'page-command-add'}">
           <h1><i></i><span>{{$t('message.cmd.twofa')}}</span><i>+ {{$t('message.cmd.add')}}</i></h1>
         </div>
-        <ul class="command-list unselected mt40">
+        <ul class="command-list unselected mt40" id="commandList">
           <li @touchstart="showControlButton($event)" @touchend="clearLoop" v-tap="{methods:hideCP}">
             <div class="progress" data-second="5"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+5)%30}}</span></div>
             <div>Sjafh3793rdkgvf</div>
@@ -59,7 +59,7 @@
 <script>
 import commandEditor from '@/components/common/command_editor'
 import ClipboardJS from 'clipboard'
-import { Toast } from 'mint-ui'
+import { Toast,MessageBox  } from 'mint-ui'
 
   export default {
     name:'page-command',
@@ -115,13 +115,22 @@ import { Toast } from 'mint-ui'
       delRecord(args){ //删除操作
         var self = this
         this.hideCP()
-        if(confirm(this.$t('message.cmd.deleteConfirm'))){
-          var _tar = $('#controlPanel').data('tar')
-          _tar.slideUp(function(){
-            this.remove()
-            self.scroll.refresh()
-          })
-        }
+        MessageBox({
+          title:this.$t('message.cmd.confirmTitle'),
+          message:this.$t('message.cmd.deleteConfirm'),
+          showCancelButton: true,
+          showConfirmButton:true,
+          cancelButtonText:this.$t('message.cmd.no'),
+          confirmButtonText:this.$t('message.cmd.yes'),
+        }).then(action => {
+          if(action=='confirm'){
+            var _tar = $('#controlPanel').data('tar')
+            _tar.slideUp(function(){
+              this.remove()
+              self.scroll.refresh()
+            })
+          }
+        })
       },
       hideEditorLayer(cname){ //隐藏编辑对话框
         this.showEditorLayer = false
@@ -183,7 +192,7 @@ import { Toast } from 'mint-ui'
         setTimeout(()=>{
           this.startProgress(ele,0)
         },30-second)
-      }
+      },
     },
     components:{
       commandEditor,

@@ -3,7 +3,8 @@
     <comp-wallet-top></comp-wallet-top>
     <transition enter-active-class="animated short fadeIn">
       <div class="search-container fixed" v-show="isSearchFixed">
-        <input type="search" :class="{active:currencySearchText.length}" :placeholder="$t('message.wallet.currencySearch')" v-model="currencySearchTopText">
+        <input type="search" :class="{active:searchText.length}" :placeholder="$t('message.wallet.currencySearch')" v-model="searchTopText" @keydown="hideKeyboard($event)">
+        <i class="close" v-tap="{methods:delSearch}" v-show="searchText.length>0">+</i>
       </div>
     </transition>
     <div class="page-main" id="scroll" @click="setBlur($event)">
@@ -14,7 +15,8 @@
           <p>≈ ￥<template v-if="amountShow">512,1464.22</template><template v-else>****</template></p>
         </div>
         <div class="search-container" id="searchContainer">
-          <input type="search" :class="{active:currencySearchText.length, hidden:isSearchFixed}"  :placeholder="$t('message.wallet.currencySearch')" v-model="currencySearchText">
+          <input type="search" :class="{active:searchText.length, hidden:isSearchFixed}"  :placeholder="$t('message.wallet.currencySearch')" v-model="searchText" @keydown="hideKeyboard($event)">
+          <i class="close" v-tap="{methods:delSearch}" v-show="searchText.length>0">+</i>
         </div>
         <ul class="currency-list" v-tap="{methods:goWalletDetail}">
           <li data-type="btc">
@@ -39,10 +41,10 @@ export default {
   name:'page-wallet',
   data(){
     return {
-      currencySearchText:'',
-      currencySearchTopText:'',
-      currencyInitSearchPos:0,
-      currencyCurrentSearchPos:0,
+      searchText:'',
+      searchTopText:'',
+      initSearchPos:0,
+      currentSearchPos:0,
       scroll:false,
       amountShow:true,
     }
@@ -51,17 +53,17 @@ export default {
     this.getAmountShowSetting()
   },
   mounted(){
-    this.currencyInitSearchPos = $('#searchContainer').position().top + $('#searchContainer').height()
+    this.initSearchPos = $('#searchContainer').position().top + $('#searchContainer').height()
     setTimeout(this.initScroll,1000)
   },
   watch:{
-    currencySearchTopText(_new,_old){
-      this.currencySearchText = _new
+    searchTopText(_new,_old){
+      this.searchText = _new
     }
   },
   computed:{
     isSearchFixed(){
-      return Math.abs(this.currencyCurrentSearchPos)>this.currencyInitSearchPos ? true:false
+      return Math.abs(this.currentSearchPos)>this.initSearchPos ? true:false
     }
   },
   methods:{
@@ -84,10 +86,10 @@ export default {
         probeType:2,
       });
       this.scroll.on('scroll',function(){
-        self.currencyCurrentSearchPos = this.y
+        self.currentSearchPos = this.y
       })
       this.scroll.on('scrollEnd',function(){
-        self.currencyCurrentSearchPos = this.y
+        self.currentSearchPos = this.y
       })
     },
     setBlur(e){
@@ -95,10 +97,18 @@ export default {
         $('.search-container input').blur()
       }
     },
+    delSearch(){
+      this.searchText = ''
+    },
     goWalletDetail(args){
       var _type = $(args.event.target).parents('li').data('type')
       this.$router.push({ name: 'page-wallet-detail', query:{type:_type}})
     },
+    hideKeyboard(event){
+      if(event.keyCode == 13){
+        $('.search-container input').blur()
+      }
+    }
   },
   components:{
     compWalletTop,
@@ -175,6 +185,7 @@ export default {
 .search-container {
   padding: 0.2rem 0.3rem 0.15rem 0.3rem;
   background-color: #fff;
+  position: relative;
   input {
     width: 100%;
     text-align: center;
@@ -184,6 +195,9 @@ export default {
     padding: 0.1rem 0.15rem;
     background: url('../assets/img/sousuo@3x.png') no-repeat center top;
     background-size: auto 0.5rem;
+    &::-webkit-search-cancel-button {
+    display: none;
+    }
     &:focus {
 
     }
@@ -199,6 +213,21 @@ export default {
     left: 0;
     right: 0;
     z-index: 1000;
+  }
+  i {
+    position: absolute;
+    width: 0.5rem;
+    height: 0.5rem;
+    top: 0.25rem;
+    right: 0.3rem;
+    color: #4D7BF3;
+    font-size: 0.36rem;
+    font-style: normal;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 0.45rem;
+    z-index: 1;
+    transform: rotate(45deg);
   }
 }
 .currency-list {

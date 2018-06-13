@@ -20,32 +20,39 @@
   </div>
 </template>
 <script>
+import Tip from '@/components/common/tip.js'
 
-  export default {
-    name:'page-command-add',
-    data(){
-      return {
-        collapsed:true,
-        account:'',
-        key:''
-      }
-    },
-    mounted(){
-      $('#account, #key').focus(()=>{
-        this.collapsed = false
-      })
-      $('#account, #key').blur(()=>{
-        setTimeout(()=>{
-          this.collapsed = true
-        },100)
-      })
-    },
-    methods:{
-      addCmd(args){
-        
-      }
-    },
-  }
+export default {
+  name:'page-command-add',
+  data(){
+    return {
+      collapsed:true,
+      account:'',
+      key:''
+    }
+  },
+  mounted(){
+    $('#account, #key').focus(()=>{
+      this.collapsed = false
+    })
+    $('#account, #key').blur(()=>{
+      setTimeout(()=>{
+        this.collapsed = true
+      },100)
+    })
+
+    Tip({
+      type:'warning',
+      title:'Success',
+      message:'congratulation'
+    })
+  },
+  methods:{
+    addCmd(args){
+      
+    }
+  },
+}
 
 </script>
 <style type="text/css" lang="less" scoped >
