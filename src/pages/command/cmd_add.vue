@@ -6,7 +6,7 @@
         <li>
           <h1>{{$t('message.cmd.addPasscode')}}</h1>
           <p>{{$t('message.cmd.account')}}</p>
-          <p><input id="account" :placeholder="$t('message.cmd.inputAmount')" type="text" v-model="account"></p>
+          <p><input id="account" maxlength="25" :placeholder="$t('message.cmd.inputAmount')" type="text" v-model="account"></p>
         </li>
         <li>
           <p>{{$t('message.cmd.privateKey')}}</p>

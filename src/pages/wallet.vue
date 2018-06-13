@@ -10,37 +10,13 @@
       <div>
         <div class="amount-container">
           <h2>{{$t('message.wallet.amount')}}</h2>
-          <h1>45658<span> BTC </span><i></i></h1>
-          <p>≈ ￥512,1464.22</p>
+          <h1><template v-if="amountShow">45658</template><template v-else>****</template><span> BTC </span><i :class="{hide:!amountShow}" v-tap="{methods:setAmountShow}"></i></h1>
+          <p>≈ ￥<template v-if="amountShow">512,1464.22</template><template v-else>****</template></p>
         </div>
         <div class="search-container" id="searchContainer">
           <input type="search" :class="{active:currencySearchText.length, hidden:isSearchFixed}"  :placeholder="$t('message.wallet.currencySearch')" v-model="currencySearchText">
         </div>
         <ul class="currency-list" v-tap="{methods:goWalletDetail}">
-          <li data-type="btc">
-            <div><img src="../assets/img/BTC-alt@3x.png"><strong>BTC</strong></div>
-            <div><span>266</span><br /><span>426,1234</span></div>
-          </li>
-          <li data-type="eth">
-            <div><img src="../assets/img/ETH@3x.png"><strong>ETH</strong></div>
-            <div><span>646</span><br /><span>426,1234</span></div>
-          </li>
-          <li data-type="btc">
-            <div><img src="../assets/img/BTC-alt@3x.png"><strong>BTC</strong></div>
-            <div><span>266</span><br /><span>426,1234</span></div>
-          </li>
-          <li data-type="eth">
-            <div><img src="../assets/img/ETH@3x.png"><strong>ETH</strong></div>
-            <div><span>646</span><br /><span>426,1234</span></div>
-          </li>
-          <li data-type="btc">
-            <div><img src="../assets/img/BTC-alt@3x.png"><strong>BTC</strong></div>
-            <div><span>266</span><br /><span>426,1234</span></div>
-          </li>
-          <li data-type="eth">
-            <div><img src="../assets/img/ETH@3x.png"><strong>ETH</strong></div>
-            <div><span>646</span><br /><span>426,1234</span></div>
-          </li>
           <li data-type="btc">
             <div><img src="../assets/img/BTC-alt@3x.png"><strong>BTC</strong></div>
             <div><span>266</span><br /><span>426,1234</span></div>
@@ -68,11 +44,14 @@ export default {
       currencyInitSearchPos:0,
       currencyCurrentSearchPos:0,
       scroll:false,
+      amountShow:true,
     }
+  },
+  created(){
+    this.getAmountShowSetting()
   },
   mounted(){
     this.currencyInitSearchPos = $('#searchContainer').position().top + $('#searchContainer').height()
-    console.log("坐标为："+this.currencyInitSearchPos);
     setTimeout(this.initScroll,1000)
   },
   watch:{
@@ -86,7 +65,18 @@ export default {
     }
   },
   methods:{
+    getAmountShowSetting(){
+      //获取金额显示、隐藏设置
+      var _amountShow = localStorage.getItem('amount_show') || 'true'
+      this.amountShow = _amountShow == 'true' ? true : false
+    },
+    setAmountShow(){
+      //设置金额显示、隐藏
+      this.amountShow = !this.amountShow
+      localStorage.setItem('amount_show',this.amountShow)
+    },
     initScroll(){
+      //初始化滚动条
       var self = this
       this.scroll = new IScroll('#scroll',{
         mouseWheel:true,
@@ -168,6 +158,9 @@ export default {
       background-size: auto 100%;
       background-image:url('../assets/img/buxianshijine@3x.png');
       margin-bottom: -0.08rem;
+      &.hide {
+        background-image:url('../assets/img/xianshijine@3x.png');
+      }
     }
   }
   h2 {
