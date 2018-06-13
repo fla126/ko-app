@@ -52,6 +52,77 @@ module.exports={
 		privateKey:'Private Key',
 		inputAmount:'Please input amount',
 		inputKey:'Please input private key'
-	}
+	},
+    mycenter:{
+      center:'Account Center',
+      msg:'News',
+      rec:'Record',
+      wallet:'Wallet',
+      backup:'Backup',
+      help:'Help',
+      about:'About us'
+    },
+  setup:{
+    setupName:'Settings',
+    languages:'Multiple Languages',
+    fiat:'Fiat',
+    manageToken:'Manage Token'
+  },
+    uinfo:{
+      tinkey:'Tinkey',
+      userInfo:'My Account',
+      account:'Account',
+      tinkeyId:'Tinkey ID',
+      walletNum:'Wallet Number',
+      addr:'Frequently Addr',
+      updatePwd:'Change Login Password',
+      logOut:'Logout'
+    },
+    msg:{
+      message:'Message',
+      all:'All',
+      content:'Your sending to XXXX on 13:14 2018.08.09 was successful. You can check it anytime at Send record.'
+
+    },
+    rec:{
+      record:'Record'
+    },
+    wallet:{
+      frozen:'Frozen',
+      unfrozen:'Unfrozen',
+      token:'Token',
+      walletName:'Wallet Name',
+      add:'Add',
+      topInfo:'Tip: You need get Tinkey connected befor creating a new  wallet.',
+      addWallet:'Add Wallet'
+    },
+    backup:{
+      backupName:'Backup',
+      cloudBackup:'Cloud Backup',
+      qrBackup:'QR Backup',
+      abkeyBackup:'ABKEY Backup',
+      updatePwd:'Change Trade Password',
+      alert:'Alert',
+      infoOne:'Our Tinkey and server donot store any Trade Password. Once it is lost, it cannot be recovered.',
+      infoTwo:'All three ways of backup work coordinately with Trade Password. The lose of Trade Password will invalidate the backup.',
+      infoThree:'Please store your Trade Password in a safe way.'
+
+    },
+    help:{
+      helpName:'Help',
+      guidence:'Guidence',
+      backup:'Backup',
+      instruction:'Instruction',
+      FAQ:'FAQ',
+      contact:'Contact'
+    },
+    about:{
+      aboutUs:'About us',
+      introduce:'Tinkey APP',
+      terms:'Terms',
+      privacy:'Privacy',
+      joinus:'Join us',
+      version:'Version'
+    }
   }
 }

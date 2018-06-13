@@ -1,10 +1,10 @@
 <template>
   <div id="uinfo" class="page wrap">
-    <mt-header class="common-mt-header" title="消息">
+    <mt-header class="common-mt-header" :title="$t('message.msg.message')">
       <router-link to="/ucenter" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
-      <mt-button class="f30"  slot="right">全部</mt-button>
+      <mt-button class="f30 btnright"  slot="right">{{$t('message.msg.all')}}</mt-button>
     </mt-header>
 
     <div class="page-main" id="scroll"> <!--content start-->
@@ -13,7 +13,7 @@
           <div class="inner">
                  <section class="item">
                       <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
-                      <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
+                      <div><p class="bottom">{{$t('message.msg.content')}}</p></div>
                  </section>
           </div>
         </div>
@@ -22,7 +22,7 @@
           <div class="inner">
             <section class="item">
               <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
-              <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
+              <div><p class="bottom">{{$t('message.msg.content')}}</p></div>
             </section>
           </div>
         </div>
@@ -31,7 +31,7 @@
           <div class="inner">
             <section class="item">
               <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
-              <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
+              <div><p class="bottom">{{$t('message.msg.content')}}</p></div>
             </section>
           </div>
         </div>
@@ -39,7 +39,7 @@
           <div class="inner">
             <section class="item">
               <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
-              <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
+              <div><p class="bottom">{{$t('message.msg.content')}}</p></div>
             </section>
           </div>
         </div>
@@ -47,7 +47,7 @@
           <div class="inner">
             <section class="item">
               <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
-              <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
+              <div><p class="bottom">{{$t('message.msg.content')}}</p></div>
             </section>
           </div>
         </div>
@@ -55,7 +55,7 @@
           <div class="inner">
             <section class="item">
               <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
-              <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
+              <div><p class="bottom">{{$t('message.msg.content')}}</p></div>
             </section>
           </div>
         </div>
@@ -63,7 +63,7 @@
           <div class="inner">
             <section class="item">
               <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
-              <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
+              <div><p class="bottom">{{$t('message.msg.content')}}</p></div>
             </section>
           </div>
         </div>
@@ -71,7 +71,7 @@
           <div class="inner">
             <section class="item">
               <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
-              <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
+              <div><p class="bottom">{{$t('message.msg.content')}}</p></div>
             </section>
           </div>
         </div>
@@ -80,7 +80,7 @@
            <div class="inner">
              <section class="item">
                <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
-               <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
+               <div><p class="bottom">{{$t('message.msg.content')}}</p></div>
              </section>
            </div>
          </div>
@@ -88,7 +88,7 @@
            <div class="inner">
              <section class="item">
                <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
-               <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
+               <div><p class="bottom">{{$t('message.msg.content')}}</p></div>
              </section>
            </div>
          </div>
@@ -96,7 +96,7 @@
            <div class="inner">
              <section class="item">
                <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
-               <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
+               <div><p class="bottom">{{$t('message.msg.content')}}</p></div>
              </section>
            </div>
          </div>
@@ -104,7 +104,7 @@
            <div class="inner">
              <section class="item">
                <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
-               <div><p class="bottom">您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看 您的转账记录。</p></div>
+               <div><p class="bottom">{{$t('message.msg.content')}}</p></div>
              </section>
            </div>
          </div>

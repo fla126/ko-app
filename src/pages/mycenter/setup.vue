@@ -1,6 +1,6 @@
 <template>
   <div id="setup" class="page wrap">
-    <mt-header class="common-mt-header" title="设置">
+    <mt-header class="common-mt-header" :title="$t('message.setup.setupName')">
       <router-link to="/ucenter" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
@@ -8,10 +8,10 @@
     <div class="common-content bg-white mt40 ft-c-gray">
       <div class="inner">
         <div class="box-cont " >
-          <div class="item"><span class="f30">多语言</span></div>
+          <div class="item"><span class="f30">{{$t('message.setup.languages')}}</span></div>
         </div>
         <div class="box-cont " >
-          <div class="item"><span class="f30">货币单位</span></div>
+          <div class="item"><span class="f30">{{$t('message.setup.fiat')}}</span></div>
         </div>
         <div class="box-cont " >
           <div class="item"><span class="f30">WEB3</span></div>
@@ -23,7 +23,7 @@
 
     <div class="common-content bg-white mt60">
       <div class="inner">
-        <mt-field class="common-mt-field"   placeholder="管理币种" v-model="captcha">
+        <mt-field class="common-mt-field"   :placeholder="$t('message.setup.manageToken')" v-model="captcha">
           <img class="i-search" src="../../assets/img/mycenter/i_search.png" >
         </mt-field>
         <mt-checklist class="common-clear-style"

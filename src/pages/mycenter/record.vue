@@ -1,7 +1,7 @@
 <template>
   <!-- 记录 -->
   <div id="record" class="page wrap">
-    <mt-header class="common-mt-header" title="记录">
+    <mt-header class="common-mt-header" :title="$t('message.rec.record')">
       <router-link to="/ucenter" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
@@ -12,7 +12,7 @@
           <div class="re-box">
             <div class="inner">
               <section class="re-top">
-                <label class=" f24 ft-c-gray">钱包</label>
+                <label class=" f24 ft-c-gray">{{$t('message.mycenter.wallet')}}</label>
                 <select class="rec-select f24">
                   <option>BTC</option>
                   <option>ETH</option>

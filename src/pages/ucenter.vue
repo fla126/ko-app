@@ -1,6 +1,6 @@
 <template>
   <div id="ucenter">
-    <mt-header class="common-mt-header" title="个人中心">
+    <mt-header class="common-mt-header" :title="$t('message.mycenter.center')">
         <a slot="right" v-tap="{methods:$root.routeTo, to:'page-ucenter-setup'}">
         <img class="ucenter-img" src="../assets/img/mycenter/i_right.png"/>
         </a>
@@ -10,7 +10,7 @@
            <div class="inner" v-tap="{methods:routeTo, to:'page-uinfo'}">
                 <ul >
                   <li><img src="../assets/img/mycenter/i_b_000.png"/></li>
-                  <li><span class="f36">Vivining</span> <span class="f24">硬件: usbtkey123456</span></li>
+                  <li><span class="f36">Vivining</span> <span class="f24">{{$t('message.uinfo.tinkey')}}: usbtkey123456</span></li>
                   <li><img  src="../assets/img/mycenter/i_right_nav.png"/></li>
                 </ul>
            </div>
@@ -20,19 +20,19 @@
       <div class="inner">
         <div class="box-cont " v-tap="{methods:routeTo, to:'page-msg'}">
           <div class="item"><img class="left1"  src="../assets/img/mycenter/i_b_002.png" ></div>
-          <div class="item"><span class="f30">消息</span></div>
+          <div class="item"><span class="f30">{{$t('message.mycenter.msg')}}</span></div>
         </div>
         <div class="box-cont " v-tap="{methods:routeTo, to:'page-record'}">
           <div class="item"><img class="left2"  src="../assets/img/mycenter/i_b_003.png" ></div>
-          <div class="item"><span class="f30">记录</span></div>
+          <div class="item"><span class="f30">{{$t('message.mycenter.rec')}}</span></div>
         </div>
         <div class="box-cont " v-tap="{methods:routeTo, to:'page-uwallet'}">
           <div class="item"><img class="left3"  src="../assets/img/mycenter/i_b_004.png" ></div>
-          <div class="item"><span class="f30">钱包</span></div>
+          <div class="item"><span class="f30">{{$t('message.mycenter.wallet')}}</span></div>
         </div>
         <div class="box-cont " v-tap="{methods:routeTo, to:'page-backup'}">
           <div class="item"><img class="left4"  src="../assets/img/mycenter/i_b_005.png" ></div>
-          <div class="item"><span class="f30">备份</span></div>
+          <div class="item"><span class="f30">{{$t('message.mycenter.backup')}}</span></div>
         </div>
       </div>
     </div>
@@ -41,11 +41,11 @@
       <div class="inner">
         <div class="box-cont " v-tap="{methods:routeTo, to:'page-help'}">
           <div class="item"><img class="left5"  src="../assets/img/mycenter/i_b_006.png" ></div>
-          <div class="item"><span class="f30">帮助</span></div>
+          <div class="item"><span class="f30">{{$t('message.mycenter.help')}}</span></div>
         </div>
         <div class="box-cont " v-tap="{methods:routeTo, to:'page-about'}">
           <div class="item"><img class="left6"  src="../assets/img/mycenter/i_b_007.png" ></div>
-          <div class="item"><span class="f30">关于我们</span></div>
+          <div class="item"><span class="f30">{{$t('message.mycenter.about')}}</span></div>
         </div>
       </div>
     </div>
