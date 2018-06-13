@@ -1,6 +1,6 @@
 <template>
   <div id="uinfo" class="page wrap" >
-    <mt-header class="common-mt-header" title="帮助">
+    <mt-header class="common-mt-header" :title="$t('message.help.helpName')">
       <router-link to="/ucenter" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
@@ -10,13 +10,13 @@
     <div class="common-content bg-white mt40 ft-c-gray">
       <div class="inner">
         <div class="box-cont " >
-          <div class="item"><span class="f30">新手必读</span></div>
+          <div class="item"><span class="f30">{{$t('message.help.guidence')}}</span></div>
         </div>
         <div class="box-cont " >
-          <div class="item"><span class="f30">钱包备份</span></div>
+          <div class="item"><span class="f30">{{$t('message.help.backup')}}</span></div>
         </div>
         <div class="box-cont " >
-          <div class="item"><span class="f30">钱包使用</span></div>
+          <div class="item"><span class="f30">{{$t('message.help.instruction')}}</span></div>
         </div>
       </div>
     </div>
@@ -25,10 +25,10 @@
     <div class="common-content bg-white mt40 ft-c-gray">
       <div class="inner">
         <div class="box-cont " >
-          <div class="item"><span class="f30">常见问题</span></div>
+          <div class="item"><span class="f30">{{$t('message.help.FAQ')}}</span></div>
         </div>
         <div class="box-cont " >
-          <div class="item"><span class="f30">联系我们</span></div>
+          <div class="item"><span class="f30">{{$t('message.help.contact')}}</span></div>
         </div>
       </div>
     </div>

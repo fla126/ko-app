@@ -1,6 +1,6 @@
 <template>
   <div  class="page wrap">
-    <mt-header class="common-mt-header" title="钱包">
+    <mt-header class="common-mt-header" :title="$t('message.mycenter.wallet')">
       <a  slot="left" v-tap="{methods:routeTo, to:'page-ucenter'}">
         <mt-button icon="back"></mt-button>
       </a>
@@ -19,155 +19,155 @@
                   <section class="one">
                     <span >VIVINING</span>
                     <span>V6237WTGDEIVINING</span>
-                    <span><mt-button size="small" type="danger">冻结</mt-button></span>
+                    <span><mt-button size="small" type="danger">{{$t('message.wallet.frozen')}}</mt-button></span>
                   </section>
                   <section class="one">
                     <span >VIVINING</span>
                     <span>V6237WTGDEIVINING</span>
-                    <span><mt-button size="small" type="primary">解冻</mt-button></span>
+                    <span><mt-button size="small" type="primary">{{$t('message.wallet.unfrozen')}}</mt-button></span>
                   </section>
                   <section class="one">
                     <span >VIVINING</span>
                     <span>V6237WTGDEIVINING</span>
-                    <span><mt-button size="small" type="danger">冻结</mt-button></span>
+                    <span><mt-button size="small" type="danger">{{$t('message.wallet.frozen')}}</mt-button></span>
                   </section>
                 </div>
               </div>
             </div>
 
-            <div class="uwallet-box">
-              <h1 class="uwallet-h1 mt25 f30">ETH</h1>
-              <div class="uwallet-content w-content m-box1 mt25 f24">
-                <div class="inner">
-                  <section class="one">
-                    <span >VIVINING</span>
-                    <span>V6237WTGDEIVINING</span>
-                    <span><mt-button size="small" type="danger">冻结</mt-button></span>
-                  </section>
-                  <section class="one">
-                    <span >VIVINING</span>
-                    <span>V6237WTGDEIVINING</span>
-                    <span><mt-button size="small" type="primary">解冻</mt-button></span>
-                  </section>
-                  <section class="one">
-                    <span >VIVINING</span>
-                    <span>V6237WTGDEIVINING</span>
-                    <span><mt-button size="small" type="danger">冻结</mt-button></span>
-                  </section>
-                </div>
-              </div>
-            </div>
-
-
-        <div class="uwallet-box">
-          <h1 class="uwallet-h1 mt25 f30">BARK</h1>
+        <div class="uwallet-box ">
+          <h1 class="uwallet-h1 mt25 f30">BTC</h1>
           <div class="uwallet-content w-content m-box1 mt25 f24">
             <div class="inner">
               <section class="one">
                 <span >VIVINING</span>
                 <span>V6237WTGDEIVINING</span>
-                <span><mt-button size="small" type="danger">冻结</mt-button></span>
+                <span><mt-button size="small" type="danger">{{$t('message.wallet.frozen')}}</mt-button></span>
               </section>
               <section class="one">
                 <span >VIVINING</span>
                 <span>V6237WTGDEIVINING</span>
-                <span><mt-button size="small" type="primary">解冻</mt-button></span>
+                <span><mt-button size="small" type="primary">{{$t('message.wallet.unfrozen')}}</mt-button></span>
               </section>
               <section class="one">
                 <span >VIVINING</span>
                 <span>V6237WTGDEIVINING</span>
-                <span><mt-button size="small" type="danger">冻结</mt-button></span>
+                <span><mt-button size="small" type="danger">{{$t('message.wallet.frozen')}}</mt-button></span>
               </section>
             </div>
           </div>
         </div>
 
-        <div class="uwallet-box">
-          <h1 class="uwallet-h1 mt25 f30">ETC</h1>
+
+        <div class="uwallet-box ">
+          <h1 class="uwallet-h1 mt25 f30">BTC</h1>
           <div class="uwallet-content w-content m-box1 mt25 f24">
             <div class="inner">
               <section class="one">
                 <span >VIVINING</span>
                 <span>V6237WTGDEIVINING</span>
-                <span><mt-button size="small" type="danger">冻结</mt-button></span>
+                <span><mt-button size="small" type="danger">{{$t('message.wallet.frozen')}}</mt-button></span>
               </section>
               <section class="one">
                 <span >VIVINING</span>
                 <span>V6237WTGDEIVINING</span>
-                <span><mt-button size="small" type="primary">解冻</mt-button></span>
+                <span><mt-button size="small" type="primary">{{$t('message.wallet.unfrozen')}}</mt-button></span>
               </section>
               <section class="one">
                 <span >VIVINING</span>
                 <span>V6237WTGDEIVINING</span>
-                <span><mt-button size="small" type="danger">冻结</mt-button></span>
-              </section>
-            </div>
-          </div>
-        </div>
-        <div class="uwallet-box">
-          <h1 class="uwallet-h1 mt25 f30">ETH</h1>
-          <div class="uwallet-content w-content m-box1 mt25 f24">
-            <div class="inner">
-              <section class="one">
-                <span >VIVINING</span>
-                <span>V6237WTGDEIVINING</span>
-                <span><mt-button size="small" type="danger">冻结</mt-button></span>
-              </section>
-              <section class="one">
-                <span >VIVINING</span>
-                <span>V6237WTGDEIVINING</span>
-                <span><mt-button size="small" type="primary">解冻</mt-button></span>
-              </section>
-              <section class="one">
-                <span >VIVINING</span>
-                <span>V6237WTGDEIVINING</span>
-                <span><mt-button size="small" type="danger">冻结</mt-button></span>
+                <span><mt-button size="small" type="danger">{{$t('message.wallet.frozen')}}</mt-button></span>
               </section>
             </div>
           </div>
         </div>
 
-        <div class="uwallet-box">
-          <h1 class="uwallet-h1 mt25 f30">ETH</h1>
+        <div class="uwallet-box ">
+          <h1 class="uwallet-h1 mt25 f30">BTC</h1>
           <div class="uwallet-content w-content m-box1 mt25 f24">
             <div class="inner">
               <section class="one">
                 <span >VIVINING</span>
                 <span>V6237WTGDEIVINING</span>
-                <span><mt-button size="small" type="danger">冻结</mt-button></span>
+                <span><mt-button size="small" type="danger">{{$t('message.wallet.frozen')}}</mt-button></span>
               </section>
               <section class="one">
                 <span >VIVINING</span>
                 <span>V6237WTGDEIVINING</span>
-                <span><mt-button size="small" type="primary">解冻</mt-button></span>
+                <span><mt-button size="small" type="primary">{{$t('message.wallet.unfrozen')}}</mt-button></span>
               </section>
               <section class="one">
                 <span >VIVINING</span>
                 <span>V6237WTGDEIVINING</span>
-                <span><mt-button size="small" type="danger">冻结</mt-button></span>
+                <span><mt-button size="small" type="danger">{{$t('message.wallet.frozen')}}</mt-button></span>
+              </section>
+            </div>
+          </div>
+        </div>
+        <div class="uwallet-box ">
+          <h1 class="uwallet-h1 mt25 f30">BTC</h1>
+          <div class="uwallet-content w-content m-box1 mt25 f24">
+            <div class="inner">
+              <section class="one">
+                <span >VIVINING</span>
+                <span>V6237WTGDEIVINING</span>
+                <span><mt-button size="small" type="danger">{{$t('message.wallet.frozen')}}</mt-button></span>
+              </section>
+              <section class="one">
+                <span >VIVINING</span>
+                <span>V6237WTGDEIVINING</span>
+                <span><mt-button size="small" type="primary">{{$t('message.wallet.unfrozen')}}</mt-button></span>
+              </section>
+              <section class="one">
+                <span >VIVINING</span>
+                <span>V6237WTGDEIVINING</span>
+                <span><mt-button size="small" type="danger">{{$t('message.wallet.frozen')}}</mt-button></span>
               </section>
             </div>
           </div>
         </div>
 
-        <div class="uwallet-box">
-          <h1 class="uwallet-h1 mt25 f30">ETH</h1>
+        <div class="uwallet-box ">
+          <h1 class="uwallet-h1 mt25 f30">BTC</h1>
           <div class="uwallet-content w-content m-box1 mt25 f24">
             <div class="inner">
               <section class="one">
                 <span >VIVINING</span>
                 <span>V6237WTGDEIVINING</span>
-                <span><mt-button size="small" type="danger">冻结</mt-button></span>
+                <span><mt-button size="small" type="danger">{{$t('message.wallet.frozen')}}</mt-button></span>
               </section>
               <section class="one">
                 <span >VIVINING</span>
                 <span>V6237WTGDEIVINING</span>
-                <span><mt-button size="small" type="primary">解冻</mt-button></span>
+                <span><mt-button size="small" type="primary">{{$t('message.wallet.unfrozen')}}</mt-button></span>
               </section>
               <section class="one">
                 <span >VIVINING</span>
                 <span>V6237WTGDEIVINING</span>
-                <span><mt-button size="small" type="danger">冻结</mt-button></span>
+                <span><mt-button size="small" type="danger">{{$t('message.wallet.frozen')}}</mt-button></span>
+              </section>
+            </div>
+          </div>
+        </div>
+
+        <div class="uwallet-box ">
+          <h1 class="uwallet-h1 mt25 f30">BTC</h1>
+          <div class="uwallet-content w-content m-box1 mt25 f24">
+            <div class="inner">
+              <section class="one">
+                <span >VIVINING</span>
+                <span>V6237WTGDEIVINING</span>
+                <span><mt-button size="small" type="danger">{{$t('message.wallet.frozen')}}</mt-button></span>
+              </section>
+              <section class="one">
+                <span >VIVINING</span>
+                <span>V6237WTGDEIVINING</span>
+                <span><mt-button size="small" type="primary">{{$t('message.wallet.unfrozen')}}</mt-button></span>
+              </section>
+              <section class="one">
+                <span >VIVINING</span>
+                <span>V6237WTGDEIVINING</span>
+                <span><mt-button size="small" type="danger">{{$t('message.wallet.frozen')}}</mt-button></span>
               </section>
             </div>
           </div>

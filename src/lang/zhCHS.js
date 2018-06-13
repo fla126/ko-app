@@ -11,8 +11,15 @@ module.exports={
     	disconnect:'Tinkey未连接'
     },
     wallet:{
-        amount:'总额',
-        currencySearch:'币种搜索',
+      amount:'总额',
+      currencySearch:'币种搜索',
+      frozen:'冻结',
+      unfrozen:'解冻',
+      token:'币种',
+      walletName:'钱包名',
+      add:'添加',
+      topInfo:'提示：为了创建钱包，你需要连接Tinkey',
+      addWallet:'添加钱包'
     },
     walletDetail:{
         send:'转账',
@@ -52,6 +59,66 @@ module.exports={
         privateKey:'钥匙',
         inputAmount:'请输入账号名',
         inputKey:'请输入钥匙'
+    },
+    mycenter:{/* 个人中心 */
+      center:'个人中心',
+      msg:'消息',
+      rec:'记录',
+      wallet:'钱包',
+      backup:'备份',
+      help:'帮助',
+      about:'关于我们'
+    },
+    setup:{
+      setupName:'设置',
+      languages:'多语言',
+      fiat:'货币单位',
+      manageToken:'管理币种'
+    },
+    uinfo:{/*个人信息*/
+      tinkey:'硬件',
+      userInfo:'个人信息',
+      account:'帐号',
+      tinkeyId:'硬件钱包ID',
+      walletNum:'钱包数量',
+      addr:'常用地址',
+      updatePwd:'修改登录密码',
+      logOut:'退出登录'
+    },
+    msg:{
+      message:'消息',
+      all:'全部',
+      content:'您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看您的转账记录。'
+    },
+    rec:{/* 记录 */
+      record:'记录'
+    },
+    backup:{
+      backupName:'备份',
+      cloudBackup:'云备份',
+      qrBackup:'二维码备份',
+      abkeyBackup:'ABKEY备份',
+      updatePwd:'修改交易密码',
+       alert:'重要提示',
+      infoOne:'1.软件和服务器不保存您的交易密码，一旦丢失将无法找回。',
+      infoTwo:'2.三种备份均需要记住交易密码。交易密码一旦丢失备份也将失效。',
+      infoThree:'3.请妥善保管交易密码。'
+    },
+    help:{
+      helpName:'帮助',
+      guidence:'新手必读',
+      backup:'钱包备份',
+      instruction:'钱包使用',
+      FAQ:'常见问题',
+     contact:'联系我们'
+    },
+    about:{
+      aboutUs:'关于我们',
+      introduce:'软件介绍',
+      terms:'用户协议',
+      privacy:'隐私条款',
+      joinus:'加入我们',
+      version:'检查版本'
     }
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <div id="uinfo" class="page wrap">
-    <mt-header class="common-mt-header" title="个人信息">
+    <mt-header class="common-mt-header" :title="$t('message.uinfo.userInfo')">
       <router-link to="/ucenter" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
@@ -10,19 +10,19 @@
     <div class="common-content bg-white mt40 ft-c-gray">
       <div class="inner">
         <div class="box-cont " >
-          <div class="item"><span class="f30">账号</span></div>
+          <div class="item"><span class="f30">{{$t('message.uinfo.account')}}</span></div>
           <div class="item"><span class="f30">Vivining</span></div>
         </div>
         <div class="box-cont " >
-          <div class="item"><span class="f30">硬件钱包ID</span></div>
+          <div class="item"><span class="f30">{{$t('message.uinfo.tinkeyId')}}</span></div>
           <div class="item"><span class="f30">usbtkey123456</span></div>
         </div>
         <div class="box-cont " >
-          <div class="item"><span class="f30">钱包数量</span></div>
+          <div class="item"><span class="f30">{{$t('message.uinfo.walletNum')}}</span></div>
           <div class="item"><span class="f30">27</span></div>
         </div>
         <div class="box-cont " @click="isdown=!isdown" >
-          <div class="item"><span class="f30">常用地址</span><img class="nav_right" src="../../assets/img/mycenter/i_question.png"/></div>
+          <div class="item"><span class="f30">{{$t('message.uinfo.addr')}}</span><img class="nav_right" src="../../assets/img/mycenter/i_question.png"/></div>
           <div class="item" > <img  :class="[{nav_right:true},{isdown:isdown}]" src="../../assets/img/mycenter/i_nav_right.png"/></div>
 
         </div>
@@ -39,10 +39,10 @@
     <div  class="common-content bg-white  ft-c-gray " :class="[isdown ? 'mt10' : 'mt40']">
       <div class="inner">
         <div class="box-cont " >
-          <div class="item"><span class="f30 ft-c-blue">修改登录密码</span></div>
+          <div class="item"><span class="f30 ft-c-blue">{{$t('message.uinfo.updatePwd')}}</span></div>
         </div>
         <div class="box-cont " >
-          <div class="item"><span class="f30 ft-c-blue">退出登录</span></div>
+          <div class="item"><span class="f30 ft-c-blue">{{$t('message.uinfo.logOut')}}</span></div>
         </div>
       </div>
     </div>

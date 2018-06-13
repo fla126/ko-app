@@ -1,6 +1,6 @@
 <template>
   <div  class="page wrap">
-    <mt-header class=" common-mt-header" title="添加钱包">
+    <mt-header class=" common-mt-header" :title="$t('message.wallet.addWallet')">
       <a  slot="left" v-tap="{methods:routeTo, to:'page-uwallet'}">
         <mt-button v-tap="{methods:routeTo, to:'page-uwallet'}" icon="back"></mt-button>
       </a>
@@ -9,8 +9,8 @@
     <div class="common-content mt10">
        <div class="inner">
          <section class="item">
-                <h1 class="f36 mt30">添加钱包</h1>
-                <h2 class="f24 mt40 ft-c-gray30">币种</h2>
+                <h1 class="f36 mt30">{{$t('message.wallet.addWallet')}}</h1>
+                <h2 class="f24 mt40 ft-c-gray30">{{$t('message.wallet.token')}}</h2>
              <select class="select f24 mt30 ft-c-gray">
                <option>BTC</option>
                <option>ETH</option>
@@ -25,8 +25,8 @@
     <div class="common-content mt10">
       <div class="inner">
         <section class="item">
-          <h2 class="f24 mt40 ft-c-gray30">钱包名</h2>
-          <input class="common-input-default f30 mt30"  placeholder="请输入要增加的信息" />
+          <h2 class="f24 mt40 ft-c-gray30">{{$t('message.wallet.walletName')}}</h2>
+          <input class="common-input-default f30 mt30"  placeholder="" />
         </section>
         <div class="hr"></div>
       </div>
@@ -35,8 +35,8 @@
     <footer>
         <div class="common-content footer mt100">
            <div class="inner">
-              <p class="f20 ft-red">提示：为了创建钱包,你需要连接高清设备。</p>
-              <mt-button class="mt20" size="large" type="primary" >添加</mt-button>
+              <p class="f20 ft-red">{{$t('message.wallet.topInfo')}}</p>
+              <mt-button class="mt20" size="large" type="primary" >{{$t('message.wallet.add')}}</mt-button>
            </div>
         </div>
     </footer>

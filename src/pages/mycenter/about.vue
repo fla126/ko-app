@@ -1,6 +1,6 @@
 <template>
   <div  class="page wrap">
-    <mt-header class="all-header common-mt-header" title="关于我们">
+    <mt-header class="all-header common-mt-header" :title="$t('message.about.aboutUs')">
       <router-link to="/ucenter" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
@@ -10,23 +10,23 @@
     <div  class="common-content box1 mt90">
       <div class="inner co-text-center">
          <img  src="../../assets/img/mycenter/i_logo.png"/>
-        <p class="f30 ft-c-gray mt30">软件介绍</p>
+        <p class="f30 ft-c-gray mt30">{{$t('message.about.introduce')}}</p>
       </div>
     </div>
 
     <div class="common-content bg-white mt190 ft-c-gray">
       <div class="inner">
         <div class="box-cont " >
-          <div class="item"><span class="f30">用户协议</span></div>
+          <div class="item"><span class="f30">{{$t('message.about.terms')}}</span></div>
         </div>
         <div class="box-cont " >
-          <div class="item"><span class="f30">隐私条款</span></div>
+          <div class="item"><span class="f30">{{$t('message.about.privacy')}}</span></div>
         </div>
         <div class="box-cont " >
-          <div class="item"><span class="f30">加入我们</span></div>
+          <div class="item"><span class="f30">{{$t('message.about.joinus')}}</span></div>
         </div>
         <div class="box-cont " >
-          <div class="item"><span class="f30">检查版本</span><img class="nav_right" src="../../assets/img/mycenter/i_question.png"/></div>
+          <div class="item"><span class="f30">{{$t('message.about.version')}}</span><img class="nav_right" src="../../assets/img/mycenter/i_question.png"/></div>
           <div class="item"></div>
         </div>
       </div>
