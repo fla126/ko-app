@@ -64,12 +64,20 @@
         </ul>
       </div>
     </div>
-    <mask-layer :isgray="true" :show="show" @hide="hideFunction" :style="{top: '0.9rem'}">
+    <mask-layer :isgray="true" :show="show" @hide="hideWalletList" :style="{top: '0.9rem'}">
       <ul class="wallet-list" v-tap="{methods:changeWallet}">
         <li>{{cointype | uppercase}}02</li>
         <li>{{cointype | uppercase}}03</li>
         <li>{{cointype | uppercase}}04</li>
       </ul>
+    </mask-layer>
+    <mask-layer :isgray="true" :show="!$store.state.usbkeyStatus && showUnlinked" @hide="hideUnlinkedLayer">
+      <div class="unlinked-layer" >
+        <p>{{$t('message.walletDetail.unlinkedStatus')}}</p>
+        <div class="step-next">
+          <mt-button type="primary" size="large" v-tap="{methods:hideUnlinkedLayer}">{{$t('message.walletDetail.ok')}}</mt-button>
+        </div>
+      </div>
     </mask-layer>
   </div>
 </template>
@@ -87,6 +95,7 @@ export default {
       scroll:false,
       cointype:'',
       show:false,
+      showUnlinked:true
     }
   },
   created(){
@@ -111,11 +120,17 @@ export default {
     showWalletList(args){
       this.show = true
     },
-    hideFunction(){
+    hideWalletList(){
       this.show = false
     },
     changeWallet(args){
       this.show = false
+    },
+    showUnlinkedLayer(){
+
+    },
+    hideUnlinkedLayer(){
+      this.showUnlinked = false
     }
   },
   components:{    
@@ -313,6 +328,40 @@ export default {
     &:last-of-type {
       border-bottom: none;
     }
+  }
+}
+
+.unlinked-layer {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 6.5rem;
+  height: 6rem;
+  margin: auto;
+  border-radius: 0.1rem;
+  text-align: center;
+  box-shadow: 0 0.05rem 0.1rem 0.01rem #6c6c6c;
+  background: url('../assets/img/device_unlinked.png') #fff no-repeat center 0.85rem;
+  background-size: 2.1rem auto;
+  p {
+    margin: 3.4rem 0.5rem 0;
+    color: #666;
+    font-size: 0.36rem;
+    text-align: center;
+  }
+}
+.step-next {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  .mint-button {
+    border-radius: 0;
+    border-bottom-left-radius: 0.1rem;
+    border-bottom-right-radius: 0.1rem;
   }
 }
 </style>

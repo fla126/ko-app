@@ -7,8 +7,8 @@ module.exports={
     	ucenter:"Account Center"
     },
     usbkeyStatus:{
-    	connected:'Tinkey Connected',
-    	disconnect:'Tinkey Disconnected'
+    	connected:'Tinkey Linked',
+    	disconnect:'Tinkey Unlinked'
     },
     wallet:{
 	    amount:'Total',
@@ -44,6 +44,7 @@ module.exports={
 	    copyAddress:'Copy Address',
 	    copySuccess:'Copy Success',
 	    copyFailure:'Your device is not supported, please copy manually',
+	    unlinkedStatus:'Due to the disconnection of Tinkey HD wallet, we cannot proceed with withdrawal action.',
 	},
 	cmd:{
 		passcode:'Passcode',

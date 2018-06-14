@@ -1,6 +1,14 @@
 <template>
   <div class="page">
-    <comp-top-back :class="'line'" :back="false">{{$t('message.cmd.passcode')}}</comp-top-back>
+    <comp-top-back :class="'line'" :back="false">
+      <transition enter-active-class="animated short fadeInUp" leave-active-class="animated short fadeOutUp">
+        <div class="connect-status" v-show="!$store.state.usbkeyStatus"><span></span>{{$t("message.usbkeyStatus.disconnect")}}</div>
+      </transition>
+      <transition enter-active-class="animated short fadeInUp" leave-active-class="animated short fadeOutUp">
+        <div class="connect-status" v-show="$store.state.usbkeyStatus"><span class="active"></span>{{$t("message.usbkeyStatus.connected")}}</div>
+      </transition>
+      {{$t('message.cmd.passcode')}}
+    </comp-top-back>
     <div class="page-main" id="scroll">
       <div>
         <div class="command-container" v-tap="{methods:$root.routeTo, to:'page-command-add'}">
@@ -80,6 +88,9 @@ import { Toast,MessageBox  } from 'mint-ui'
       this.initCountDown()
       this.initCopy()
       setTimeout(this.initScroll,1000)
+      setTimeout(()=>{
+        this.$store.commit('updateUsbkeyStatus',true)
+      },2000)
     },
     methods:{
       initScroll(){
@@ -203,6 +214,30 @@ import { Toast,MessageBox  } from 'mint-ui'
 <style lang="less" scoped>
   .page-main {
     overflow-y: hidden;
+  }
+  .connect-status {
+    position: absolute;
+    left: 0.3rem;
+    top: 0.2rem;
+    right: 1.5rem;
+    bottom: 0.2rem;
+    text-align: left;
+    font-size: 0.24rem;
+    color: #333333;
+    span {
+      display: inline-block;
+      vertical-align: middle;
+      width: 0.5rem;
+      height: 0.5rem;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: auto 100%;
+      background-image: url('../assets/img/shebeiweilianjie@3x.png');
+      margin-right: 0.15rem;
+      &.active {
+        background-image: url('../assets/img/shebeiyilianjie@3x.png');
+      }
+    }
   }
   .command-container {
     height: 1.8rem;

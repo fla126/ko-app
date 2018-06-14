@@ -44,6 +44,7 @@ module.exports={
         copyAddress:'复制地址',
         copySuccess:'复制地址 成功',
         copyFailure:'你的设备不支持,请手动复制',
+        unlinkedStatus:'当前硬件钱包未连接无法进行转账操作',
     },
     cmd:{
         passcode:'口令',

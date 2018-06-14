@@ -41,15 +41,15 @@ export default {
       },100)
     })
 
-    Tip({
-      type:'warning',
-      title:'Success',
-      message:'congratulation'
-    })
+    
   },
   methods:{
     addCmd(args){
-      
+      Tip({
+        type:'danger',
+        title:'错误',
+        message:'请输入账号名称'
+      })
     }
   },
 }
