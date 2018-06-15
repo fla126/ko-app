@@ -123,6 +123,27 @@ module.exports={
       privacy:'隐私条款',
       joinus:'加入我们',
       version:'检查版本'
+    },
+    login:{
+        phonePlaceholder:'输入手机号',
+        passwordPlaceholder:'输入密码',
+        forgot:'忘记密码？',
+        login:'登录',
+        noAccount:'没有账号?',
+        register:'点击注册',
+        error:'错误!',
+        phoneEnterError:'请输入正确的手机账号',
+        passwordEnterError:'请输入6位数以上的账号密码',
+    },
+    register:{
+        register:'注册',
+        phonePlaceholder:'输入手机号',
+        passwordPlaceholder:'输入密码,6-16位英文或数字',
+        passwordAgainPlaceholder:'再次输入密码',
+        CodeEnterPlaceholder:'输入验证码',
+        acquire:'获取验证码',
+        resetPassword:'重置密码',
+        confirm:'确定'
     }
   }
 }

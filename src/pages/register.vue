@@ -2,13 +2,13 @@
   <div class="page">
     <comp-top-back></comp-top-back>
     <div class="register-form">
-      <h1 class="register-top">注册</h1>
+      <h1 class="register-top">{{$t('message.register.register')}}</h1>
       <div class="form">
-        <p><i class="mobile"></i><input type="tel" name="mobile" v-model="account" maxlength="11" placeholder="输入手机号"></p>
-        <p><i class="password"></i><input type="password" name="password" v-model="password" maxlength="16" placeholder="输入密码,6-16位英文或数字"><i class="clear-password" v-tap="{methods:resetPW}"></i></p>
-        <p><i class="password"></i><input type="password" name="password2" v-model="password2" maxlength="16" placeholder="请再次输入密码"></p>
-        <p><i class="code"></i><input type="tel" name="code" v-model="smsCode" placeholder="请输入验证码" maxlength="6"><mt-button type="primary" size="small">获取验证码</mt-button></p>
-        <div class="register-btn"><mt-button type="primary" size="large" v-tap="{methods:register}">注册</mt-button></div>
+        <p><i class="mobile"></i><input type="tel" name="mobile" v-model="account" maxlength="11" :placeholder="$t('message.register.phonePlaceholder')"></p>
+        <p><i class="password"></i><input type="password" name="password" v-model="password" maxlength="16" :placeholder="$t('message.register.passwordPlaceholder')"><i class="clear-password" v-tap="{methods:resetPW}"></i></p>
+        <p><i class="password"></i><input type="password" name="password2" v-model="password2" maxlength="16" :placeholder="$t('message.register.passwordAgainPlaceholder')"></p>
+        <p><i class="code"></i><input type="tel" name="code" v-model="smsCode" :placeholder="$t('message.register.CodeEnterPlaceholder')" maxlength="6"><mt-button type="primary" size="small">{{$t('message.register.acquire')}}</mt-button></p>
+        <div class="register-btn"><mt-button type="primary" size="large" v-tap="{methods:register}">{{$t('message.register.register')}}</mt-button></div>
       </div>
     </div>
     <p class="agreement">点击注册按钮，即同意凯欧琏<span @click="toggleAgreement">《用户协议》</span></p>
@@ -57,6 +57,7 @@ export default {
     },
     register(args){
       //注册处理函数
+      
 
     },
     hideFunction(){

@@ -125,6 +125,27 @@ module.exports={
       privacy:'Privacy',
       joinus:'Join us',
       version:'Version'
+    },
+    login:{
+    	phonePlaceholder:'Enter phone number',
+    	passwordPlaceholder:'Enter password',
+    	forgot:'Forgot password?',
+    	login:'Login',
+    	noAccount:'No account?',
+    	register:'Register',
+    	error:'Error!',
+    	phoneEnterError:'Please enter the correct phone number ',
+    	passwordEnterError:'Please enter the account password',
+    },
+    register:{
+        register:'Register',
+        phonePlaceholder:'Enter phone number',
+        passwordPlaceholder:'Enter password (6-16 English letters or digits)',
+        passwordAgainPlaceholder:'Confirm password',
+        CodeEnterPlaceholder:'Enter verification code',
+        acquire:'Acquire',
+        resetPassword:'Reset password',
+        confirm:'OK'
     }
   }
 }

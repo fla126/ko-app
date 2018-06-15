@@ -3,18 +3,18 @@
     <div class="login-top"><i></i></div>
     <div class="login-form">
       <div>
-        <p><i class="mobile"></i><input type="tel" name="account" v-model="account" maxlength="11" placeholder="输入手机号"></p>
-        <p><i class="password"></i><input type="password" name="password" v-model="password" maxlength="16" placeholder="输入密码"><i class="clear-password" v-tap="{methods:resetPW}"></i></p>
-        <div class="findpw"><router-link :to="{name:'reset-password'}" tag="span">忘记密码？</router-link></div>
-        <div class="login-btn"><mt-button type="primary" size="large" v-tap="{methods:$root.routeTo, to:'page-wallet'}">登录</mt-button></div>
-        <div class="reg-btn">没有账号? <router-link :to="{name:'register'}">点击注册</router-link></div>
+        <p><i class="mobile"></i><input type="tel" name="account" v-model="account" maxlength="11" :placeholder="$t('message.login.phonePlaceholder')"></p>
+        <p><i class="password"></i><input type="password" name="password" v-model="password" maxlength="16" :placeholder="$t('message.login.passwordPlaceholder')"><i class="clear-password" v-tap="{methods:resetPW}"></i></p>
+        <div class="findpw"><router-link :to="{name:'reset-password'}" tag="span">{{$t('message.login.forgot')}}</router-link></div>
+        <div class="login-btn"><mt-button type="primary" size="large" v-tap="{methods:login}">{{$t('message.login.login')}}</mt-button></div>
+        <div class="reg-btn">{{$t('message.login.noAccount')}} <router-link :to="{name:'register'}">{{$t('message.login.register')}}</router-link></div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  
+import Tip from '@/components/common/tip.js'
 import Data from '@/api/data'
 
 
@@ -38,6 +38,19 @@ export default {
   methods:{
     resetPW(){
       this.password = ''
+    },
+    login(args){
+      if(!this.$root.ismobile(this.account)){
+        Tip({type:'danger',title:this.$t('message.login.error'), message:this.$t('message.login.phoneEnterError')})
+        $('.login-form input[name=account]').focus()
+        return
+      }
+      if(!this.$root.trim(this.password,1)){
+        Tip({type:'danger',title:this.$t('message.login.error'), message:this.$t('message.login.passwordEnterError')})
+        $('.login-form input[name=password]').focus()
+        return
+      }
+
     }
   },
   components:{    
