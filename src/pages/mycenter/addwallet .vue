@@ -58,7 +58,7 @@
 
 <script>
   import Vue from 'vue'
-  // import walletAdd from '@/components/common/wallet_pwd_add'
+  import walletAdd from '@/components/common/wallet_pwd_add'
   import { Button } from 'mint-ui';
   import { Cell } from 'mint-ui';
   import { Header } from 'mint-ui';
@@ -86,7 +86,7 @@
     export default {
       name: "page-addwallet",
       components:{
-         // walletAdd,
+          walletAdd,
       },
       data(){
           return{

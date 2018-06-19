@@ -7,6 +7,7 @@
     </mt-header>-->
     <comp-top-back :class="'line'" :back="false" >
         {{$t('message.mycenter.center')}}
+      <span class="header-right"><img v-tap="{methods:routeTo, to:'page-ucenter-setup'}" class="uwallet-right-img" src="../assets/img/mycenter/i_right.png"/></span>
     </comp-top-back>
 
     <div class="common-content u-box1 mt40">
@@ -82,7 +83,15 @@ export default {
 
 </script>
 <style type="text/css" lang="less"  scoped >
-
+  .header-right{
+    position: absolute;
+    right: .3rem;
+    img.uwallet-right-img{
+      width: .4rem;
+      height: .4rem;
+      margin-top: .07rem;
+    }
+  }
    img.left1{
     width: .4rem;
     height: .3rem;

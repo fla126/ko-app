@@ -238,10 +238,13 @@
   .header-right{
     position: absolute;
     right: .3rem;
+    img.uwallet-right-img{
+      width: .4rem;
+      height: .4rem;
+      margin-top: .07rem;
+    }
   }
-  img.uwallet-right-img{
-    width: .36rem; height: .36rem;
-  }
+
   .uwallet-content .one{
     display: flex;
     justify-content: space-between;
