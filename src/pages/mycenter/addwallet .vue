@@ -58,15 +58,15 @@
 
 <script>
   import Vue from 'vue'
-  import walletAdd from '@/components/common/wallet_pwd_add'
+  // import walletAdd from '@/components/common/wallet_pwd_add'
   import { Button } from 'mint-ui';
   import { Cell } from 'mint-ui';
   import { Header } from 'mint-ui';
   import { Toast,MessageBox  } from 'mint-ui'
   import Tip from '@/components/common/tip.js'
 
-  import VeeValidate, { Validator } from 'vee-validate'
-  import messages  from 'vee-validate/dist/locale/zh_CN.js'
+  // import VeeValidate, { Validator } from 'vee-validate'
+  // import messages  from 'vee-validate/dist/locale/zh_CN.js'
 
 
   const config = {
@@ -76,7 +76,7 @@
     messages: null,
     strict: true
   };
-  Vue.use(VeeValidate,config);
+  // Vue.use(VeeValidate,config);
 
   Vue.component(Button.name, Button);
   Vue.component(Header.name, Header);
@@ -86,7 +86,7 @@
     export default {
       name: "page-addwallet",
       components:{
-         walletAdd,
+         // walletAdd,
       },
       data(){
           return{
