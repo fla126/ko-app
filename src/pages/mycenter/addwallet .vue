@@ -113,7 +113,6 @@
           this.$router.push({ name: args.to})
         },
         addFun(){
-          Toast('提示信息');
           this.showEditorLayer = true
         }
       },

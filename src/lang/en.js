@@ -21,8 +21,8 @@ module.exports={
       topInfo:'Tip: You need get Tinkey connected befor creating a new  wallet.',
       addWallet:'Add Wallet'
 	},
-    addWalletDialog:{// Ìí¼ÓÇ®°üÊäÈëÃÜÂëµ¯´°
-      enterPwd:'ÇëÊäÈëÃÜÂë'
+    addWalletDialog:{
+      enterPwd:'Enter Passcode'
     },
 	walletDetail:{
 	    send:'Send',
