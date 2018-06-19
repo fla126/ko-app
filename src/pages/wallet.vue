@@ -9,10 +9,12 @@
     </transition>
     <div class="page-main" id="scroll" @click="setBlur($event)">
       <div>
-        <div class="amount-container">
-          <h2>{{$t('message.wallet.amount')}}</h2>
-          <h1><template v-if="amountShow">45658</template><template v-else>****</template><span> BTC </span><i :class="{hide:!amountShow}" v-tap="{methods:setAmountShow}"></i></h1>
-          <p>≈ ￥<template v-if="amountShow">512,1464.22</template><template v-else>****</template></p>
+        <div class="bg-white">
+          <div class="amount-container">
+            <h2>{{$t('message.wallet.amount')}}</h2>
+            <h1><template v-if="amountShow">45658</template><template v-else>****</template><span> BTC </span><i :class="{hide:!amountShow}" v-tap="{methods:setAmountShow}"></i></h1>
+            <p>≈ ￥<template v-if="amountShow">512,1464.22</template><template v-else>****</template></p>
+          </div>
         </div>
         <div class="search-container" id="searchContainer">
           <input type="search" :class="{active:searchText.length, hidden:isSearchFixed}"  :placeholder="$t('message.wallet.currencySearch')" v-model="searchText" @keydown="hideKeyboard($event)">
@@ -21,11 +23,11 @@
         <ul class="currency-list" v-tap="{methods:goWalletDetail}">
           <li data-type="btc">
             <div><img src="../assets/img/BTC-alt@3x.png"><strong>BTC</strong></div>
-            <div><span>266</span><br /><span>426,1234</span></div>
+            <div><span>266</span><br /><span>≈ ￥426,1234</span></div>
           </li>
           <li data-type="eth">
             <div><img src="../assets/img/ETH@3x.png"><strong>ETH</strong></div>
-            <div><span>646</span><br /><span>426,1234</span></div>
+            <div><span>646</span><br /><span>≈ ￥426,1234</span></div>
           </li>
         </ul>
       </div>
@@ -101,8 +103,11 @@ export default {
       this.searchText = ''
     },
     goWalletDetail(args){
-      var _type = $(args.event.target).parents('li').data('type')
-      this.$router.push({ name: 'page-wallet-detail', query:{type:_type}})
+      var _tar = $(args.event.target).parents('li'), _type = _tar.data('type')
+      _tar.addClass('active')
+      setTimeout(()=>{
+        this.$router.push({ name: 'page-wallet-detail', query:{type:_type}})
+      },300)
     },
     hideKeyboard(event){
       if(event.keyCode == 13){
@@ -119,7 +124,9 @@ export default {
 <style lang="less" scoped>
 .page-main {
   overflow-y: hidden;
+  background-color: #F9F9F9;
 }
+.bg-white {background-color: #fff;}
 .amount-container {
   height: 3rem;
   background-color: #4D7BF3;
@@ -241,6 +248,12 @@ export default {
     &:first-of-type {
       border-top-color: #e4e5e7;
     }
+    &:last-of-type {
+      border-bottom: none;
+    }
+    &.active {
+      background-color: #f1f1f1;
+    }
     > div {
       flex: 1;
       &:last-of-type {
@@ -268,12 +281,6 @@ export default {
       span:last-of-type {
         color: #98999C;
         font-size: 0.24rem;
-        &:before {
-          content: '≈';
-        }
-        &:after {
-          content: '￥';
-        }
       }
     }
   }

@@ -1,6 +1,6 @@
 <template>
   <div class="wrap">
-    <transition enter-active-class="animated short slideInRight" leave-active-class="animated short slideOutLeft">
+    <transition enter-active-class="animated short fadeIn" leave-active-class="animated short fadeOut">
       <router-view :class="['frames']"></router-view>
     </transition>
     <comp-footer id="footer"></comp-footer>

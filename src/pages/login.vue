@@ -6,7 +6,7 @@
         <p><i class="mobile"></i><input type="tel" name="account" v-model="account" maxlength="11" :placeholder="$t('message.login.phonePlaceholder')"></p>
         <p><i class="password"></i><input type="password" name="password" v-model="password" maxlength="16" :placeholder="$t('message.login.passwordPlaceholder')"><i class="clear-password" v-tap="{methods:resetPW}"></i></p>
         <div class="findpw"><router-link :to="{name:'reset-password'}" tag="span">{{$t('message.login.forgot')}}</router-link></div>
-        <div class="login-btn"><mt-button type="primary" size="large" v-tap="{methods:login}">{{$t('message.login.login')}}</mt-button></div>
+        <div class="login-btn"><mt-button type="primary" size="large" v-tap="{methods:$root.routeTo,to:'page-wallet'}">{{$t('message.login.login')}}</mt-button></div>
         <div class="reg-btn">{{$t('message.login.noAccount')}} <router-link :to="{name:'register'}">{{$t('message.login.register')}}</router-link></div>
       </div>
     </div>

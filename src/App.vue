@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-      <transition enter-active-class="animated short slideInRight" leave-active-class="animated short slideOutLeft">
+      <transition enter-active-class="animated short fadeIn" leave-active-class="animated short fadeOut">
       	<router-view></router-view>
       </transition>
   </div>

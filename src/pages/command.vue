@@ -14,42 +14,42 @@
         <div class="command-container" v-tap="{methods:$root.routeTo, to:'page-command-add'}">
           <h1><i></i><span>{{$t('message.cmd.twofa')}}</span><i>+ {{$t('message.cmd.add')}}</i></h1>
         </div>
-        <ul class="command-list unselected mt40" id="commandList">
-          <li @touchstart="showControlButton($event)" @touchend="clearLoop" v-tap="{methods:hideCP}">
+        <ul class="command-list unselected mt40" id="commandList" @touchstart="hideCP">
+          <li @touchstart="activeLayer($event)" @touchend="clearLoop">
             <div class="progress" data-second="5"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+5)%30}}</span></div>
             <div>Sjafh3793rdkgvf</div>
-            <div><i></i><span class="f36">123 456</span></div>
-            <div class="btn-copy" :data-clipboard-text="'i love you '"><i></i></div>
+            <div><i v-tap="{methods:showControlButton}"></i><span class="f36">123111</span></div>
+            <div><i class="btn-copy" :data-clipboard-text="'i love you '"></i></div>
           </li>
-          <li @touchstart="showControlButton($event)" @touchend="clearLoop" v-tap="{methods:hideCP}">
-            <div class="progress" data-second="18"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+18)%30}}</span></div>
+          <li @touchstart="activeLayer($event)" @touchend="clearLoop">
+            <div class="progress" data-second="5"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+5)%30}}</span></div>
             <div>Sjafh3793rdkgvf</div>
-            <div><i></i><span class="f36">123 456</span></div>
-            <div class="btn-copy" :data-clipboard-text="'i love you '"><i></i></div>
+            <div><i v-tap="{methods:showControlButton}"></i><span class="f36">123111</span></div>
+            <div><i class="btn-copy" :data-clipboard-text="'i love you '"></i></div>
           </li>
-          <li @touchstart="showControlButton($event)" @touchend="clearLoop" v-tap="{methods:hideCP}">
-            <div class="progress" data-second="10"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+10)%30}}</span></div>
+          <li @touchstart="activeLayer($event)" @touchend="clearLoop">
+            <div class="progress" data-second="5"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+5)%30}}</span></div>
             <div>Sjafh3793rdkgvf</div>
-            <div><i></i><span class="f36">123 456</span></div>
-            <div class="btn-copy" :data-clipboard-text="'i love you '"><i></i></div>
+            <div><i v-tap="{methods:showControlButton}"></i><span class="f36">123111</span></div>
+            <div><i class="btn-copy" :data-clipboard-text="'i love you '"></i></div>
           </li>
-          <li @touchstart="showControlButton($event)" @touchend="clearLoop" v-tap="{methods:hideCP}">
-            <div class="progress" data-second="2"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+2)%30}}</span></div>
+          <li @touchstart="activeLayer($event)" @touchend="clearLoop">
+            <div class="progress" data-second="5"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+5)%30}}</span></div>
             <div>Sjafh3793rdkgvf</div>
-            <div><i></i><span class="f36">123 456</span></div>
-            <div class="btn-copy" :data-clipboard-text="'i love you '"><i></i></div>
+            <div><i v-tap="{methods:showControlButton}"></i><span class="f36">123111</span></div>
+            <div><i class="btn-copy" :data-clipboard-text="'i love you '"></i></div>
           </li>
-          <li @touchstart="showControlButton($event)" @touchend="clearLoop" v-tap="{methods:hideCP}">
-            <div class="progress" data-second="8"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+8)%30}}</span></div>
+          <li @touchstart="activeLayer($event)" @touchend="clearLoop">
+            <div class="progress" data-second="5"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+5)%30}}</span></div>
             <div>Sjafh3793rdkgvf</div>
-            <div><i></i><span class="f36">123 456</span></div>
-            <div class="btn-copy" :data-clipboard-text="'i love you '"><i></i></div>
+            <div><i v-tap="{methods:showControlButton}"></i><span class="f36">123111</span></div>
+            <div><i class="btn-copy" :data-clipboard-text="'i love you '"></i></div>
           </li>
-          <li @touchstart="showControlButton($event)" @touchend="clearLoop" v-tap="{methods:hideCP}">
-            <div class="progress" data-second="25"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+25)%30}}</span></div>
+          <li @touchstart="activeLayer($event)" @touchend="clearLoop">
+            <div class="progress" data-second="5"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+5)%30}}</span></div>
             <div>Sjafh3793rdkgvf</div>
-            <div><i></i><span class="f36">123 456</span></div>
-            <div class="btn-copy" :data-clipboard-text="'i love you '"><i></i></div>
+            <div><i v-tap="{methods:showControlButton}"></i><span class="f36">123111</span></div>
+            <div><i class="btn-copy" :data-clipboard-text="'i love you '"></i></div>
           </li>
         </ul>
         <div class="pb40"></div>
@@ -61,6 +61,7 @@
         </transition>
       </div>
     </div>
+    <ul class="command-list unselected fixed" id="tempContainer" v-show="isDrag"></ul>
     <command-editor :show="showEditorLayer" :hideFunction="hideEditorLayer" :cname="cname"></command-editor>
   </div>
 </template>
@@ -74,23 +75,49 @@ import { Toast,MessageBox  } from 'mint-ui'
     data(){
       return {
         scroll:false,
-        loop:0,
         showCP:false,
         showEditorLayer:false,
         cname:'Sjafh3793rdkgvf',
         timer:0,
+        isDrag:false,
+        dragTarget:Object,
+        currentPos:0, //拖动对象所处的位置
+        init:{
+          init_y:0, //拖动起始点y坐标
+          init_scroll_top:0, //拖动起始点滚动偏移量
+          init_CL_y:0, //口令列表初始位置
+          init_CL_li_height:0, //口令列表单列高度
+        } 
+
       }
     },
     mounted(){
+      this.init.init_CL_y = $('#commandList').offset().top
+      this.init.init_CL_li_height = $('#commandList li:first').outerHeight()
       setInterval(()=>{
         this.timer += 1
       },1000)
       this.initCountDown()
       this.initCopy()
+      this.initSortable()
       setTimeout(this.initScroll,1000)
-      setTimeout(()=>{
-        this.$store.commit('updateUsbkeyStatus',true)
-      },2000)
+    },
+    watch:{
+      currentPos(n, o){ //当位置发生跳转时，进行排序动作
+        var $tar
+        if(n>=0){
+          $tar = $('#commandList li').not(this.dragTarget).eq(n)
+        } else {
+          $tar = $('#commandList li').not(this.dragTarget).eq(0)
+        }
+        if($tar.length){
+          if(n>=0){
+            $tar.after(this.dragTarget)
+          } else {
+            $tar.before(this.dragTarget)
+          }
+        }
+      }
     },
     methods:{
       initScroll(){
@@ -101,14 +128,52 @@ import { Toast,MessageBox  } from 'mint-ui'
           click:true
         });
       },
-      showControlButton(event) {
+      showControlButton(args) {
+        var $container = $(args.event.target).parents('li:first'), $tar = $('#controlPanel')
+        $tar.data('tar',$container).css('top',Math.round($container.position().top+$container.height()))
+        $container.siblings('.active').removeClass('active')
+        $container.addClass('active')
+        this.showCP = true
+      },
+      initSortable(){
+        var self = this
+        $('#tempContainer').on('touchstart',function(e){
+          e.preventDefault()
+          e.stopPropagation()
+          if (e.targetTouches.length == 1) {
+            var touch = e.targetTouches[0];  // 把元素放在手指所在的位置
+            self.init.init_y = touch.pageY
+            self.init.init_scroll_top = self.scroll.y
+          }
+          
+        }).on('touchmove',function(e){
+          e.preventDefault()
+          e.stopPropagation()
+          if (e.targetTouches.length == 1) {
+            var touch = e.targetTouches[0], scroll_dist  // 把元素放在手指所在的位置
+            $(this).css("top",(touch.pageY- parseInt($(this).height())/2 + 'px'));
+            scroll_dist = self.init.init_scroll_top-(touch.pageY - self.init.init_y)
+            scroll_dist = scroll_dist > 0 ? 0: scroll_dist
+            scroll_dist = scroll_dist < self.scroll.maxScrollY  ? self.scroll.maxScrollY: scroll_dist
+            self.scroll.scrollTo(0, scroll_dist)
+            var _pos = Math.floor(($(e.currentTarget).offset().top - self.init.init_CL_li_height/2 - (self.init.init_CL_y+scroll_dist))/self.init.init_CL_li_height)
+            self.currentPos = _pos
+          }
+        }).on('touchend',function(e){
+          var $drag = $('#tempContainer')
+          self.dragTarget.html($drag.find('li').html())
+          self.isDrag = false
+          $drag.empty()
+        })
+      },
+      activeLayer(event) {
           clearInterval(this.loop);//再次清空定时器，防止重复注册定时器
           this.loop=setTimeout(()=>{
-              var $container = $(event.target).parents('li:first'), $tar = $('#controlPanel')
-              $tar.data('tar',$container).css('top',Math.round($container.position().top+$container.height()))
-              $container.siblings('.active').removeClass('active')
-              $container.addClass('active')
-              this.showCP = true
+              var $container = $(event.target).parents('li:first'), $drag = $('#tempContainer')
+              $drag.append($container.clone()).css('top',$container.offset().top+'px')
+              $container.empty()
+              this.isDrag = true
+              this.dragTarget = $container
           },500);
       },
       clearLoop(args) {
@@ -116,6 +181,12 @@ import { Toast,MessageBox  } from 'mint-ui'
       },
       hideCP(){
         this.showCP = false
+        if(this.isDrag){
+          var $drag = $('#tempContainer')
+          this.dragTarget.html($drag.find('li').html())
+          this.isDrag = false
+          $drag.empty()
+        }
       },
       showRecordEditor(args){ //编辑操作
         var self = this
@@ -302,17 +373,25 @@ import { Toast,MessageBox  } from 'mint-ui'
   }
   .command-list {
     background-color: #F9F9F9;
+    &.fixed {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 1rem;
+      box-shadow: 0 0.05rem 0.2rem #ccc
+    }
     > li {
       border-top: 1px solid #eaebec;
       border-bottom: 1px solid #fff;
       padding:0.48rem 0.3rem 0.3rem 0.3rem;
+      height: 1.38rem;
       position: relative;
       list-style: none;
       display: flex;
       &:first-of-type {
         border-top:none;
       }
-      &:hover, &.active  {
+      &.active  {
         background-color: #ebeff7;
         > div:first-child span:last-of-type {
           background-color: #ebeff7;
@@ -374,19 +453,23 @@ import { Toast,MessageBox  } from 'mint-ui'
         }
       }
       >div:nth-child(2) {
+        width: 3rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
         font-size: 0.28rem;
         color: #666;
-        line-height: 0.7rem;
+        line-height: 0.6rem;
       }
       >div:nth-child(3) {
+        width: 3rem;
+        margin-left: 0.1rem;
         color: #00CC33;
         i{
           display: inline-block;
-          width: .28rem;
+          width: 0.9rem;
           height: .28rem;
           margin-top: .2rem;
-          margin-left: 1rem;
-          margin-right: 0.2rem;
           background: url('../assets/img/i_block.png') no-repeat center;
           background-size: contain;
         }
@@ -396,8 +479,7 @@ import { Toast,MessageBox  } from 'mint-ui'
           display: inline-block;
           width: .31rem;
           height: .39rem;
-          margin-top: .1rem;
-          margin-left: .8rem;
+          margin-top: .14rem;
           background: url('../assets/img/i_copy.png') no-repeat center;
           background-size: contain;
         }
