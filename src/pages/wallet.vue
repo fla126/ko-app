@@ -107,7 +107,7 @@ export default {
       _tar.addClass('active')
       setTimeout(()=>{
         this.$router.push({ name: 'page-wallet-detail', query:{type:_type}})
-      },300)
+      },200)
     },
     hideKeyboard(event){
       if(event.keyCode == 13){

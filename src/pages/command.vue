@@ -22,7 +22,13 @@
             <div><i class="btn-copy" :data-clipboard-text="'i love you '"></i></div>
           </li>
           <li @touchstart="activeLayer($event)" @touchend="clearLoop">
-            <div class="progress" data-second="5"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+5)%30}}</span></div>
+            <div class="progress" data-second="10"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+10)%30}}</span></div>
+            <div>Sjafh3793rdkgvf</div>
+            <div><i v-tap="{methods:showControlButton}"></i><span class="f36">123111</span></div>
+            <div><i class="btn-copy" :data-clipboard-text="'i love you '"></i></div>
+          </li>
+          <li @touchstart="activeLayer($event)" @touchend="clearLoop">
+            <div class="progress" data-second="15"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+15)%30}}</span></div>
             <div>Sjafh3793rdkgvf</div>
             <div><i v-tap="{methods:showControlButton}"></i><span class="f36">123111</span></div>
             <div><i class="btn-copy" :data-clipboard-text="'i love you '"></i></div>
@@ -34,7 +40,13 @@
             <div><i class="btn-copy" :data-clipboard-text="'i love you '"></i></div>
           </li>
           <li @touchstart="activeLayer($event)" @touchend="clearLoop">
-            <div class="progress" data-second="5"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+5)%30}}</span></div>
+            <div class="progress" data-second="10"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+10)%30}}</span></div>
+            <div>Sjafh3793rdkgvf</div>
+            <div><i v-tap="{methods:showControlButton}"></i><span class="f36">123111</span></div>
+            <div><i class="btn-copy" :data-clipboard-text="'i love you '"></i></div>
+          </li>
+          <li @touchstart="activeLayer($event)" @touchend="clearLoop">
+            <div class="progress" data-second="15"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+15)%30}}</span></div>
             <div>Sjafh3793rdkgvf</div>
             <div><i v-tap="{methods:showControlButton}"></i><span class="f36">123111</span></div>
             <div><i class="btn-copy" :data-clipboard-text="'i love you '"></i></div>
@@ -46,7 +58,13 @@
             <div><i class="btn-copy" :data-clipboard-text="'i love you '"></i></div>
           </li>
           <li @touchstart="activeLayer($event)" @touchend="clearLoop">
-            <div class="progress" data-second="5"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+5)%30}}</span></div>
+            <div class="progress" data-second="10"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+10)%30}}</span></div>
+            <div>Sjafh3793rdkgvf</div>
+            <div><i v-tap="{methods:showControlButton}"></i><span class="f36">123111</span></div>
+            <div><i class="btn-copy" :data-clipboard-text="'i love you '"></i></div>
+          </li>
+          <li @touchstart="activeLayer($event)" @touchend="clearLoop">
+            <div class="progress" data-second="15"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+15)%30}}</span></div>
             <div>Sjafh3793rdkgvf</div>
             <div><i v-tap="{methods:showControlButton}"></i><span class="f36">123111</span></div>
             <div><i class="btn-copy" :data-clipboard-text="'i love you '"></i></div>
@@ -87,19 +105,21 @@ import { Toast,MessageBox  } from 'mint-ui'
           init_scroll_top:0, //拖动起始点滚动偏移量
           init_CL_y:0, //口令列表初始位置
           init_CL_li_height:0, //口令列表单列高度
+          init_up:0, //向上自动滚动触发点
+          init_down:0, //向下自动滚动触发点
+          interval:0 //滚动心跳
         } 
 
       }
     },
     mounted(){
-      this.init.init_CL_y = $('#commandList').offset().top
-      this.init.init_CL_li_height = $('#commandList li:first').outerHeight()
       setInterval(()=>{
         this.timer += 1
       },1000)
       this.initCountDown()
       this.initCopy()
       this.initSortable()
+      this.initPos()
       setTimeout(this.initScroll,1000)
     },
     watch:{
@@ -120,7 +140,13 @@ import { Toast,MessageBox  } from 'mint-ui'
       }
     },
     methods:{
-      initScroll(){
+      initPos(){ //初始化滚动前的各项初始参数
+        this.init.init_CL_y = $('#commandList').offset().top
+        this.init.init_CL_li_height = $('#commandList li:first').outerHeight()
+        this.init.init_up =  window.innerHeight/3
+        this.init.init_down =  window.innerHeight*2/3
+      },
+      initScroll(){ //初始化滚动条
         var self = this
         this.scroll = new IScroll('#scroll',{
           mouseWheel:true,
@@ -128,20 +154,20 @@ import { Toast,MessageBox  } from 'mint-ui'
           click:true
         });
       },
-      showControlButton(args) {
+      showControlButton(args) { //显示编辑、删除面板
         var $container = $(args.event.target).parents('li:first'), $tar = $('#controlPanel')
         $tar.data('tar',$container).css('top',Math.round($container.position().top+$container.height()))
         $container.siblings('.active').removeClass('active')
         $container.addClass('active')
         this.showCP = true
       },
-      initSortable(){
+      initSortable(){ //初始化拖动排序功能
         var self = this
         $('#tempContainer').on('touchstart',function(e){
           e.preventDefault()
           e.stopPropagation()
           if (e.targetTouches.length == 1) {
-            var touch = e.targetTouches[0];  // 把元素放在手指所在的位置
+            var touch = e.targetTouches[0]
             self.init.init_y = touch.pageY
             self.init.init_scroll_top = self.scroll.y
           }
@@ -150,7 +176,7 @@ import { Toast,MessageBox  } from 'mint-ui'
           e.preventDefault()
           e.stopPropagation()
           if (e.targetTouches.length == 1) {
-            var touch = e.targetTouches[0], scroll_dist  // 把元素放在手指所在的位置
+            var touch = e.targetTouches[0], scroll_dist
             $(this).css("top",(touch.pageY- parseInt($(this).height())/2 + 'px'));
             scroll_dist = self.init.init_scroll_top-(touch.pageY - self.init.init_y)
             scroll_dist = scroll_dist > 0 ? 0: scroll_dist
@@ -160,18 +186,17 @@ import { Toast,MessageBox  } from 'mint-ui'
             self.currentPos = _pos
           }
         }).on('touchend',function(e){
-          var $drag = $('#tempContainer')
-          self.dragTarget.html($drag.find('li').html())
+          $('#tempContainer').empty()
+          self.dragTarget.removeClass('hide')
           self.isDrag = false
-          $drag.empty()
         })
       },
-      activeLayer(event) {
+      activeLayer(event) { //激活排序拖动
           clearInterval(this.loop);//再次清空定时器，防止重复注册定时器
           this.loop=setTimeout(()=>{
               var $container = $(event.target).parents('li:first'), $drag = $('#tempContainer')
               $drag.append($container.clone()).css('top',$container.offset().top+'px')
-              $container.empty()
+              $container.addClass('hide')
               this.isDrag = true
               this.dragTarget = $container
           },500);
@@ -182,10 +207,10 @@ import { Toast,MessageBox  } from 'mint-ui'
       hideCP(){
         this.showCP = false
         if(this.isDrag){
-          var $drag = $('#tempContainer')
-          this.dragTarget.html($drag.find('li').html())
+          $('#tempContainer').empty()
+          this.dragTarget.removeClass('hide')
           this.isDrag = false
-          $drag.empty()
+          
         }
       },
       showRecordEditor(args){ //编辑操作
@@ -390,6 +415,11 @@ import { Toast,MessageBox  } from 'mint-ui'
       display: flex;
       &:first-of-type {
         border-top:none;
+      }
+      &.hide  {
+        > div {
+          display: none;
+        }
       }
       &.active  {
         background-color: #ebeff7;
