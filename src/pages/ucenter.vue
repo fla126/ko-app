@@ -1,10 +1,13 @@
 <template>
-  <div id="ucenter">
-    <mt-header class="common-mt-header" :title="$t('message.mycenter.center')">
+  <div class="page">
+<!--    <mt-header class="common-mt-header" :title="$t('message.mycenter.center')">
         <a slot="right" v-tap="{methods:$root.routeTo, to:'page-ucenter-setup'}">
         <img class="ucenter-img" src="../assets/img/mycenter/i_right.png"/>
         </a>
-    </mt-header>
+    </mt-header>-->
+    <comp-top-back :class="'line'" :back="false" >
+        {{$t('message.mycenter.center')}}
+    </comp-top-back>
 
     <div class="common-content u-box1 mt40">
            <div class="inner" v-tap="{methods:routeTo, to:'page-uinfo'}">

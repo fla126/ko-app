@@ -48,7 +48,7 @@ export default {
       event.currentTarget.select()
     }
   },
-  components:{  
+  components:{
     maskLayer,
   }
 }
@@ -80,7 +80,7 @@ export default {
     line-height: 0.5rem;
     font-size: 0.32rem;
     &:focus {
-      
+
     }
   }
   h3 {

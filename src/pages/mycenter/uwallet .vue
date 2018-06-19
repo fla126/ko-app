@@ -1,14 +1,9 @@
 <template>
   <div  class="page wrap">
-    <mt-header class="common-mt-header" :title="$t('message.mycenter.wallet')">
-      <a  slot="left" v-tap="{methods:routeTo, to:'page-ucenter'}">
-        <mt-button icon="back"></mt-button>
-      </a>
-        <!--<mt-button v-tap="{methods:routeTo, to:'page-ucenter'}" icon="back" ></mt-button>-->
-       <a slot="right" class="right">
-        <img v-tap="{methods:routeTo, to:'page-addwallet'}" class="uwallet-right-img" src="../../assets/img/mycenter/i_nav_add.png"/>
-       </a>
-    </mt-header>
+    <comp-top-back :class="'line'" :back="true" >
+      {{$t('message.mycenter.wallet')}}
+      <span class="header-right"><img v-tap="{methods:routeTo, to:'page-addwallet'}" class="uwallet-right-img" src="../../assets/img/mycenter/i_nav_add.png"/></span>
+    </comp-top-back>
 
     <div class="page-main" id="scroll">
       <section>
@@ -19,17 +14,20 @@
                   <section class="one">
                     <span >VIVINING</span>
                     <span>V6237WTGDEIVINING</span>
-                    <span><mt-button size="small" type="danger">{{$t('message.wallet.frozen')}}</mt-button></span>
+                    <span> <button class="tin-btn-default tin-btn-blue">{{$t('message.wallet.frozen')}}</button>
+                     </span>
                   </section>
                   <section class="one">
                     <span >VIVINING</span>
                     <span>V6237WTGDEIVINING</span>
-                    <span><mt-button size="small" type="primary">{{$t('message.wallet.unfrozen')}}</mt-button></span>
+                    <span>
+                      <button class="tin-btn-default tin-btn-green">{{$t('message.wallet.unfrozen')}}</button>
+                    </span>
                   </section>
                   <section class="one">
                     <span >VIVINING</span>
                     <span>V6237WTGDEIVINING</span>
-                    <span><mt-button size="small" type="danger">{{$t('message.wallet.frozen')}}</mt-button></span>
+                    <span><button class="tin-btn-default tin-btn-blue">{{$t('message.wallet.unfrozen')}}</button></span>
                   </section>
                 </div>
               </div>
@@ -42,45 +40,25 @@
               <section class="one">
                 <span >VIVINING</span>
                 <span>V6237WTGDEIVINING</span>
-                <span><mt-button size="small" type="danger">{{$t('message.wallet.frozen')}}</mt-button></span>
+                <span> <button class="tin-btn-default tin-btn-blue">{{$t('message.wallet.frozen')}}</button>
+                     </span>
               </section>
               <section class="one">
                 <span >VIVINING</span>
                 <span>V6237WTGDEIVINING</span>
-                <span><mt-button size="small" type="primary">{{$t('message.wallet.unfrozen')}}</mt-button></span>
+                <span>
+                      <button class="tin-btn-default tin-btn-green">{{$t('message.wallet.unfrozen')}}</button>
+                    </span>
               </section>
               <section class="one">
                 <span >VIVINING</span>
                 <span>V6237WTGDEIVINING</span>
-                <span><mt-button size="small" type="danger">{{$t('message.wallet.frozen')}}</mt-button></span>
+                <span><button class="tin-btn-default tin-btn-blue">{{$t('message.wallet.unfrozen')}}</button></span>
               </section>
             </div>
           </div>
         </div>
 
-
-        <div class="uwallet-box ">
-          <h1 class="uwallet-h1 mt25 f30">BTC</h1>
-          <div class="uwallet-content w-content m-box1 mt25 f24">
-            <div class="inner">
-              <section class="one">
-                <span >VIVINING</span>
-                <span>V6237WTGDEIVINING</span>
-                <span><mt-button size="small" type="danger">{{$t('message.wallet.frozen')}}</mt-button></span>
-              </section>
-              <section class="one">
-                <span >VIVINING</span>
-                <span>V6237WTGDEIVINING</span>
-                <span><mt-button size="small" type="primary">{{$t('message.wallet.unfrozen')}}</mt-button></span>
-              </section>
-              <section class="one">
-                <span >VIVINING</span>
-                <span>V6237WTGDEIVINING</span>
-                <span><mt-button size="small" type="danger">{{$t('message.wallet.frozen')}}</mt-button></span>
-              </section>
-            </div>
-          </div>
-        </div>
 
         <div class="uwallet-box ">
           <h1 class="uwallet-h1 mt25 f30">BTC</h1>
@@ -89,39 +67,20 @@
               <section class="one">
                 <span >VIVINING</span>
                 <span>V6237WTGDEIVINING</span>
-                <span><mt-button size="small" type="danger">{{$t('message.wallet.frozen')}}</mt-button></span>
+                <span> <button class="tin-btn-default tin-btn-blue">{{$t('message.wallet.frozen')}}</button>
+                     </span>
               </section>
               <section class="one">
                 <span >VIVINING</span>
                 <span>V6237WTGDEIVINING</span>
-                <span><mt-button size="small" type="primary">{{$t('message.wallet.unfrozen')}}</mt-button></span>
+                <span>
+                      <button class="tin-btn-default tin-btn-green">{{$t('message.wallet.unfrozen')}}</button>
+                    </span>
               </section>
               <section class="one">
                 <span >VIVINING</span>
                 <span>V6237WTGDEIVINING</span>
-                <span><mt-button size="small" type="danger">{{$t('message.wallet.frozen')}}</mt-button></span>
-              </section>
-            </div>
-          </div>
-        </div>
-        <div class="uwallet-box ">
-          <h1 class="uwallet-h1 mt25 f30">BTC</h1>
-          <div class="uwallet-content w-content m-box1 mt25 f24">
-            <div class="inner">
-              <section class="one">
-                <span >VIVINING</span>
-                <span>V6237WTGDEIVINING</span>
-                <span><mt-button size="small" type="danger">{{$t('message.wallet.frozen')}}</mt-button></span>
-              </section>
-              <section class="one">
-                <span >VIVINING</span>
-                <span>V6237WTGDEIVINING</span>
-                <span><mt-button size="small" type="primary">{{$t('message.wallet.unfrozen')}}</mt-button></span>
-              </section>
-              <section class="one">
-                <span >VIVINING</span>
-                <span>V6237WTGDEIVINING</span>
-                <span><mt-button size="small" type="danger">{{$t('message.wallet.frozen')}}</mt-button></span>
+                <span><button class="tin-btn-default tin-btn-blue">{{$t('message.wallet.unfrozen')}}</button></span>
               </section>
             </div>
           </div>
@@ -134,17 +93,45 @@
               <section class="one">
                 <span >VIVINING</span>
                 <span>V6237WTGDEIVINING</span>
-                <span><mt-button size="small" type="danger">{{$t('message.wallet.frozen')}}</mt-button></span>
+                <span> <button class="tin-btn-default tin-btn-blue">{{$t('message.wallet.frozen')}}</button>
+                     </span>
               </section>
               <section class="one">
                 <span >VIVINING</span>
                 <span>V6237WTGDEIVINING</span>
-                <span><mt-button size="small" type="primary">{{$t('message.wallet.unfrozen')}}</mt-button></span>
+                <span>
+                      <button class="tin-btn-default tin-btn-green">{{$t('message.wallet.unfrozen')}}</button>
+                    </span>
               </section>
               <section class="one">
                 <span >VIVINING</span>
                 <span>V6237WTGDEIVINING</span>
-                <span><mt-button size="small" type="danger">{{$t('message.wallet.frozen')}}</mt-button></span>
+                <span><button class="tin-btn-default tin-btn-blue">{{$t('message.wallet.unfrozen')}}</button></span>
+              </section>
+            </div>
+          </div>
+        </div>
+        <div class="uwallet-box ">
+          <h1 class="uwallet-h1 mt25 f30">BTC</h1>
+          <div class="uwallet-content w-content m-box1 mt25 f24">
+            <div class="inner">
+              <section class="one">
+                <span >VIVINING</span>
+                <span>V6237WTGDEIVINING</span>
+                <span> <button class="tin-btn-default tin-btn-blue">{{$t('message.wallet.frozen')}}</button>
+                     </span>
+              </section>
+              <section class="one">
+                <span >VIVINING</span>
+                <span>V6237WTGDEIVINING</span>
+                <span>
+                      <button class="tin-btn-default tin-btn-green">{{$t('message.wallet.unfrozen')}}</button>
+                    </span>
+              </section>
+              <section class="one">
+                <span >VIVINING</span>
+                <span>V6237WTGDEIVINING</span>
+                <span><button class="tin-btn-default tin-btn-blue">{{$t('message.wallet.unfrozen')}}</button></span>
               </section>
             </div>
           </div>
@@ -157,17 +144,46 @@
               <section class="one">
                 <span >VIVINING</span>
                 <span>V6237WTGDEIVINING</span>
-                <span><mt-button size="small" type="danger">{{$t('message.wallet.frozen')}}</mt-button></span>
+                <span> <button class="tin-btn-default tin-btn-blue">{{$t('message.wallet.frozen')}}</button>
+                     </span>
               </section>
               <section class="one">
                 <span >VIVINING</span>
                 <span>V6237WTGDEIVINING</span>
-                <span><mt-button size="small" type="primary">{{$t('message.wallet.unfrozen')}}</mt-button></span>
+                <span>
+                      <button class="tin-btn-default tin-btn-green">{{$t('message.wallet.unfrozen')}}</button>
+                    </span>
               </section>
               <section class="one">
                 <span >VIVINING</span>
                 <span>V6237WTGDEIVINING</span>
-                <span><mt-button size="small" type="danger">{{$t('message.wallet.frozen')}}</mt-button></span>
+                <span><button class="tin-btn-default tin-btn-blue">{{$t('message.wallet.unfrozen')}}</button></span>
+              </section>
+            </div>
+          </div>
+        </div>
+
+        <div class="uwallet-box ">
+          <h1 class="uwallet-h1 mt25 f30">BTC</h1>
+          <div class="uwallet-content w-content m-box1 mt25 f24">
+            <div class="inner">
+              <section class="one">
+                <span >VIVINING</span>
+                <span>V6237WTGDEIVINING</span>
+                <span> <button class="tin-btn-default tin-btn-blue">{{$t('message.wallet.frozen')}}</button>
+                     </span>
+              </section>
+              <section class="one">
+                <span >VIVINING</span>
+                <span>V6237WTGDEIVINING</span>
+                <span>
+                      <button class="tin-btn-default tin-btn-green">{{$t('message.wallet.unfrozen')}}</button>
+                    </span>
+              </section>
+              <section class="one">
+                <span >VIVINING</span>
+                <span>V6237WTGDEIVINING</span>
+                <span><button class="tin-btn-default tin-btn-blue">{{$t('message.wallet.unfrozen')}}</button></span>
               </section>
             </div>
           </div>
@@ -219,6 +235,13 @@
     overflow-y: hidden;
     background-color: #F9F9F9;
   }
+  .header-right{
+    position: absolute;
+    right: .3rem;
+  }
+  img.uwallet-right-img{
+    width: .36rem; height: .36rem;
+  }
   .uwallet-content .one{
     display: flex;
     justify-content: space-between;
@@ -226,9 +249,8 @@
     padding: 0.2rem 0rem;
   }
   .uwallet-content .one span{
-     line-height: .6rem;
+     line-height: .45rem;
   }
-
   .uwallet-content .one:last-child{
     border-bottom: 0;
   }
@@ -246,11 +268,9 @@
   .w-content>.inner{
     padding: 0 .3rem;
   }
-
   .w-content a.w-box1{
     margin-top: .4rem;
   }
-
   .w-content a.w-box1 .mint-cell-title img{
     height:.3rem;
     width: .4rem;

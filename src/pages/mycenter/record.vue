@@ -1,23 +1,22 @@
 <template>
   <!-- 记录 -->
   <div id="record" class="page wrap">
-    <mt-header class="common-mt-header" :title="$t('message.rec.record')">
-      <router-link to="/ucenter" slot="left">
-        <mt-button icon="back"></mt-button>
-      </router-link>
-    </mt-header>
-
+    <comp-top-back :class="'line'" :back="true" >
+      {{$t('message.rec.record')}}
+    </comp-top-back>
     <div class="page-main" id="scroll">
       <div>
           <div class="re-box">
             <div class="inner">
               <section class="re-top">
                 <label class=" f24 ft-c-gray">{{$t('message.mycenter.wallet')}}</label>
-                <select class="rec-select f24">
-                  <option>BTC</option>
-                  <option>ETH</option>
-                  <option>BARK</option>
-                </select>
+                <div class="styled-select">
+                  <select class="rec-select f24">
+                    <option>BTC</option>
+                    <option>ETH</option>
+                    <option>BARK</option>
+                  </select>
+                </div>
               </section>
             </div>
           </div>
@@ -266,6 +265,29 @@
 
 </script>
 <style type="text/css" lang="less" scoped  >
+  .styled-select  {
+    overflow: hidden;
+    width: 6.1rem;
+    background: url("../../assets/img/i_down.png") no-repeat 5.5rem;
+    background-size: .26rem .15rem;
+    display: inline-block;
+    border: .01rem solid #ecedee;
+    padding: 0 0 0 .3rem;
+    border-radius: .02rem;
+    select{
+      background: transparent;
+      width: 100%;
+      border: 0;
+      height: .6rem;
+      line-height: .5rem;
+      -webkit-appearance: none;
+    }
+  }
+
+  .rec-select:focus {
+    outline:none;
+    border: 0;
+  }
   .page-main{
     overflow-y: hidden;
     background-color: #F9F9F9;
@@ -296,12 +318,12 @@
     color: #333333;
   }
 
- #record .rec-select{
+/* #record .rec-select{
    width: 6.1rem;
    height: .5rem;
    border: .01rem solid #ececec;
    background: #f9f9f9;
- }
+ }*/
  #record .m-box1,.m-box2{
     background-color:white;
   }
@@ -337,6 +359,8 @@
  .re-top label{
    width:.8rem;
    display: inline-block;
+   position: relative;
+   top: -.21rem;
  }
  #record .b-manger .mint-field-core{
     font-size: .3rem;

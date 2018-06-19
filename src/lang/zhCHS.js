@@ -21,6 +21,9 @@ module.exports={
       topInfo:'提示：为了创建钱包，你需要连接Tinkey',
       addWallet:'添加钱包'
     },
+    addWalletDialog:{// 添加钱包输入密码弹窗
+     enterPwd:'请输入密码'
+    },
     walletDetail:{
         send:'转账',
         receive:'收款',
