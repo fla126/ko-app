@@ -1,11 +1,9 @@
 <template>
   <div id="uinfo" class="page wrap">
-    <mt-header class="common-mt-header" :title="$t('message.msg.message')">
-      <router-link to="/ucenter" slot="left">
-        <mt-button icon="back"></mt-button>
-      </router-link>
-      <mt-button class="f30 btnright"  slot="right">{{$t('message.msg.all')}}</mt-button>
-    </mt-header>
+    <comp-top-back :class="'line'" :back="true" >
+      {{$t('message.msg.message')}}
+       <span class="header-right">全部</span>
+    </comp-top-back>
 
     <div class="page-main" id="scroll"> <!--content start-->
        <div>
@@ -145,6 +143,11 @@
 </script>
 
 <style type="text/css" lang="less" scoped >
+  .header-right{
+    position: absolute;
+    right: .3rem;
+    font-size: .3rem;
+  }
   .page-main{
     overflow-y: hidden;
     background-color: #F9F9F9;

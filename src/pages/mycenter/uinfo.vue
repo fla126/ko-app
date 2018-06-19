@@ -1,11 +1,8 @@
 <template>
   <div id="uinfo" class="page wrap">
-    <mt-header class="common-mt-header" :title="$t('message.uinfo.userInfo')">
-      <router-link to="/ucenter" slot="left">
-        <mt-button icon="back"></mt-button>
-      </router-link>
-    </mt-header>
-
+    <comp-top-back :class="'line'" :back="true" >
+      {{$t('message.uinfo.userInfo')}}
+    </comp-top-back>
 
     <div class="common-content bg-white mt40 ft-c-gray">
       <div class="inner">
@@ -29,7 +26,7 @@
 
       </div>
     </div>
-    <transition enter-active-class="animated short fadeIn">
+    <transition enter-active-class="animated short fadeIn" >
         <ul v-show="isdown" class="address_ul f24 mt10" >
           <li><span>大壳子</span><span>BTC2</span><span>dweyfwef......sd123456</span></li>
           <li><span>大壳子</span><span>BTC2</span><span>dweyfwef......sd123456</span></li>

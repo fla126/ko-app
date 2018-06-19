@@ -1,11 +1,8 @@
 <template>
   <div  class="page wrap">
-    <mt-header class="all-header common-mt-header" :title="$t('message.about.aboutUs')">
-      <router-link to="/ucenter" slot="left">
-        <mt-button icon="back"></mt-button>
-      </router-link>
-    </mt-header>
-
+    <comp-top-back :class="'line'" :back="true" >
+      {{$t('message.about.aboutUs')}}
+    </comp-top-back>
 
     <div  class="common-content box1 mt90">
       <div class="inner co-text-center">

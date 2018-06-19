@@ -1,11 +1,8 @@
 <template>
   <div id="uinfo" class="page wrap" >
-    <mt-header class="common-mt-header" :title="$t('message.help.helpName')">
-      <router-link to="/ucenter" slot="left">
-        <mt-button icon="back"></mt-button>
-      </router-link>
-    </mt-header>
-
+    <comp-top-back :class="'line'" :back="true" >
+      {{$t('message.help.helpName')}}
+    </comp-top-back>
 
     <div class="common-content bg-white mt40 ft-c-gray">
       <div class="inner">

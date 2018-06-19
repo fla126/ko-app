@@ -23,7 +23,7 @@
 
     <div class="common-content bg-white mt60">
       <div class="inner">
-        <mt-field class="common-mt-field"   :placeholder="$t('message.setup.manageToken')" v-model="captcha">
+        <mt-field   class="common-mt-field"   :placeholder="$t('message.setup.manageToken')" v-model="captcha">
           <img class="i-search" src="../../assets/img/mycenter/i_search.png" >
         </mt-field>
         <mt-checklist class="common-clear-style"
