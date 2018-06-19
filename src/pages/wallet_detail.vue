@@ -20,6 +20,11 @@
             <div><i></i></div>
             <div>1MzziGBa7tNN.......wRcvSGZu5<br /><span>2018.04.23</span></div>
             <div><span>0.4567BTC</span></div>
+            <div class="progress">
+              <p>56秒<em class="active">6/12</em></p>
+              <mt-progress :value="20"></mt-progress>
+            </div>
+
           </li>
           <li class="out">
             <div><i></i></div>
@@ -85,7 +90,7 @@
 <script>
 
 import data from '@/api/data'
-
+import { Progress } from 'mint-ui'
 import maskLayer from '@/components/common/mask'
 
 export default {
@@ -136,11 +141,13 @@ export default {
   components:{    
     
     maskLayer,
+    'mtProgress':Progress
   }
 }
 
 </script>
 <style lang="less" scoped>
+
 .page-main {
   overflow-y: hidden;
 }
@@ -262,6 +269,7 @@ export default {
     padding: 0.3rem;
     list-style: none;
     display: flex;
+    flex-wrap:wrap;
     &:first-of-type {
       border-top: none;
     }
@@ -284,6 +292,10 @@ export default {
           content: '+ ';
         }
       }
+    }
+    > div:nth-of-type(4) {
+      width: 100%;
+      padding-left: 0.7rem;
     }
     i {
       display: inline-block;
@@ -362,6 +374,21 @@ export default {
     border-radius: 0;
     border-bottom-left-radius: 0.1rem;
     border-bottom-right-radius: 0.1rem;
+  }
+}
+
+.progress p {
+  color: #98999C;
+  font-size: 0.24rem;
+  line-height: 0.4rem;
+  position: relative;
+  em {
+    position: absolute;
+    font-style: normal;
+    right: 0;
+    &.active {
+      color: #4D7BF3;
+    }
   }
 }
 </style>
