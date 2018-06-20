@@ -96,7 +96,9 @@ export default {
   },
   methods:{
     scanning(args){
-
+      this.$root.scanner((error,data)=>{
+        console.log(data)
+      })
     },
     collapse(args){
       this.collapsed = !this.collapsed

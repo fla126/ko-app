@@ -16,5 +16,8 @@ export default {
 	        var t=/^(13\d{9})|(14\d{9})|(15\d{9})|(17\d{9})|(18\d{9})|(0\d{10,11})$/;
 	        return t.test(str);
         }
+    },
+    scanner(func){ //扫描二维码公共函数
+    	uexScanner.open(func)
     }
 }
