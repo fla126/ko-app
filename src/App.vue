@@ -9,24 +9,6 @@
 <script>
 import Vue from 'vue'
 
-// 注册一个全局自定义指令 `v-focus`
-Vue.directive('focus', {
-  inserted: function (el) {
-    el.focus()
-  }
-})
-// 注册一个全局自定义指令 `v-selected`
-Vue.directive('selected', {
-  inserted: function (el) {
-    el.select()
-  }
-})
-
-//小写转大写过滤器
-Vue.filter('uppercase', function (value) {
-  return value.toUpperCase()
-})
-
 export default {
   name: 'app',
   created(){

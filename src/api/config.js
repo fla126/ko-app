@@ -1,15 +1,15 @@
+var env = 'dev'
 var config = {
 	domain:'imagelee.com', //生产环境主域名
 	root:''
 }
-
-var pattern = new RegExp(config.domain)
-if(!pattern.test(location.href)){
-    //开发环境
-    config.domain='localhost:3000'
+var config = {
+	domain: env === 'dev' ? 'localhost:3001': 'hdj.13322.com',
+	root:''
 }
 
 config.root = 'http://'.concat(config.domain)
+
 
 export default {
   root: config.root,
