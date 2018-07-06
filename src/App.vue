@@ -14,10 +14,10 @@ export default {
   created(){
     let isfirst = localStorage.getItem('firstWallet')
     if(!isfirst){
-      this.$router.push({name:'guide'})
+      this.$router.replace({name:'guide'})
     } else {
       if(this.$route.name == 'index'){
-        this.$router.push({name:'login'})
+        this.$router.replace({name:'login'})
       }
     }
   },

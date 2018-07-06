@@ -24,7 +24,7 @@ Vue.use(VueI18n)
 
 Vue.component(compTopBack.name, compTopBack);
 
-var vConsole = new VConsole()
+// var vConsole = new VConsole()
 
 //请求加入随机参数
 var $ajax = axios.create({
