@@ -276,3 +276,31 @@ a:hover,input:hover,button:hover,textarea:hover,a:focus,input:focus,button:focus
   height: auto;
   line-height: auto;
 }
+
+.allow-right::after {
+  border: 1px solid #c8c8cd;
+  border-bottom-width: 0;
+  border-left-width: 0;
+  content: " ";
+  top: 50%;
+  right: 0.1rem;
+  position: absolute;
+  width: 0.12rem;
+  height: 0.12rem;
+  -webkit-transform: translateY(-50%) rotate(45deg);
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.tick::after {
+  border: 1px solid #4d7bf3;
+  border-top-width: 0;
+  border-right-width: 0;
+  content: " ";
+  top: 50%;
+  right: 0.1rem;
+  position: absolute;
+  width: 0.24rem;
+  height: 0.12rem;
+  -webkit-transform: translateY(-50%) rotate(-45deg);
+  transform: translateY(-50%) rotate(-45deg);
+}

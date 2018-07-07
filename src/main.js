@@ -15,7 +15,6 @@ require('./api/filter') //引入全局自定义过滤器
 
 import LangEn from './lang/en' //英文包
 import LangZhCHS from './lang/zhCHS' //简体中文包
-import LangZhCHT from './lang/zhCHT' //繁体中文包
 
 import compTopBack from '@/components/common/top_back'
 
@@ -36,12 +35,11 @@ var $ajax = axios.create({
 Vue.prototype.$ajax = $ajax
 Vue.config.productionTip = false
 
-const i18n = new VueI18n({
-  locale: 'zhCHS',
+let i18n = window.$i18n = new VueI18n({
+  locale: store.state.lang,
   messages: {
     'en': LangEn,
     'zhCHS': LangZhCHS,
-    'zhCHT': LangZhCHT
   }
 })
 

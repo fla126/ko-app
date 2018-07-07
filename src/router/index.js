@@ -24,6 +24,7 @@ import addwallet  from '@/pages/mycenter/addwallet '
 import help  from '@/pages/mycenter/help'
 import about  from '@/pages/mycenter/about'
 import pwd  from '@/pages/pwd/pwd_index'
+import Lang  from '@/pages/mycenter/lang'
 Vue.use(Router)
 
 // const Foo = r => require.ensure([], ()=>r(require('../components/foo.vue')), 'group-foo')
@@ -72,7 +73,7 @@ const router = new Router({
     { path: '/addwallet', name:addwallet.name, component: addwallet  }, // 个人中心--添加钱包
     { path: '/help', name:help.name, component: help  }, // 个人中心--帮助
     { path: '/about', name:about.name, component: about  }, // 个人中心--关于我们
-      {
+    {
       path:'/command-add', //添加口令
       name: commandAdd.name,
       component: commandAdd
@@ -117,7 +118,7 @@ const router = new Router({
       name: walletGather.name,
       component: walletGather
     },
-    
+    {path: '/lang', name: Lang.name, component: Lang },
   ]
 })
 

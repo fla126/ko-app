@@ -1,14 +1,11 @@
 <template>
-  <div id="setup" class="page wrap">
-    <mt-header class="common-mt-header" :title="$t('message.setup.setupName')">
-      <router-link to="/ucenter" slot="left">
-        <mt-button icon="back"></mt-button>
-      </router-link>
-    </mt-header>
+  <div id="setup" class="page">
+    <comp-top-back>{{$t('message.setup.setupName')}}</comp-top-back>
     <div class="common-content bg-white mt40 ft-c-gray">
       <div class="inner">
-        <div class="box-cont " >
+        <div class="box-cont " v-tap="{methods:$root.routeTo, to:'page-lang'}">
           <div class="item"><span class="f30">{{$t('message.setup.languages')}}</span></div>
+          <i class="allow-right"></i>
         </div>
         <div class="box-cont " >
           <div class="item"><span class="f30">{{$t('message.setup.fiat')}}</span></div>
@@ -93,6 +90,7 @@
     align-items: center;
     height: .85rem;
     border-bottom: .02rem solid #ecedee;
+    position: relative;
     .item{
       width: 50%;
     }

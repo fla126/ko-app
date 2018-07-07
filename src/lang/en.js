@@ -78,9 +78,10 @@ module.exports={
     },
   setup:{
     setupName:'Settings',
-    languages:'Multiple Languages',
+    languages:'Language',
     fiat:'Fiat',
-    manageToken:'Manage Token'
+    manageToken:'Manage Token',
+    save:'Save'
   },
     uinfo:{
       tinkey:'Tinkey',

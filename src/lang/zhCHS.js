@@ -80,7 +80,8 @@ module.exports={
       setupName:'设置',
       languages:'多语言',
       fiat:'货币单位',
-      manageToken:'管理币种'
+      manageToken:'管理币种',
+      save:'保存'
     },
     uinfo:{/*个人信息*/
       tinkey:'硬件',
