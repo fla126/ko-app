@@ -87,9 +87,8 @@ export default {
     position: absolute;
     right: .3rem;
     img.uwallet-right-img{
-      width: .4rem;
-      height: .4rem;
-      margin-top: .07rem;
+      width: .5rem;
+      height: .5rem;
     }
   }
    img.left1{
