@@ -68,5 +68,6 @@
     position: absolute;
     right: 0.3rem;
     color: #4d7bf3;
+    font-size: 0.32rem;
   }
 </style>
