@@ -14,6 +14,7 @@ export default new Vuex.Store({
     historyLength: 0,
     usbkeyStatus:false, //usbKey连接状态
     lang: window.localStorage.getItem('lang') || 'en', //语言包
+    publicKey:'e331b6d69882b4cb4ea581d88e0b604039a3de5967688d3dcffdd2270c0fd109', //公钥
 
   },
   getters:{
@@ -22,6 +23,9 @@ export default new Vuex.Store({
     },
     getLang (state){
       return state.lang
+    },
+    getPublicKey (state){
+      return state.publicKey
     },
   },
   mutations: {
@@ -35,6 +39,9 @@ export default new Vuex.Store({
     updateLang (state, lang){
       state.lang = lang
     },
+    updatePublicKey (state, publicKey){
+      state.publicKey = publicKey
+    },
   },
   actions: {
     setHistoryLength({commit}){
@@ -46,6 +53,9 @@ export default new Vuex.Store({
     setLang ({commit}, lang){
       window.localStorage.setItem('lang', lang)
       commit('updateLang',lang)
+    },
+    setPublicKey({commit},publicKey){
+      commit('updatePublicKey',publicKey)
     },
     
   },

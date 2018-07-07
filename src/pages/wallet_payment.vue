@@ -62,12 +62,12 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import data from '@/api/data'
-
-import { Button } from 'mint-ui';
-
-Vue.component(Button.name, Button);
+import { mapGetters, mapActions } from 'vuex'
+import web3 from 'web3'
+import Buffer from 'buffer'
+import Tx from 'ethereumjs-tx'
+import bitcore from 'bitcore-lib'
 
 
 export default {
@@ -94,6 +94,9 @@ export default {
   updated(){
     
   },
+  computed:{
+    ...mapGetters(['getPrivateKey']),
+  },
   methods:{
     scanning(args){
       this.$root.scanner((error,data)=>{
@@ -103,6 +106,28 @@ export default {
     collapse(args){
       this.collapsed = !this.collapsed
     },
+    /*打包签名交易，并发送到各自区块函数
+    @param publicKey String 公钥
+    @param currency String 币种
+    @param transactionData Object 签名交易数据
+    @param callback Function 回调函数*/
+    sendSignedTransaction(publicKey,currency,transactionData,callback){ 
+      currency = currency.toLowerCase()
+      switch(currency){
+        case 'btc':
+          var transaction = new bitcore.Transaction()
+            .from(transactionData)
+            .to('1Gokm82v6DmtwKEB8AiVhm82hyFSsEvBDK', 15000)
+            .sign(privateKey);
+          break
+        case 'eth':
+          var tx = new Tx(transactionData);
+          tx = window.getETHSign(tx,publicKey);
+          var serializedTx = tx.serialize();
+          web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')).on('receipt', callback);
+          break
+      }
+    }
   },
   components:{    
     
