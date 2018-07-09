@@ -25,7 +25,7 @@
         </mt-field>
         <mt-checklist class="common-clear-style"
           align="right"
-          v-model="value"
+          v-model="values"
           :options="options">
         </mt-checklist>
       </div>
@@ -37,13 +37,12 @@
   import Vue from 'vue'
   import { Button } from 'mint-ui';
   import { Cell } from 'mint-ui';
-  import { Header } from 'mint-ui';
   import { Field } from 'mint-ui';
   import { Checklist } from 'mint-ui';
+  import { mapGetters, mapActions } from 'vuex'
 
 
   Vue.component(Button.name, Button);
-  Vue.component(Header.name, Header);
   Vue.component(Cell.name, Cell);
   Vue.component(Field.name, Field);
   Vue.component(Checklist.name, Checklist);
@@ -52,34 +51,50 @@
     data(){
       return {
         captcha:'',
-        value:[],
-        options : [
-          {
-            label: 'BTC',
-            value: 'BTC'
-          },
-          {
-            label: 'ETH',
-            value: 'ETH'
-          },
-          {
-            label: 'ZEC',
-            value: 'ZEC'
-          },{
-            label: 'SNT',
-            value: 'SNT'
-          }
-        ]
+        options:[],
+        values:[],
       }
+    },
+    created(){
+      this.getSetting()
     },
     mounted(){
       $(".common-clear-style").find(".mint-cell-wrapper:last").css('border-bottom','none')
     },
-    created(e){
-
+    watch:{
+      values(n,o){
+        if(o.length){
+          var _currency = {}
+          this.options.forEach((item)=>{
+            _currency[item] = false
+          })
+          n.forEach((item)=>{
+            _currency[item] = true
+          })
+          this.setCurrency(_currency)
+        }
+      },      
+    },
+    computed:{
+      ...mapGetters(['getCurrency']),
     },
     methods:{
-
+      ...mapActions(['setCurrency']),
+      getSetting(){
+        if(!this.options.length){
+          setTimeout(()=>{
+            let checked = []
+            this.options = Object.keys(this.getCurrency)
+            for(let key in this.getCurrency){
+              if(this.getCurrency[key]){
+                checked.push(key)
+              }
+            }
+            this.values = checked
+            this.getSetting()
+          },100)
+        }
+      }
     },
   }
 

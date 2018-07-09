@@ -10,14 +10,18 @@ var $ajax = axios.create({
 
 var url = {
 	login: config.root + "/api/user/login", //手机号用户登录
+	currency:`${config.root}/api/currency`, //获取币种列表
 }
 
 export default {
-	login: function(account, password, code) {
+	login(account, password, code) {
 		return $ajax.post(url.login, {
 			mobile: account,
 			password: password,
 			code: code
 		})
 	},
+	getCurrency(){
+		return $ajax.get(url.currency)
+	}
 }

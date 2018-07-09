@@ -15,6 +15,7 @@ export default new Vuex.Store({
     usbkeyStatus:false, //usbKey连接状态
     lang: window.localStorage.getItem('lang') || 'en', //语言包
     publicKey:'e331b6d69882b4cb4ea581d88e0b604039a3de5967688d3dcffdd2270c0fd109', //公钥
+    currency:{} //币种
 
   },
   getters:{
@@ -26,6 +27,9 @@ export default new Vuex.Store({
     },
     getPublicKey (state){
       return state.publicKey
+    },
+    getCurrency (state){
+      return state.currency
     },
   },
   mutations: {
@@ -42,6 +46,9 @@ export default new Vuex.Store({
     updatePublicKey (state, publicKey){
       state.publicKey = publicKey
     },
+    updateCurrency (state, currency){
+      state.currency = currency
+    },
   },
   actions: {
     setHistoryLength({commit}){
@@ -57,7 +64,11 @@ export default new Vuex.Store({
     setPublicKey({commit},publicKey){
       commit('updatePublicKey',publicKey)
     },
-    
+    setCurrency (context, currency){
+      window.localStorage.setItem('currencySetting',JSON.stringify(currency))
+      currency = Object.assign(context.state.currency,currency)
+      context.commit('updateCurrency',currency)
+    },
   },
   modules: {
     

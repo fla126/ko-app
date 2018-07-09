@@ -119,6 +119,7 @@ const router = new Router({
       component: walletGather
     },
     {path: '/lang', name: Lang.name, component: Lang },
+    {path: '*', redirect:{ name: 'page-wallet' } },
   ]
 })
 
