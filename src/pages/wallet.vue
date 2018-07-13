@@ -12,18 +12,18 @@
         <div class="bg-white">
           <div class="amount-container">
             <h2>{{$t('message.wallet.amount')}}</h2>
-            <h1><template v-if="amountShow">45658</template><template v-else>****</template><span> BTC </span><i :class="{hide:!amountShow}" v-tap="{methods:setAmountShow}"></i></h1>
-            <p>≈ ￥<template v-if="amountShow">512,1464.22</template><template v-else>****</template></p>
+            <h1><template v-if="amountShow">{{total.btc}}</template><template v-else>****</template><span> BTC </span><i :class="{hide:!amountShow}" v-tap="{methods:setAmountShow}"></i></h1>
+            <p>≈ {{getCoinSign}}<template v-if="amountShow">{{total.fabi}}</template><template v-else>****</template></p>
           </div>
         </div>
         <div class="search-container" id="searchContainer">
           <input type="search" :class="{active:searchText.length, hidden:isSearchFixed}"  :placeholder="$t('message.wallet.currencySearch')" v-model="searchText" @keydown="hideKeyboard($event)">
           <i class="close" v-tap="{methods:delSearch}" v-show="searchText.length>0">+</i>
         </div>
-        <ul class="currency-list" v-tap="{methods:goWalletDetail}">
-          <li :data-type="item" v-for="item in filterCurrency(getShowCurrency)">
+        <ul class="currency-list">
+          <li :data-type="item" v-tap="{methods:goWalletDetail,t:item}" v-for="item in filterCurrency(getShowCurrency)">
             <div><i :class="item"></i><strong>{{item}}</strong></div>
-            <div><span>266</span><br /><span>≈ ￥426,1234</span></div>
+            <div><span>{{displayAmount(item)}}</span><br /><span>≈ {{getCoinSign}}{{displayFabi(item)}}</span></div>
           </li>
         </ul>
       </div>
@@ -34,6 +34,7 @@
 import Vue from 'vue'
 import compWalletTop from '@/components/top_wallet'
 import { mapGetters, mapActions } from 'vuex'
+import numUtils from '@/assets/js/numberUtils'
 
 export default {
   name:'page-wallet',
@@ -61,12 +62,47 @@ export default {
     },
   },
   computed:{
-    ...mapGetters(['getCurrency','getShowCurrency']),
+    ...mapGetters(['getCurrency','getShowCurrency','getCoinSign','getUSDCNY','getBtcValues','getWalletList']),
     isSearchFixed(){
       return Math.abs(this.currentSearchPos)>this.initSearchPos ? true:false
     },
+    wallet(){
+      let temp_wallet = {}
+      for(let walletItem of this.getWalletList){
+        for(let item in walletItem.currency){
+          temp_wallet[item] = numUtils.add(temp_wallet[item], walletItem.currency[item]) 
+        }
+      }
+      return temp_wallet
+    },
+    total(){
+      if (this.getUSDCNY && this.getBtcValues.ETH) {
+        let totalBtc = 0, totalFabi = 0
+        for(let item of Object.keys(this.wallet)){
+          let curMarketBtc = this.getBtcValues[item]
+          let curMarketPrice = curMarketBtc ? numUtils.mul(curMarketBtc, this.getUSDCNY).toFixed(2) : this.getUSDCNY
+          totalFabi = numUtils.add(totalFabi, numUtils.mul(curMarketPrice, this.wallet[item]))
+        }
+        totalBtc = numUtils.div(totalFabi,this.getUSDCNY).toFixed(8)
+        return {fabi:totalFabi.toFixed(2).toMoney(),btc:totalBtc}
+      } else {
+        return {fabi:'0.00',btc:'0.00000000'}
+      }
+    },
   },
   methods:{
+    displayFabi(_type){
+      if (this.getUSDCNY && this.getBtcValues.ETH) {
+        let curMarketBtc = this.getBtcValues[_type]
+        let curMarketPrice = curMarketBtc ? numUtils.mul(curMarketBtc, this.getUSDCNY).toFixed(2) : this.getUSDCNY
+        return numUtils.mul(curMarketPrice, this.wallet[_type]).toFixed(2).toMoney()
+      } else {
+        return '0.00'
+      }
+    },
+    displayAmount(_type){
+      return this.wallet[_type]?this.wallet[_type].toFixed(8):0
+    },
     filterCurrency(currency){
       var str = $.trim(this.searchText).toUpperCase()
       return currency.filter((item)=>{
@@ -107,10 +143,9 @@ export default {
       this.searchText = ''
     },
     goWalletDetail(args){
-      var _tar = $(args.event.target).parents('li'), _type = _tar.data('type')
-      _tar.addClass('active')
+      $(args.event.currentTarget).addClass('active')
       setTimeout(()=>{
-        this.$router.push({ name: 'page-wallet-detail', query:{type:_type}})
+        this.$router.push({ name: 'page-wallet-detail', params:{currency:args.t}})
       },200)
     },
     hideKeyboard(event){
@@ -167,6 +202,8 @@ export default {
   h1 {
     font-size: 0.6rem;
     margin-top: 0.2rem;
+    position: relative;
+    z-index: 1;
     span {
       font-size: 0.4rem;
     }

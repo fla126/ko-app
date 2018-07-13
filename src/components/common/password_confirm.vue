@@ -3,9 +3,10 @@
     <div class="pwconfirm-layer" >
       <i class="close" v-tap="{methods:hideFunction}">×</i>
       <h3>{{$t('message.walletDetail.payPassword')}}</h3>
-      <input type="password"  v-model="password" @keydown="checkInput($event)" v-focus>
+      <input type="password"  v-model="password" maxlength="6" @keydown="checkInput($event)" v-focus>
+      <div class="password-display"><span :class="{active:getActive(1)}">&nbsp;</span><span :class="{active:getActive(2)}">&nbsp;</span><span :class="{active:getActive(3)}">&nbsp;</span><span :class="{active:getActive(4)}">&nbsp;</span><span :class="{active:getActive(5)}">&nbsp;</span><span :class="{active:getActive(6)}">&nbsp;</span></div>
       <div class="step-next">
-        <mt-button type="primary" size="large" v-tap="{methods:pwconfirm}">{{$t('message.walletDetail.ok')}}</mt-button>
+        <mt-button type="primary" size="large" :disabled="password.length!=6" v-tap="{methods:pwconfirm}">{{$t('message.walletDetail.ok')}}</mt-button>
       </div>
     </div>
   </mask-layer>
@@ -22,6 +23,9 @@ export default {
     },
     hideFunction:{
       type: Function
+    },
+    submitFunction:{
+      type: Function
     }
   },
   data(){
@@ -29,17 +33,23 @@ export default {
       password:''
     }
   },
-  mounted(){
-
+  watch:{
+    password(n, o){
+      this.password = $.trim(n)
+    }
   },
   methods:{
     pwconfirm(){
-      this.$root.routeTo({to:'page-wallet-detail'})
+      this.hideFunction()
+      this.submitFunction(this.password)
     },
     checkInput(event){
-      if(event.keyCode == 13){
+      if(event.keyCode == 13 && this.password.length == 6){
         this.pwconfirm()
       }
+    },
+    getActive(len){
+      return this.password.length>=len? true: false
     }
   },
   components:{  
@@ -66,15 +76,28 @@ export default {
   text-align: center;
   box-shadow: 0 0.05rem 0.1rem 0.01rem #6c6c6c;
   input {
-    margin: 0.35rem auto;
-    width: 3.4rem;
-    border:none;
-    background-color: transparent;
-    border-bottom: 1px solid #333;
-    line-height: 0.5rem;
-    font-size: 0.32rem;
-    &:focus {
-      
+    position: absolute;
+    left: -100vw;
+  }
+  .password-display{
+    position: relative;
+    margin-top: 0.4rem;
+    text-align: center;
+    span {
+      display: inline-block;
+      width: 0.36rem;
+      height: 0.5rem;
+      margin: 0 0.12rem ;
+      line-height: 0.5rem;
+      border-bottom: 1px solid #333;
+      &.active:after {
+        display: inline-block;
+        content: '';
+        width: 0.2rem;
+        height: 0.2rem;
+        border-radius: 50%;
+        background-color: #333;
+      }
     }
   }
   h3 {

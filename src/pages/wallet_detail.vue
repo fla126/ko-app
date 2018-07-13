@@ -1,16 +1,17 @@
 <template>
   <div class="page">
     <comp-top-back>
-      <span class="selected-title" v-tap="{methods:showWalletList}">{{cointype | uppercase}}01</span>
+      <span class="selected-title" v-tap="{methods:showWalletList}">{{wallet[wallet_idx] && wallet[wallet_idx].name}}</span>
     </comp-top-back>
     <div class="page-main">
       <div class="amount-container">
-        <h1>45658<span> {{cointype | uppercase}} </span></h1>
-        <p>≈ ￥512,1464.22</p>
+        <h1>{{wallet[wallet_idx] && $root.toFixed(wallet[wallet_idx].currency[currency],8)}}<span> {{currency}} </span></h1>
+        <p>≈ {{getCoinSign}}{{total}}</p>
         <ul class="actions">
-          <li v-tap="{methods:$root.routeTo, to:'page-wallet-payment',params:{type:cointype}}"><i></i>{{$t('message.walletDetail.send')}}</li>
+          <router-link :to="{name:'page-wallet-payment',params:{currency:currency, idx:wallet_idx}}" tag="li"><i></i>{{$t('message.walletDetail.send')}}</router-link>
           <li><span class="line"></span></li>
-          <li v-tap="{methods:$root.routeTo, to:'page-wallet-gather',params:{type:cointype}}"><i></i>{{$t('message.walletDetail.receive')}}</li>
+          <li v-if="wallet[wallet_idx] && wallet[wallet_idx].isAll"></li>
+          <router-link :to="{name:'page-wallet-gather',params:{currency:currency, name:wallet[wallet_idx] && wallet[wallet_idx].name, key:wallet[wallet_idx] && wallet[wallet_idx].publicKey}}" tag="li" v-else><i></i>{{$t('message.walletDetail.receive')}}</router-link>
         </ul>
       </div>
       <div class="trans-records-title">{{$t('message.walletDetail.lastRecord')}}</div>
@@ -70,10 +71,8 @@
       </div>
     </div>
     <mask-layer :isgray="true" :show="show" @hide="hideWalletList" :style="{top: '0.9rem'}">
-      <ul class="wallet-list" v-tap="{methods:changeWallet}">
-        <li>{{cointype | uppercase}}02</li>
-        <li>{{cointype | uppercase}}03</li>
-        <li>{{cointype | uppercase}}04</li>
+      <ul class="wallet-list" >
+        <li v-tap="{methods:changeWallet, idx:index}" v-for="(item,index) in wallet" :key="index">{{item.name}}</li>
       </ul>
     </mask-layer>
     <mask-layer :isgray="true" :show="!$store.state.usbkeyStatus && showUnlinked" @hide="hideUnlinkedLayer">
@@ -92,27 +91,56 @@
 import data from '@/api/data'
 import { Progress } from 'mint-ui'
 import maskLayer from '@/components/common/mask'
+import { mapGetters, mapActions } from 'vuex'
+import numUtils from '@/assets/js/numberUtils'
 
 export default {
   name:'page-wallet-detail',
   data(){
     return {
       scroll:false,
-      cointype:'',
+      currency:'',
       show:false,
-      showUnlinked:true
+      showUnlinked:true,
+      wallet_idx:0,
     }
   },
   created(){
-    
+    this.currency = this.$route.params.currency || 'BTC'
+    this.wallet_idx = this.$route.params.idx || 0
   },
   mounted(){
-    setTimeout(this.initScroll,1000)
-    this.cointype = this.$route.query.type || 'btc'
-    
+    setTimeout(this.initScroll,1000)    
   },
-  updated(){
-    
+  computed:{
+    ...mapGetters(['getCoinSign','getUSDCNY','getBtcValues','getWalletList','getUTXO']),
+    wallet(){ //符合UTXO的币种添加ALL聚合钱包
+      var _publicKeys = [], _total = 0, _all, _wallet = JSON.parse(JSON.stringify(this.getWalletList))
+      if(this.getUTXO.includes(this.currency)){
+        for(let walletItem of this.getWalletList){
+          _total = numUtils.add(_total, walletItem.currency[this.currency])
+          _publicKeys.push(walletItem.publicKey)
+        }
+        _all = {
+          name:`${this.currency}_ALL`,
+          currency:{},
+          isAll:true
+        }
+        _all['publicKey'] = _publicKeys
+        _all.currency[this.currency] = _total
+        _wallet.push(_all)
+      }
+      return _wallet
+    },
+    total(){
+      if (this.getUSDCNY && this.getBtcValues.ETH) {
+        let curMarketBtc = this.getBtcValues[this.currency]
+        let curMarketPrice = curMarketBtc ? numUtils.mul(curMarketBtc, this.getUSDCNY).toFixed(2) : this.getUSDCNY
+        return numUtils.mul(curMarketPrice, this.wallet[this.wallet_idx] && this.wallet[this.wallet_idx].currency[this.currency]).toFixed(2).toMoney()
+      } else {
+        return '0.00'
+      }
+    },
   },
   methods:{
     initScroll(){
@@ -123,13 +151,14 @@ export default {
       });
     },
     showWalletList(args){
-      this.show = true
+      this.show = !this.show
     },
     hideWalletList(){
       this.show = false
     },
     changeWallet(args){
       this.show = false
+      this.wallet_idx = args.idx
     },
     showUnlinkedLayer(){
 

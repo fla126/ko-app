@@ -17,6 +17,7 @@ import LangEn from './lang/en' //英文包
 import LangZhCHS from './lang/zhCHS' //简体中文包
 import {
   Button,
+  Range,
   } from 'mint-ui'
 import compTopBack from '@/components/common/top_back'
 
@@ -24,10 +25,11 @@ Vue.use(vueTap)
 Vue.use(VueI18n)
 
 Vue.component(Button.name, Button)
+Vue.component(Range.name, Range)
 
 Vue.component(compTopBack.name, compTopBack)
 
-// var vConsole = new VConsole()
+var vConsole = new VConsole()
 
 //请求加入随机参数
 var $ajax = axios.create({

@@ -16,5 +16,5 @@ export default function(args){
   },0)
   setTimeout(()=>{
     _html.removeAttr('style')
-  },3500)
+  },4500)
 }

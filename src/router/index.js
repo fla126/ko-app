@@ -99,22 +99,22 @@ const router = new Router({
       component: resetPassword
     },
     {
-      path:'/wallet-detail', //钱包详情
+      path:'/wallet-detail/:currency?', //钱包详情
       name: walletDetail.name,
       component: walletDetail
     },
     {
-      path: '/wallet-payment', //钱包转账
+      path: '/wallet-payment/:currency?/:idx?', //钱包转账
       name: walletPayment.name,
       component: walletPayment
     },
     {
-      path: '/wallet-payment-confirm', //钱包转账确认
+      path: '/wallet-payment-confirm/:currency/:idx?', //钱包转账确认
       name: walletPaymentConfirm.name,
       component: walletPaymentConfirm
     },
     {
-      path: '/wallet-gather', //钱包收款
+      path: '/wallet-gather/:currency?', //钱包收款
       name: walletGather.name,
       component: walletGather
     },

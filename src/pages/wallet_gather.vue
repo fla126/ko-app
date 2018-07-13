@@ -4,10 +4,10 @@
     <div class="page-main">
       <ul class="pament-detail">
         <li>
-          <h1 v-if="$i18n.locale=='en'">{{$t('message.walletDetail.receive')}} {{cointype | uppercase}}<span>{{cointype | uppercase}}01</span></h1>
-          <h1 v-if="$i18n.locale=='zhCHS'">{{cointype | uppercase}}{{$t('message.walletDetail.receive')}}<span>{{cointype | uppercase}}01</span></h1>
+          <h1 v-if="$i18n.locale=='en'">{{$t('message.walletDetail.receive')}} {{currency}}<span>{{name}}</span></h1>
+          <h1 v-if="$i18n.locale=='zhCHS'">{{currency}}{{$t('message.walletDetail.receive')}}<span>{{name}}</span></h1>
           <p>{{$t('message.walletDetail.receiveAmount')}}</p>
-          <p><input id="gatherInput" :placeholder="$t('message.walletDetail.enterAmount')" type="tel" v-model="amount"></p>
+          <p><input id="gatherInput" :placeholder="$t('message.walletDetail.enterAmount')" type="number" v-model="amount"></p>
         </li>
         <li class="text-center">
           <p>{{address}}</p>
@@ -33,23 +33,36 @@ export default {
   name:'page-wallet-gather',
   data(){
     return {
-      amount:'',
-      address:'1MzziGBa7tNNzMwVJMPEjAfM1wRcvSGZu5',
+      currency:'',
+      name:'',
+      publicKey:'',
+      amount:'0',
       collapsed:true,
-      cointype:'',
     }
   },
   created(){
-
+    this.currency = this.$route.params.currency
+    this.wallet_idx = this.$route.params.name
+    this.publicKey = this.$route.params.key
   },
   mounted(){
-    this.cointype = this.$route.query.type || 'btc'
     this.initQRCode()
     this.initCopy()
     this.initFocusEvent()
   },
-  updated(){
-
+  watch:{
+    amount(n,o){
+      this.initQRCode()
+    }
+  },
+  computed:{
+    address(){
+      console.log(this.currency, this.publicKey)
+      return this.$root.getAddress(this.currency, this.publicKey)
+    },
+    QRAddress(){
+      return `${this.currency}$$${this.amount}$$${this.address}`
+    }
   },
   methods:{
     initCopy(){
@@ -68,7 +81,7 @@ export default {
     },
     initQRCode(){
       //初始化二维码
-      QRCode.toCanvas(document.getElementById('canvas'), this.address, {
+      QRCode.toCanvas(document.getElementById('canvas'), this.QRAddress, {
         color: {
           dark: '#000',  // Black dots
           light: '#0000' // Transparent background

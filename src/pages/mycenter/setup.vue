@@ -26,7 +26,7 @@
         <mt-checklist class="common-clear-style"
           align="right"
           v-model="values"
-          :options="options">
+          :options="filterOptions">
         </mt-checklist>
       </div>
     </div>
@@ -77,6 +77,11 @@
     },
     computed:{
       ...mapGetters(['getCurrency']),
+      filterOptions(){
+        return this.options.filter((item)=>{
+          return item.indexOf(this.captcha.toUpperCase()) > -1
+        })
+      },
     },
     methods:{
       ...mapActions(['setCurrency']),

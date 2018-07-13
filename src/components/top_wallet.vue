@@ -1,17 +1,20 @@
 <template>
   <div class="page-top">
   	<transition enter-active-class="animated short fadeInUp" leave-active-class="animated short fadeOutUp">
-  	<div class="connect-status" v-show="!$store.state.usbkeyStatus"><span></span>{{$t("message.usbkeyStatus.disconnect")}}</div>
+  	<div class="connect-status" v-show="!getUsbkeyStatus"><span></span>{{$t("message.usbkeyStatus.disconnect")}}</div>
   	</transition>
   	<transition enter-active-class="animated short fadeInUp" leave-active-class="animated short fadeOutUp">
-    <div class="connect-status" v-show="$store.state.usbkeyStatus"><span class="active"></span>{{$t("message.usbkeyStatus.connected")}}</div>
+    <div class="connect-status" v-show="getUsbkeyStatus"><span class="active"></span>{{$t("message.usbkeyStatus.connected")}}</div>
 	</transition>
     <span class="scanning" v-tap="{methods:scanning}"></span>
     <span class="setting" v-tap="{methods:$root.routeTo, to:'page-ucenter-setup'}"></span>
   </div>
 </template>
 <script>
-import store from '@/store'
+import web3 from 'web3'
+import {Address} from 'bitcore-lib'
+import { mapGetters, mapActions } from 'vuex'
+import { Toast } from 'mint-ui'
 
 export default {
   name:'comp-wallet-top',
@@ -22,18 +25,29 @@ export default {
   },
   mounted(){
   	setTimeout(()=>{
-  		this.$store.commit('updateUsbkeyStatus',true)
+  		this.setUsbkeyStatus(true)
   	},2000)
   },
+  computed:{
+  	...mapGetters(['getUsbkeyStatus']),
+  },
   methods:{
+  	...mapActions(['setUsbkeyStatus']),
   	scanning(args){
-  		this.$root.scanner((error,data)=>{
-  		  console.log(data)
-  		})
-  	},
-  }
-
-  
+      this.$root.scanner((error,data)=>{
+      	console.log(data)
+        var QRdata = data.code.split('$$')
+        if(data.type=='QR_CODE' && QRdata.length==3){
+	        var currency = QRdata[0]
+	        var amount = QRdata[1]
+	        var receiverAddress = QRdata[2]
+	        this.$router.push({name:'page-wallet-payment', params:{currency:currency,amount:amount,address:receiverAddress}})
+        } else {
+        	Toast(this.$t('message.walletDetail.invalidQRAddress'))
+        }
+      })
+    },
+  },
 }
 
 </script>

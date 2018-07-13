@@ -15,8 +15,12 @@ export default new Vuex.Store({
     usbkeyStatus:false, //usbKey连接状态
     lang: window.localStorage.getItem('lang') || 'en', //语言包
     publicKey:'e331b6d69882b4cb4ea581d88e0b604039a3de5967688d3dcffdd2270c0fd109', //公钥
-    currency:{} //币种
-
+    currency:{}, //币种
+    USDCNY: {}, //美元与人民币汇率
+    btcValuation: 0,
+    btcValues: {}, //换算价格
+    walletList:[], //钱包列表
+    UTXO:[], //UTXO 所属币种加入ALL钱包选项
   },
   getters:{
     getUsbkeyStatus (state){
@@ -40,6 +44,28 @@ export default new Vuex.Store({
       }
       return currency
     },
+    getCoinSign (state) {
+      return state.lang === 'en' ? '$' : '￥'
+    },
+    getUSDCNY (state) {
+      if (state.lang === 'en') {
+        return state.USDCNY && state.USDCNY.USD
+      } else {
+        return state.USDCNY && state.USDCNY.CNY
+      }
+    },
+    getBTCValuation (state) {
+      return state.btcValuation
+    },
+    getBtcValues (state) {
+      return state.btcValues
+    },
+    getWalletList (state) {
+      return state.walletList
+    },
+    getUTXO (state) {
+      return state.UTXO
+    },
   },
   mutations: {
     updateHistoryLength (state){
@@ -58,13 +84,28 @@ export default new Vuex.Store({
     updateCurrency (state, currency){
       state.currency = currency
     },
+    updateUSDCNY (state, USDCNY) {
+      state.USDCNY = USDCNY
+    },
+    updateBTCValuation (state, btcValuation) {
+      state.btcValuation = btcValuation
+    },
+    updateBtcValues (state, btcValues) {
+      state.btcValues = btcValues
+    },
+    updateWalletList (state, walletList) {
+      state.walletList = walletList
+    },
+    updateUTXO (state, UTXO) {
+      state.UTXO = UTXO
+    },
   },
   actions: {
     setHistoryLength({commit}){
       commit('updateHistoryLength')
     },
     setUsbkeyStatus({commit},status){
-      commit('updateHistoryLength',status)
+      commit('updateUsbkeyStatus',status)
     },
     setLang ({commit}, lang){
       window.localStorage.setItem('lang', lang)
@@ -77,6 +118,27 @@ export default new Vuex.Store({
       window.localStorage.setItem('currencySetting',JSON.stringify(currency))
       currency = Object.assign(JSON.parse(JSON.stringify(context.state.currency)),currency)
       context.commit('updateCurrency',currency)
+    },
+    setUSDCNY ({commit}, USDCNY) {
+      commit('updateUSDCNY', USDCNY)
+    },
+    setBTCValuation ({commit}, btcValuation) {
+      commit('updateBTCValuation', btcValuation)
+    },
+    setBtcValues ({commit}, data) {
+      let btcValues = {}
+      data.forEach((item) => {
+        if (item.baseSymbol === 'BTC') {
+          btcValues[item.currencySymbol] = item.lastPrice
+        }
+      })
+      commit('updateBtcValues', btcValues)
+    },
+    setWalletList ({commit}, walletList) {
+      commit('updateWalletList', walletList)
+    },
+    setUTXO ({commit}, UTXO) {
+      commit('updateUTXO', UTXO)
     },
   },
   modules: {
