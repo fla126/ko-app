@@ -78,6 +78,7 @@ module.exports={
 	},
     mycenter:{
       center:'Account Center',
+      check:'Please select',
       msg:'News',
       rec:'Record',
       wallet:'Wallet',

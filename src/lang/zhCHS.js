@@ -78,6 +78,7 @@ module.exports={
     },
     mycenter:{/* 个人中心 */
       center:'个人中心',
+      check:'选择',
       msg:'消息',
       rec:'记录',
       wallet:'钱包',
