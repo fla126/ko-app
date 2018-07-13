@@ -16,15 +16,26 @@ import walletPaymentConfirm from '@/pages/wallet_payment_confirm'
 import walletGather from '@/pages/wallet_gather'
 import uinfo from '@/pages/mycenter/uinfo'
 import message from '@/pages/mycenter/message'
+import msginfo from '@/pages/mycenter/msginfo'// 交易记录详细
 import backup from '@/pages/mycenter/backup'
 import setup from '@/pages/mycenter/setup'
+import monUnit from '@/pages/mycenter/setup/monUnit'
 import record from '@/pages/mycenter/record'
 import uwallet  from '@/pages/mycenter/uwallet '
 import addwallet  from '@/pages/mycenter/addwallet '
 import help  from '@/pages/mycenter/help'
+import mustRead  from '@/pages/mycenter/help/mustRead'
+import walletbackup  from '@/pages/mycenter/help/walletbackup'/*备份说明*/
+import walletUse  from '@/pages/mycenter/help/walletUse'/*使用说明*/
+import problem  from '@/pages/mycenter/help/problem'/*常见问题*/
+import contact  from '@/pages/mycenter/help/contact'/*联系我们*/
 import about  from '@/pages/mycenter/about'
+import agreement  from '@/pages/mycenter/about/agreement'/*用户协议*/
+import privacy  from '@/pages/mycenter/about/privacy'/*隐私条款*/
+import join  from '@/pages/mycenter/about/join'/*隐私条款*/
 import pwd  from '@/pages/pwd/pwd_index'
-import Lang  from '@/pages/mycenter/lang'
+import Lang  from '@/pages/mycenter/setup/lang'
+import webthree  from '@/pages/mycenter/setup/webthree'/*web3设置*/
 Vue.use(Router)
 
 // const Foo = r => require.ensure([], ()=>r(require('../components/foo.vue')), 'group-foo')
@@ -66,13 +77,25 @@ const router = new Router({
     },
     { path: '/uinfo', name:uinfo.name, component: uinfo }, // 个人中心--信息
     { path: '/message', name:message.name, component: message }, // 个人中心--消息
+    { path: '/msginfo', name:msginfo.name, component: msginfo }, // 个人中心--消息
     { path: '/backup', name:backup.name, component: backup }, // 个人中心--备份
     { path: '/setup', name:setup.name, component: setup }, // 个人中心--设置
+    { path: '/monUnit', name:monUnit.name, component: monUnit }, // 个人中心--设置--货币单位
+    { path: '/webthree', name:webthree.name, component: webthree }, // 个人中心--设置--web3设置
+
     { path: '/record', name:record.name, component: record }, // 个人中心--记录
     { path: '/uwallet', name:uwallet.name, component: uwallet  }, // 个人中心--钱包
     { path: '/addwallet', name:addwallet.name, component: addwallet  }, // 个人中心--添加钱包
     { path: '/help', name:help.name, component: help  }, // 个人中心--帮助
+    { path: '/mustRead', name:mustRead.name, component: mustRead  }, // 帮助--新手必读
+    { path: '/walletbackup', name:walletbackup.name, component: walletbackup  }, // 帮助--钱包备份
+    { path: '/walletUse', name:walletUse.name, component: walletUse  }, // 帮助--钱包使用
+    { path: '/problem', name:problem.name, component: problem  }, // 帮助--常见问题
+    { path: '/contact', name:contact.name, component: contact  }, // 帮助--联系我们
     { path: '/about', name:about.name, component: about  }, // 个人中心--关于我们
+    { path: '/agreement', name:agreement.name, component: agreement  }, // 关于我们-用户协议
+    { path: '/privacy', name:privacy.name, component: privacy}, // 关于我们-用户协议
+    { path: '/join', name:join.name, component: join}, // 关于我们-用户协议
     {
       path:'/command-add', //添加口令
       name: commandAdd.name,

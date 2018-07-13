@@ -22,6 +22,10 @@ export default {
 	        return t.test(str);
         }
     },
+  isurl(str){ //检测URL的合法性
+      var t=/^(?=^.{3,255}$)(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+(:\d+)*(\/\w+\.\w+)*([\?&]\w+=\w*)*$/;
+      return t.test(str);
+  },
     scanner(func){ //扫描二维码公共函数
     	uexScanner.open(func)
     },
