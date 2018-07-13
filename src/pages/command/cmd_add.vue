@@ -21,7 +21,8 @@
 </template>
 <script>
 import Tip from '@/components/common/tip.js'
-
+import  commandApi from '@/api/command'
+import { Toast,MessageBox  } from 'mint-ui'
 export default {
   name:'page-command-add',
   data(){
@@ -41,15 +42,32 @@ export default {
       },100)
     })
 
-    
+
   },
   methods:{
     addCmd(args){
-      Tip({
-        type:'danger',
-        title:'错误',
-        message:'请输入账号名称'
-      })
+      if(!this.$root.trim(this.account,1)){
+        Tip({type:'danger',title:this.$t('message.login.error'), message:"请输入账号名"})
+        $('#account').focus()
+        return
+      }else if(!this.$root.trim(this.key,1)){
+        Tip({type:'danger',title:this.$t('message.login.error'), message:"请输入钥匙"})
+        $('#key').focus()
+        return
+      }else{
+        let com={
+          comname:this.account,
+          keycode:this.key
+        }
+        commandApi.save(com, (data) => {
+             MessageBox.alert('保存成功').then(action => {
+                this.$router.push({name:'page-command'})
+              });
+        }, (msg) => { })
+      }
+    },
+    saveCmd(){
+
     }
   },
 }
@@ -108,7 +126,7 @@ export default {
     font-size: 0.24rem;
     color: #666;
     &:focus{
-      
+
     }
   }
   input::placeholder {

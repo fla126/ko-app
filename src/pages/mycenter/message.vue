@@ -1,112 +1,22 @@
 <template>
-  <div id="uinfo" class="page wrap">
+  <div id="uinfo" class="page wrap ">
     <comp-top-back :class="'line'" :back="true" >
       {{$t('message.msg.message')}}
        <span class="header-right">全部</span>
     </comp-top-back>
 
     <div class="page-main" id="scroll"> <!--content start-->
-       <div>
-        <div class="w-content m-box1">
+       <div style="margin-bottom: 3rem">
+        <div v-for="(item,index) in msgArry" class="w-content m-box1"  v-tap="{methods:routeTo, to:'page-msginfo',query:item.id}">
           <div class="inner">
                  <section class="item">
-                      <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
+                      <div><span class="left ft-c-gray" >{{item.title}}:</span><span class="right ft-c-gray">{{item.tratime|date}}</span></div>
                       <div><p class="bottom">{{$t('message.msg.content')}}</p></div>
                  </section>
           </div>
         </div>
-
-        <div class="w-content m-box1">
-          <div class="inner">
-            <section class="item">
-              <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
-              <div><p class="bottom">{{$t('message.msg.content')}}</p></div>
-            </section>
-          </div>
-        </div>
-
-        <div class="w-content m-box1">
-          <div class="inner">
-            <section class="item">
-              <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
-              <div><p class="bottom">{{$t('message.msg.content')}}</p></div>
-            </section>
-          </div>
-        </div>
-          <div class="w-content m-box1">
-          <div class="inner">
-            <section class="item">
-              <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
-              <div><p class="bottom">{{$t('message.msg.content')}}</p></div>
-            </section>
-          </div>
-        </div>
-          <div class="w-content m-box1">
-          <div class="inner">
-            <section class="item">
-              <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
-              <div><p class="bottom">{{$t('message.msg.content')}}</p></div>
-            </section>
-          </div>
-        </div>
-          <div class="w-content m-box1">
-          <div class="inner">
-            <section class="item">
-              <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
-              <div><p class="bottom">{{$t('message.msg.content')}}</p></div>
-            </section>
-          </div>
-        </div>
-          <div class="w-content m-box1">
-          <div class="inner">
-            <section class="item">
-              <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
-              <div><p class="bottom">{{$t('message.msg.content')}}</p></div>
-            </section>
-          </div>
-        </div>
-       <div class="w-content m-box1">
-          <div class="inner">
-            <section class="item">
-              <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
-              <div><p class="bottom">{{$t('message.msg.content')}}</p></div>
-            </section>
-          </div>
-        </div>
-
-         <div class="w-content m-box1">
-           <div class="inner">
-             <section class="item">
-               <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
-               <div><p class="bottom">{{$t('message.msg.content')}}</p></div>
-             </section>
-           </div>
+         <div style="height:.7rem">
          </div>
-         <div class="w-content m-box1">
-           <div class="inner">
-             <section class="item">
-               <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
-               <div><p class="bottom">{{$t('message.msg.content')}}</p></div>
-             </section>
-           </div>
-         </div>
-         <div class="w-content m-box1">
-           <div class="inner">
-             <section class="item">
-               <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
-               <div><p class="bottom">{{$t('message.msg.content')}}</p></div>
-             </section>
-           </div>
-         </div>
-         <div class="w-content m-box1">
-           <div class="inner">
-             <section class="item">
-               <div><span class="left ft-c-gray" >BTC2:</span><span class="right ft-c-gray">2018.08.09-15:20</span></div>
-               <div><p class="bottom">{{$t('message.msg.content')}}</p></div>
-             </section>
-           </div>
-         </div>
-
     </div>
     </div> <!-- content end -->
   </div>
@@ -114,6 +24,8 @@
 
 <script>
   import Vue from 'vue'
+  import  centerApi from '@/api/mycenter'
+  import  utils from '@/assets/js/utils'
   import { Button } from 'mint-ui';
   import { Cell } from 'mint-ui';
   import { Header } from 'mint-ui';
@@ -124,11 +36,13 @@
          name: "page-msg",
          data(){
           return {
-            scroll:false
+            scroll:false,
+            msgArry:[]
           }
           },
       mounted(){
         setTimeout(this.initScroll,700)
+        this.getMsgsList();// 初始化数据
       },
       methods:{
         initScroll(){
@@ -137,12 +51,24 @@
             mouseWheel:true,
             tap:true
           });
+        },
+        getMsgsList(){
+          centerApi.getMsgs({}, (data) => {
+            this.msgArry = data
+          }, (msg) => {
+          })
+        },
+        routeTo(args){
+          this.$router.push({ name: args.to,query:{id:args.query}})
         }
       }
     }
 </script>
 
 <style type="text/css" lang="less" scoped >
+  .uinfo{
+    height: calc(100vh - 8rem);
+  }
   .header-right{
     position: absolute;
     right: .3rem;
@@ -151,6 +77,7 @@
   .page-main{
     overflow-y: hidden;
     background-color: #F9F9F9;
+    padding-bottom: .2rem;
   }
   .m-box1,.m-box2{
     background-color:white;

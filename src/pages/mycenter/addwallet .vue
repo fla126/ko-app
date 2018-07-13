@@ -11,8 +11,8 @@
                 <h1 class="f36 mt40">{{$t('message.wallet.addWallet')}}</h1>
                 <h2 class="f24 mt60 ft-c-gray30">{{$t('message.wallet.token')}}</h2>
           <div class="styled-select mt20">
-             <select class="select f24  ft-c-gray">
-               <option>BTC</option>
+             <select class="select f24  ft-c-gray" v-model="icon">
+               <option >BTC</option>
                <option>ETH</option>
                <option>BARK</option>
              </select>
@@ -26,7 +26,7 @@
       <div class="inner">
         <section class="item" style="padding-bottom: .1rem;">
           <h2 class="f24 mt50 ft-c-gray30">{{$t('message.wallet.walletName')}}</h2>
-          <input class="common-input-default f30 mt20"  placeholder="Wynne07" />
+          <input id="wname"  v-model="wname" class="common-input-default f30 mt20"  placeholder="Wynne07" />
         </section>
         <div class="hr"></div>
       </div>
@@ -64,7 +64,7 @@
   import { Header } from 'mint-ui';
   import { Toast,MessageBox  } from 'mint-ui'
   import Tip from '@/components/common/tip.js'
-
+  import  centerApi from '@/api/mycenter'
   // import VeeValidate, { Validator } from 'vee-validate'
   // import messages  from 'vee-validate/dist/locale/zh_CN.js'
 
@@ -92,14 +92,16 @@
           return{
             showEditorLayer:false,
             cname:'',
+            icon:'BTC',//币种
+            wname:''//钱包名
           }
       },
       mounted(){
-        Tip({
-          type:'success',//
+      /*  Tip({
+          type:'success',
           title:'Success',
           message:'congratulation'
-        })
+        })*/
       },
       methods:{
         hideEditorLayer(cname){ //隐藏编辑对话框
@@ -113,7 +115,25 @@
           this.$router.push({ name: args.to})
         },
         addFun(){
-          this.showEditorLayer = true
+          if(!this.$root.trim(this.wname,1)){
+            Tip({type:'danger',title:this.$t('message.login.error'), message:"请输入账号名"})
+            $('#wname').focus()
+            return
+          }else{
+            let w={
+              name:this.wname,
+              icconname:this.icon
+              };
+            centerApi.wsave(w,(data) => {
+              MessageBox.alert('保存成功').then(action => {
+                this.$router.push({name:'page-uwallet'})
+              });
+            }, (msg) => {
+              Toast('保存失败！');
+            })
+          }
+
+         /* this.showEditorLayer = true*/
         }
       },
     }

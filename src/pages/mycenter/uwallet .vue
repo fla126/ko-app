@@ -7,186 +7,20 @@
 
     <div class="page-main" id="scroll">
       <section>
-            <div class="uwallet-box ">
-              <h1 class="uwallet-h1 mt25 f30">BTC</h1>
+            <div v-for="(item,key) in walletList" class="uwallet-box ">
+              <h1 class="uwallet-h1 mt25 f30">{{key}}</h1>
               <div class="uwallet-content w-content m-box1 mt25 f24">
                 <div class="inner">
-                  <section class="one">
-                    <span >VIVINING</span>
-                    <span>V6237WTGDEIVINING</span>
-                    <span> <button class="tin-btn-default tin-btn-blue">{{$t('message.wallet.frozen')}}</button>
+                  <section v-for="child in  item" class="one">
+                    <span >{{child.name}}</span>
+                    <span>{{child.address}}</span>
+                    <span> <button :class="[{'tin-btn-default':true},child.statue===0?'tin-btn-blue': 'tin-btn-green']"  v-tap="{methods:changeStaue,query:{ id:child.id,statue:child.statue}}">{{child.statue===0? $t('message.wallet.unfrozen'):$t('message.wallet.frozen')}}</button>
                      </span>
-                  </section>
-                  <section class="one">
-                    <span >VIVINING</span>
-                    <span>V6237WTGDEIVINING</span>
-                    <span>
-                      <button class="tin-btn-default tin-btn-green">{{$t('message.wallet.unfrozen')}}</button>
-                    </span>
-                  </section>
-                  <section class="one">
-                    <span >VIVINING</span>
-                    <span>V6237WTGDEIVINING</span>
-                    <span><button class="tin-btn-default tin-btn-blue">{{$t('message.wallet.unfrozen')}}</button></span>
                   </section>
                 </div>
               </div>
             </div>
-
-        <div class="uwallet-box ">
-          <h1 class="uwallet-h1 mt25 f30">BTC</h1>
-          <div class="uwallet-content w-content m-box1 mt25 f24">
-            <div class="inner">
-              <section class="one">
-                <span >VIVINING</span>
-                <span>V6237WTGDEIVINING</span>
-                <span> <button class="tin-btn-default tin-btn-blue">{{$t('message.wallet.frozen')}}</button>
-                     </span>
-              </section>
-              <section class="one">
-                <span >VIVINING</span>
-                <span>V6237WTGDEIVINING</span>
-                <span>
-                      <button class="tin-btn-default tin-btn-green">{{$t('message.wallet.unfrozen')}}</button>
-                    </span>
-              </section>
-              <section class="one">
-                <span >VIVINING</span>
-                <span>V6237WTGDEIVINING</span>
-                <span><button class="tin-btn-default tin-btn-blue">{{$t('message.wallet.unfrozen')}}</button></span>
-              </section>
-            </div>
-          </div>
-        </div>
-
-
-        <div class="uwallet-box ">
-          <h1 class="uwallet-h1 mt25 f30">BTC</h1>
-          <div class="uwallet-content w-content m-box1 mt25 f24">
-            <div class="inner">
-              <section class="one">
-                <span >VIVINING</span>
-                <span>V6237WTGDEIVINING</span>
-                <span> <button class="tin-btn-default tin-btn-blue">{{$t('message.wallet.frozen')}}</button>
-                     </span>
-              </section>
-              <section class="one">
-                <span >VIVINING</span>
-                <span>V6237WTGDEIVINING</span>
-                <span>
-                      <button class="tin-btn-default tin-btn-green">{{$t('message.wallet.unfrozen')}}</button>
-                    </span>
-              </section>
-              <section class="one">
-                <span >VIVINING</span>
-                <span>V6237WTGDEIVINING</span>
-                <span><button class="tin-btn-default tin-btn-blue">{{$t('message.wallet.unfrozen')}}</button></span>
-              </section>
-            </div>
-          </div>
-        </div>
-
-        <div class="uwallet-box ">
-          <h1 class="uwallet-h1 mt25 f30">BTC</h1>
-          <div class="uwallet-content w-content m-box1 mt25 f24">
-            <div class="inner">
-              <section class="one">
-                <span >VIVINING</span>
-                <span>V6237WTGDEIVINING</span>
-                <span> <button class="tin-btn-default tin-btn-blue">{{$t('message.wallet.frozen')}}</button>
-                     </span>
-              </section>
-              <section class="one">
-                <span >VIVINING</span>
-                <span>V6237WTGDEIVINING</span>
-                <span>
-                      <button class="tin-btn-default tin-btn-green">{{$t('message.wallet.unfrozen')}}</button>
-                    </span>
-              </section>
-              <section class="one">
-                <span >VIVINING</span>
-                <span>V6237WTGDEIVINING</span>
-                <span><button class="tin-btn-default tin-btn-blue">{{$t('message.wallet.unfrozen')}}</button></span>
-              </section>
-            </div>
-          </div>
-        </div>
-        <div class="uwallet-box ">
-          <h1 class="uwallet-h1 mt25 f30">BTC</h1>
-          <div class="uwallet-content w-content m-box1 mt25 f24">
-            <div class="inner">
-              <section class="one">
-                <span >VIVINING</span>
-                <span>V6237WTGDEIVINING</span>
-                <span> <button class="tin-btn-default tin-btn-blue">{{$t('message.wallet.frozen')}}</button>
-                     </span>
-              </section>
-              <section class="one">
-                <span >VIVINING</span>
-                <span>V6237WTGDEIVINING</span>
-                <span>
-                      <button class="tin-btn-default tin-btn-green">{{$t('message.wallet.unfrozen')}}</button>
-                    </span>
-              </section>
-              <section class="one">
-                <span >VIVINING</span>
-                <span>V6237WTGDEIVINING</span>
-                <span><button class="tin-btn-default tin-btn-blue">{{$t('message.wallet.unfrozen')}}</button></span>
-              </section>
-            </div>
-          </div>
-        </div>
-
-        <div class="uwallet-box ">
-          <h1 class="uwallet-h1 mt25 f30">BTC</h1>
-          <div class="uwallet-content w-content m-box1 mt25 f24">
-            <div class="inner">
-              <section class="one">
-                <span >VIVINING</span>
-                <span>V6237WTGDEIVINING</span>
-                <span> <button class="tin-btn-default tin-btn-blue">{{$t('message.wallet.frozen')}}</button>
-                     </span>
-              </section>
-              <section class="one">
-                <span >VIVINING</span>
-                <span>V6237WTGDEIVINING</span>
-                <span>
-                      <button class="tin-btn-default tin-btn-green">{{$t('message.wallet.unfrozen')}}</button>
-                    </span>
-              </section>
-              <section class="one">
-                <span >VIVINING</span>
-                <span>V6237WTGDEIVINING</span>
-                <span><button class="tin-btn-default tin-btn-blue">{{$t('message.wallet.unfrozen')}}</button></span>
-              </section>
-            </div>
-          </div>
-        </div>
-
-        <div class="uwallet-box ">
-          <h1 class="uwallet-h1 mt25 f30">BTC</h1>
-          <div class="uwallet-content w-content m-box1 mt25 f24">
-            <div class="inner">
-              <section class="one">
-                <span >VIVINING</span>
-                <span>V6237WTGDEIVINING</span>
-                <span> <button class="tin-btn-default tin-btn-blue">{{$t('message.wallet.frozen')}}</button>
-                     </span>
-              </section>
-              <section class="one">
-                <span >VIVINING</span>
-                <span>V6237WTGDEIVINING</span>
-                <span>
-                      <button class="tin-btn-default tin-btn-green">{{$t('message.wallet.unfrozen')}}</button>
-                    </span>
-              </section>
-              <section class="one">
-                <span >VIVINING</span>
-                <span>V6237WTGDEIVINING</span>
-                <span><button class="tin-btn-default tin-btn-blue">{{$t('message.wallet.unfrozen')}}</button></span>
-              </section>
-            </div>
-          </div>
+        <div style="height:.7rem">
         </div>
       </section>
     </div>
@@ -203,19 +37,41 @@
   import { Button } from 'mint-ui';
   import { Cell } from 'mint-ui';
   import { Header } from 'mint-ui';
+  import { MessageBox,Toast  } from 'mint-ui';
+  import  centerApi from '@/api/mycenter'
   Vue.component(Button.name, Button);
   Vue.component(Header.name, Header);
   Vue.component(Cell.name, Cell);
     export default {
         name: "page-uwallet",  data(){
         return {
-          scroll:false
+          scroll:false,
+          walletList:{}
         }
       },
       mounted(){
-        setTimeout(this.initScroll,700)
+        setTimeout(this.initScroll,700);
+        this.getlist()
       },
         methods:{
+          changeStaue(args){//改变钱包地址状态
+            console.log(args)
+            MessageBox.confirm('确定执行此操作?').then(action => {
+              centerApi.wupdate({id:args.query.id,statue:args.query.statue===0?1:0},(data) => {
+                  Toast('更新成功！');
+                  this.getlist();
+              }, (msg) => {
+                  Toast('更新失败！');
+              })
+            });
+
+          },
+          getlist(){
+            centerApi.getwallsList((data) => {
+              this.walletList = data
+            }, (msg) => {
+            })
+          },
           initScroll(){
             var self = this
             this.scroll = new IScroll('#scroll',{
@@ -250,6 +106,18 @@
     justify-content: space-between;
     border-bottom:.02rem solid #ecedee;
     padding: 0.2rem 0rem;
+    span:nth-of-type(1){
+      width: 1rem;
+      overflow: hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap
+    }
+    span:nth-of-type(2){
+       width: 3rem;
+      overflow: hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap
+    }
   }
   .uwallet-content .one span{
      line-height: .45rem;
