@@ -31,6 +31,15 @@ export default new Vuex.Store({
     getCurrency (state){
       return state.currency
     },
+    getShowCurrency (state){
+      var currency = []
+      for(let key in state.currency){
+        if(state.currency[key]){
+          currency.push(key)
+        }
+      }
+      return currency
+    },
   },
   mutations: {
     updateHistoryLength (state){
@@ -66,7 +75,7 @@ export default new Vuex.Store({
     },
     setCurrency (context, currency){
       window.localStorage.setItem('currencySetting',JSON.stringify(currency))
-      currency = Object.assign(context.state.currency,currency)
+      currency = Object.assign(JSON.parse(JSON.stringify(context.state.currency)),currency)
       context.commit('updateCurrency',currency)
     },
   },

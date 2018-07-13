@@ -21,13 +21,9 @@
           <i class="close" v-tap="{methods:delSearch}" v-show="searchText.length>0">+</i>
         </div>
         <ul class="currency-list" v-tap="{methods:goWalletDetail}">
-          <li data-type="btc">
-            <div><img src="../assets/img/BTC-alt@3x.png"><strong>BTC</strong></div>
+          <li :data-type="item" v-for="item in filterCurrency(getShowCurrency)">
+            <div><i :class="item"></i><strong>{{item}}</strong></div>
             <div><span>266</span><br /><span>≈ ￥426,1234</span></div>
-          </li>
-          <li data-type="eth">
-            <div><img src="../assets/img/ETH@3x.png"><strong>ETH</strong></div>
-            <div><span>646</span><br /><span>≈ ￥426,1234</span></div>
           </li>
         </ul>
       </div>
@@ -37,7 +33,7 @@
 <script>
 import Vue from 'vue'
 import compWalletTop from '@/components/top_wallet'
-
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name:'page-wallet',
@@ -49,6 +45,7 @@ export default {
       currentSearchPos:0,
       scroll:false,
       amountShow:true,
+      currency:[],
     }
   },
   created(){
@@ -61,14 +58,21 @@ export default {
   watch:{
     searchTopText(_new,_old){
       this.searchText = _new
-    }
+    },
   },
   computed:{
+    ...mapGetters(['getCurrency','getShowCurrency']),
     isSearchFixed(){
       return Math.abs(this.currentSearchPos)>this.initSearchPos ? true:false
-    }
+    },
   },
   methods:{
+    filterCurrency(currency){
+      var str = $.trim(this.searchText).toUpperCase()
+      return currency.filter((item)=>{
+        return item.indexOf(str)>-1
+      })
+    },
     getAmountShowSetting(){
       //获取金额显示、隐藏设置
       var _amountShow = localStorage.getItem('amount_show') || 'true'
@@ -259,13 +263,21 @@ export default {
       &:last-of-type {
         text-align: right;
       }
-      img {
+      i {
+        display: inline-block;
         width: 0.7rem;
         height: 0.7rem;
         margin-right: 0.4rem;
-        object-fit: contain;
-        object-position: center;
+        background-repeat: none;
+        background-position: center;
+        background-size: contain;
         vertical-align: bottom;
+        &.BTC {
+          background-image: url('../assets/img/BTC-alt@3x.png');
+        }
+        &.ETH {
+          background-image: url('../assets/img/ETH@3x.png');
+        }
       }
       strong {
         font-size: 0.36rem;
