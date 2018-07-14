@@ -1,6 +1,6 @@
 <template>
   <div  class="page">
-    <comp-top-back>web3设置<span class="save-btn" v-tap="{methods:saveWeb}">{{$t('message.setup.save')}}</span></comp-top-back>
+    <comp-top-back>{{$t('message.setup.webset')}}<span class="save-btn" v-tap="{methods:saveWeb}">{{$t('message.setup.save')}}</span></comp-top-back>
     <div class="page-main">
       <ul class="addcmd-detail">
         <li>
@@ -8,7 +8,7 @@
           <p><input id="account" maxlength="25" :placeholder="webUrl" type="text" v-model="url"></p>
         </li>
         <li>
-          <p class="default" v-tap="{methods:setDefault}" >设置默认URL</p>
+          <p class="default" v-tap="{methods:setDefault}" >{{$t('message.setup.defaulturl')}}</p>
         </li>
       </ul>
     </div>

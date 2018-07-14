@@ -37,7 +37,7 @@
   import { Button } from 'mint-ui';
   import { Cell } from 'mint-ui';
   import { Header } from 'mint-ui';
-  import { MessageBox,Toast  } from 'mint-ui';
+  import { MessageBox,Toast,Indicator} from 'mint-ui';
   import  centerApi from '@/api/mycenter'
   Vue.component(Button.name, Button);
   Vue.component(Header.name, Header);
@@ -56,12 +56,15 @@
         methods:{
           changeStaue(args){//改变钱包地址状态
             console.log(args)
-            MessageBox.confirm('确定执行此操作?').then(action => {
-              centerApi.wupdate({id:args.query.id,statue:args.query.statue===0?1:0},(data) => {
-                  Toast('更新成功！');
+        MessageBox.confirm(this.$t('message.wallet.info'),this.$t('message.wallet.wok'),{confirmButtonText:this.$t('message.wallet.ok'),cancelButtonText:this.$t('message.wallet.no')}).then(action => {
+          Indicator.open();
+          centerApi.wupdate({id:args.query.id,statue:args.query.statue===0?1:0},(data) => {
+                  Indicator.close();
+                  Toast(this.$t('message.wallet.updatesuccess'));
                   this.getlist();
               }, (msg) => {
-                  Toast('更新失败！');
+                 Indicator.close();
+                  Toast(this.$t('message.wallet.updatefailed'));
               })
             });
 

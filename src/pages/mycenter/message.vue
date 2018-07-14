@@ -2,7 +2,7 @@
   <div id="uinfo" class="page wrap ">
     <comp-top-back :class="'line'" :back="true" >
       {{$t('message.msg.message')}}
-       <span class="header-right">全部</span>
+       <span class="header-right">{{$t('message.msg.all')}}</span>
     </comp-top-back>
 
     <div class="page-main" id="scroll"> <!--content start-->
@@ -10,7 +10,7 @@
         <div v-for="(item,index) in msgArry" class="w-content m-box1"  v-tap="{methods:routeTo, to:'page-msginfo',query:item.id}">
           <div class="inner">
                  <section class="item">
-                      <div><span class="left ft-c-gray" >{{item.title}}:</span><span class="right ft-c-gray">{{item.tratime|date}}</span></div>
+                      <div><span class="left ft-c-gray" >{{item.tratype===1?$t('message.msg.advicemsg'):(item.tratype===2?$t('message.msg.sendmsg'):$t('message.msg.sysmsg'))}}:</span><span class="right ft-c-gray">{{item.tratime|date}}</span></div>
                       <div><p class="bottom">{{$t('message.msg.content')}}</p></div>
                  </section>
           </div>

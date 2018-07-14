@@ -12,7 +12,7 @@
                 <label class=" f24 ft-c-gray">{{$t('message.mycenter.check')}}</label>
                 <div class="styled-select">
                   <select class="rec-select f24"  v-model="captcha" @change="chooseIcon(captcha)" >
-                    <option value="" >全部</option>
+                    <option value="" >{{$t('message.msg.all')}}</option>
                     <option value="BTC" >BTC</option>
                     <option value="ETH">ETH</option>
                     <option value="BARK">BARK</option>

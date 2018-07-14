@@ -1,7 +1,7 @@
 <template>
   <div id="uinfo" class="page wrap ">
     <comp-top-back :class="'line'" :back="true" >
-       交易记录
+      {{$t('message.rec.tradingrec')}}
     </comp-top-back>
     <div class="box one">
            <div class="inner">
@@ -12,13 +12,13 @@
     <div class="box two">
       <div class="inner">
          <div >
-            <h1><span>发款方:</span></h1>
+            <h1><span>{{$t('message.rec.sender')}}:</span></h1><!--发送方-->
             <h2><span class="msg-eplise"> {{msginfo.senduser}}</span></h2>
-            <h1><span>收款方:</span></h1>
+            <h1><span>{{$t('message.rec.receiver')}}:</span></h1><!--接收方-->
             <h2><span class="msg-eplise">{{msginfo.recuser}}</span></h2>
-            <h1><span>矿工费用:</span></h1>
+            <h1><span>{{$t('message.rec.cost')}}:</span></h1><!--矿工费用 -->
             <h2>{{msginfo.minersfee}}</h2>
-            <h1><span>备注</span></h1>
+            <h1><span>{{$t('message.rec.remarks')}}</span></h1><!--备注-->
             <h2>{{msginfo.note}}</h2>
          </div>
       </div>
@@ -26,11 +26,11 @@
 
     <div class="box three">
       <div class="inner">
-        <h1><span>交易号:</span></h1>
+        <h1><span>{{$t('message.rec.trannumer')}}:</span></h1><!--交易号-->
         <h2><span class="msg-eplise">{{msginfo.transaction}}</span></h2>
-        <h1><span>区块：</span></h1>
+        <h1><span>{{$t('message.rec.block')}}：</span></h1><!--区块-->
         <h2>{{msginfo.block}}</h2>
-        <h1><span>交易时间:</span></h1>
+        <h1><span>{{$t('message.rec.trantime')}}:</span></h1><!--交易时间-->
         <h2>{{msginfo.tratime|date}}</h2>
       </div>
     </div>

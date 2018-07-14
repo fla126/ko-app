@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <comp-top-back>货币单位<span class="save-btn" v-tap="{methods:saveLang}">{{$t('message.setup.save')}}</span></comp-top-back>
+    <comp-top-back>{{$t('message.setup.monunit')}}<span class="save-btn" v-tap="{methods:saveLang}">{{$t('message.setup.save')}}</span></comp-top-back>
     <div class="common-content bg-white mt40 ft-c-gray">
       <div class="inner">
         <div class="box-cont " v-tap="{methods:changeLang, t:'CNY'}">

@@ -97,6 +97,8 @@
           }
       },
       mounted(){
+
+
       /*  Tip({
           type:'success',
           title:'Success',
@@ -116,7 +118,7 @@
         },
         addFun(){
           if(!this.$root.trim(this.wname,1)){
-            Tip({type:'danger',title:this.$t('message.login.error'), message:"请输入账号名"})
+            Tip({type:'danger',title:this.$t('message.login.error'), message:this.$t('message.wallet.pleasewalletName')})
             $('#wname').focus()
             return
           }else{
@@ -125,11 +127,11 @@
               icconname:this.icon
               };
             centerApi.wsave(w,(data) => {
-              MessageBox.alert('保存成功').then(action => {
+              MessageBox.alert(this.$t('message.wallet.info'),this.$t('message.wallet.savesucc'),{confirmButtonText:this.$t('message.wallet.ok')}).then(action => {
                 this.$router.push({name:'page-uwallet'})
               });
             }, (msg) => {
-              Toast('保存失败！');
+              Toast(this.$t('message.wallet.savefailed'));
             })
           }
 
