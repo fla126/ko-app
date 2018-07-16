@@ -22,10 +22,44 @@ export default {
 	        return t.test(str);
         }
     },
-    scanner(func){ //扫描二维码公共函数
-    	uexScanner.open(func)
+    getPhonePlatform(){ //获取前端系统环境
+    	var u = navigator.userAgent;
+    	var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+    	var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+    	var type=""
+    	if(isAndroid){
+    	  type="android"
+    	}
+    	if(isiOS){
+    	  type="ios"
+    	}
+    	if(type==""){
+    	  type="h5"
+    	}
+    	return type;
     },
-    toFixed (value, fixed) {
+    scanner(success, error){ //扫描二维码公共函数
+    	var plat = this.getPhonePlatform()
+    	if (plat === 'android') {
+	        cordova.plugins.barcodeScanner.scan(
+	            function (result) {
+	            	console.log(result)
+	                success && success(result.text);
+	            },
+	            function (ex) {
+	                error && error(ex);
+	            }
+	        );
+	    } else if (plat === 'ios') {
+	        cordova.exec(function (result) {
+	            success && success(result);
+	        }, function (ex) {
+	            error && error("调用OC插件失败: " + msg);
+	        }, "CDVScan", "recognize", ["将二维码放入框内, 即可自动扫描"]);
+	    }
+
+    },
+    toFixed (value, fixed) { //截取位数
 		if(isNaN(Number(value))){
 			return value
 		} else {
@@ -38,13 +72,13 @@ export default {
 	    case 'BTC':
 	      if(publicKeys.constructor == String){
 	      	var publicKeyBuffer = new Buffer(publicKeys, 'hex')
-	      	var publicKey = bitcoin.ECPair.fromPublicKeyBuffer(publicKeyBuffer)
-	        address = new bitcoin.ECPair(null, publicKey.Q, { compressed: false }).getAddress()
+	      	var publicKeyHash = bitcoin.crypto.hash160(publicKeyBuffer)
+	      	address = bitcoin.address.toBase58Check(publicKeyHash, bitcoin.networks.bitcoin.pubKeyHash)
 	      } else {
 	        address = publicKeys.map((item)=>{
         		var publicKeyBuffer = new Buffer(item, 'hex')
-        		var publicKey = bitcoin.ECPair.fromPublicKeyBuffer(publicKeyBuffer)
-        	    return new bitcoin.ECPair(null, publicKey.Q, { compressed: false }).getAddress()
+		      	var publicKeyHash = bitcoin.crypto.hash160(publicKeyBuffer)
+		      	return bitcoin.address.toBase58Check(publicKeyHash, bitcoin.networks.bitcoin.pubKeyHash)
 	        }).join(',')
 	      }
 	      break

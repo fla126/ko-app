@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <comp-top-back></comp-top-back>
+    <comp-top-back :home="true"></comp-top-back>
     <div class="page-main">
       <ul class="pament-detail">
         <li>
@@ -57,7 +57,6 @@ export default {
   },
   computed:{
     address(){
-      console.log(this.currency, this.publicKey)
       return this.$root.getAddress(this.currency, this.publicKey)
     },
     QRAddress(){

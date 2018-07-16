@@ -8,7 +8,9 @@ module.exports={
     },
     usbkeyStatus:{
     	connected:'Tinkey已连接',
-    	disconnect:'Tinkey未连接'
+    	disconnect:'Tinkey未连接',
+      tip:'提示：请检查设备是否完好，是否已正确连接。',
+      reconnect:'重新连接',
     },
     wallet:{
       amount:'总额',
@@ -154,9 +156,21 @@ module.exports={
         passwordPlaceholder:'输入密码,6-16位英文或数字',
         passwordAgainPlaceholder:'再次输入密码',
         CodeEnterPlaceholder:'输入验证码',
+        differentPassword:'两次输入的密码不一致',
         acquire:'获取验证码',
         resetPassword:'重置密码',
         confirm:'确定'
+    },
+    init:{
+      skip:'跳过',
+      createWallet:'创建新钱包，初始化Tinkey',
+      importWallet:'导入已初始化Tinkey钱包',
+      inputPassword:'请输入Tinkey登录密码',
+      checkException:'检查连接异常 ',
+      invalidPassword:'登录密码错误',
+      passwordLayerTitle:'设置Tinkey初始化密码',
+      enterPassword:'密码(6位字母或数字)',
+      confirmPassword:'确认密码',
     }
   }
 }

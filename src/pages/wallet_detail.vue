@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <comp-top-back>
+    <comp-top-back :home="true">
       <span class="selected-title" v-tap="{methods:showWalletList}">{{wallet[wallet_idx] && wallet[wallet_idx].name}}</span>
     </comp-top-back>
     <div class="page-main">

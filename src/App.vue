@@ -29,18 +29,18 @@ export default {
     this.getUTXO()
   },
   computed:{
-
+    ...mapGetters(['getUsbkeyStatus','getHasLogin']),
   },
   methods:{
     ...mapActions(['setCurrency','setBTCValuation','setUSDCNY','setBtcValues','setWalletList','setUTXO']),
-    initRouter(){ //第一次访问路由
+    initRouter(){ 
       let isfirst = localStorage.getItem('firstWallet')
-      if(!isfirst){
+      if(!isfirst){ //第一次使用本app转到引导页
         this.$router.replace({name:'guide'})
-      } else {
-        if(this.$route.name == 'index'){
+      } else if(this.getHasLogin && this.$route.name == 'index'){
           this.$router.replace({name:'page-wallet'})
-        }
+      } else {
+        this.$router.replace({name:'page-init'})
       }
     },
     getCurrency(){

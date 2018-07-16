@@ -1,6 +1,7 @@
 <template>
   <div class="page-top">
   	<span class="btn-back" v-tap="{methods:goBack}" v-if="back"></span>
+    <span class="btn-home" v-tap="{methods:goHome}" v-if="home"></span>
     <slot></slot>
   </div>
 </template>
@@ -13,10 +14,17 @@ export default {
       type: Boolean,
       default:true
     },
+    home:{
+      type: Boolean,
+      default:false
+    },
   },
   methods:{
   	goBack(){
       this.$router.back()
+    },
+    goHome(){
+      this.$router.replace({name:'page-wallet'})
     }
   }
 }
@@ -36,6 +44,14 @@ export default {
     height: 0.5rem;
     left: 0.3rem;
     background: url('../../assets/img/fanhui-icon@3x.png') no-repeat center;
+    background-size: contain;
+  }
+  .btn-home {
+    position: absolute;
+    width: 0.5rem;
+    height: 0.5rem;
+    right: 0.3rem;
+    background: url('../../assets/img/home.png') no-repeat center;
     background-size: contain;
   }
 }

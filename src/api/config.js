@@ -5,7 +5,7 @@ var config = {
 	wsroot:'',
 }
 var config = {
-	domain: env === 'dev' ? 'dev.koall.io': '10.0.2.180',
+	domain: env === 'dev' ? '10.0.2.180': 'dev.koall.io',
 	root:''
 }
 

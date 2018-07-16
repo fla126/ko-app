@@ -15,7 +15,7 @@
           <p>{{senderAddress}}</p>
         </li>
         <li>
-          <div>{{$t('message.walletDetail.amount')}}<span>{{amount}} {{currency}}</span></div>
+          <div>{{$t('message.walletDetail.amount')}}<span>{{$root.toFixed(amount,8)}} {{currency}}</span></div>
           <div>{{$t('message.walletDetail.miningFee')}}<span><template v-if="feeSign=='ETH'">{{GasNumber}}gas * {{GasPrice}}gwei = </template>{{miningFeeDisplay}} {{feeSign}}</span></div>
           <h3>{{$t('message.walletDetail.total')}}<span>{{totalDisplay}} {{currency}}</span></h3>
         </li>

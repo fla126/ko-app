@@ -1,5 +1,5 @@
 <template>
-  <div class="wrap">
+  <div class="page">
     <mt-swipe :auto="0" :continuous="false" class="guide" :class="{en:$i18n.locale=='en'}"  @change="handleChange">
       <mt-swipe-item></mt-swipe-item>
       <mt-swipe-item></mt-swipe-item>
@@ -41,7 +41,7 @@ export default {
     },
     start(args){
      localStorage.setItem('firstWallet',1)
-     this.$router.replace({ name: 'page-wallet'})
+     this.$router.replace({name:'page-init'})
     }
   },
   components:{

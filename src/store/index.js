@@ -13,6 +13,7 @@ export default new Vuex.Store({
     slogan: '学而时习之，不亦乐乎!',
     historyLength: 0,
     usbkeyStatus:false, //usbKey连接状态
+    hasLogin:false, //是否已经登录硬件
     lang: window.localStorage.getItem('lang') || 'en', //语言包
     publicKey:'e331b6d69882b4cb4ea581d88e0b604039a3de5967688d3dcffdd2270c0fd109', //公钥
     currency:{}, //币种
@@ -25,6 +26,9 @@ export default new Vuex.Store({
   getters:{
     getUsbkeyStatus (state){
       return state.usbkeyStatus
+    },
+    getHasLogin (state){
+      return state.hasLogin
     },
     getLang (state){
       return state.lang
@@ -75,6 +79,9 @@ export default new Vuex.Store({
     updateUsbkeyStatus(state,status){ //注册更新usbkey连接函数
       state.usbkeyStatus = status
     },
+    updateHasLogin(state,status){ //注册更新usbkey连接函数
+      state.hasLogin = status
+    },
     updateLang (state, lang){
       state.lang = lang
     },
@@ -106,6 +113,9 @@ export default new Vuex.Store({
     },
     setUsbkeyStatus({commit},status){
       commit('updateUsbkeyStatus',status)
+    },
+    setHasLogin({commit},status){
+      commit('updateHasLogin',status)
     },
     setLang ({commit}, lang){
       window.localStorage.setItem('lang', lang)

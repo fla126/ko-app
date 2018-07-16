@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '@/store'
+import init from '@/pages/init'
 import guide from '@/pages/guide'
 import login from '@/pages/login'
 import register from '@/pages/register'
@@ -77,6 +78,11 @@ const router = new Router({
       path:'/command-add', //添加口令
       name: commandAdd.name,
       component: commandAdd
+    },
+    {
+      path:'/init', //初始化页面
+      name: init.name,
+      component: init
     },
     {
       path:'/guide', //引导页面

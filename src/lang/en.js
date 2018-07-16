@@ -8,7 +8,9 @@ module.exports={
     },
     usbkeyStatus:{
     	connected:'Tinkey Linked',
-    	disconnect:'Tinkey Unlinked'
+    	disconnect:'Tinkey Unlinked',
+      tip:'Tip：Please check whether the equipment is in good condition and whether it is properly connected.',
+      reconnect:'Reconnect',
     },
     wallet:{
 	    amount:'Total',
@@ -153,12 +155,25 @@ module.exports={
     register:{
         register:'Register',
         phonePlaceholder:'Enter phone number',
-        passwordPlaceholder:'Enter password (6-16 English letters or digits)',
+        passwordPlaceholder:'Enter password (6-16 english letters or digits)',
         passwordAgainPlaceholder:'Confirm password',
         CodeEnterPlaceholder:'Enter verification code',
+        differentPassword:'Entered passwords differ',
         acquire:'Acquire',
         resetPassword:'Reset password',
         confirm:'OK'
+    },
+    init:{
+      skip:'Skip',
+      createWallet:'Initialize the Tinkey and create a wallet',
+      importWallet:'Import an initialized Tinkey wallet',
+      inputPassword:'Please enter the Tinkey login password',
+      checkException:'Check connection exception',
+      invalidPassword:'Invalid password',
+      passwordLayerTitle:'Set Tinkey password',
+      enterPassword:'Password ( 6 English/Digit letters )',
+      confirmPassword:'Confirm password',
+      initializeFailure:'Failed, please contact customer service'
     }
   }
 }
