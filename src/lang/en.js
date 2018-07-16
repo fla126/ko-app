@@ -21,7 +21,16 @@ module.exports={
       walletName:'Wallet Name',
       add:'Add',
       topInfo:'Tip: You need get Tinkey connected befor creating a new  wallet.',
-      addWallet:'Add Wallet'
+      addWallet:'Add Wallet',
+      ok:'ok',
+      info:'Info',
+      no:'no',
+      wok:'Make sure this is done?',
+      updatesuccess:'Update Successfully',
+      updatefailed:'Update failed',
+      savesucc:'save successfully!',
+      savefailed:'fail to save!',
+      pleasewalletName:'Please enter your wallet name'
 	},
     addWalletDialog:{
       enterPwd:'Enter Passcode'
@@ -80,6 +89,7 @@ module.exports={
 	},
     mycenter:{
       center:'Account Center',
+      check:'Please select',
       msg:'News',
       rec:'Record',
       wallet:'Wallet',
@@ -92,7 +102,10 @@ module.exports={
     languages:'Language',
     fiat:'Fiat',
     manageToken:'Manage Token',
-    save:'Save'
+    save:'Save',
+    defaulturl:'Set the default URL',
+    webset:'Web3 Set',
+    monunit:'Monetary Unit'
   },
     uinfo:{
       tinkey:'Tinkey',
@@ -107,11 +120,22 @@ module.exports={
     msg:{
       message:'Message',
       all:'All',
-      content:'Your sending to XXXX on 13:14 2018.08.09 was successful. You can check it anytime at Send record.'
-
+      content:'Your sending to XXXX on 13:14 2018.08.09 was successful. You can check it anytime at Send record.',
+      sysmsg:'System Message',
+      sendmsg:'Transfer notice',
+      advicemsg:'Advice Of Collection'
     },
     rec:{
-      record:'Record'
+      record:'Record',
+      tradingrec:"Trading Record",
+      selected:'selected',
+      sender:'Sender',
+      receiver:'Receiver',
+      cost:'Cost of miners',
+      remarks:'Remarks',
+      trannumer:'Transaction Number',
+      block:'Block',
+      trantime:'Transaction Time'
     },
     backup:{
       backupName:'Backup',

@@ -33,11 +33,17 @@ export default {
     }
   },
   created(){
-    this.commandName = this.cname
+    //this.commandName = this.cname
+  },
+  watch:{
+    cname(){
+      this.commandName=this.cname;
+    }
   },
   methods:{
     mconfirm(){
-      this.hideFunction(this.commandName)
+      this.hideFunction(this.commandName);
+      this.$emit("submitinfo",this.commandName)
     },
     checkInput(event){
       if(event.keyCode == 13){

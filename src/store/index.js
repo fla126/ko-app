@@ -22,6 +22,7 @@ export default new Vuex.Store({
     btcValues: {}, //换算价格
     walletList:[], //钱包列表
     UTXO:[], //UTXO 所属币种加入ALL钱包选项
+    webThree:''
   },
   getters:{
     getUsbkeyStatus (state){
@@ -70,6 +71,9 @@ export default new Vuex.Store({
     getUTXO (state) {
       return state.UTXO
     },
+       getWebThree(state){
+      return state.webThree
+    }
   },
   mutations: {
     updateHistoryLength (state){
@@ -106,6 +110,9 @@ export default new Vuex.Store({
     updateUTXO (state, UTXO) {
       state.UTXO = UTXO
     },
+       updateWebThree(state, webThree){
+      state.webThree = webThree
+    }
   },
   actions: {
     setHistoryLength({commit}){
@@ -150,6 +157,9 @@ export default new Vuex.Store({
     setUTXO ({commit}, UTXO) {
       commit('updateUTXO', UTXO)
     },
+      setWebThree ({commit}, WebThree){
+      commit('updateWebThree',WebThree)
+    }
   },
   modules: {
     

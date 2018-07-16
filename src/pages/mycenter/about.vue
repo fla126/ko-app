@@ -13,16 +13,16 @@
 
     <div class="common-content bg-white mt190 ft-c-gray">
       <div class="inner">
-        <div class="box-cont " >
+        <div class="box-cont " v-tap="{methods:routeTo, to:'page-agreement'}"> <!--用户协议-->
           <div class="item"><span class="f30">{{$t('message.about.terms')}}</span></div>
         </div>
-        <div class="box-cont " >
+        <div class="box-cont " v-tap="{methods:routeTo, to:'page-privacy'}"> <!--隐私条款-->
           <div class="item"><span class="f30">{{$t('message.about.privacy')}}</span></div>
         </div>
-        <div class="box-cont " >
+       <!-- <div class="box-cont " v-tap="{methods:routeTo, to:'page-join'}"> &lt;!&ndash;加入我们&ndash;&gt;
           <div class="item"><span class="f30">{{$t('message.about.joinus')}}</span></div>
-        </div>
-        <div class="box-cont " >
+        </div>-->
+        <div class="box-cont "v-tap="{methods:checkVersion}" ><!--检查版本-->
           <div class="item"><span class="f30">{{$t('message.about.version')}}</span><img class="nav_right" src="../../assets/img/mycenter/i_question.png"/></div>
           <div class="item"></div>
         </div>
@@ -36,11 +36,20 @@
   import { Button } from 'mint-ui';
   import { Cell } from 'mint-ui';
   import { Header } from 'mint-ui';
+  import { MessageBox } from 'mint-ui';
   Vue.component(Button.name, Button);
   Vue.component(Header.name, Header);
   Vue.component(Cell.name, Cell);
   export default {
-    name: "page-about"
+    name: "page-about",
+    methods:{
+      routeTo(args){
+        this.$router.push({ name: args.to})
+      },
+      checkVersion(){
+        MessageBox('温馨提示!', '已经是最新版');
+      }
+    }
   }
 </script>
 

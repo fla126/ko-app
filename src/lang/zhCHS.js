@@ -21,7 +21,17 @@ module.exports={
       walletName:'钱包名',
       add:'添加',
       topInfo:'提示：为了创建钱包，你需要连接Tinkey',
-      addWallet:'添加钱包'
+      addWallet:'添加钱包',
+      info:'信息',
+      ok:'确定',
+      no:'取消',
+      wok:'确定执行此操作?',
+      updatesuccess:'更新成功！',
+      updatefailed:'更新失败！',
+      savesucc:'保存成功!',
+      savefailed:'保存失败!',
+      pleasewalletName:'请输入钱包名'
+
     },
     addWalletDialog:{// 添加钱包输入密码弹窗
      enterPwd:'请输入密码'
@@ -80,6 +90,7 @@ module.exports={
     },
     mycenter:{/* 个人中心 */
       center:'个人中心',
+      check:'选择',
       msg:'消息',
       rec:'记录',
       wallet:'钱包',
@@ -92,7 +103,10 @@ module.exports={
       languages:'多语言',
       fiat:'货币单位',
       manageToken:'管理币种',
-      save:'保存'
+      save:'保存',
+      defaulturl:'设置默认URL',
+      webset:'web3设置',
+      monunit:'货币单位'
     },
     uinfo:{/*个人信息*/
       tinkey:'硬件',
@@ -107,10 +121,22 @@ module.exports={
     msg:{
       message:'消息',
       all:'全部',
-      content:'您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看您的转账记录。'
+      content:'您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看您的转账记录。',
+      sysmsg:'系统信息',
+      sendmsg:'收款通知',
+      advicemsg:'转账通知'
     },
     rec:{/* 记录 */
-      record:'记录'
+      record:'记录',
+      tradingrec:'交易记录',
+      selected:'选择',
+      sender:'发送方',
+      receiver:'接收方',
+      cost:'矿工费用',
+      remarks:'备注',
+      trannumer:'交易号',
+      block:'区块',
+      trantime:'交易时间'
     },
     backup:{
       backupName:'备份',

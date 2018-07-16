@@ -9,226 +9,69 @@
           <div class="re-box">
             <div class="inner">
               <section class="re-top">
-                <label class=" f24 ft-c-gray">{{$t('message.mycenter.wallet')}}</label>
+                <label class=" f24 ft-c-gray">{{$t('message.mycenter.check')}}</label>
                 <div class="styled-select">
-                  <select class="rec-select f24">
-                    <option>BTC</option>
-                    <option>ETH</option>
-                    <option>BARK</option>
+                  <select class="rec-select f24"  v-model="captcha" @change="chooseIcon(captcha)" >
+                    <option value="" >{{$t('message.msg.all')}}</option>
+                    <option value="BTC" >BTC</option>
+                    <option value="ETH">ETH</option>
+                    <option value="BARK">BARK</option>
                   </select>
                 </div>
               </section>
             </div>
           </div>
 
-          <div class="w-content m-box2 f24">
+          <div  v-for="(item,index) in recList" class="w-content m-box2 f24" v-tap="{methods:routeTo, to:'page-msginfo',query:item.id}" :key="index">
             <div class="inner">
                <ul >
-                 <li><img src="../../assets/img/mycenter/i_add.png"/></li>
+                 <li >
+                   <img :src="item.tratype===1?i_add:i_remove"/>
+                 </li>
                  <li> <section class="w-c-center">
-                   <p>1MzziGBa7tNN.......wRcvSGZu5</p>
-                   <p>2018.04.23</p>
+                   <p class="sender"><span>{{item.senduser}}</span></p>
+                   <p> <span>{{item.tratime|date}}</span></p>
                  </section>
                  </li>
                  <li>
-                   <span>+0.4567BTC</span>
+                   <span><i >{{item.tratype===1 ?'+':'-'}}</i>{{item.amount}}{{item.icontype}}</span>
                  </li>
                </ul>
             </div>
           </div>
-
-          <div class="w-content m-box2 f24">
-            <div class="inner">
-              <ul >
-                <li><img src="../../assets/img/mycenter/i_reduction.png"/></li>
-                <li> <section class="w-c-center">
-                  <p>1MzziGBa7tNN.......wRcvSGZu5</p>
-                  <p>2018.04.23</p>
-                </section>
-                </li>
-                <li>
-                  <span>+0.4567BTC</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="w-content m-box2 f24">
-            <div class="inner">
-              <ul >
-                <li><img src="../../assets/img/mycenter/i_error.png"/></li>
-                <li> <section class="w-c-center">
-                  <p>1MzziGBa7tNN.......wRcvSGZu5</p>
-                  <p>2018.04.23</p>
-                </section>
-                </li>
-                <li>
-                  <span>+0.4567BTC</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-        <div class="w-content m-box2 f24">
-          <div class="inner">
-            <ul >
-              <li><img src="../../assets/img/mycenter/i_error.png"/></li>
-              <li> <section class="w-c-center">
-                <p>1MzziGBa7tNN.......wRcvSGZu5</p>
-                <p>2018.04.23</p>
-              </section>
-              </li>
-              <li>
-                <span>+0.4567BTC</span>
-              </li>
-            </ul>
-          </div>
+        <div style="height:.7rem">
         </div>
-        <div class="w-content m-box2 f24">
-          <div class="inner">
-            <ul >
-              <li><img src="../../assets/img/mycenter/i_error.png"/></li>
-              <li> <section class="w-c-center">
-                <p>1MzziGBa7tNN.......wRcvSGZu5</p>
-                <p>2018.04.23</p>
-              </section>
-              </li>
-              <li>
-                <span>+0.4567BTC</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="w-content m-box2 f24">
-          <div class="inner">
-            <ul >
-              <li><img src="../../assets/img/mycenter/i_error.png"/></li>
-              <li> <section class="w-c-center">
-                <p>1MzziGBa7tNN.......wRcvSGZu5</p>
-                <p>2018.04.23</p>
-              </section>
-              </li>
-              <li>
-                <span>+0.4567BTC</span>
-              </li>
-            </ul>
-          </div>
-        </div>  <div class="w-content m-box2 f24">
-        <div class="inner">
-          <ul >
-            <li><img src="../../assets/img/mycenter/i_error.png"/></li>
-            <li> <section class="w-c-center">
-              <p>1MzziGBa7tNN.......wRcvSGZu5</p>
-              <p>2018.04.23</p>
-            </section>
-            </li>
-            <li>
-              <span>+0.4567BTC</span>
-            </li>
-          </ul>
-        </div>
-      </div>  <div class="w-content m-box2 f24">
-        <div class="inner">
-          <ul >
-            <li><img src="../../assets/img/mycenter/i_error.png"/></li>
-            <li> <section class="w-c-center">
-              <p>1MzziGBa7tNN.......wRcvSGZu5</p>
-              <p>2018.04.23</p>
-            </section>
-            </li>
-            <li>
-              <span>+0.4567BTC</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-        <div class="w-content m-box2 f24">
-          <div class="inner">
-            <ul >
-              <li><img src="../../assets/img/mycenter/i_error.png"/></li>
-              <li> <section class="w-c-center">
-                <p>1MzziGBa7tNN.......wRcvSGZu5</p>
-                <p>2018.04.23</p>
-              </section>
-              </li>
-              <li>
-                <span>+0.4567BTC</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="w-content m-box2 f24">
-          <div class="inner">
-            <ul >
-              <li><img src="../../assets/img/mycenter/i_error.png"/></li>
-              <li> <section class="w-c-center">
-                <p>1MzziGBa7tNN.......wRcvSGZu5</p>
-                <p>2018.04.23</p>
-              </section>
-              </li>
-              <li>
-                <span>+0.4567BTC</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="w-content m-box2 f24">
-          <div class="inner">
-            <ul >
-              <li><img src="../../assets/img/mycenter/i_error.png"/></li>
-              <li> <section class="w-c-center">
-                <p>1MzziGBa7tNN.......wRcvSGZu5</p>
-                <p>2018.04.23</p>
-              </section>
-              </li>
-              <li>
-                <span>+0.4567BTC</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="w-content m-box2 f24">
-          <div class="inner">
-            <ul >
-              <li><img src="../../assets/img/mycenter/i_error.png"/></li>
-              <li> <section class="w-c-center">
-                <p>1MzziGBa7tNN.......wRcvSGZu5</p>
-                <p>2018.04.23</p>
-              </section>
-              </li>
-              <li>
-                <span>+0.4567BTC</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-
-
       </div>
     </div>
   </div>
 </template>
 <script>
   import Vue from 'vue'
+  import  centerApi from '@/api/mycenter'
   import { Button } from 'mint-ui';
   import { Cell } from 'mint-ui';
   import { Header } from 'mint-ui';
   import { Field } from 'mint-ui';
   import { Checklist } from 'mint-ui';
 
-
   Vue.component(Button.name, Button);
   Vue.component(Header.name, Header);
   Vue.component(Cell.name, Cell);
   Vue.component(Field.name, Field);
   Vue.component(Checklist.name, Checklist);
+
+
+
   export default {
     name:'page-record',
     data(){
       return {
+        i_add:require('../../assets/img/mycenter/i_add.png'),
+        i_remove:require('../../assets/img/mycenter/i_reduction.png'),
+        i_error:require('../../assets/img/mycenter/i_error.png'),
         captcha:'',
         value:[],
+        recList:[],
         scroll:false,
         options : [
           {
@@ -246,13 +89,44 @@
             label: 'SNT',
             value: 'SNT'
           }
-        ]
+        ],
+        recordArrys:[{name:'BTC',address:'1MzziGBa7tNN.......wRcvSGZu5',aumont:'0.4567'}]// 记录列表
       }
     },
     mounted(){
-      setTimeout(this.initScroll,700)
+      setTimeout(this.initScroll,700);
+      this.getList(this.captcha);
     },
     methods:{
+      chooseIcon(v){
+        console.log(v);
+        this.getList(v);
+      },
+      saveinfo(){ // 保存消息记录
+        let msg={
+           amount:'123',
+           icontype:'ETH',
+           senduser:'df12fd5fd13af',
+           content:'测试数据'
+        };
+        centerApi.saveMsg(msg, (data) => {
+        }, (msg) => {
+        })
+      },
+      getList(captcha){
+        let pars={
+          icontype:captcha,
+          tratype:4
+        }
+        centerApi.getMsgs(pars, (data) => {
+          console.log(data);
+          this.recList = data
+        }, (msg) => {
+        })
+      },
+      routeTo(args){
+        this.$router.push({ name: args.to,query:{id:args.query}})
+      },
       initScroll(){
         var self = this
         this.scroll = new IScroll('#scroll',{
@@ -316,6 +190,22 @@
  #record .all-header h1{
     font-size: .36rem;
     color: #333333;
+  }
+
+  .w-content{
+    ul{
+      li{
+        p.sender{
+          span{
+            width: 3rem;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            display: inline-block;
+          }
+        }
+      }
+    }
   }
 
 /* #record .rec-select{

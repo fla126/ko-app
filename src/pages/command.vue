@@ -15,13 +15,13 @@
           <h1><i></i><span>{{$t('message.cmd.twofa')}}</span><i>+ {{$t('message.cmd.add')}}</i></h1>
         </div>
         <ul class="command-list unselected mt40" id="commandList" @touchstart="hideCP">
-          <li @touchstart="activeLayer($event)" @touchend="clearLoop">
-            <div class="progress" data-second="5"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+5)%30}}</span></div>
-            <div>Sjafh3793rdkgvf</div>
-            <div><i v-tap="{methods:showControlButton}"></i><span class="f36">123111</span></div>
-            <div><i class="btn-copy" :data-clipboard-text="'i love you '"></i></div>
+          <li v-for="(item,index) in comList"  @touchstart="activeLayer($event)" @touchend="clearLoop" :key="index">
+            <div class="progress" :data-second="index"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+item.progress)%30}}</span></div>
+            <div>{{item.comname}}</div>
+            <div><i v-tap="{methods:showControlButton,query:item.id,comname:item.comname}"></i><span class="f36">{{item.keycode}}</span></div>
+            <div><i class="btn-copy" :data-clipboard-text="item.comname"></i></div>
           </li>
-          <li @touchstart="activeLayer($event)" @touchend="clearLoop">
+          <!--<li @touchstart="activeLayer($event)" @touchend="clearLoop">
             <div class="progress" data-second="10"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+10)%30}}</span></div>
             <div>Sjafh3793rdkgvf</div>
             <div><i v-tap="{methods:showControlButton}"></i><span class="f36">123111</span></div>
@@ -68,23 +68,24 @@
             <div>Sjafh3793rdkgvf</div>
             <div><i v-tap="{methods:showControlButton}"></i><span class="f36">123111</span></div>
             <div><i class="btn-copy" :data-clipboard-text="'i love you '"></i></div>
-          </li>
+          </li>-->
         </ul>
         <div class="pb40"></div>
         <transition enter-active-class="animated short fadeIn" leave-active-class="animated short fadeOut">
         <ul class="control-panel" id="controlPanel" v-show="showCP">
           <li v-tap="{methods:showRecordEditor}">{{$t('message.cmd.edit')}}</li>
-          <li v-tap="{methods:delRecord}">{{$t('message.cmd.delete')}}</li>
+          <li v-tap="{methods:delRecord,query:selectid}">{{$t('message.cmd.delete')}}</li>
         </ul>
         </transition>
       </div>
     </div>
     <ul class="command-list unselected fixed" id="tempContainer" v-show="isDrag"></ul>
-    <command-editor :show="showEditorLayer" :hideFunction="hideEditorLayer" :cname="cname"></command-editor>
+    <command-editor :show="showEditorLayer" :hideFunction="hideEditorLayer" :cname="cname" @submitinfo="submitfun"></command-editor>
   </div>
 </template>
 <script>
 import commandEditor from '@/components/common/command_editor'
+import  commandApi from '@/api/command'
 import ClipboardJS from 'clipboard'
 import { Toast,MessageBox  } from 'mint-ui'
 
@@ -95,8 +96,11 @@ import { Toast,MessageBox  } from 'mint-ui'
         scroll:false,
         showCP:false,
         showEditorLayer:false,
-        cname:'Sjafh3793rdkgvf',
+        cname:'',//组件传值名称
         timer:0,
+        selectid:'',//选中id
+        comname:'',//选中name
+        comList:[],//列表数据
         isDrag:false,
         dragTarget:Object,
         currentPos:0, //拖动对象所处的位置
@@ -108,9 +112,12 @@ import { Toast,MessageBox  } from 'mint-ui'
           init_up:0, //向上自动滚动触发点
           init_down:0, //向下自动滚动触发点
           interval:0 //滚动心跳
-        } 
+        }
 
       }
+    },
+    created(){
+      this.getlist();
     },
     mounted(){
       setInterval(()=>{
@@ -140,6 +147,24 @@ import { Toast,MessageBox  } from 'mint-ui'
       }
     },
     methods:{
+      submitfun(cname){
+        let obj={
+           id:this.selectid,
+           comname:cname
+        }
+        commandApi.update(obj,(data) => {
+          Toast('更新成功！');
+          this.getlist()
+        }, (msg) => {
+          Toast('更新失败！');
+        })
+      },
+      getlist(){//获取数据列表
+        commandApi.getlist((data) => {
+          this.comList = data
+        }, (msg) => {
+        })
+      },
       initPos(){ //初始化滚动前的各项初始参数
         this.init.init_CL_y = $('#commandList').offset().top
         this.init.init_CL_li_height = $('#commandList li:first').outerHeight()
@@ -153,8 +178,13 @@ import { Toast,MessageBox  } from 'mint-ui'
           tap:true,
           click:true
         });
+
       },
+
       showControlButton(args) { //显示编辑、删除面板
+      this.selectid=args.query;// 选中id
+      this.comname=args.comname;//选中名称
+
         var $container = $(args.event.target).parents('li:first'), $tar = $('#controlPanel')
         $tar.data('tar',$container).css('top',Math.round($container.position().top+$container.height()))
         $container.siblings('.active').removeClass('active')
@@ -171,18 +201,22 @@ import { Toast,MessageBox  } from 'mint-ui'
             self.init.init_y = touch.pageY
             self.init.init_scroll_top = self.scroll.y
           }
-          
+
         }).on('touchmove',function(e){
           e.preventDefault()
           e.stopPropagation()
           if (e.targetTouches.length == 1) {
             var touch = e.targetTouches[0], scroll_dist
+
             $(this).css("top",(touch.pageY- parseInt($(this).height())/2 + 'px'));
             scroll_dist = self.init.init_scroll_top-(touch.pageY - self.init.init_y)
             scroll_dist = scroll_dist > 0 ? 0: scroll_dist
             scroll_dist = scroll_dist < self.scroll.maxScrollY  ? self.scroll.maxScrollY: scroll_dist
-            self.scroll.scrollTo(0, scroll_dist)
+
+            console.log("滚动距离"+scroll_dist)
+            self.scroll.scrollTo(0, scroll_dist, 1000, IScroll.utils.ease.elastic)
             var _pos = Math.floor(($(e.currentTarget).offset().top - self.init.init_CL_li_height/2 - (self.init.init_CL_y+scroll_dist))/self.init.init_CL_li_height)
+            console.log("位置信息_pos:"+_pos)
             self.currentPos = _pos
           }
         }).on('touchend',function(e){
@@ -210,13 +244,14 @@ import { Toast,MessageBox  } from 'mint-ui'
           $('#tempContainer').empty()
           this.dragTarget.removeClass('hide')
           this.isDrag = false
-          
+
         }
       },
       showRecordEditor(args){ //编辑操作
         var self = this
         var _tar = $('#controlPanel').data('tar')
         this.hideCP()
+        this.cname=this.comname;//选中修改名称
         this.showEditorLayer = true
       },
       delRecord(args){ //删除操作
@@ -236,10 +271,18 @@ import { Toast,MessageBox  } from 'mint-ui'
               this.remove()
               self.scroll.refresh()
             })
+            /*alert(this.selectid)*/
+            commandApi.del(this.selectid,(data) => {
+              Toast('删除成功');
+            }, (msg) => {
+            })
+
+
           }
         })
       },
       hideEditorLayer(cname){ //隐藏编辑对话框
+        this.cname="";
         this.showEditorLayer = false
         if(cname && typeof(cname)=='string'){
           // 回传编辑数据
