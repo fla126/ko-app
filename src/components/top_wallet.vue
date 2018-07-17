@@ -6,8 +6,8 @@
   	<transition enter-active-class="animated short fadeInUp" leave-active-class="animated short fadeOutUp">
     <div class="connect-status" v-show="getUsbkeyStatus"><span class="active"></span>{{$t("message.usbkeyStatus.connected")}}</div>
 	</transition>
-    <span class="scanning" v-tap="{methods:scanning}"></span>
-    <span class="setting" v-tap="{methods:$root.routeTo, to:'page-ucenter-setup'}"></span>
+    <span v-if="isscan" class="scanning" v-tap="{methods:scanning}"></span>
+    <span v-if="isset" class="setting" v-tap="{methods:$root.routeTo, to:'page-ucenter-setup'}"></span>
   </div>
 </template>
 <script>
@@ -18,9 +18,19 @@ import { Toast } from 'mint-ui'
 
 export default {
   name:'comp-wallet-top',
+  props:{
+    isscan:{
+      type: Boolean,
+      default:true
+    },
+    isset:{
+      type: Boolean,
+      default:true
+    }
+  },
   data(){
   	return {
-  		
+
   	}
   },
   mounted(){

@@ -1,5 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import JsCookies from 'js-cookie'
+import numUtils from '@/assets/js/numberUtils'
+import userAllInfo from './modules/user'
+import marketState from './modules/market'
 /**
  * @desc 导入需要的store
  * @author Ivan
@@ -11,6 +15,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     slogan: '学而时习之，不亦乐乎!',
+    initMarket:'ETH_BTC', //初始市场
+    marketList:null, //交易市场列表
     historyLength: 0,
     factoryCode:'', //usbkey 的硬件id
     usbkeyStatus:false, //usbKey连接状态
@@ -27,6 +33,12 @@ export default new Vuex.Store({
     webThree:''
   },
   getters:{
+    getMarketList (state){
+      return state.marketList
+    },
+    getInitMarket (state){
+      return state.initMarket
+    },
     getFactoryCode (state){
       return state.factoryCode
     },
@@ -84,6 +96,9 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    updateMarketList (state, marketList){
+      state.marketList = marketList
+    },
     updateHistoryLength (state){
       state.historyLength++
       console.log('historyLength = '+state.historyLength)
@@ -129,6 +144,12 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    setMarketList (context, marketList) {
+      marketList = marketList.filter((market)=>{
+        return market.currencySymbol != 'CYL'
+      })
+      context.commit('updateMarketList', marketList)
+    },
     setHistoryLength({commit}){
       commit('updateHistoryLength')
     },
@@ -182,6 +203,7 @@ export default new Vuex.Store({
     }
   },
   modules: {
-    
+    userAllInfo,
+    marketState
   }
 })
