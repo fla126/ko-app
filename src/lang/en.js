@@ -87,6 +87,12 @@ module.exports={
 		inputAmount:'Please input amount',
 		inputKey:'Please input private key'
 	},
+    mining:{
+      mining:'Mining'
+    },
+    trade:{
+      trade:'Trade'
+    },
     mycenter:{
       center:'Account Center',
       check:'Please select',

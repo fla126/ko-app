@@ -36,6 +36,12 @@ module.exports={
     addWalletDialog:{// 添加钱包输入密码弹窗
      enterPwd:'请输入密码'
     },
+    mining:{
+      mining:'挖矿'
+    },
+    trade:{
+      trade:'交易'
+    },
     walletDetail:{
         send:'转账',
         receive:'收款',

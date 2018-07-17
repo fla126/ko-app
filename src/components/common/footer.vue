@@ -5,11 +5,25 @@
       <img slot="icon" src="../../assets/img/qianbao_xuanz@3x.png">
       {{ $t("message.compFooter.wallet") }}
     </mt-tab-item>
+<!--交易-->
+    <mt-tab-item id="trading" v-tap="{methods:$root.routeTo, to:'page-trading'}">
+      <img slot="icon" src="../../assets/img/tradeX-icon@3x.png">
+      <img slot="icon" src="../../assets/img/trade@3x.png">
+      {{ $t("message.trade.trade") }}
+    </mt-tab-item>
+<!--挖矿-->
+    <mt-tab-item id="dig" v-tap="{methods:$root.routeTo, to:'page-dig'}">
+      <img slot="icon" src="../../assets/img/miningX@3x.png">
+      <img slot="icon" src="../../assets/img/mining@3x.png">
+      {{ $t("message.mining.mining") }}
+    </mt-tab-item>
+<!--口令-->
     <mt-tab-item id="command" v-tap="{methods:$root.routeTo, to:'page-command'}">
       <img slot="icon" src="../../assets/img/kouling_weixz@3x.png">
       <img slot="icon" src="../../assets/img/kouling_xuanz@3x.png">
       {{ $t("message.compFooter.command") }}
     </mt-tab-item>
+
     <mt-tab-item id="ucenter" v-tap="{methods:$root.routeTo, to:'page-ucenter'}">
       <img slot="icon" src="../../assets/img/my_weixz@3x.png">
       <img slot="icon" src="../../assets/img/my_xuanz@3x.png">
@@ -44,6 +58,12 @@ export default {
     setTab(){
       if(this.$route.path.indexOf('wallet')>-1){
         this.selected = 'wallet'
+      }
+      if(this.$route.path.indexOf('trading')>-1){
+        this.selected = 'trading'
+      }
+      if(this.$route.path.indexOf('dig')>-1){
+        this.selected = 'dig'
       }
       if(this.$route.path.indexOf('command')>-1){
         this.selected = 'command'

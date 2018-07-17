@@ -37,6 +37,12 @@ import join  from '@/pages/mycenter/about/join'/*隐私条款*/
 import pwd  from '@/pages/pwd/pwd_index'
 import Lang  from '@/pages/mycenter/setup/lang'
 import webthree  from '@/pages/mycenter/setup/webthree'/*web3设置*/
+/*交易信息*/
+import trading from '@/pages/trading'
+import tradingdex from '@/pages/trading_dex'
+import market from '@/pages/trading/market'
+/*挖矿*/
+import dig from '@/pages/dig'
 Vue.use(Router)
 
 // const Foo = r => require.ensure([], ()=>r(require('../components/foo.vue')), 'group-foo')
@@ -71,11 +77,17 @@ const router = new Router({
       component: index,
       children:[
         // { path: '',  redirect:{ name: 'page-wallet' }},
-        { path: 'wallet', name:wallet.name, component: wallet },
-        { path: 'command', name:command.name, component: command },
-        { path: 'ucenter', name:ucenter.name, component: ucenter }
+        { path: 'wallet', name:wallet.name, component: wallet },/*1钱包*/
+        { path: 'trading', name:trading.name, component: trading },/*2-1交易BITARK*/
+        { path: 'tradingdex', name:tradingdex.name, component: tradingdex },/*2-2交易DEX*/
+        { path: 'dig', name:dig.name, component: dig },/*2-2交易DEX*/
+        { path: 'command', name:command.name, component: command },/*3口令*/
+        { path: 'ucenter', name:ucenter.name, component: ucenter }/*4个人中心*/
       ]
     },
+
+    /*市场*/
+    { path: '/market', name:market.name, component: market }, // 个人中心--信息
     { path: '/uinfo', name:uinfo.name, component: uinfo }, // 个人中心--信息
     { path: '/message', name:message.name, component: message }, // 个人中心--消息
     { path: '/msginfo', name:msginfo.name, component: msginfo }, // 个人中心--消息

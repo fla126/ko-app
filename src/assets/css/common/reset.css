@@ -1,0 +1,9 @@
+.setprogress{
+  margin-top: .55rem;
+}
+.setprogress .mt-progress-content .mt-progress-progress{
+  background-color: #507df3;
+}
+.setprogress .mt-progress-runway, .setprogress .mt-progress-progress{
+  border-radius: 15px;
+}
