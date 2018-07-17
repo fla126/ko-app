@@ -2,7 +2,7 @@ import axios from 'axios'
 
 let api = {}
 
-api.Allurl='http://10.0.1.45:8080'
+api.Allurl='http://www.dgcs.top'
 // 添加请求拦截器
 /*axios.interceptors.request.use(function (config) {
   config.headers.common['header'] = 'Access-Control-Allow-Origin:*'
