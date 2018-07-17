@@ -24,7 +24,6 @@ export default {
     this.initRouter()
     this.connect()
     window.connect = this.connect
-    console.log(window.connect)
     this.getCurrency()
     this.initWebsoket()
     this.getMarketList()
@@ -50,7 +49,7 @@ export default {
         this.$router.replace({name:'page-init'})
       }
     },
-    connect(){ //连接硬件设备，全程检测连接状态
+    connect(key){ //连接硬件设备，全程检测连接状态
       try{
         cordova.exec((res)=>{
           res = JSON.parse(res)
@@ -70,11 +69,13 @@ export default {
               this.setIsInited(false)
             }
           }
-          setTimeout(this.connect,5000)
         }, (error)=>{
           console.log(error)
         }, "WalletApi", "isImportAuthKey", [])
       } catch(err){}
+      if(!key){
+        setTimeout(this.connect,5000)
+      }
     },
     getCurrency(){ //获取支持币种
       var currency, _currencyobj = {}, currencySetting = JSON.parse(window.localStorage.getItem('currencySetting') || '{}')

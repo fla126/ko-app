@@ -104,6 +104,7 @@ export default {
   },
   created(){
     // this.setUsbkeyStatus(true)
+    // this.setIsInited(true)
   },
   mounted(){
 
@@ -126,7 +127,18 @@ export default {
     }
   },
   methods:{
-    ...mapActions(['setUsbkeyStatus','setHasLogin','setIsInited']),
+    ...mapActions(['setUsbkeyStatus','setHasLogin','setIsInited','setFactoryCode']),
+    getFactoryCode(){ //获取usbkey硬件ID号
+      cordova.exec((res)=>{
+        res = JSON.parse(res)
+        console.log(res)
+        if(res.code=='0'){
+          this.setFactoryCode(res.msg)
+        }
+      }, (error)=>{
+        console.log(error)
+      }, 'WalletApi', 'getFactoryCode', []);
+    },
     modifyPassword(){ //修改交易密码
       if(this.initPassword === this.confirmPassword){
         var reg = new RegExp(/^(?![^a-zA-Z]+$)(?!\D+$)/)
@@ -206,6 +218,7 @@ export default {
         if(res.code==0){
           this.setHasLogin(true)
           this.getWalletList()
+          this.getFactoryCode()
         } else {
           Tip({type:'danger', title:this.$t('message.login.error'), message:this.$t('message.init.invalidPassword')})
         }
@@ -236,6 +249,7 @@ export default {
               this.isActionSheet =false
               this.setHasLogin(true)
               this.getWalletList()
+              this.getFactoryCode()
             } else if(res.code==2){ //初始化完成但登陆失败,显示登陆界面
               this.isSetPassword = false
               this.getIsInited =true
@@ -288,7 +302,7 @@ export default {
       })
     },
     connect(){ //初始化显示界面
-      window.connect()
+      window.connect(true)
     },
   },
   components:{
