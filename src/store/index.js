@@ -12,7 +12,9 @@ export default new Vuex.Store({
   state: {
     slogan: '学而时习之，不亦乐乎!',
     historyLength: 0,
+    factoryCode:'', //usbkey 的硬件id
     usbkeyStatus:false, //usbKey连接状态
+    isInited:false, //usbKey初始化状态
     hasLogin:false, //是否已经登录硬件
     lang: window.localStorage.getItem('lang') || 'en', //语言包
     publicKey:'e331b6d69882b4cb4ea581d88e0b604039a3de5967688d3dcffdd2270c0fd109', //公钥
@@ -25,8 +27,14 @@ export default new Vuex.Store({
     webThree:''
   },
   getters:{
+    getFactoryCode (state){
+      return state.factoryCode
+    },
     getUsbkeyStatus (state){
       return state.usbkeyStatus
+    },
+    getIsInited (state){
+      return state.isInited
     },
     getHasLogin (state){
       return state.hasLogin
@@ -80,10 +88,16 @@ export default new Vuex.Store({
       state.historyLength++
       console.log('historyLength = '+state.historyLength)
     },
+    updateFactoryCode(state,factoryCode){
+      state.factoryCode = factoryCode
+    },
+    updateIsInited(state,status){ //注册更新usbkey初始化函数
+      state.isInited = status
+    },
     updateUsbkeyStatus(state,status){ //注册更新usbkey连接函数
       state.usbkeyStatus = status
     },
-    updateHasLogin(state,status){ //注册更新usbkey连接函数
+    updateHasLogin(state,status){ //注册更新usbkey登陆函数
       state.hasLogin = status
     },
     updateLang (state, lang){
@@ -118,8 +132,14 @@ export default new Vuex.Store({
     setHistoryLength({commit}){
       commit('updateHistoryLength')
     },
+    setFactoryCode({commit},factoryCode){
+      commit('updateFactoryCode',factoryCode)
+    },
     setUsbkeyStatus({commit},status){
       commit('updateUsbkeyStatus',status)
+    },
+    setIsInited({commit},status){
+      commit('updateIsInited',status)
     },
     setHasLogin({commit},status){
       commit('updateHasLogin',status)

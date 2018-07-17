@@ -34,7 +34,7 @@ import Config from '@/api/config'
   function createWebSocket () {
     let ws = new WebSocket(`${Config.wsroot}/ws${port}`)
     ws.onopen = function () {
-      console.log(`open websocket:${port}`)
+      // console.log(`open websocket:${port}`)
       this.send(1)
       sendMessage()
     }
@@ -50,11 +50,11 @@ import Config from '@/api/config'
         }
         opts.callback && opts.callback(res)
       } catch (ex) {
-        console.warn(ex)
+        // console.warn(ex)
       }
     }
     ws.onclose = function () {
-      console.log(`close websocket:${port}`)
+      // console.log(`close websocket:${port}`)
       typeof opts.onClose === 'function' && opts.onClose()
       setTimeout(function () {
         if (isLeavePage) {
@@ -64,7 +64,7 @@ import Config from '@/api/config'
       }, 3000)
     }
     ws.onerror = function () {
-      console.log(`error websocket:${port}`)
+      // console.log(`error websocket:${port}`)
     }
     return ws
   }

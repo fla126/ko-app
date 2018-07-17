@@ -98,4 +98,8 @@ export default {
 	  }
 	  return address
 	},
+	fitLen(num, length){ //固定显示长度不足补0
+		num = '000000000'+num
+		return num.slice(num.length-length)
+	}
 }

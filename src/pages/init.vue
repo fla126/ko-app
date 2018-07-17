@@ -1,23 +1,33 @@
 <template>
   <div class="page">
-    <template v-if="getUsbkeyStatus && !isInited && !loading">
+    <!-- 引导-->
+    <transition enter-active-class="animated short myFadeIn" leave-active-class="animated short fadeOut">
+    <div class="page-rec" v-if="(isfirst || !getIsInited) && !unlinkedShow && isActionSheet">
       <div class="login-top"><i></i></div>
       <div class="action-sheet">
-        <mt-button type="primary" size="large" v-tap="{methods:showIPLayer}">{{$t('message.init.createWallet')}}</mt-button>
+        <mt-button type="primary" size="large" v-tap="{methods:guideWallet}">{{$t('message.init.createWallet')}}</mt-button>
         <mt-button type="primary" class="mt40" size="large" v-tap="{methods:importWallet}">{{$t('message.init.importWallet')}}</mt-button>
         <mt-button type="primary" class="mt40" size="large" v-tap="{methods:$root.routeTo,to:'page-wallet'}">{{$t('message.init.skip')}}</mt-button>
       </div>
-    </template>
-    <template v-if="!getUsbkeyStatus && !loading">
+    </div>
+    </transition>
+    <!-- 硬件未连接-->
+    <transition enter-active-class="animated short myFadeIn" leave-active-class="animated short fadeOut">
+    <div class="page-rec" v-if="!getUsbkeyStatus && unlinkedShow">
       <div class="unlinked">
+        <comp-top-back :back="false"><span class="btn-back" v-tap="{methods:()=>{unlinkedShow=false}}"></span></comp-top-back>
         <h1>{{$t('message.usbkeyStatus.disconnect')}}</h1>
         <div class="reconnect-container">
           <p class="tip-text">{{$t('message.usbkeyStatus.tip')}}</p>
           <mt-button type="primary" @touchstart="" class="mt50" size="large" v-tap="{methods:connect}">{{$t('message.usbkeyStatus.reconnect')}}</mt-button>
         </div>
       </div>
-    </template>
-    <template v-if="getUsbkeyStatus && isInited && !loading">
+    </div>
+    </transition>
+    <!-- 硬件登陆-->
+    <transition enter-active-class="animated short myFadeIn" leave-active-class="animated short fadeOut">
+    <div class="page-rec" v-if="getUsbkeyStatus && getIsInited && !isfirst">
+      <div class="page-rec"></div>
       <div class="login-top"><i></i></div>
       <div class="login-form">
         <h4>{{$t('message.init.inputPassword')}}</h4>
@@ -25,49 +35,81 @@
         <div class="password-display" v-tap="{methods:setFocus}"><span :class="{active:getActive(1)}">&nbsp;</span><span :class="{active:getActive(2)}">&nbsp;</span><span :class="{active:getActive(3)}">&nbsp;</span><span :class="{active:getActive(4)}">&nbsp;</span><span :class="{active:getActive(5)}">&nbsp;</span><span :class="{active:getActive(6)}">&nbsp;</span></div>
         <mt-button type="primary" @touchstart="" :disabled="password.length!=6" class="login-btn" size="large" v-tap="{methods:login}">{{$t('message.login.login')}}</mt-button>
       </div>
-    </template>
-    <mask-layer :show="isIPLayer" :isgray="true" @hide="hideIPLayer">
-      <div class="init-form">
-        <i class="close" v-tap="{methods:hideIPLayer}">×</i>
-        <h3>{{$t('message.init.passwordLayerTitle')}}</h3>
-        <p class="mt30"><input type="password"  maxlength="6" v-model="initPassword" :placeholder="$t('message.init.enterPassword')"><i class="clear-password" v-tap="{methods:resetPW}" v-show="showPWClear"></i></p>
-        <p><input type="password" v-model="confirmPassword" maxlength="16" :placeholder="$t('message.init.confirmPassword')"></p>
-        <mt-button type="primary"  @touchstart="" :disabled="initPassword.length!=6" class="mt40" size="large" v-tap="{methods:initDevice}">{{$t('message.register.confirm')}}</mt-button>
+    </div>
+    </transition>
+    <!-- 密码风险提示 -->
+    <transition enter-active-class="animated short myFadeIn" leave-active-class="animated short fadeOut">
+    <div class="page-rec" v-if="isRiskTip">
+      <comp-top-back :back="false"><span class="btn-back" v-tap="{methods:()=>{isRiskTip=false,isActionSheet=true}}"></span></comp-top-back>
+      <div class="form">
+        <h1>{{$t('message.init.riskTipTitle')}}</h1>
+        <p class="riskContent" v-html="$t('message.init.riskTipContent')"></p>
       </div>
-    </mask-layer>
-    <loading :show="loading"></loading>
+      <div class="step-next">
+        <mt-button type="primary" size="large" v-tap="{methods:()=>{isRiskTip=false,setOrMod?isSetPassword=true:isModifyPassword=true}}">{{$t('message.walletDetail.next')}}</mt-button>
+      </div>
+    </div>
+    </transition>
+    <!-- 密码设置 -->
+    <transition enter-active-class="animated short myFadeIn" leave-active-class="animated short fadeOut">
+    <div class="page-rec" v-if="isSetPassword">
+      <comp-top-back :back="false"><span class="btn-back" v-tap="{methods:()=>{isSetPassword=false,isActionSheet=true}}"></span></comp-top-back>
+      <div class="form init-form">
+        <h1>{{$t('message.init.passwordTitle')}}</h1>
+        <p class="mt30"><i class="password"></i><input type="password"  maxlength="6" v-model="initPassword" :placeholder="$t('message.init.enterPassword')"><i class="clear-password" v-tap="{methods:resetPW}" v-show="showPWClear"></i></p>
+        <p><i class="password"></i><input type="password" v-model="confirmPassword" maxlength="6" :placeholder="$t('message.init.confirmPassword')"></p>
+        <mt-button type="primary"  @touchstart="" :disabled="initPassword.length!=6" class="mt150" size="large" v-tap="{methods:initDevice}">{{$t('message.register.confirm')}}</mt-button>
+      </div>
+    </div>
+    </transition>
+    <!-- 修改密码 -->
+    <transition enter-active-class="animated short myFadeIn" leave-active-class="animated short fadeOut">
+    <div class="page-rec" v-if="isModifyPassword">
+      <comp-top-back :back="false"><span class="btn-back" v-tap="{methods:()=>{isModifyPassword=false,isActionSheet=true}}"></span></comp-top-back>
+      <div class="form init-form">
+        <h1>{{$t('message.init.modifyPasswordTitle')}}</h1>
+        <p class="mt30"><i class="password"></i><input type="password"  maxlength="6" v-model="password" :placeholder="$t('message.init.oldPassword')"></p>
+        <p><i class="password"></i><input type="password" v-model="initPassword" maxlength="6" :placeholder="$t('message.init.enterPassword')"><i class="clear-password" v-tap="{methods:resetPW}" v-show="showPWClear"></i></p>
+        <p><i class="password"></i><input type="password" v-model="confirmPassword" maxlength="6" :placeholder="$t('message.init.confirmPassword')"></p>
+        <mt-button type="primary"  @touchstart="" :disabled="initPassword.length!=6 || password.length!=6" class="mt150" size="large" v-tap="{methods:modifyPassword}">{{$t('message.register.confirm')}}</mt-button>
+      </div>
+    </div>
+    </transition>
   </div>
 </template>
 
 <script>
-// import cordova from '@/assets/js/cordovaApi'
 import { mapGetters, mapActions } from 'vuex'
-import { Toast } from 'mint-ui'
-import loading from '@/components/common/loading'
+import { Toast,MessageBox  } from 'mint-ui'
 import Tip from '@/components/common/tip'
 import maskLayer from '@/components/common/mask'
+import api from '@/api/data'
+var isfirst = localStorage.getItem('firstWalletLogin')
 
 export default {
   name:'page-init',
   data(){
     return {
-      isInited:false, //设备是否已经初始化
+      isfirst:isfirst?false:true, //是否第一次使用本APP
+      unlinkedShow:false, //显示设备未连接界面
+      setOrMod:true, //设置密码还是修改密码 true 为设置 false 为修改
+      isSetPassword:false, //显示密码设置界面
+      isModifyPassword:false, //显示密码修改界面
+      isRiskTip:false, //显示密码设置风险提示界面
+      isActionSheet:true, //显示引导主页界面
       password:'',
-      isIPLayer:false,
       initPassword:'',
       confirmPassword:'',
-      loading:false
     }
   },
   created(){
     // this.setUsbkeyStatus(true)
-    this.connect()
   },
   mounted(){
 
   },
   computed:{
-    ...mapGetters(['getUsbkeyStatus']),
+    ...mapGetters(['getUsbkeyStatus','getCurrency','getIsInited']),
     showPWClear(){
       return this.initPassword.length > 0  || this.confirmPassword.length > 0 ? true : false
     }
@@ -84,25 +126,92 @@ export default {
     }
   },
   methods:{
-    ...mapActions(['setUsbkeyStatus','setHasLogin']),
-    showIPLayer(){
-      this.isIPLayer = true
+    ...mapActions(['setUsbkeyStatus','setHasLogin','setIsInited']),
+    modifyPassword(){ //修改交易密码
+      if(this.initPassword === this.confirmPassword){
+        var reg = new RegExp(/^(?![^a-zA-Z]+$)(?!\D+$)/)
+        if(reg.test(this.initPassword)){
+          cordova.exec((res)=>{
+            res = JSON.parse(res)
+            if(res.code==0){
+              Tip({type:'success', title:this.$t('message.login.success'), message:this.$t('message.init.modifySuccess')})
+              this.isModifyPassword = false
+              this.isfirst = false
+              this.password = ''
+              localStorage.setItem('firstWalletLogin',1)
+            } else {
+              this.password = ''
+              Tip({type:'danger', title:this.$t('message.login.error'), message:this.$t('message.init.modifyFailure')})
+            }
+          }, (error)=>{
+            console.log(error)
+          }, 'WalletApi', 'updateAuthKey', [this.password, this.initPassword])
+        } else {
+          Tip({type:'danger', title:this.$t('message.login.error'), message:this.$t('message.init.nonstandardPassword')})
+        }
+      } else {
+        Tip({type:'danger', title:this.$t('message.login.error'), message:this.$t('message.register.differentPassword')})
+      }
+    },
+    guideWallet(){ //引导新建或修改
+      if(this.getUsbkeyStatus){
+        if(this.isfirst && this.getIsInited){ //第一次登陆如果已初始化，提示是否需要改密
+          MessageBox({
+            title:this.$t('message.cmd.confirmTitle'),
+            message:this.$t('message.init.isModifyPassword'),
+            showCancelButton: true,
+            showConfirmButton:true,
+            cancelButtonText:this.$t('message.cmd.no'),
+            confirmButtonText:this.$t('message.cmd.yes'),
+          }).then(action => {
+            
+            if(action=='confirm'){
+              this.setOrMod = false
+              this.isActionSheet = false
+              this.isRiskTip = true
+            } else {
+              localStorage.setItem('firstWalletLogin',1)
+              this.isfirst = false
+            }
+          })
+        } else {
+          MessageBox({
+            title:this.$t('message.cmd.confirmTitle'),
+            message:this.$t('message.init.isSetPassword'),
+            showCancelButton: true,
+            showConfirmButton:true,
+            cancelButtonText:this.$t('message.cmd.no'),
+            confirmButtonText:this.$t('message.cmd.yes'),
+          }).then(action => {
+            if(action=='confirm'){
+              this.isActionSheet = false
+              this.isRiskTip = true
+              localStorage.setItem('firstWalletLogin',1)
+            } 
+          })
+          
+        }
+      } else {
+        this.unlinkedShow = true
+      }
     },
     resetPW(){
       this.initPassword = ''
       this.confirmPassword = ''
     },
     login(){ //登录硬件钱包
-      cordova.plugins.WalletApi.login(this.password,(res)=>{
+      cordova.exec((res)=>{
         res = JSON.parse(res)
         console.log(res)
-        if(res.code==1){
+        if(res.code==0){
           this.setHasLogin(true)
           this.getWalletList()
         } else {
-          Tip({type:'danger', title:this.$t('message.login.error'), message:this.$t('message.invalidPassword.init')})
+          Tip({type:'danger', title:this.$t('message.login.error'), message:this.$t('message.init.invalidPassword')})
         }
-      })
+      }, (error)=>{
+        console.log(error)
+      }, 'WalletApi', 'login', [this.password])
     },
     checkInput(event){
       if(event.keyCode == 13 && this.password.length == 6){
@@ -117,56 +226,72 @@ export default {
     },
     initDevice(args){ //初始化硬件钱包
       if(this.initPassword === this.confirmPassword){
-        cordova.plugins.WalletApi.importAuth(this.initPassword, (res)=>{
-          res = JSON.parse(res)
-          console.log(res)
-          if(res.code==1){
-            this.isInited =true
-            this.setHasLogin(true)
-            this.getWalletList()
-            this.isIPLayer = false
-          } else if(res.code==2){
-            this.isInited =true
-            this.isIPLayer = false
-          } else{
-            Tip({type:'danger', title:this.$t('message.login.error'), message:this.$t('message.init.initializeFailure')})
-          }
-        })
+        var reg = new RegExp(/^(?![^a-zA-Z]+$)(?!\D+$)/)
+        if(reg.test(this.initPassword)){
+          cordova.exec((res)=>{
+            res = JSON.parse(res)
+            console.log(res)
+            if(res.code==1){ //初始化完成并登陆成功
+              this.isSetPassword = false
+              this.isActionSheet =false
+              this.setHasLogin(true)
+              this.getWalletList()
+            } else if(res.code==2){ //初始化完成但登陆失败,显示登陆界面
+              this.isSetPassword = false
+              this.getIsInited =true
+            } else{ //初始化失败
+              Tip({type:'danger', title:this.$t('message.login.error'), message:this.$t('message.init.initializeFailure')})
+            }
+          }, (error)=>{
+            console.log(error)
+          }, 'WalletApi', 'importAuthKey', [this.initPassword])
+        } else {
+          Tip({type:'danger', title:this.$t('message.login.error'), message:this.$t('message.init.nonstandardPassword')})
+        }
       } else {
         Tip({type:'danger', title:this.$t('message.login.error'), message:this.$t('message.register.differentPassword')})
       }
     },
     importWallet(args){ //导入已初始化钱包
-      alert('此功能有待完善')
+      if(this.getUsbkeyStatus){
+        alert('此功能有待完善')
+      } else {
+        this.unlinkedShow = true
+      }
     },
     getWalletList(){ //获取硬件钱包列表
+      var self = this
       cordova.plugins.WalletApi.getWalletList((res)=>{
         res = JSON.parse(res)
-        console.log(res)
+        var publicKeys = res.data, walletList = [], walletNames = localStorage.getItem('walletNames')
+        walletNames = walletNames && JSON.parse(walletNames)
+        //解析钱包列表
+        for(let i=0, wallet={}; i<publicKeys.length;  i++){ 
+          wallet.name = walletNames && walletNames[publicKey] || this.$t('message.compFooter.wallet')+this.$root.fitLen(i,2)
+          wallet.publicKey = publicKeys[i]
+          wallet.currency = {}
+          walletList.push(wallet)
+        }
+        this.setWalletList(walletList)
+        //解析钱包列表里每种币种的数量
+        for(var wallet of walletList){
+          for(let token of Object.keys(this.getCurrency)){
+            var address = this.getAddress(token, wallet.publicKey)
+            api.getBalance(token,address,wallet,function(token, wallet, getData){
+              getData.then((res)=>{
+                wallet.currency[token] = res.data.data.balance
+              })
+            })
+          }
+        }
         this.$router.replace({name:'page-wallet'})
       })
     },
-    connect(){ //连接硬件设备
-      cordova.plugins.WalletApi.isImportAuth((res)=>{
-        res = JSON.parse(res)
-        if(res.code==1){
-          this.setUsbkeyStatus(true)
-          this.isInited = true
-        } else if(res.code==0){
-          this.setUsbkeyStatus(true)
-        } else {
-          Toast(this.$t('message.init.checkException'))
-          setTimeout(this.connect,10000)
-        }
-        this.loading = false
-      })
+    connect(){ //初始化显示界面
+      window.connect()
     },
-    hideIPLayer(){
-      this.isIPLayer = false
-    }
   },
   components:{
-    loading,
     maskLayer,
   }
 }
@@ -174,6 +299,19 @@ export default {
 </script>
 <style lang="less" scoped="">
 .html {background-color: #f9f9f9;}
+.page-rec {position: absolute; left: 0; right: 0; top: 0; height: 100vh;}
+.form {
+  padding-left: 0.45rem; 
+  padding-right: 0.45rem;
+  h1 {
+    margin-top: 0.5rem;
+    font-size: 0.6rem;
+  }
+  .riskContent {
+    font-size: 0.24rem;
+    line-height: 0.5rem;
+  }
+}
 .login-top {
   height: 4.6rem;
   position: relative;
@@ -207,6 +345,7 @@ export default {
   }
   
 }
+
 .login-form {
    position: relative;
    width: 70%;
@@ -253,43 +392,15 @@ export default {
     margin-right: auto;
   }
 }
+
 .init-form {
-  display: block;
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 5.4rem;
-  height: 3.9rem;
-  margin: auto;
-  padding-top: 0.25rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-  background-color: #fff;
-  border-radius: 0.1rem;
-  // overflow: hidden;
-  text-align: center;
-  box-shadow: 0 0.05rem 0.1rem 0.01rem #6c6c6c;
-  h3 {
-    font-size: 0.32rem;
-  }
-  .close {
-    position: absolute;
-    width: 0.5rem;
-    height: 0.5rem;
-    right: -0.2rem;
-    top: -0.2rem;
-    background-color: rgba(0,0,0,.5);
-    border-radius: 50%;
-    font-size: 0.5rem;
-    color: rgba(255,255,255,.5);
-    line-height: 0.5rem;
-    text-align: center;
-    font-style: normal;
+  .form {
+    margin-top: 0.95rem;
   }
   p {
-    padding-bottom: 0.12rem;
+    padding-bottom: 0.22rem;
+    padding-left: 0.75rem;
+    margin-top: 0.6rem;
     position: relative;
     line-height: 0.5rem;
     &:after {
@@ -303,30 +414,62 @@ export default {
     }
     i {
       position: absolute;
-      width: 0.6rem;
+      width: 0.5rem;
       height: 0.5rem;
-      background:#fff no-repeat center;
+      background: no-repeat center;
       background-size: contain;
       vertical-align: middle;
-      top: 0;
+      &.mobile {
+        background-image: url('../assets/img/shoujihao@3x.png');
+        left: 0;
+      }
+      &.password {
+        background-image: url('../assets/img/mima@3x.png');
+        left: 0;
+      }
       &.clear-password {
         background-image: url('../assets/img/mimabukejian@3x.png');
         right: 0;
+      }
+      &.code {
+        background-image: url('../assets/img/yanzheng@3x.png');
+        left: 0;
       }
     }
     input {
       width: 5rem;
       border: none;
+      border-left: 1px solid #666666;
       background-color: transparent;
+      padding-left: 0.4rem;
       font-size: 0.28rem;
       &::placeholder {
         color: #666;
       }
     }
-    &:nth-of-type(2){
-      margin-top: 0.2rem;
+    button {
+      position: absolute;
+      right: 0;
+      top: -0.1rem;
     }
+    &:first-of-type{
+      margin-top: 0.9rem;
+    }
+  }
+  .register-btn {
+    margin-top: 1.3rem;
+
   }
 }
 
+.step-next {
+  position: absolute;
+  left: 0.3rem;
+  right: 0.3rem;
+  bottom: 0rem;
+  padding-bottom: 0.3rem;
+  margin-top: 0;
+  margin-left: 0;
+  margin-right: 0;
+}
 </style>

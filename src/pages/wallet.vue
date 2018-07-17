@@ -35,6 +35,7 @@ import Vue from 'vue'
 import compWalletTop from '@/components/top_wallet'
 import { mapGetters, mapActions } from 'vuex'
 import numUtils from '@/assets/js/numberUtils'
+var isfirst = localStorage.getItem('firstWalletView')
 
 export default {
   name:'page-wallet',
@@ -50,6 +51,9 @@ export default {
     }
   },
   created(){
+    if(!isfirst){ //第一次使用本app转到引导页
+      this.$router.replace({name:'guide'})
+    }
     this.getAmountShowSetting()
   },
   mounted(){

@@ -22,28 +22,61 @@ export default {
   },
   created(){
     this.initRouter()
+    this.connect()
+    window.connect = this.connect
+    console.log(window.connect)
     this.getCurrency()
     this.initWebsoket()
     this.getMarketList()
-    this.getWalletList()
     this.getUTXO()
+
+    //一旦硬件断开，取消硬件连接状态，取消硬件登陆状态, 清除钱包数据
+    window.setUnlinked = ()=>{
+      
+      alert('已断开连接')
+    }
   },
   computed:{
-    ...mapGetters(['getUsbkeyStatus','getHasLogin']),
+    ...mapGetters(['getUsbkeyStatus','getHasLogin','getIsInited']),
   },
   methods:{
-    ...mapActions(['setCurrency','setBTCValuation','setUSDCNY','setBtcValues','setWalletList','setUTXO']),
+    ...mapActions(['setCurrency','setBTCValuation','setUSDCNY','setBtcValues','setWalletList','setUTXO','setUsbkeyStatus','setHasLogin','setIsInited']),
     initRouter(){ 
-      let isfirst = localStorage.getItem('firstWallet')
-      if(!isfirst){ //第一次使用本app转到引导页
-        this.$router.replace({name:'guide'})
-      } else if(this.getHasLogin && this.$route.name == 'index'){
+      if(this.getHasLogin){
+        if(this.$route.name == 'index'){
           this.$router.replace({name:'page-wallet'})
+        }
       } else {
         this.$router.replace({name:'page-init'})
       }
     },
-    getCurrency(){
+    connect(){ //连接硬件设备，全程检测连接状态
+      try{
+        cordova.exec((res)=>{
+          res = JSON.parse(res)
+          if(res.code=='-1'){
+            if(this.getUsbkeyStatus){ //断开连接清除状态数据
+              this.setUsbkeyStatus(false)
+              this.setIsInited(false)
+              this.setHasLogin(false)
+              this.setWalletList([])
+              this.$router.push({name:'page-init'})
+            }
+          } else {
+            this.setUsbkeyStatus(true)
+            if(res.code=='1'){
+              this.setIsInited(true)
+            } else {
+              this.setIsInited(false)
+            }
+          }
+          setTimeout(this.connect,5000)
+        }, (error)=>{
+          console.log(error)
+        }, "WalletApi", "isImportAuthKey", [])
+      } catch(err){}
+    },
+    getCurrency(){ //获取支持币种
       var currency, _currencyobj = {}, currencySetting = JSON.parse(window.localStorage.getItem('currencySetting') || '{}')
       api.getCurrency().then((res)=>{
         for(let i=0, _temp, _active; i<res.data.data.length; i++){
@@ -63,7 +96,7 @@ export default {
         this.setCurrency(_currencyobj)
       })
     },
-    initWebsoket(){
+    initWebsoket(){ 
       //建立全局推送，初始化数据
       this.gws = new GlobalWebSocket({
         type: 'global',
@@ -84,32 +117,6 @@ export default {
         if (res.data.rst === 1) {
           this.setBtcValues(res.data.data)
         }
-      })
-    },
-    getWalletList(){
-      //获取硬件钱包列表
-      api.getWalletList().then((res)=>{
-        if (res.data.rst === 1) {
-          this.setWalletList(res.data.data)
-        }
-      }).catch((error)=>{ //启用模拟数据
-        this.setWalletList([{
-          name:'零花钱',
-          publicKey:'040ba1ba3b8d8f7bd4a70828ec0e749dd26ee4cdd18d058c880afa121fad60e5b6f2ee1b72d9b9a57706e5de72acc1378f92269086c4964c073593bf92d28c647d',
-          currency:{
-            BTC:0.03529,
-            ETH:15.234,
-            BARK:107.346
-          }
-        },{
-          name:'长期投资',
-          publicKey:'04ba2416481d6260e621d8f2b6aad3e9c51d438c1876b624303a16f2bcf8a06cd695cef87230180ceed5735e7bf6cb3f9db360f6fee50824c85f230a6bb3ca9573',
-          currency:{
-            BTC:4.734857,
-            ETH:105.321784,
-            BARK:2018.1314
-          }
-        }])      
       })
     },
     getUTXO(){

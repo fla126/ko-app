@@ -173,6 +173,7 @@ module.exports={
         noAccount:'没有账号?',
         register:'点击注册',
         error:'错误!',
+        success:'成功',
         phoneEnterError:'请输入正确的手机账号',
         passwordEnterError:'请输入6位数以上的账号密码',
     },
@@ -194,9 +195,19 @@ module.exports={
       inputPassword:'请输入Tinkey登录密码',
       checkException:'检查连接异常 ',
       invalidPassword:'登录密码错误',
-      passwordLayerTitle:'设置Tinkey初始化密码',
+      passwordTitle:'设置交易密码',
+      modifyPasswordTitle:'修改交易密码',
+      oldPassword:'旧密码',
       enterPassword:'密码(6位字母或数字)',
       confirmPassword:'确认密码',
+      initializeFailure:'Tinkey 初始化失败',
+      nonstandardPassword:'密码必须包含字母跟数字',
+      isModifyPassword:'您的Tinkey已设置交易密码！是否重置交易密码？',
+      isSetPassword:'您的Tinkey未设置交易密码,是否设置交易密码？',
+      riskTipTitle:'风险提示',
+      riskTipContent:'以下内容十分重要，请仔细阅读。<br /><br />1.交易密码是控制Tinkey的唯一凭证。 <br />2.交易密码用于Tinkey的授权、交易、备份、备份恢复等。 <br />3.交易密码一旦丢失，您的Tinkey将无法使用，资产将永久损失。请牢记妥善保存交易密码，勿泄露给他人。 <br />4.软件钱包在任何时候都不会记录您的交易密码。 <br />5.交易密码可以修改，每次修改后必须对Tinkey进行备份。 <br />6.交易密码长度为6位，区分大小写，无特殊字符，必须字母加数字。',
+      modifySuccess:'交易密码修改成功',
+      modifyFailure:'不正确的旧密码',
     }
   }
 }
