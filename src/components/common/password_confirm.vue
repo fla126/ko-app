@@ -36,6 +36,9 @@ export default {
   watch:{
     password(n, o){
       this.password = $.trim(n)
+      if(this.password.length==6){
+        $('#password').blur()
+      }
     }
   },
   methods:{

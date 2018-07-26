@@ -60,6 +60,4 @@ const update=function (data, success, error) {
   }, error)
 }
 command.update = update
-
-
 export default command

@@ -1,13 +1,13 @@
 <template>
   <div class="page">
-    <comp-top-back>{{$t('message.setup.monunit')}}<span class="save-btn" v-tap="{methods:saveLang}">{{$t('message.setup.save')}}</span></comp-top-back>
+    <comp-top-back>{{$t('message.setup.monunit')}}<span class="save-btn" v-tap="{methods:saveFiat}">{{$t('message.setup.save')}}</span></comp-top-back>
     <div class="common-content bg-white mt40 ft-c-gray">
       <div class="inner">
-        <div class="box-cont " v-tap="{methods:changeLang, t:'CNY'}">
-          <div class="item"><span class="f30">CNY</span><i class="tick" v-show="currency=='CNY'"></i></div>
+        <div class="box-cont " v-tap="{methods:changeFiat, t:'CNY'}">
+          <div class="item"><span class="f30">CNY</span><i class="tick" v-show="fiat=='CNY'"></i></div>
         </div>
-        <div class="box-cont " v-tap="{methods:changeLang, t:'USD'}">
-          <div class="item"><span class="f30">USD</span><i class="tick" v-show="currency=='USD'"></i></div>
+        <div class="box-cont " v-tap="{methods:changeFiat, t:'USD'}">
+          <div class="item"><span class="f30">USD</span><i class="tick" v-show="fiat=='USD'"></i></div>
         </div>
       </div>
     </div>
@@ -19,23 +19,23 @@
     name:'page-monUnit',
     data(){
       return {
-        currency:''
+        fiat:''
       }
     },
     created(){
-      this.currency = this.getCurrency
+      this.fiat = this.getFiat
     },
     computed:{
-      ...mapGetters(['getCurrency'])
+      ...mapGetters(['getFiat'])
     },
     methods:{
-      ...mapActions(['setCurrency']),
-      changeLang(args){
-        this.currency = args.t
+      ...mapActions(['setFiat']),
+      changeFiat(args){
+        this.fiat = args.t
       },
-      saveLang(args){
-        this.setCurrency(this.currency)
-        this.$router.push({name:'page-ucenter-setup'})
+      saveFiat(args){
+        this.setFiat(this.fiat)
+        this.$router.replace({name:'page-ucenter-setup'})
       }
     },
   }

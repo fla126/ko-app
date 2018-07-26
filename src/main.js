@@ -18,6 +18,9 @@ import LangZhCHS from './lang/zhCHS' //简体中文包
 import {
   Button,
   Range,
+  Swipe,
+  SwipeItem,
+  Loadmore,
   } from 'mint-ui'
 import compTopBack from '@/components/common/top_back'
 
@@ -26,6 +29,9 @@ Vue.use(VueI18n)
 
 Vue.component(Button.name, Button)
 Vue.component(Range.name, Range)
+Vue.component(Swipe.name, Swipe)
+Vue.component(SwipeItem.name, SwipeItem)
+Vue.component(Loadmore.name, Loadmore)
 
 Vue.component(compTopBack.name, compTopBack)
 

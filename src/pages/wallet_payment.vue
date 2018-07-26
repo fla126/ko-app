@@ -13,7 +13,7 @@
           <p>{{$t('message.walletDetail.amount')}}</p>
           <p><input type="number" id="amount" v-model="amount" :placeholder="$t('message.walletDetail.maxUsableAmount')+' '+Number($root.toFixed(wallet[wallet_idx] && wallet[wallet_idx].currency[currency],8))"><span class="btn" v-tap="{methods:()=>{amount=wallet[wallet_idx].currency[currency]}}">全部</span></p>
         </li>
-        <li v-if="currency!='BTC'">
+        <li v-show="false">
           <p>{{$t('message.walletDetail.tag')}}</p>
           <p><input type="text" v-model="tag" :placeholder="$t('message.walletDetail.inputTag')"></p>
         </li>
@@ -54,7 +54,7 @@ import { Toast } from 'mint-ui'
 import { mapGetters, mapActions } from 'vuex'
 import numUtils from '@/assets/js/numberUtils'
 import Tip from '@/components/common/tip'
-import web3 from 'web3'
+import util from 'ethereumjs-util'
 import {Address} from 'bitcore-lib'
 
 export default {
@@ -77,7 +77,6 @@ export default {
         min:0,
         max:1,
       },
-      ERC20:['ETH','BARK'], //erc20代币用ETH结算矿工费,以后再完善添加
     }
   },
   created(){
@@ -89,19 +88,19 @@ export default {
     this.amount = this.$route.params.amount || ''
     this.receiverAddress = this.$route.params.address || ''
     
-    if(payment){ //读取缓存数据
+    if(payment && this.currency == payment.currency){ //读取缓存数据
       this.collapsed = payment.collapsed
       this.receiverAddress = payment.receiverAddress
       this.amount = payment.amount
       this.tag = payment.tag
+      this.sixteenDecimalData = payment.sixteenDecimalData
       setTimeout(()=>{
         this.GasPrice = payment.GasPrice
         this.GasNumber = payment.GasNumber
       },100)
-      this.sixteenDecimalData = payment.sixteenDecimalData
     }
 
-    api.getFeeRange(this.currency).then((res)=>{
+    api.getFeeRange(this.currency).then((res)=>{ //回去推荐矿工费
       this.feeRange = res.data.data
       if(payment){
         this.miningFee = (payment.miningFee - this.feeRange.min)/(this.feeRange.max - this.feeRange.min)*100
@@ -135,10 +134,10 @@ export default {
     }
   },
   computed:{
-    ...mapGetters(['getWalletList','getUTXO']),
+    ...mapGetters(['getWalletList','getUTXO','getERC20']),
     feeSign(){
       var _type = this.currency
-      if(this.ERC20.includes(this.currency)){
+      if(this.getERC20.includes(this.currency)){
         _type = 'ETH'
       }
       return _type
@@ -176,7 +175,7 @@ export default {
     },
   },
   methods:{
-    parseGas(currency, feeSign, miningFee){ // 获取ERC20代币的 GasPrice、GasNumber, feeSign=='ETH' 为ERC20代币
+    parseGas(currency, feeSign, miningFee){ // 获取ERC20代币的 GasPrice、GasNumber, feeSign=='ETH' 
       var GasPrice = '', GasNumber = ''
       if(feeSign=='ETH'){
         if(currency=='ETH'){
@@ -191,6 +190,7 @@ export default {
       this.GasNumber = GasNumber
     },
     checkPayment(){ //检测转账输入各项参数是否正确
+      console.log('wallets=========',this.wallet)
       if($.trim(this.receiverAddress).length==0){ //判断地址是否为空
         Tip({type:'warning', title:'提醒', message:this.$t('message.walletDetail.blankReceiverAddress')})
         $('#receiverAddress').focus()
@@ -217,7 +217,7 @@ export default {
       }
       var params = {
         currency: this.currency,
-        idx:this.wallet_idx,
+        idx:this.wallet[this.wallet_idx].idx,
         receiverAddress: this.receiverAddress,
         senderAddress: this.$root.getAddress(this.currency, this.wallet[this.wallet_idx].publicKey),
         amount: this.amount,
@@ -230,6 +230,7 @@ export default {
       }
       //缓存当前转账数据
       var payment = {
+        currency: this.currency,
         collapsed: this.collapsed,
         receiverAddress: this.receiverAddress,
         amount: this.amount,
@@ -244,9 +245,10 @@ export default {
       this.$router.push({name:'page-wallet-payment-confirm', params:params})
     },
     scanning(args){
-      this.$root.scanner((error,data)=>{
-        var QRdata = data.code.split('$$')
-        if(data.type=='QR_CODE' && QRdata.length==3){
+      this.$root.scanner((data)=>{
+        console.log(data)
+        var QRdata = data.text.split('$$')
+        if(data.format=='QR_CODE' && QRdata.length==3){
           if(this.currency==QRdata[0]){
             this.amount = QRdata[1]
             this.receiverAddress = QRdata[2]
@@ -268,7 +270,7 @@ export default {
           result = Address.isValid(address)
           break
         default:
-          result = web3.utils.isAddress(address)
+          result = util.isValidAddress(address)
           break
 
       }

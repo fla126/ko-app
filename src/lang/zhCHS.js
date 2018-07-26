@@ -28,19 +28,66 @@ module.exports={
       wok:'确定执行此操作?',
       updatesuccess:'更新成功！',
       updatefailed:'更新失败！',
-      savesucc:'保存成功!',
-      savefailed:'保存失败!',
-      pleasewalletName:'请输入钱包名'
-
+      savesucc:'添加钱包成功!',
+      savefailed:'添加钱包失败!',
+      pleasewalletName:'请输入钱包名',
+      maxWallet:'最多添加32个钱包',
     },
     addWalletDialog:{// 添加钱包输入密码弹窗
      enterPwd:'请输入密码'
     },
     mining:{
-      mining:'挖矿'
+      mining:'挖矿',
+      online:'在线时长',
+      expectedMining:'预计挖到',
+      onmine:'挖矿中',
+      CurHashrate:'当前算力',
+      tkyacquired:'已挖到',
+      Pause:'暂停'
+    },
+    kline:{
+      height:'最高价',
+      lower:'最低价',
+      twetrade:'24H成交量',
+      timesharing:'分时',
+      fiveminut:'5分钟',
+      tenfivmiu:'15分钟',
+      onehour:'1小时',
+      sixhour:'6小时',
+      oneday:'一天',
+      more:'更多',
+      buy:'买入',
+      sell:'卖出',
+      deph:'深度',
+      kline:'K线'
     },
     trade:{
-      trade:'交易'
+      amount:'金额',
+      trade:'交易',
+      optional:'自选',
+      volume:'成交量',
+      price:'价格',
+      twnhourupdocwn:'24h涨跌',
+      buy:'买入',
+      sell:'卖出',
+      aumont:'数量',
+      available:'可用',
+      market:'市价',
+      Marketprice:'市价委托',
+      limitorder:'限价委托',
+      curentrust:'当前委托',
+      hisentrust:'历史委托',
+      allcancel:'全部撤消',
+      Sernumber:'编号',
+      cancel:'撤消',
+      lasttrade:'最新成交',
+      actualdeal:'实际成交',
+      othertrading:'隐藏其它交易对',
+      tradingcancel:'隐藏已撤销',
+      traded:'已成交',
+      trading:'已撤销',
+      avgparice:'成交均价',
+      transactionAmount:'成交金额'
     },
     walletDetail:{
         send:'转账',
@@ -60,7 +107,7 @@ module.exports={
         review:'转账确认',
         senderAddress:'付款方地址',
         ok:'确定',
-        payPassword:'请输入付款密码',
+        payPassword:'请输入交易密码',
         receive:'收款',
         receiveAmount:'收款金额',
         enterAmount:'请输入收款金额',
@@ -75,6 +122,11 @@ module.exports={
         blankMiningFee:'请设置矿工费',
         invalidQRAddress:'不正确的二维码收款地址',
         mismatchingCurrency:'币种不匹配',
+        pullText:'上拉加载',
+        releaseText:'释放更新',
+        LoadingText:'加载中...',
+        transSuccess:'新的交易创建成功',
+        placeQrcode:'在扫描区域内放置二维码',
     },
     cmd:{
         passcode:'口令',
@@ -102,7 +154,8 @@ module.exports={
       wallet:'钱包',
       backup:'备份',
       help:'帮助',
-      about:'关于我们'
+      about:'关于我们',
+      unknown:'未知',
     },
     setup:{
       setupName:'设置',
@@ -128,9 +181,9 @@ module.exports={
       message:'消息',
       all:'全部',
       content:'您在2018.08.09-13:14分转账至某某某钱包已成功，请注意查看您的转账记录。',
-      sysmsg:'系统信息',
-      sendmsg:'收款通知',
-      advicemsg:'转账通知'
+      sysMsg:'系统信息',
+      gatherMsg:'收款通知',
+      transferMsg:'转账通知'
     },
     rec:{/* 记录 */
       record:'记录',
@@ -179,7 +232,8 @@ module.exports={
         noAccount:'没有账号?',
         register:'点击注册',
         error:'错误!',
-        success:'成功',
+        success:'成功!',
+        warning:'警告!',
         phoneEnterError:'请输入正确的手机账号',
         passwordEnterError:'请输入6位数以上的账号密码',
     },

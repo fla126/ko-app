@@ -9,12 +9,11 @@
       </div>
    </header>
 
-
     <div class=" box one">
       <div class="inner">
         <section class="coin_tab">
           <ul >
-            <li :class="[active==='tab-container1'?'activation':'']" @click="whickTabFun('tab-container1')"><span>自选</span></li>
+            <li :class="[active==='tab-container1'?'activation':'']" @click="whickTabFun('tab-container1')"><span>{{$t('message.trade.optional')}}</span></li>
             <li :class="[active==='tab-container2'?'activation':'']" @click="whickTabFun('tab-container2')"><span>BTC</span></li>
             <li :class="[active==='tab-container3'?'activation':'']" @click="whickTabFun('tab-container3')"><span>ETH</span></li>
             <li :class="[active==='tab-container4'?'activation':'']" @click="whickTabFun('tab-container4')"><span>BARK</span><i></i></li>
@@ -22,20 +21,20 @@
         </section>
         <section class="coin_header">
           <ul>
-            <li>成交量<i class="up"></i></li>
-            <li>价格<i class="down"></i></li>
-            <li >24h涨跌<i class="down"></i></li>
+            <li>{{$t('message.trade.volume')}}<i class="up"></i></li>
+            <li>{{$t('message.trade.price')}}<i class="down"></i></li>
+            <li >{{$t('message.trade.twnhourupdocwn')}}<i class="down"></i></li>
           </ul>
         </section>
       </div>
     </div>
 
+    <div class="main-content">
     <mt-tab-container v-model="active" :swipeable="true">
       <mt-tab-container-item id="tab-container1">
 
         <div id="scroll" class="datalist">
           <div class="box box-wrap">
-            <div class="inner">
               <section class="coin_content">
                 <div class="item">
                   <div class="inner">
@@ -162,13 +161,12 @@
                   </div>
                 </div>
               </section>
-            </div>
           </div>
         </div>
       </mt-tab-container-item>
       <mt-tab-container-item id="tab-container2">
-        <div class="box box-wrap">
-          <div class="inner">
+        <div id="scrolltwo" class="datalist">
+          <div class="box box-wrap">
             <section class="coin_content">
               <div class="item">
                 <div class="inner">
@@ -299,8 +297,8 @@
         </div>
       </mt-tab-container-item>
       <mt-tab-container-item id="tab-container3">
-        <div class="box box-wrap">
-          <div class="inner">
+        <div id="scrollthree" class="datalist">
+          <div class="box box-wrap">
             <section class="coin_content">
               <div class="item">
                 <div class="inner">
@@ -433,8 +431,8 @@
 
 
       <mt-tab-container-item id="tab-container4">
-        <div class="box box-wrap">
-          <div class="inner">
+        <div id="scrollfour" class="datalist">
+          <div class="box box-wrap">
             <section class="coin_content">
               <div class="item">
                 <div class="inner">
@@ -565,7 +563,7 @@
         </div>
       </mt-tab-container-item>
     </mt-tab-container>
-
+    </div> <!---->
   </div>
 </template>
 
@@ -583,15 +581,18 @@
     data(){
       return {
         scroll:false,
+        scrolltwo:false,
         active:'tab-container1',
       }
     },
     created(){
 
     },
+    watch:{
+    },
     mounted(){
-      setTimeout(this.initScroll,700)
-      $('.coin_content ul.item').on('click',()=>{
+    /*  setTimeout(this.initScroll,700)*/
+      $('.coin_content ul.item button').on('click',()=>{
          this.$router.push({ name:'page-market'})
       })
     },
@@ -601,6 +602,7 @@
     methods:{
       whickTabFun(index){
         this.active=index
+
       },
       initScroll(){
         var self = this
@@ -645,9 +647,26 @@
   #scroll{
    /* height: 8.5rem;*/
     /* height: 8.5rem; */
-    overflow: hidden;
-    height: calc(~'100vh - 1.7rem');
+    overflow: scroll;
+    height: calc(~'100vh - 3.74rem');
   }
+  #scrolltwo{
+    /* height: 8.5rem;*/
+    /* height: 8.5rem; */
+    overflow: scroll;
+    height: calc(~'100vh - 3.74rem');
+  } #scrollthree{
+    /* height: 8.5rem;*/
+    /* height: 8.5rem; */
+    overflow: scroll;
+    height: calc(~'100vh - 3.74rem');
+  } #scrollfour{
+    /* height: 8.5rem;*/
+    /* height: 8.5rem; */
+    overflow: scroll;
+    height: calc(~'100vh - 3.74rem');
+  }
+
   @write:#ffffff;
   @write-20:#cbd4ec;
 
@@ -689,7 +708,7 @@
   }
   .box{
     font-size: .3rem;
-
+    color: #8089a3;
     &>.inner{
       padding:0 .3rem;
       color: #8089a3;

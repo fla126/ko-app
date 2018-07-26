@@ -25,6 +25,7 @@
     </mt-tab-item>
 
     <mt-tab-item id="ucenter" v-tap="{methods:$root.routeTo, to:'page-ucenter'}">
+      <i class="red-dot" v-if="getHasMessage"></i>
       <img slot="icon" src="../../assets/img/my_weixz@3x.png">
       <img slot="icon" src="../../assets/img/my_xuanz@3x.png">
       {{ $t("message.compFooter.ucenter") }}
@@ -34,6 +35,7 @@
 <script>
 import Vue from 'vue'
 import { Tabbar, TabItem } from 'mint-ui';
+import { mapGetters, mapActions } from 'vuex'
 
 Vue.component(Tabbar.name, Tabbar);
 Vue.component(TabItem.name, TabItem);
@@ -53,6 +55,9 @@ export default {
     $route(){
       this.setTab()
     }
+  },
+   computed:{
+    ...mapGetters(['getHasMessage']),
   },
   methods:{
     setTab(){
@@ -111,5 +116,5 @@ export default {
   }
 
 }
-
+.red-dot {position: absolute; right: 0.4rem; top: 0.2rem; background-color: red; width: 0.1rem; height: 0.1rem; border-radius: 50%;}
 </style>

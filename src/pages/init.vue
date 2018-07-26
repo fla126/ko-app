@@ -19,7 +19,6 @@
         <h1>{{$t('message.usbkeyStatus.disconnect')}}</h1>
         <div class="reconnect-container">
           <p class="tip-text">{{$t('message.usbkeyStatus.tip')}}</p>
-          <mt-button type="primary" @touchstart="" class="mt50" size="large" v-tap="{methods:connect}">{{$t('message.usbkeyStatus.reconnect')}}</mt-button>
         </div>
       </div>
     </div>
@@ -33,7 +32,7 @@
         <h4>{{$t('message.init.inputPassword')}}</h4>
         <input type="password" id="password"  v-model="password" maxlength="6" @keydown="checkInput($event)" v-focus>
         <div class="password-display" v-tap="{methods:setFocus}"><span :class="{active:getActive(1)}">&nbsp;</span><span :class="{active:getActive(2)}">&nbsp;</span><span :class="{active:getActive(3)}">&nbsp;</span><span :class="{active:getActive(4)}">&nbsp;</span><span :class="{active:getActive(5)}">&nbsp;</span><span :class="{active:getActive(6)}">&nbsp;</span></div>
-        <mt-button type="primary" @touchstart="" :disabled="password.length!=6" class="login-btn" size="large" v-tap="{methods:login}">{{$t('message.login.login')}}</mt-button>
+        <!-- <mt-button type="primary" @touchstart="" :disabled="password.length!=6" class="login-btn" size="large" v-tap="{methods:login}">{{$t('message.login.login')}}</mt-button> -->
       </div>
     </div>
     </transition>
@@ -46,7 +45,7 @@
         <p class="riskContent" v-html="$t('message.init.riskTipContent')"></p>
       </div>
       <div class="step-next">
-        <mt-button type="primary" size="large" v-tap="{methods:()=>{isRiskTip=false,setOrMod?isSetPassword=true:isModifyPassword=true}}">{{$t('message.walletDetail.next')}}</mt-button>
+        <mt-button type="primary" size="large" v-tap="{methods:()=>{isRiskTip=false,isSetPassword=true}}">{{$t('message.walletDetail.next')}}</mt-button>
       </div>
     </div>
     </transition>
@@ -62,39 +61,24 @@
       </div>
     </div>
     </transition>
-    <!-- 修改密码 -->
-    <transition enter-active-class="animated short myFadeIn" leave-active-class="animated short fadeOut">
-    <div class="page-rec" v-if="isModifyPassword">
-      <comp-top-back :back="false"><span class="btn-back" v-tap="{methods:()=>{isModifyPassword=false,isActionSheet=true}}"></span></comp-top-back>
-      <div class="form init-form">
-        <h1>{{$t('message.init.modifyPasswordTitle')}}</h1>
-        <p class="mt30"><i class="password"></i><input type="password"  maxlength="6" v-model="password" :placeholder="$t('message.init.oldPassword')"></p>
-        <p><i class="password"></i><input type="password" v-model="initPassword" maxlength="6" :placeholder="$t('message.init.enterPassword')"><i class="clear-password" v-tap="{methods:resetPW}" v-show="showPWClear"></i></p>
-        <p><i class="password"></i><input type="password" v-model="confirmPassword" maxlength="6" :placeholder="$t('message.init.confirmPassword')"></p>
-        <mt-button type="primary"  @touchstart="" :disabled="initPassword.length!=6 || password.length!=6" class="mt150" size="large" v-tap="{methods:modifyPassword}">{{$t('message.register.confirm')}}</mt-button>
-      </div>
-    </div>
-    </transition>
   </div>
 </template>
 
 <script>
+import Vue from 'vue'
 import { mapGetters, mapActions } from 'vuex'
 import { Toast,MessageBox  } from 'mint-ui'
 import Tip from '@/components/common/tip'
 import maskLayer from '@/components/common/mask'
 import api from '@/api/data'
-var isfirst = localStorage.getItem('firstWalletLogin')
 
 export default {
   name:'page-init',
   data(){
     return {
-      isfirst:isfirst?false:true, //是否第一次使用本APP
+      isfirst:true, //是否第一次使用本APP
       unlinkedShow:false, //显示设备未连接界面
-      setOrMod:true, //设置密码还是修改密码 true 为设置 false 为修改
       isSetPassword:false, //显示密码设置界面
-      isModifyPassword:false, //显示密码修改界面
       isRiskTip:false, //显示密码设置风险提示界面
       isActionSheet:true, //显示引导主页界面
       password:'',
@@ -103,21 +87,30 @@ export default {
     }
   },
   created(){
-    // this.setUsbkeyStatus(true)
-    // this.setIsInited(true)
+    this.isfirst = localStorage.getItem('firstWalletLogin')?false:true
+    this.unlinkedShow = this.$route.params.unlinkedShow || false
+    
+    this.$root.test()
   },
   mounted(){
 
   },
   computed:{
-    ...mapGetters(['getUsbkeyStatus','getCurrency','getIsInited']),
+    ...mapGetters(['getUsbkeyStatus','getShowCurrency','getIsInited']),
     showPWClear(){
       return this.initPassword.length > 0  || this.confirmPassword.length > 0 ? true : false
     }
   },
   watch:{
+    getUsbkeyStatus(n, o){
+      if(n){this.unlinkedShow = false}
+    },
     password(n, o){
       this.password = $.trim(n)
+      if(this.password.length==6){
+        $('#password').blur()
+        setTimeout(this.login,300)
+      }
     },
     initPassword(n, o){
       this.initPassword = $.trim(n)
@@ -127,7 +120,7 @@ export default {
     }
   },
   methods:{
-    ...mapActions(['setUsbkeyStatus','setHasLogin','setIsInited','setFactoryCode']),
+    ...mapActions(['setUsbkeyStatus','setHasLogin','setIsInited','setFactoryCode','setWalletList']),
     getFactoryCode(){ //获取usbkey硬件ID号
       cordova.exec((res)=>{
         res = JSON.parse(res)
@@ -137,33 +130,7 @@ export default {
         }
       }, (error)=>{
         console.log(error)
-      }, 'WalletApi', 'getFactoryCode', []);
-    },
-    modifyPassword(){ //修改交易密码
-      if(this.initPassword === this.confirmPassword){
-        var reg = new RegExp(/^(?![^a-zA-Z]+$)(?!\D+$)/)
-        if(reg.test(this.initPassword)){
-          cordova.exec((res)=>{
-            res = JSON.parse(res)
-            if(res.code==0){
-              Tip({type:'success', title:this.$t('message.login.success'), message:this.$t('message.init.modifySuccess')})
-              this.isModifyPassword = false
-              this.isfirst = false
-              this.password = ''
-              localStorage.setItem('firstWalletLogin',1)
-            } else {
-              this.password = ''
-              Tip({type:'danger', title:this.$t('message.login.error'), message:this.$t('message.init.modifyFailure')})
-            }
-          }, (error)=>{
-            console.log(error)
-          }, 'WalletApi', 'updateAuthKey', [this.password, this.initPassword])
-        } else {
-          Tip({type:'danger', title:this.$t('message.login.error'), message:this.$t('message.init.nonstandardPassword')})
-        }
-      } else {
-        Tip({type:'danger', title:this.$t('message.login.error'), message:this.$t('message.register.differentPassword')})
-      }
+      }, 'WalletApi', 'getFactoryCode', [])
     },
     guideWallet(){ //引导新建或修改
       if(this.getUsbkeyStatus){
@@ -178,9 +145,7 @@ export default {
           }).then(action => {
             
             if(action=='confirm'){
-              this.setOrMod = false
-              this.isActionSheet = false
-              this.isRiskTip = true
+              this.$router.push({name:'page-modify-password'})
             } else {
               localStorage.setItem('firstWalletLogin',1)
               this.isfirst = false
@@ -215,11 +180,12 @@ export default {
       cordova.exec((res)=>{
         res = JSON.parse(res)
         console.log(res)
-        if(res.code==0){
+        if(res.code=='0'){
           this.setHasLogin(true)
           this.getWalletList()
           this.getFactoryCode()
         } else {
+          this.password = ''
           Tip({type:'danger', title:this.$t('message.login.error'), message:this.$t('message.init.invalidPassword')})
         }
       }, (error)=>{
@@ -244,13 +210,11 @@ export default {
           cordova.exec((res)=>{
             res = JSON.parse(res)
             console.log(res)
-            if(res.code==1){ //初始化完成并登陆成功
-              this.isSetPassword = false
-              this.isActionSheet =false
+            if(res.code=='0'){ //初始化完成并登陆成功
               this.setHasLogin(true)
               this.getWalletList()
               this.getFactoryCode()
-            } else if(res.code==2){ //初始化完成但登陆失败,显示登陆界面
+            } else if(res.code=='-5'){ //初始化完成但登陆失败,显示登陆界面
               this.isSetPassword = false
               this.getIsInited =true
             } else{ //初始化失败
@@ -275,35 +239,48 @@ export default {
     },
     getWalletList(){ //获取硬件钱包列表
       var self = this
-      cordova.plugins.WalletApi.getWalletList((res)=>{
+      cordova.exec((res)=>{
         res = JSON.parse(res)
-        var publicKeys = res.data, walletList = [], walletNames = localStorage.getItem('walletNames')
-        walletNames = walletNames && JSON.parse(walletNames)
-        //解析钱包列表
-        for(let i=0, wallet={}; i<publicKeys.length;  i++){ 
-          wallet.name = walletNames && walletNames[publicKey] || this.$t('message.compFooter.wallet')+this.$root.fitLen(i,2)
-          wallet.publicKey = publicKeys[i]
-          wallet.currency = {}
-          walletList.push(wallet)
-        }
-        this.setWalletList(walletList)
-        //解析钱包列表里每种币种的数量
-        for(var wallet of walletList){
-          for(let token of Object.keys(this.getCurrency)){
-            var address = this.getAddress(token, wallet.publicKey)
-            api.getBalance(token,address,wallet,function(token, wallet, getData){
-              getData.then((res)=>{
-                wallet.currency[token] = res.data.data.balance
-              })
-            })
+        console.log(res)
+        if(res.code=='0'){
+          var publicKeys = JSON.parse(res.msg), walletList = [], walletNames = JSON.parse(localStorage.getItem('walletNames') || '{}')
+          //解析钱包列表
+          for(let i=0; i<publicKeys.length;  i++){ 
+            if(publicKeys[i]){
+              let wallet={}
+              wallet.name = walletNames[publicKeys[i]] || ''
+              wallet.publicKey = publicKeys[i]
+              wallet.idx = i
+              wallet.currency = {}
+              walletList.push(wallet)
+            }
           }
+          this.setWalletList(walletList)
+          //解析钱包列表里每种币种的数量
+          for(var wallet of walletList){
+            for(let token of this.getShowCurrency){
+              var address = this.$root.getAddress(token, wallet.publicKey)
+              api.getBalance(token,address,wallet,function(token, wallet, getData){
+                getData.then((res)=>{
+                  var balance = 0
+                  if(res.data.rst){
+                    balance = res.data.data.balance && res.data.data.balance
+                  }
+                  Vue.set(wallet.currency, token, balance)
+                })
+              })
+            }
+          }
+          this.$router.replace({name:'page-wallet'})
+        } else {
+          this.setHasLogin(false)
+          this.$router.replace({name:'page-init'})
         }
-        this.$router.replace({name:'page-wallet'})
-      })
+      }, (error)=>{
+        console.log(error)
+      }, 'WalletApi', 'GetAllEccPubKey', [])
     },
-    connect(){ //初始化显示界面
-      window.connect(true)
-    },
+
   },
   components:{
     maskLayer,
@@ -344,7 +321,7 @@ export default {
 }
 .action-sheet {
   position: absolute;
-  left: 0.5rem;
+  left: 0.3rem;
   right: 0.3rem;
   bottom: 1.45rem;
 }
@@ -365,15 +342,15 @@ export default {
    width: 70%;
    margin: auto;
    text-align: center;
-  h4 {padding-top: 0.5rem; font-size: 0.28rem; text-align: center; color: #707070;}
+  h4 {padding-top: 0.7rem; font-size: 0.28rem; text-align: center; color: #707070;}
   input {
     position: absolute;
     left: -100vw;
   }
   .password-display{
     position: relative;
-    width: 4.26rem;
-    height: 0.7rem;
+    width: 4.86rem;
+    height: 0.8rem;
     margin-left: auto;
     margin-right: auto;
     margin-top: 0.6rem;
@@ -382,9 +359,9 @@ export default {
     overflow: hidden;
     span {
       display: inline-block;
-      width: 0.7rem;
-      height: 0.7rem;
-      line-height: 0.82rem;
+      width: 0.8rem;
+      height: 0.8rem;
+      line-height: 0.92rem;
       border-right: 1px solid #9b9b9b;
       &:last-of-type{
         border-right: none;

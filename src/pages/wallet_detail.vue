@@ -1,78 +1,45 @@
 <template>
   <div class="page">
     <comp-top-back :home="true">
-      <span class="selected-title" v-tap="{methods:showWalletList}">{{wallet[wallet_idx] && wallet[wallet_idx].name}}</span>
+      <span class="selected-title" v-tap="{methods:showWalletList}">{{displayName(wallet_idx)}}</span>
     </comp-top-back>
     <div class="page-main">
       <div class="amount-container">
         <h1>{{wallet[wallet_idx] && $root.toFixed(wallet[wallet_idx].currency[currency],8)}}<span> {{currency}} </span></h1>
         <p>≈ {{getCoinSign}}{{total}}</p>
         <ul class="actions">
-          <router-link :to="{name:'page-wallet-payment',params:{currency:currency, idx:wallet_idx}}" tag="li"><i></i>{{$t('message.walletDetail.send')}}</router-link>
+          <li v-if="!getUsbkeyStatus || !wallet[wallet_idx]" class="gray"><i></i>{{$t('message.walletDetail.send')}}</li>
+          <router-link :to="{name:'page-wallet-payment',params:{currency:currency, idx:wallet_idx}}" tag="li" v-else><i></i>{{$t('message.walletDetail.send')}}</router-link>
           <li><span class="line"></span></li>
-          <li v-if="wallet[wallet_idx] && wallet[wallet_idx].isAll"></li>
-          <router-link :to="{name:'page-wallet-gather',params:{currency:currency, name:wallet[wallet_idx] && wallet[wallet_idx].name, key:wallet[wallet_idx] && wallet[wallet_idx].publicKey}}" tag="li" v-else><i></i>{{$t('message.walletDetail.receive')}}</router-link>
+          <li v-if="!getUsbkeyStatus || !wallet[wallet_idx] || (wallet[wallet_idx] && wallet[wallet_idx].isAll)" class="gray"><i></i>{{$t('message.walletDetail.receive')}}</li>
+          <router-link :to="{name:'page-wallet-gather',params:{currency:currency, name:displayName(wallet_idx), key:wallet[wallet_idx] && wallet[wallet_idx].publicKey}}" tag="li" v-else><i></i>{{$t('message.walletDetail.receive')}}</router-link>
         </ul>
       </div>
       <div class="trans-records-title">{{$t('message.walletDetail.lastRecord')}}</div>
       <div class="trans-records-scroll" id="scroll">
-        <ul class="trans-records-list">
-          <li class="in">
-            <div><i></i></div>
-            <div>1MzziGBa7tNN.......wRcvSGZu5<br /><span>2018.04.23</span></div>
-            <div><span>0.4567BTC</span></div>
-            <div class="progress">
-              <p>56秒<em class="active">6/12</em></p>
-              <mt-progress :value="20"></mt-progress>
-            </div>
-
-          </li>
-          <li class="out">
-            <div><i></i></div>
-            <div>1MzziGBa7tNN.......wRcvSGZu5<br /><span>2018.04.23</span></div>
-            <div><span>0.4567BTC</span></div>
-          </li>
-          <li class="error">
-            <div><i></i></div>
-            <div>1MzziGBa7tNN.......wRcvSGZu5<br /><span>2018.04.23</span></div>
-            <div><span>{{$t('message.walletDetail.zipedFailed')}}</span></div>
-          </li>
-          <li class="in">
-            <div><i></i></div>
-            <div>1MzziGBa7tNN.......wRcvSGZu5<br /><span>2018.04.23</span></div>
-            <div><span>0.4567BTC</span></div>
-          </li>
-          <li class="out">
-            <div><i></i></div>
-            <div>1MzziGBa7tNN.......wRcvSGZu5<br /><span>2018.04.23</span></div>
-            <div><span>0.4567BTC</span></div>
-          </li>
-          <li class="error">
-            <div><i></i></div>
-            <div>1MzziGBa7tNN.......wRcvSGZu5<br /><span>2018.04.23</span></div>
-            <div><span>{{$t('message.walletDetail.zipedFailed')}}</span></div>
-          </li>
-          <li class="in">
-            <div><i></i></div>
-            <div>1MzziGBa7tNN.......wRcvSGZu5<br /><span>2018.04.23</span></div>
-            <div><span>0.4567BTC</span></div>
-          </li>
-          <li class="out">
-            <div><i></i></div>
-            <div>1MzziGBa7tNN.......wRcvSGZu5<br /><span>2018.04.23</span></div>
-            <div><span>0.4567BTC</span></div>
-          </li>
-          <li class="error">
-            <div><i></i></div>
-            <div>1MzziGBa7tNN.......wRcvSGZu5<br /><span>2018.04.23</span></div>
-            <div><span>{{$t('message.walletDetail.zipedFailed')}}</span></div>
-          </li>
-        </ul>
+        <mt-loadmore :bottom-method="getTransList" :bottom-all-loaded="allLoaded" :auto-fill="false" :bottomPullText="$t('message.walletDetail.pullText')" :bottomDropText="$t('message.walletDetail.releaseText')" :bottomLoadingText="$t('message.walletDetail.LoadingText')" ref="loadmore">
+          <ul class="trans-records-list">
+            <!-- <li class="error">
+              <div><i></i></div>
+              <div>1MzziGBa7tNN.......wRcvSGZu5<br /><span>2018.04.23</span></div>
+              <div><span>{{$t('message.walletDetail.zipedFailed')}}</span></div>
+            </li> -->
+            <li :class="[trans.direction===1?'in':'out']" v-for="(trans,index) in transList" :key="index" v-tap="{methods:visitBlock, txId:trans.txId}">
+              <div><i></i></div>
+              <div>{{displayAdress(trans)}}<br /><span>{{trans.createdTime.split(' ')[0]}}</span></div>
+              <div><span>{{$root.toFixed(trans.amount,4)}}{{trans.symbol }}</span></div>
+              <div class="progress" v-if="trans.status===2">
+                <p>{{displayTime(trans)}}<em class="active">{{trans.confirmation}}/{{trans.blockNumber}}</em></p>
+                <mt-progress :value="Math.round(trans.confirmation/trans.blockNumber*100)"></mt-progress>
+              </div>
+            </li>
+          </ul>
+        </mt-loadmore>
       </div>
     </div>
     <mask-layer :isgray="true" :show="show" @hide="hideWalletList" :style="{top: '0.9rem'}">
       <ul class="wallet-list" >
-        <li v-tap="{methods:changeWallet, idx:index}" v-for="(item,index) in wallet" :key="index">{{item.name}}</li>
+        <li v-tap="{methods:changeWallet, idx:index}" v-for="(item,index) in wallet" :key="index">{{displayName(index)}}</li>
       </ul>
     </mask-layer>
     <mask-layer :isgray="true" :show="!$store.state.usbkeyStatus && showUnlinked" @hide="hideUnlinkedLayer">
@@ -88,7 +55,7 @@
 
 <script>
 
-import data from '@/api/data'
+import api from '@/api/data'
 import { Progress } from 'mint-ui'
 import maskLayer from '@/components/common/mask'
 import { mapGetters, mapActions } from 'vuex'
@@ -103,21 +70,39 @@ export default {
       show:false,
       showUnlinked:true,
       wallet_idx:0,
+      WFSetting:{},
+      page:0,
+      totalPage:null,
+      transList:[],
+      allLoaded:false,
+      serverTime:new Date(),
+      timer:0,
+      key:false
     }
   },
   created(){
+    this.key = this.$route.params.key || false
     this.currency = this.$route.params.currency || 'BTC'
-    this.wallet_idx = this.$route.params.idx || 0
+    this.wallet_idx = Number(this.$route.params.idx) || 0
+    this.WFSetting = JSON.parse(localStorage.getItem('walletFrozenSetting') || '{}') //获取钱包冻结设置
+    this.getTransList()
   },
   mounted(){
-    setTimeout(this.initScroll,1000)    
+    setInterval(()=>{
+      this.timer += 1
+    },1000)
   },
   computed:{
-    ...mapGetters(['getCoinSign','getUSDCNY','getBtcValues','getWalletList','getUTXO']),
-    wallet(){ //符合UTXO的币种添加ALL聚合钱包
-      var _publicKeys = [], _total = 0, _all, _wallet = JSON.parse(JSON.stringify(this.getWalletList))
-      if(this.getUTXO.includes(this.currency)){
-        for(let walletItem of this.getWalletList){
+    ...mapGetters(['getUsbkeyStatus','getCoinSign','getSymbolExchange','getFiat','getWalletList','getUTXO','getFactoryCode','getERC20']),
+    wallet(){ 
+      var _publicKeys = [], _total = 0, _all, _wallets = JSON.parse(JSON.stringify(this.getWalletList))
+      // 过滤已冻结钱包
+      _wallets = _wallets.filter((item)=>{
+        return !this.checkFrozen(this.currency, item.publicKey)
+      })
+      //符合UTXO的币种添加ALL聚合钱包
+      if(_wallets.length && this.getUTXO.includes(this.currency)){
+        for(let walletItem of _wallets){
           _total = numUtils.add(_total, walletItem.currency[this.currency])
           _publicKeys.push(walletItem.publicKey)
         }
@@ -128,27 +113,75 @@ export default {
         }
         _all['publicKey'] = _publicKeys
         _all.currency[this.currency] = _total
-        _wallet.push(_all)
+        _wallets.push(_all)
       }
-      return _wallet
+      return _wallets
     },
     total(){
-      if (this.getUSDCNY && this.getBtcValues.ETH) {
-        let curMarketBtc = this.getBtcValues[this.currency]
-        let curMarketPrice = curMarketBtc ? numUtils.mul(curMarketBtc, this.getUSDCNY).toFixed(2) : this.getUSDCNY
-        return numUtils.mul(curMarketPrice, this.wallet[this.wallet_idx] && this.wallet[this.wallet_idx].currency[this.currency]).toFixed(2).toMoney()
+      if (this.getSymbolExchange.length) {
+        return numUtils.mul(this.getSymbolExchangePrice(this.currency), this.wallet[this.wallet_idx] && this.wallet[this.wallet_idx].currency[this.currency]).toFixed(2).toMoney()
       } else {
         return '0.00'
       }
     },
   },
   methods:{
-    initScroll(){
-      var self = this
-      this.scroll = new IScroll('#scroll',{
-        mouseWheel:true,
-        tap:true
-      });
+    visitBlock(args){
+      if(this.currency==='ETH' || this.getERC20.includes(this.currency)){
+        //location.href = `https://etherscan.io/tx/${args.txId}`
+        this.$router.push({name:'page-visitblock',params:{txId:args.txId}})
+      }
+    },
+    displayTime(trans){
+      var msec = this.serverTime.getTime() - new Date(trans.createdTime.replace('-','/')).getTime() + this.timer*1000
+      return this.$root.humanTime(msec)
+    },
+    displayAdress(trans){
+      let address = trans.direction===1?trans.fromAddress : trans.toAddress 
+      return address.slice(0,12)+'.......'+address.slice(address.length-9)
+    },
+    getTransList(){ //获取交易记录
+      if(this.wallet.length){
+        console.log('loadBottom')
+        let address = this.$root.getAddress(this.currency, this.wallet[this.wallet_idx].publicKey)
+        api.getTransList(address, this.page+1).then((res)=>{
+          if(res.data.rst==1){
+            this.totalPage =Math.ceil(res.data.total/10)
+            this.serverTime = new Date(res.data.timestamp.replace('-','/'))
+            this.timer = 0
+            if(res.data.data.length){
+              this.transList = this.transList.concat(res.data.data)
+              this.page +=1
+              if(this.page===this.totalPage){
+                this.allLoaded = true
+              }
+              this.$refs.loadmore.onBottomLoaded();
+            }
+          }
+        })
+      }
+    },
+    displayName(idx){ //显示钱包名称
+      return (this.wallet[idx] && this.wallet[idx].name) || (this.wallet[idx] && this.currency+this.$root.fitLen(idx+1,2)) || ''
+    },
+    getSymbolExchangePrice(token){ //获取币种汇率价格
+      var price = 0
+      let match = this.getSymbolExchange.filter((item)=>{
+        return item.symbol == token
+      })
+      if (match.length) {
+        let exchange = match[0].exchangeItemList.filter((item)=>{
+          return item.currency == this.getFiat
+        })
+        if (exchange.length) {
+          price = exchange[0].price
+        }
+      }
+      return price
+    },
+    checkFrozen(token, publicKey){ //检查钱包币种是否被冻结 fid 硬件id号 publicKey 公钥 token 币种
+      var fid = this.getFactoryCode
+      return this.WFSetting[fid] && this.WFSetting[fid][publicKey] && this.WFSetting[fid][publicKey][token]
     },
     showWalletList(args){
       this.show = !this.show
@@ -159,13 +192,14 @@ export default {
     changeWallet(args){
       this.show = false
       this.wallet_idx = args.idx
+      this.$router.replace({name:'page-wallet-detail', params:{currency:this.currency, idx:this.wallet_idx}})
     },
     showUnlinkedLayer(){
 
     },
     hideUnlinkedLayer(){
       this.showUnlinked = false
-    }
+    },
   },
   components:{    
     
@@ -271,7 +305,16 @@ export default {
       }
       &:last-of-type i{
           background-image: url('../assets/img/shoukuan@3x.png');
+      }
+      &.gray {
+        color:#ccc;
+        i {
+          background-image: url('../assets/img/fukuan_icon_gray@3x.png')
         }
+        &:last-of-type i{
+          background-image: url('../assets/img/shoukuan_gray@3x.png');
+        }
+      }
     }
   }
 }
@@ -280,7 +323,7 @@ export default {
   height:-webkit-calc(~"100vh - 4.92rem");
   height: calc(~"100vh - 4.92rem");
   background-color: #F9F9F9;
-  overflow: hidden;
+  overflow-y: auto;
 }
 
 .trans-records-title {
@@ -356,7 +399,9 @@ export default {
 
 .wallet-list {
   width: 50%;
+  height: 100%;
   margin:auto;
+  overflow-y: auto;
   li {
     line-height: 0.9rem;
     background-color: #fff;

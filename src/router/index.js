@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import store from '@/store'
 import init from '@/pages/init'
-import guide from '@/pages/guide'
 import login from '@/pages/login'
 import register from '@/pages/register'
 import resetPassword from '@/pages/reset_password'
@@ -34,13 +33,14 @@ import about  from '@/pages/mycenter/about'
 import agreement  from '@/pages/mycenter/about/agreement'/*用户协议*/
 import privacy  from '@/pages/mycenter/about/privacy'/*隐私条款*/
 import join  from '@/pages/mycenter/about/join'/*隐私条款*/
-import pwd  from '@/pages/pwd/pwd_index'
+import ModifyPW  from '@/pages/mycenter/modifyPW' //修改密码
 import Lang  from '@/pages/mycenter/setup/lang'
-import webthree  from '@/pages/mycenter/setup/webthree'/*web3设置*/
+// import webthree  from '@/pages/mycenter/setup/webthree'/*web3设置*/
 /*交易信息*/
 import trading from '@/pages/trading'
 import tradingdex from '@/pages/trading_dex'
 import market from '@/pages/trading/market'
+import kline from '@/pages/trading/kline'
 /*挖矿*/
 import dig from '@/pages/dig'
 Vue.use(Router)
@@ -94,7 +94,10 @@ const router = new Router({
     { path: '/backup', name:backup.name, component: backup }, // 个人中心--备份
     { path: '/setup', name:setup.name, component: setup }, // 个人中心--设置
     { path: '/monUnit', name:monUnit.name, component: monUnit }, // 个人中心--设置--货币单位
-    { path: '/webthree', name:webthree.name, component: webthree }, // 个人中心--设置--web3设置
+    // { path: '/webthree', name:webthree.name, component: webthree }, // 个人中心--设置--web3设置
+/*交易*/
+    { path: '/kline', name:kline.name, component: kline }, // 个人中心--信息
+
 
     { path: '/record', name:record.name, component: record }, // 个人中心--记录
     { path: '/uwallet', name:uwallet.name, component: uwallet  }, // 个人中心--钱包
@@ -120,11 +123,6 @@ const router = new Router({
       component: init
     },
     {
-      path:'/guide', //引导页面
-      name: guide.name,
-      component: guide
-    },
-    {
       path:'/login', //登录页面
       name: login.name,
       component: login
@@ -140,7 +138,7 @@ const router = new Router({
       component: resetPassword
     },
     {
-      path:'/wallet-detail/:currency?', //钱包详情
+      path:'/wallet-detail/:currency?/:idx?', //钱包详情
       name: walletDetail.name,
       component: walletDetail
     },
@@ -160,6 +158,8 @@ const router = new Router({
       component: walletGather
     },
     {path: '/lang', name: Lang.name, component: Lang },
+    {path: '/modify-password', name: ModifyPW.name, component: ModifyPW },
+
     {path: '*', redirect:{ name: 'page-wallet' } },
   ]
 })

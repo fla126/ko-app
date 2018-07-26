@@ -36,7 +36,7 @@
       saveLang(args){
         this.setLang(this.lang)
         window.$i18n.locale = this.lang
-        this.$router.push({name:'page-ucenter-setup'})
+        this.$router.replace({name:'page-ucenter'})
       }
     },
   }

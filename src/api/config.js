@@ -1,15 +1,15 @@
 var env = 'dev'
 var config = {
-	domain:'imagelee.com', //生产环境主域名
+	domain:'dev.tinkey.net', //生产环境主域名
 	root:'',
 	wsroot:'',
 }
 var config = {
-	domain: env === 'dev' ? '10.0.2.180': 'dev.koall.io',
+	domain: env === 'dev' ? 'dev.tinkey.net': '10.0.1.29:8080',
 	root:''
 }
 
-config.root = window.location.protocol+'//'.concat(config.domain)
+config.root = 'http://'.concat(config.domain)
 config.wsroot = window.location.protocol === 'https:' ? 'wss://': 'ws://'.concat(config.domain)
 
 

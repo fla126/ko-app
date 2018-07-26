@@ -1,48 +1,48 @@
 <template>
-  <div id="uinfo" class="page wrap">
+  <div id="uinfo" class="page">
 
     <comp-top-back :class="'line'" :back="true" >
       {{$t('message.backup.backupName')}}
     </comp-top-back>
 
-
-    <div class="common-content bg-white mt40 ft-c-gray">
-      <div class="inner">
-        <div class="box-cont " v-tap="{methods:routeTo, to:'page-msg'}">
-          <div class="item"><span class="f30">{{$t('message.backup.cloudBackup')}}</span></div>
-          <div class="item"><img class="nav_right" src="../../assets/img/mycenter/i_question.png"/></div>
-        </div>
-        <div class="box-cont " v-tap="{methods:routeTo, to:'page-record'}">
-          <div class="item"><span class="f30">{{$t('message.backup.qrBackup')}}</span></div>
-          <div class="item"><img class="nav_right" src="../../assets/img/mycenter/i_question.png"/></div>
-        </div>
-        <div class="box-cont " v-tap="{methods:routeTo, to:'page-uwallet'}">
-          <div class="item"><span class="f30">{{$t('message.backup.abkeyBackup')}}</span></div>
-          <div class="item"><img class="nav_right" src="../../assets/img/mycenter/i_question.png"/></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="common-content bg-white mt40 ft-c-gray">
-      <div class="inner">
-        <div class="box-cont " >
-          <div class="item"><span class="f30 ft-c-blue">{{$t('message.backup.updatePwd')}}</span></div>
-        </div>
-      </div>
-    </div>
-
-    <!--  说明文字 -->
-    <div class="m-box3">
+    <div class="page-main">
+      <div class="common-content bg-white mt40 ft-c-gray">
         <div class="inner">
-          <h1>{{$t('message.backup.alert')}}</h1>
-          <ul>
-            <li>{{$t('message.backup.infoOne')}}</li>
-            <li>{{$t('message.backup.infoTwo')}}</li>
-            <li>{{$t('message.backup.infoThree')}}</li>
-          </ul>
+          <div class="box-cont " v-tap="{methods:routeTo, to:'page-msg'}">
+            <div class="item"><span class="f30">{{$t('message.backup.cloudBackup')}}</span></div>
+            <div class="item"><img class="nav_right" src="../../assets/img/mycenter/i_question.png"/></div>
+          </div>
+          <div class="box-cont " v-tap="{methods:routeTo, to:'page-record'}">
+            <div class="item"><span class="f30">{{$t('message.backup.qrBackup')}}</span></div>
+            <div class="item"><img class="nav_right" src="../../assets/img/mycenter/i_question.png"/></div>
+          </div>
+          <div class="box-cont " v-tap="{methods:routeTo, to:'page-uwallet'}">
+            <div class="item"><span class="f30">{{$t('message.backup.abkeyBackup')}}</span></div>
+            <div class="item"><img class="nav_right" src="../../assets/img/mycenter/i_question.png"/></div>
+          </div>
         </div>
-    </div>
+      </div>
 
+      <div class="common-content bg-white mt40 ft-c-gray">
+        <div class="inner" v-tap="{methods:$root.routeTo, to:'page-modify-password'}">
+          <div class="box-cont " >
+            <div class="item"><span class="f30 ft-c-blue">{{$t('message.backup.updatePwd')}}</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!--  说明文字 -->
+      <div class="m-box3">
+          <div class="inner">
+            <h1>{{$t('message.backup.alert')}}</h1>
+            <ul>
+              <li>{{$t('message.backup.infoOne')}}</li>
+              <li>{{$t('message.backup.infoTwo')}}</li>
+              <li>{{$t('message.backup.infoThree')}}</li>
+            </ul>
+          </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -65,6 +65,10 @@
 </script>
 
 <style type="text/css" lang="less" scoped  >
+.page-main {
+  overflow-y: hidden;
+  background-color: #F9F9F9;
+}
   .m-box3{margin-top: .45rem;}
   .m-box3>.inner{padding: 0 .2rem;}
   .m-box3 h1{font-size: .24rem;color:#666666}

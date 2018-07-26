@@ -6,63 +6,82 @@
     </comp-top-back>
 
     <div class="page-main" id="scroll"> <!--content start-->
-       <div style="margin-bottom: 3rem">
-        <div v-for="(item,index) in msgArry" class="w-content m-box1"  v-tap="{methods:routeTo, to:'page-msginfo',query:item.id}">
+      <div style="margin-bottom: 3rem">
+        <!-- <div v-for="(item,index) in msgArry" class="w-content m-box1"  v-tap="{methods:$root.routeTo, to:'page-msginfo',query:item.id}"> -->
+        <div v-for="(item,index) in newMsg" class="w-content m-box1">
           <div class="inner">
-                 <section class="item">
-                      <div><span class="left ft-c-gray" >{{item.tratype===1?$t('message.msg.advicemsg'):(item.tratype===2?$t('message.msg.sendmsg'):$t('message.msg.sysmsg'))}}:</span><span class="right ft-c-gray">{{item.tratime|date}}</span></div>
-                      <div><p class="bottom">{{$t('message.msg.content')}}</p></div>
-                 </section>
+            <section class="item">
+                <div><span class="left ft-c-gray" >{{item.tratype===1?$t('message.msg.transferMsg'):(item.tratype===2?$t('message.msg.gatherMsg'):$t('message.msg.sysMsg'))}}:</span><span class="right ft-c-gray">{{item.tratime}}</span></div>
+                <div><p class="bottom">{{$t('message.msg.content')}}</p></div>
+            </section>
           </div>
         </div>
          <div style="height:.7rem">
          </div>
-    </div>
+      </div>
     </div> <!-- content end -->
   </div>
 </template>
 
 <script>
-  import Vue from 'vue'
-  import  centerApi from '@/api/mycenter'
-  import  utils from '@/assets/js/utils'
-  import { Button } from 'mint-ui';
-  import { Cell } from 'mint-ui';
-  import { Header } from 'mint-ui';
-  Vue.component(Button.name, Button);
-  Vue.component(Header.name, Header);
-  Vue.component(Cell.name, Cell);
-    export default {
-         name: "page-msg",
-         data(){
-          return {
-            scroll:false,
-            msgArry:[]
-          }
-          },
-      mounted(){
-        setTimeout(this.initScroll,700)
-        this.getMsgsList();// 初始化数据
-      },
-      methods:{
-        initScroll(){
-          var self = this
-          this.scroll = new IScroll('#scroll',{
-            mouseWheel:true,
-            tap:true
-          });
-        },
-        getMsgsList(){
-          centerApi.getMsgs({}, (data) => {
-            this.msgArry = data
-          }, (msg) => {
-          })
-        },
-        routeTo(args){
-          this.$router.push({ name: args.to,query:{id:args.query}})
-        }
-      }
+import { mapGetters, mapActions } from 'vuex'
+import api from '@/api/data'
+
+export default {
+  name: "page-msg",
+  data(){
+    return {
+      scroll:false,
+      newMsg:[],
+      localMsg:[],
     }
+  },
+  created(){
+    this.getMsgList()
+    this.getLocalMsg()
+  },
+  mounted(){
+    setTimeout(this.initScroll,700)
+    
+  },
+  computed:{
+    ...mapGetters(['getAllWalletAddress','getFactoryCode']),
+  },
+  methods:{
+    ...mapActions(['setHasMessage']),
+    initScroll(){
+      var self = this
+      this.scroll = new IScroll('#scroll',{
+        mouseWheel:true,
+        tap:true
+      });
+    },
+    getMsgList(){ // 获取新消息数据
+      api.getMessage(this.getAllWalletAddress.join(','),true).then((res)=>{
+
+        this.newMsg = res.data.data
+        this.saveLocalMsg(res.data.data)
+        this.setHasMessage(false)
+      }).catch((err)=>{
+        this.newMsg = [
+        {id:1, tratype:1, tratime:'2018-7-23 18:24:23'},
+        {id:2, tratype:2, tratime:'2018-7-23 18:24:23'},
+        ]
+        this.setHasMessage(false)
+      })
+    },
+    saveLocalMsg(msgArray){ //保存消息到本地数据库
+      var fid = this.getFactoryCode
+      for(let msg of msgArray){
+        // localApi && localApi.saveMsg(fid,msg)
+      }
+    },
+    getLocalMsg(){ //获取本地数据库消息
+      var fid = this.getFactoryCode
+      // this.localMsg = localApi ? localApi.getMsg(fid,10,1) : []
+    },
+  }
+}
 </script>
 
 <style type="text/css" lang="less" scoped >

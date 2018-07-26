@@ -1,20 +1,20 @@
 <template>
-  <div  class="page wrap">
+  <div  class="page">
     <comp-top-back :class="'line'" :back="true" >
       {{$t('message.mycenter.wallet')}}
-      <span class="header-right"><img v-tap="{methods:routeTo, to:'page-addwallet'}" class="uwallet-right-img" src="../../assets/img/mycenter/i_nav_add.png"/></span>
+      <span class="header-right"><img v-tap="{methods:$root.routeTo, to:'page-addwallet'}" class="uwallet-right-img" src="../../assets/img/mycenter/i_nav_add.png"/></span>
     </comp-top-back>
 
-    <div class="page-main" id="scroll">
+    <div class="page-main" id="scroll" v-show="getWalletList.length">
       <section>
-            <div v-for="(item,key) in walletList" class="uwallet-box ">
-              <h1 class="uwallet-h1 mt25 f30">{{key}}</h1>
+            <div v-for="(token,i) in getShowCurrency" class="uwallet-box " :key="i">
+              <h1 class="uwallet-h1 mt25 f30">{{token}}</h1>
               <div class="uwallet-content w-content m-box1 mt25 f24">
                 <div class="inner">
-                  <section v-for="child in  item" class="one">
-                    <span >{{child.name}}</span>
-                    <span>{{child.address}}</span>
-                    <span> <button :class="[{'tin-btn-default':true},child.statue===0?'tin-btn-blue': 'tin-btn-green']"  v-tap="{methods:changeStaue,query:{ id:child.id,statue:child.statue}}">{{child.statue===0? $t('message.wallet.unfrozen'):$t('message.wallet.frozen')}}</button>
+                  <section v-for="(wallet,j) in getWalletList" class="one" :key="j">
+                    <span >{{wallet.name || token+$root.fitLen(j+1,2)}}</span>
+                    <span>{{$root.getAddress(token,wallet.publicKey)}}</span>
+                    <span> <button class="tin-btn-default" :class="[checkFrozen(token,wallet.publicKey)?'tin-btn-green':'tin-btn-blue']" v-tap="{methods:toggleFrozen, token:token, publicKey:wallet.publicKey}">{{checkFrozen(token,wallet.publicKey)? $t('message.wallet.unfrozen'):$t('message.wallet.frozen')}}</button>
                      </span>
                   </section>
                 </div>
@@ -24,69 +24,62 @@
         </div>
       </section>
     </div>
-
-
-
-
-
   </div>
 </template>
 
 <script>
-  import Vue from 'vue'
-  import { Button } from 'mint-ui';
-  import { Cell } from 'mint-ui';
-  import { Header } from 'mint-ui';
-  import { MessageBox,Toast,Indicator} from 'mint-ui';
-  import  centerApi from '@/api/mycenter'
-  Vue.component(Button.name, Button);
-  Vue.component(Header.name, Header);
-  Vue.component(Cell.name, Cell);
-    export default {
-        name: "page-uwallet",  data(){
-        return {
-          scroll:false,
-          walletList:{}
-        }
-      },
-      mounted(){
-        setTimeout(this.initScroll,700);
-        this.getlist()
-      },
-        methods:{
-          changeStaue(args){//改变钱包地址状态
-            console.log(args)
-        MessageBox.confirm(this.$t('message.wallet.info'),this.$t('message.wallet.wok'),{confirmButtonText:this.$t('message.wallet.ok'),cancelButtonText:this.$t('message.wallet.no')}).then(action => {
-          Indicator.open();
-          centerApi.wupdate({id:args.query.id,statue:args.query.statue===0?1:0},(data) => {
-                  Indicator.close();
-                  Toast(this.$t('message.wallet.updatesuccess'));
-                  this.getlist();
-              }, (msg) => {
-                 Indicator.close();
-                  Toast(this.$t('message.wallet.updatefailed'));
-              })
-            });
+import Vue from 'vue'
+import { mapGetters, mapActions } from 'vuex'
+import { MessageBox,Toast} from 'mint-ui'
+var walletFrozenSetting = JSON.parse(localStorage.getItem('walletFrozenSetting') || '{}')
 
-          },
-          getlist(){
-            centerApi.getwallsList((data) => {
-              this.walletList = data
-            }, (msg) => {
-            })
-          },
-          initScroll(){
-            var self = this
-            this.scroll = new IScroll('#scroll',{
-              mouseWheel:true,
-              tap:true
-            });
-           },
-          routeTo(args){
-            this.$router.push({ name: args.to})
-          }
-        }
+export default {
+    name: "page-uwallet",  
+    data(){
+    return {
+      scroll:false,
+      WFSetting:walletFrozenSetting
     }
+  },
+  created(){
+    
+  },
+  mounted(){
+    setTimeout(this.initScroll,700);
+  },
+  computed:{
+    ...mapGetters(['getWalletList','getShowCurrency','getFactoryCode']),
+  },
+  methods:{
+    ...mapActions(['setWalletList']),
+    checkFrozen(token, publicKey){ //检查钱包币种是否被冻结 fid 硬件id号 publicKey 公钥 token 币种
+      var fid = this.getFactoryCode
+      return this.WFSetting[fid] && this.WFSetting[fid][publicKey] && this.WFSetting[fid][publicKey][token]
+    },
+    toggleFrozen(args){ //冻结、解冻钱包
+      console.log(this.WFSetting)
+      var token = args.token, publicKey = args.publicKey
+      MessageBox.confirm(this.$t('message.wallet.wok'),this.$t('message.cmd.confirmTitle'),{confirmButtonText:this.$t('message.cmd.yes'),cancelButtonText:this.$t('message.cmd.no')}).then(action => {
+        var fid = this.getFactoryCode, status = this.checkFrozen(token, publicKey)
+        if(!this.WFSetting[fid]){
+          Vue.set(this.WFSetting, fid, {})
+        }
+        if(!this.WFSetting[fid][publicKey]){
+          Vue.set(this.WFSetting[fid], publicKey, {})
+        }
+        Vue.set(this.WFSetting[fid][publicKey], token, !status)
+        localStorage.setItem('walletFrozenSetting',JSON.stringify(this.WFSetting))
+      })
+    },
+    initScroll(){
+      var self = this
+      this.scroll = new IScroll('#scroll',{
+        mouseWheel:true,
+        tap:true
+      });
+     },
+  }
+}
 </script>
 
 <style type="text/css" lang="less" scoped >
@@ -141,43 +134,6 @@
   }
   .w-content>.inner{
     padding: 0 .3rem;
-  }
-  .w-content a.w-box1{
-    margin-top: .4rem;
-  }
-  .w-content a.w-box1 .mint-cell-title img{
-    height:.3rem;
-    width: .4rem;
-  }
-  .w-content  a.w-box2 .mint-cell-title img{
-    height:.34rem;
-    width: .34rem;
-  }
-  .w-content a.w-box3 .mint-cell-title img{
-    height:.34rem;
-    width: .4rem;
-  }
-  .w-content a.w-box4 .mint-cell-title img{
-    height:.34rem;
-    width: .34rem;
-  }
-
-  /*帮助*/
-  .w-content a.w-box5 .mint-cell-title img{
-    height:.38rem;
-    width: .32rem;
-  }
-  .w-content a.w-box6 .mint-cell-title img{
-    height:.36rem;
-    width: .34rem;
-  }
-  .w-item .mint-cell-title .mint-cell-text{
-    font-size: .3rem;
-  }
-
-  .w-content .mint-cell{
-    min-height: .85rem;
-    border-bottom: .01rem solid #ecedee;
   }
 
 </style>

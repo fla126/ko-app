@@ -11,10 +11,10 @@
           <div class="item"><span class="f30">{{$t('message.setup.fiat')}}</span></div>
           <i class="allow-right"></i>
         </div>
-        <div class="box-cont " v-tap="{methods:$root.routeTo, to:'page-webthree'}" >
+        <!-- <div class="box-cont " v-tap="{methods:$root.routeTo, to:'page-webthree'}" >
           <div class="item"><span class="f30">WEB3</span></div>
           <i class="allow-right"></i>
-        </div>
+        </div> -->
       </div>
     </div>
 

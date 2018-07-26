@@ -1,6 +1,6 @@
 <template>
-  <div class="wrap">
-    <mt-swipe :auto="0" :continuous="false" class="guide" :class="{en:$i18n.locale=='en'}"  @change="handleChange">
+  <div class="guide">
+    <mt-swipe :auto="0" :continuous="false" :class="{en:$i18n.locale=='en'}"  @change="handleChange">
       <mt-swipe-item></mt-swipe-item>
       <mt-swipe-item></mt-swipe-item>
       <mt-swipe-item></mt-swipe-item>
@@ -12,11 +12,7 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import { Swipe, SwipeItem, Button } from 'mint-ui';
-Vue.component(Button.name, Button);
-Vue.component(Swipe.name, Swipe);
-Vue.component(SwipeItem.name, SwipeItem);
+
 export default {
   name:'guide',
   data(){
@@ -41,7 +37,7 @@ export default {
     },
     start(args){
      localStorage.setItem('firstWalletView',1)
-     this.$router.replace({name:'page-init'})
+     this.$parent.guide = false
     }
   },
   components:{
@@ -50,21 +46,27 @@ export default {
 }
 
 </script>
-<style lang="less" scoped="">
-.wrap {
-  background-color: #2d2e5a;
+<style lang="less">
+.page .guide .mint-button.mint-button--large {
+  height: 1.05rem;
+    font-size: 0.4rem;
+}
+.guide {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99999999;
+  background-color: #fff;
   button {
     position: absolute;
+    left: 0;
     bottom: 0;
+    width: 100%;
     border-radius: 0;
-    height: 1.05rem;
-    font-size: 0.4rem;
   }
 }
-
-</style>
-<style lang="less">
-
 .guide .mint-swipe-item {
   background: no-repeat center;
   background-size: cover;

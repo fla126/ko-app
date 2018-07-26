@@ -48,7 +48,7 @@
 		position: relative;
 		width: 1.2rem;
 	    height: 0.4rem;
-		background: #262a42;
+		background: #f1f1f1;
 		&:after, &:before {
 			content: " ";
 			top: 0;
@@ -59,25 +59,25 @@
 		&:before {
 			width: 1.2rem;
 			height: 0.4rem;
-			background-color: #262a42;
+			background-color: #f1f1f1;
 		}
 		&:after {
 			width: 0.6rem;
 			height: 0.4rem;
-			background-color: #8089a3;
+			background-color: #4d7bf3;
 			box-shadow: 0 1px 3px rgba(0,0,0,.4);
 		}
-		
+
 	}
 	.switch-input:checked + .switch-core {
-	    background-color: #26a2ff;
+	    background-color: #f1f1f1;
 	}
 	.switch-input:checked + .switch-core::before {
 	    transform: scale(0);
 	}
 	.switch-input:checked + .switch-core::after {
 	    transform: translateX(0.6rem);
-	    background-color: #262a42;
+	    background-color: #4d7bf3;
 	}
 	.switch-label {
 	    margin-left: 0.26rem;

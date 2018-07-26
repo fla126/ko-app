@@ -1,151 +1,129 @@
 <template>
-  <div  class="page wrap">
-
+  <div class="page">
     <comp-top-back :class="'line'" :back="true" >
       {{$t('message.wallet.addWallet')}}
     </comp-top-back>
-
-    <div class="common-content mt10">
-       <div class="inner">
-         <section class="item">
-                <h1 class="f36 mt40">{{$t('message.wallet.addWallet')}}</h1>
-                <h2 class="f24 mt60 ft-c-gray30">{{$t('message.wallet.token')}}</h2>
-          <div class="styled-select mt20">
-             <select class="select f24  ft-c-gray" v-model="icon">
-               <option >BTC</option>
-               <option>ETH</option>
-               <option>BARK</option>
-             </select>
-          </div>
-         </section>
-         <div class="hr"></div>
-       </div>
-    </div>
-
-    <div class="common-content mt10">
-      <div class="inner">
-        <section class="item" style="padding-bottom: .1rem;">
-          <h2 class="f24 mt50 ft-c-gray30">{{$t('message.wallet.walletName')}}</h2>
-          <input id="wname"  v-model="wname" class="common-input-default f30 mt20"  placeholder="Wynne07" />
-        </section>
-        <div class="hr"></div>
+    <div class="page-main">
+      <div class="common-content mt10">
+         <div class="inner">
+           <section class="item">
+                  <h1 class="f36 mt40">{{$t('message.wallet.addWallet')}}</h1>
+                  <h2 class="f24 mt60 ft-c-gray30">{{$t('message.wallet.token')}}</h2>
+            <div class="styled-select mt20">
+               <select class="select f30  ft-c-gray" v-model="token">
+                 <option :value="item" v-for="item in Object.keys(getCurrency)">{{item}}</option>
+               </select>
+            </div>
+           </section>
+         </div>
+      </div>
+      <div class="common-content mt10">
+        <div class="inner">
+          <section class="item">
+            <h2 class="f24 mt50 ft-c-gray30">{{$t('message.wallet.walletName')}}</h2>
+            <input id="wname" v-model="wname" class="common-input-default f30 mt20" maxlength="20"  :placeholder="$t('message.wallet.walletName')">
+          </section>
+        </div>
+      </div>
+      <div class="step-next" :class="{fixed:isBlur}" v-tap="{methods:pwconfirm}">
+        <p class="f20 ft-c-red text-center">{{$t('message.wallet.topInfo')}}</p>
+        <mt-button class="mt20" size="large" type="primary">{{$t('message.wallet.add')}}</mt-button>
       </div>
     </div>
-
-    <!--<div class="column is-12">
-      <label class="label" for="email">Email</label>
-      <p class="control">
-        <input name="email"
-               type="text"
-               placeholder="Email"
-               v-validate
-               data-rules="required|email"
-               :class="{  'input': true,'is-danger': errors.has('email')}">
-        <span class="help is-danger" v-show="errors.has('email')" >{{ errors.first('email') }}要</span>
-      </p>
-    </div>-->
-    <footer>
-        <div class="common-content footer mt100">
-           <div class="inner">
-              <p class="f20 ft-c-red">{{$t('message.wallet.topInfo')}}</p>
-              <mt-button class="mt20" size="large" type="primary" @click="addFun" >{{$t('message.wallet.add')}}</mt-button>
-           </div>
-        </div>
-    </footer>
-    <wallet-add :show="showEditorLayer" :hideFunction="hideEditorLayer" :cname="cname"></wallet-add>
+    <password-confirm :show="showPWCLayer" :hideFunction="hidePWCLayer" :submitFunction="addWallet"></password-confirm>
   </div>
 </template>
 
 <script>
-  import Vue from 'vue'
-  import walletAdd from '@/components/common/wallet_pwd_add'
-  import { Button } from 'mint-ui';
-  import { Cell } from 'mint-ui';
-  import { Header } from 'mint-ui';
-  import { Toast,MessageBox  } from 'mint-ui'
-  import Tip from '@/components/common/tip.js'
-  import  centerApi from '@/api/mycenter'
-  // import VeeValidate, { Validator } from 'vee-validate'
-  // import messages  from 'vee-validate/dist/locale/zh_CN.js'
+import passwordConfirm from '@/components/common/password_confirm'
+import { Toast,MessageBox  } from 'mint-ui'
+import Tip from '@/components/common/tip.js'
+import { mapGetters, mapActions } from 'vuex'
 
-
-  const config = {
-    errorBagName: 'errors', // change if property conflicts.
-    delay: 0,
-    locale: 'zh_CN',
-    messages: null,
-    strict: true
-  };
-  // Vue.use(VeeValidate,config);
-
-  Vue.component(Button.name, Button);
-  Vue.component(Header.name, Header);
-  Vue.component(Cell.name, Cell);
-  Vue.component(Toast.name, Toast);
-  Vue.component(MessageBox.name, MessageBox);
-    export default {
-      name: "page-addwallet",
-      components:{
-          walletAdd,
-      },
-      data(){
-          return{
-            showEditorLayer:false,
-            cname:'',
-            icon:'BTC',//币种
-            wname:''//钱包名
-          }
-      },
-      mounted(){
-
-
-      /*  Tip({
-          type:'success',
-          title:'Success',
-          message:'congratulation'
-        })*/
-      },
-      methods:{
-        hideEditorLayer(cname){ //隐藏编辑对话框
-          this.showEditorLayer = false
-          if(cname && typeof(cname)=='string'){
-            // 回传编辑数据
-            console.log(cname)
-          }
-        },
-        routeTo(args){
-          this.$router.push({ name: args.to})
-        },
-        addFun(){
-          if(!this.$root.trim(this.wname,1)){
-            Tip({type:'danger',title:this.$t('message.login.error'), message:this.$t('message.wallet.pleasewalletName')})
-            $('#wname').focus()
-            return
-          }else{
-            let w={
-              name:this.wname,
-              icconname:this.icon
-              };
-            centerApi.wsave(w,(data) => {
-              MessageBox.alert(this.$t('message.wallet.info'),this.$t('message.wallet.savesucc'),{confirmButtonText:this.$t('message.wallet.ok')}).then(action => {
-                this.$router.push({name:'page-uwallet'})
-              });
-            }, (msg) => {
-              Toast(this.$t('message.wallet.savefailed'));
-            })
-          }
-
-         /* this.showEditorLayer = true*/
+export default {
+  name: "page-addwallet",
+  components:{
+      passwordConfirm,
+  },
+  data(){
+      return{
+        showPWCLayer:false,
+        cname:'',
+        token:'BTC',//币种
+        wname:'',//钱包名
+        isBlur:true
+      }
+  },
+  computed:{
+    ...mapGetters(['getCurrency','getWalletList']),
+  },
+  mounted(){
+    $('#wname').focus(()=>{
+      this.isBlur = false
+    })
+    $('#wname').blur(()=>{
+      this.isBlur = true
+    })
+  },
+  methods:{
+    ...mapActions(['setWalletList']),
+    pwconfirm(){ //最多添加32个钱包
+      if(this.getWalletList.length>=32){
+        Tip({type:'warning',title:this.$t('message.login.warning'), message:this.$t('message.wallet.maxWallet')})
+        return
+      }
+      if(!this.$root.trim(this.wname,1)){
+        Tip({type:'danger',title:this.$t('message.login.error'), message:this.$t('message.wallet.pleasewalletName')})
+      } else {
+        this.showPWCLayer = true
+      }
+    },
+    hidePWCLayer(){
+      this.showPWCLayer = false
+    },
+    addWallet(password){
+      cordova.exec((res)=>{
+        res = JSON.parse(res)
+        if(res.code=='0'){ //密码正确，创建钱包
+          var idx = this.getWalletList.length
+          cordova.exec((res)=>{
+            res = JSON.parse(res)
+            console.log(res)
+            if(res.code=='0'){
+              var wallet = {}
+              wallet.name = this.wname
+              wallet.publicKey = res.msg
+              wallet.idx = idx
+              wallet.currency = {}
+              this.setWalletList(this.getWalletList.push(wallet))
+              console.log(this.getWalletList)
+              Tip({type:'success', title:this.$t('message.login.success'), message:this.$t('message.wallet.savesucc')})
+              //本地保存钱包名称
+              var walletNames = JSON.parse(localStorage.getItem('walletNames') || '{}')
+              walletNames[res.msg] = this.wname
+              localStorage.setItem('walletNames', JSON.stringify(walletNames))
+              this.$router.raplace({name:'page-uwallet'})
+            } else {
+              console.log(res.msg)
+            }
+          }, (error)=>{
+            console.log(error)
+          }, 'WalletApi', 'CreateWallet', [idx])
+        } else {
+          Tip({type:'danger', title:this.$t('message.login.error'), message:this.$t('message.init.invalidPassword')})
         }
-      },
+      }, (error)=>{
+        console.log(error)
+      }, 'WalletApi', 'login', [this.password])
     }
+  },
+}
 </script>
 
-<style type="text/css" lang="less" scoped >
-.common-content{
-  .hr{
-    border-top: .01rem solid #eaebec;
-  }
+<style lang="less" scoped >
+.page-main {
+  overflow-y: hidden;
+  background-color: #F9F9F9;
 }
 .styled-select  {
   overflow: hidden;
@@ -161,13 +139,6 @@
   }
 }
 
-/*.select{
-  width:100%;
-  height: .5rem;
-  border:0;
-  background: #f9f9f9;
-  padding: .1rem;
-}*/
 .select:focus {
   outline:none;
   border: 0;
@@ -184,17 +155,30 @@
   border: 0;
 }
 
-  .item{
-    border-bottom: .01rem solid #fff;
+.item{
+  border-bottom: 1px solid #eaebec;
+  &:after {
+    content: '';
+    display: block;
+    border-top: 1px solid #fff;
   }
-
-  .footer {
-    position: fixed;
-    width: 100%;
-    bottom: .3rem;
-    text-align: center;
-  }
-.footer button{
- background-color: #4d7bf3;
 }
+
+.step-next {
+  margin-top: 0.5rem;
+  margin-left: 0.3rem;
+  margin-right: 0.3rem;
+  background-color: #f9f9f9;
+  padding-bottom: 0.3rem;
+  &.fixed {
+    position: fixed;
+    left: 0.3rem;
+    right: 0.3rem;
+    bottom: 0rem;
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
 </style>

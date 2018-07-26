@@ -1,30 +1,25 @@
 <template>
   <div class="page">
-<!--    <mt-header class="common-mt-header" :title="$t('message.mycenter.center')">
-        <a slot="right" v-tap="{methods:$root.routeTo, to:'page-ucenter-setup'}">
-        <img class="ucenter-img" src="../assets/img/mycenter/i_right.png"/>
-        </a>
-    </mt-header>-->
     <comp-top-back :class="'line'" :back="false" >
         {{$t('message.mycenter.center')}}
-      <span class="header-right"><img v-tap="{methods:routeTo, to:'page-ucenter-setup'}" class="uwallet-right-img" src="../assets/img/mycenter/i_right.png"/></span>
+      <span class="header-right"><img v-tap="{methods:routeTo, to:'page-ucenter-setup'}" class="uwallet-right-img" src="../assets/img/shezhi_icon@3x.png"/></span>
     </comp-top-back>
 
     <div class="common-content u-box1 mt40">
-           <div class="inner" v-tap="{methods:routeTo, to:'page-uinfo'}">
-                <ul >
-                  <li><img src="../assets/img/mycenter/i_b_000.png"/></li>
-                  <li><span class="f36">Vivining</span> <span class="f24">{{$t('message.uinfo.tinkey')}}: usbtkey123456</span></li>
-                  <li><img  src="../assets/img/mycenter/i_right_nav.png"/></li>
-                </ul>
-           </div>
+       <div class="inner" v-tap="{methods:routeTo, to:'page-uinfo'}">
+            <ul >
+              <li><img src="../assets/img/mycenter/i_b_000.png"/></li>
+              <li><span class="f36">{{$t('message.mycenter.unknown')}}</span> <span class="f24">{{$t('message.uinfo.tinkey')}}: {{getFactoryCode}}</span></li>
+              <li><img  src="../assets/img/mycenter/i_right_nav.png"/></li>
+            </ul>
+       </div>
     </div>
 
     <div class="common-content bg-white mt40">
       <div class="inner">
         <div class="box-cont " v-tap="{methods:routeTo, to:'page-msg'}">
           <div class="item"><img class="left1"  src="../assets/img/mycenter/i_b_002.png" ></div>
-          <div class="item"><span class="f30">{{$t('message.mycenter.msg')}}</span></div>
+          <div class="item"><span class="f30">{{$t('message.mycenter.msg')}}<i class="red-dot" v-if="getHasMessage"></i></span></div>
         </div>
         <div class="box-cont " v-tap="{methods:routeTo, to:'page-record'}">
           <div class="item"><img class="left2"  src="../assets/img/mycenter/i_b_003.png" ></div>
@@ -57,13 +52,8 @@
   </div>
 </template>
 <script>
-import Vue from 'vue'
-import { Button } from 'mint-ui';
-import { Cell } from 'mint-ui';
-import { Header } from 'mint-ui';
-Vue.component(Button.name, Button);
-Vue.component(Header.name, Header);
-Vue.component(Cell.name, Cell);
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
   name:'page-ucenter',
   data(){
@@ -73,6 +63,9 @@ export default {
   },
   mounted(){
 
+  },
+  computed:{
+    ...mapGetters(['getFactoryCode','getHasMessage']),
   },
   methods:{
     routeTo(args){
@@ -129,6 +122,7 @@ export default {
       span{
         line-height: .4rem;
         margin-left: .3rem;
+        position: relative;
       }
     }
   }
@@ -167,4 +161,5 @@ export default {
     height: .42rem;
   }
 }
+.red-dot {position: absolute; right: -0.2rem; top: 0; background-color: red; width: 0.1rem; height: 0.1rem; border-radius: 50%;}
 </style>

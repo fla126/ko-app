@@ -4,7 +4,7 @@ module.exports={
     compFooter:{
     	wallet:"Wallet",
     	command:"Passcode",
-    	ucenter:"Account Center"
+    	ucenter:"My"
     },
     usbkeyStatus:{
     	connected:'Tinkey Linked',
@@ -22,15 +22,16 @@ module.exports={
       add:'Add',
       topInfo:'Tip: You need get Tinkey connected befor creating a new  wallet.',
       addWallet:'Add Wallet',
-      ok:'ok',
+      ok:'OK',
       info:'Info',
-      no:'no',
-      wok:'Make sure this is done?',
-      updatesuccess:'Update Successfully',
+      no:'NO',
+      wok:'Do you decide to execute this oparation?',
+      updatesuccess:'Update success',
       updatefailed:'Update failed',
-      savesucc:'save successfully!',
-      savefailed:'fail to save!',
-      pleasewalletName:'Please enter your wallet name'
+      savesucc:'Add wallet success!',
+      savefailed:'Add wallet failure!',
+      pleasewalletName:'Please enter your wallet name',
+      maxWallet:'Max add 32 wallets',
 	},
     addWalletDialog:{
       enterPwd:'Enter Passcode'
@@ -53,7 +54,7 @@ module.exports={
 	    review:'Review',
 	    senderAddress:'Sender Address',
 	    ok:'OK',
-	    payPassword:'Enter the payment password',
+	    payPassword:'Enter transaction password',
 	    receive:'Receive',
 	    receiveAmount:'Amount',
 	    enterAmount:'Please input Amount',
@@ -67,7 +68,12 @@ module.exports={
       overAmount:'Input amount greater then the max usable amount',
       blankMiningFee:'Please set up the miner\'s fee',
       invalidQRAddress:'Invalid QR code receiver address',
-      mismatchingCurrency:'Mismatching currency'
+      mismatchingCurrency:'Mismatching currency',
+      pullText:'Pull up loading',
+      releaseText:'Release refresh',
+      LoadingText:'Loading...',
+      transSuccess:'Success of new transaction',
+      placeQrcode:'Place a QR code inside the scan area',
 	},
 	cmd:{
 		passcode:'Passcode',
@@ -88,20 +94,69 @@ module.exports={
 		inputKey:'Please input private key'
 	},
     mining:{
-      mining:'Mining'
+      mining:'Mine',
+      online:'Time online',
+      expectedMining:'Estimated mine amount',
+      onmine:'Mining',
+      CurHashrate:'Current Hashrate',
+      tkyacquired:'TKY acquired',
+      Pause:'Pause'
     },
     trade:{
-      trade:'Trade'
+      amount:'Amount',
+      trade:'Trade',
+      optional:'Optional',
+      volume:'Filled',
+      price:'Price',
+      twnhourupdocwn:'24h Change',
+      buy:'Buy',
+      sell:'Sell',
+      aumont:'Amount',
+      market:'Market Price',
+      available:'available',
+      Marketprice:'Market Price',
+      limitorder:'Limit Price',
+      curentrust:'Open Orders',
+      hisentrust:'Order History',
+      allcancel:'All Cancel',
+      cancel:'Cancel',
+      lasttrade:'The latest deal',
+      Sernumber:'Serial number',
+      actualdeal:'Actual completion',
+      othertrading:'Hide other pairs',
+      tradingcancel:'Concealment has been revoked',
+      traded:'traded',
+      trading:'trading',
+      avgparice:'Avg Price',
+      transactionAmount:'Total'
+
+    },
+    kline:{
+      height:'High',
+      lower:'Low',
+      twetrade:'24h Volume',
+      timesharing:'Time',
+      fiveminut:'5Min',
+      tenfivmiu:'15Min',
+      onehour:'1Hour',
+      sixhour:'6Hour',
+      oneday:'1D',
+      more:'More',
+      buy:'Buy',
+      sell:'Sell',
+      deph:'Depth ',
+      kline:'Candlestick Chart'
     },
     mycenter:{
       center:'Account Center',
       check:'Please select',
-      msg:'News',
+      msg:'Message',
       rec:'Record',
       wallet:'Wallet',
       backup:'Backup',
       help:'Help',
-      about:'About us'
+      about:'About us',
+      unknown:'Unknown',
     },
   setup:{
     setupName:'Settings',
@@ -127,9 +182,9 @@ module.exports={
       message:'Message',
       all:'All',
       content:'Your sending to XXXX on 13:14 2018.08.09 was successful. You can check it anytime at Send record.',
-      sysmsg:'System Message',
-      sendmsg:'Transfer notice',
-      advicemsg:'Advice Of Collection'
+      sysMsg:'System message',
+      gatherMsg:'Gather message',
+      transferMsg:'Transfer message'
     },
     rec:{
       record:'Record',
@@ -148,7 +203,7 @@ module.exports={
       cloudBackup:'Cloud Backup',
       qrBackup:'QR Backup',
       abkeyBackup:'ABKEY Backup',
-      updatePwd:'Change Trade Password',
+      updatePwd:'Modify Trade Password',
       alert:'Alert',
       infoOne:'Our Tinkey and server donot store any Trade Password. Once it is lost, it cannot be recovered.',
       infoTwo:'All three ways of backup work coordinately with Trade Password. The lose of Trade Password will invalidate the backup.',
@@ -180,6 +235,7 @@ module.exports={
     	register:'Register',
     	error:'Error!',
       success:'Success!',
+      warning:'Warning!',
     	phoneEnterError:'Please enter the correct phone number ',
     	passwordEnterError:'Please enter the account password',
     },
@@ -201,8 +257,8 @@ module.exports={
       inputPassword:'Please enter the Tinkey login password',
       checkException:'Check connection exception',
       invalidPassword:'Invalid login password',
-      passwordTitle:'Setting password',
-      modifyPasswordTitle:'Modifying password',
+      passwordTitle:'Setting Password',
+      modifyPasswordTitle:'Modifying Password',
       oldPassword:'Old password',
       enterPassword:'Password ( 6 English/Digit letters )',
       confirmPassword:'Confirm password',
@@ -211,7 +267,7 @@ module.exports={
       isModifyPassword:'Your Tinkey has set the transaction password, do you want to reset it?',
       isSetPassword:'Your Tinkey does\'t set the transaction password, do you set it right now?',
       riskTipTitle:'Risk hints',
-      riskTipContent:'以下内容十分重要，请仔细阅读。<br /><br />1.交易密码是控制Tinkey的唯一凭证。 <br />2.交易密码用于Tinkey的授权、交易、备份、备份恢复等。 <br />3.交易密码一旦丢失，您的Tinkey将无法使用，资产将永久损失。请牢记妥善保存交易密码，勿泄露给他人。 <br />4.软件钱包在任何时候都不会记录您的交易密码。 <br />5.交易密码可以修改，每次修改后必须对Tinkey进行备份。 <br />6.交易密码长度为6到10位，区分大小写，无特殊字符，必须字母加数字。',
+      riskTipContent:'The below contents are extremely important, please read it 100% carefully.<br /><br />1.Trade Password is the only passport / proof to enter Tinkey.  <br />2.Trade Password can be used to Tinkey’s authorization, trading, backup, recovery and so on. <br />3.If Trade Password lost, not only Tinkey become unavailable, but also your crypto asset. So please keep your Trade   Password highly safe, never ever leak to anyone else. <br />4.Software wallet will nowhere record your Trade Password. <br />5.Whenever you finish the revision of Trade Password, please donot forget to backup Tinkey. <br />6.The length of Trade Password must be 6-10 letters and digits, including capital, small letter, but no special character.',
       modifySuccess:'Modify password success',
       modifyFailure:'Invalid old password',
     }

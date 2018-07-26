@@ -27,7 +27,7 @@ import data from '@/api/data'
 import ClipboardJS from 'clipboard'
 import QRCode from 'qrcode'
 import { Toast } from 'mint-ui'
-
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name:'page-wallet-gather',
@@ -42,8 +42,9 @@ export default {
   },
   created(){
     this.currency = this.$route.params.currency
-    this.wallet_idx = this.$route.params.name
+    this.name = this.$route.params.name
     this.publicKey = this.$route.params.key
+    this.setFAddr()
   },
   mounted(){
     this.initQRCode()
@@ -56,6 +57,7 @@ export default {
     }
   },
   computed:{
+    ...mapGetters(['getFactoryCode']),
     address(){
       return this.$root.getAddress(this.currency, this.publicKey)
     },
@@ -64,6 +66,18 @@ export default {
     }
   },
   methods:{
+    setFAddr(){ //统计收款地址使用情况
+      var FAddr = JSON.parse(localStorage.getItem('frequentlyAddr') || '{}'), fid = this.getFactoryCode
+      if(!FAddr[fid]){
+        FAddr[fid] = {}
+      }
+      if(!FAddr[fid][this.address]){
+        FAddr[fid][this.address] = {count:1 , name:this.name, token:this.currency}
+      } else {
+        FAddr[fid][this.address].count += 1
+      }
+      localStorage.setItem('frequentlyAddr',JSON.stringify(FAddr))
+    },
     initCopy(){
       //初始化复制按钮
       var self = this

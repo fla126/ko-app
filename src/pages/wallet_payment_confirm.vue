@@ -24,16 +24,17 @@
         <mt-button type="primary" size="large" v-tap="{methods:pwconfirm}">{{$t('message.walletDetail.ok')}}</mt-button>
       </div>
     </div>
-    <password-confirm :show="showPWCLayer" :hideFunction="hidePWCLayer" :submitFunction="submitOrder"></password-confirm>
+    <password-confirm ref='passConfirm' :show="showPWCLayer" :hideFunction="hidePWCLayer" :submitFunction="submitOrder"></password-confirm>
   </div>
 </template>
 
 <script>
 import numUtils from '@/assets/js/numberUtils'
-import passwordConfirm from '@/components/common/password_confirm';
-import web3 from 'web3'
-import Tx from 'ethereumjs-tx'
-import bitcore from 'bitcore-lib'
+import passwordConfirm from '@/components/common/password_confirm'
+import api from '@/api/data'
+import Tip from '@/components/common/tip'
+import { mapGetters, mapActions } from 'vuex'
+import { Indicator } from 'mint-ui'
 
 export default {
   name:'page-wallet-payment-confirm',
@@ -60,7 +61,7 @@ export default {
     this.currency = this.$route.params.currency
     this.wallet_idx = this.$route.params.idx
 
-    if(this.$route.params.receiverAddress){
+    if(this.$route.params.receiverAddress){ //如果有即时数据用即时数据，没有则尝试加载缓存数据
       this.receiverAddress = this.$route.params.receiverAddress
       this.senderAddress = this.$route.params.senderAddress
       this.amount = this.$route.params.amount
@@ -70,7 +71,7 @@ export default {
       this.GasPrice = this.$route.params.GasPrice
       this.GasNumber = this.$route.params.GasNumber
       this.sixteenDecimalData = this.$route.params.sixteenDecimalData
-    } else {
+    } else if(confirm){
       this.receiverAddress = confirm.receiverAddress
       this.senderAddress = confirm.senderAddress
       this.amount = confirm.amount
@@ -86,6 +87,7 @@ export default {
     
   },
   computed:{
+    ...mapGetters(['getFactoryCode','getContractAddr']),
     miningFeeDisplay(){
       if(this.feeSign == 'ETH'){
         return numUtils.div(numUtils.mul(this.GasPrice, this.GasNumber),10**9).toFixed(8)
@@ -102,6 +104,18 @@ export default {
     }
   },
   methods:{
+    setFAddr(){ //统计付款地址使用情况
+      var FAddr = JSON.parse(localStorage.getItem('frequentlyAddr') || '{}'), fid = this.getFactoryCode
+      if(!FAddr[fid]){
+        FAddr[fid] = {}
+      }
+      if(!FAddr[fid][this.senderAddress]){
+        FAddr[fid][this.senderAddress] = {count:1 , name:this.name, token:this.currency}
+      } else {
+        FAddr[fid][this.senderAddress].count += 1
+      }
+      localStorage.setItem('frequentlyAddr',JSON.stringify(FAddr))
+    },
     pwconfirm(){
       this.showPWCLayer = true
     },
@@ -110,45 +124,101 @@ export default {
     },
     submitOrder(password){ //提交订单函数
       var params = {
-        password,
         currency:this.currency,
-        receiverAddress:this.receiverAddress,
-        senderAddress:this.senderAddress,
-        amount:this.amount,
+        position:this.wallet_idx,
+        toAddress:this.receiverAddress,
+        fromAddress:this.senderAddress,
+        value:String(this.amount),
         miningFee:this.miningFee,
         feeSign:this.feeSign,
         tag:this.tag,
-        GasPrice:this.GasPrice,
-        GasNumber:this.GasNumber,
-        sixteenDecimalData:this.sixteenDecimalData
+        gasPrice:this.GasPrice,
+        gasLimit:String(this.GasNumber),
+        data:this.sixteenDecimalData
       }
-      localStorage.removeItem('payment')
-      localStorage.removeItem('confirm')
       console.log(params)
-      this.$router.replace({name:'page-wallet-detail', params:{currency:this.currency, idx:this.wallet_idx}})
+      this.checkLogin(password).then((status)=>{
+        if(status){ //密码验证成功
+          Indicator.open({
+            text: 'Loading...',
+          })
+          this.getSignedTrans(params).then((res)=>{
+            if(res.status){ //获取交易签名成功
+              var jData = {
+                operateAddress:params.fromAddress,
+                fromAddress:params.fromAddress,
+                toAddress:params.toAddress,
+                amount:Number(params.value),
+                symbol:params.currency,
+                direction:2,
+                gasLimit:Number(params.gasLimit),
+                gasPrice:Number(params.gasPrice),
+                minerFee:Number(params.miningFee),
+                smartContractAddress:this.getContractAddr[params.currency],
+                signData:res.msg
+              }
+              api.createTrans(jData).then((res)=>{
+                console.log('createTrans=====',jData,res.data)
+                if(res.data.rst===1){
+                  localStorage.removeItem('payment') 
+                  localStorage.removeItem('confirm')
+                  Tip({type:'success', title:this.$t('message.login.success'), message:this.$t('message.walletDetail.transSuccess')})
+                  this.setFAddr() //设置钱包地址常用度
+                  this.$router.replace({name:'page-wallet-detail', params:{currency:this.currency, idx:this.wallet_idx}})
+                } else {
+                  console.log(res.data.msg)
+                }
+                Indicator.close()
+              })
+            }
+          })
+        } else {
+          this.$refs.passConfirm.password = ''
+          Tip({type:'danger', title:this.$t('message.login.error'), message:this.$t('message.init.invalidPassword')})
+        }
+      })
     },
-    /*打包签名交易，并发送到各自区块函数
-    @param publicKey String 公钥
-    @param currency String 币种
-    @param transactionData Object 签名交易数据
-    @param callback Function 回调函数*/
-    sendSignedTransaction(publicKey,currency,transactionData,callback){ 
-      currency = currency.toLowerCase()
-      switch(currency){
-        case 'btc':
-          var transaction = new bitcore.Transaction()
-            .from(transactionData)
-            .to('1Gokm82v6DmtwKEB8AiVhm82hyFSsEvBDK', 15000)
-            .sign(privateKey);
-          break
-        case 'eth':
-          var tx = new Tx(transactionData);
-          tx = window.getETHSign(tx,publicKey);
-          var serializedTx = tx.serialize();
-          web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')).on('receipt', callback);
-          break
-      }
-    }
+    checkLogin(password){ //验证密码正确性
+      return new Promise(function(resolve, reject){
+        cordova.exec((res)=>{
+          res = JSON.parse(res)
+          console.log('login=====',res)
+          if(res.code=='0'){
+            resolve(true)
+          } else {
+            resolve(false)
+          }
+        }, (error)=>{
+          console.log(error)
+        }, 'WalletApi', 'login', [password])
+      })
+    },
+    getSignedTrans(params){ //获取交易签名字符串
+      return new Promise(function(resolve, reject){
+        switch(params.currency){
+          case 'BTC':
+            
+            break
+          case 'ETH':
+            api.getNonce(params.fromAddress).then((res)=>{
+              params.nonce = res.data.data.nonce
+              console.log('nonce=====',params.nonce)
+              cordova.exec((res)=>{
+                res = JSON.parse(res)
+                console.log('web3jSign=====',res)
+                if(res.code=='0'){
+                  resolve({status:true, msg:res.msg})
+                } else {
+                  resolve({status:false, msg:res.msg})
+                }
+              }, (error)=>{
+                console.log(error)
+              }, 'WalletApi', 'web3jSign', [JSON.stringify(params)])
+            })
+            break
+        }
+      })
+    },
   },
   components:{    
     

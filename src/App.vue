@@ -22,24 +22,27 @@ export default {
   },
   created(){
     this.initRouter()
-    this.connect()
-    window.connect = this.connect
     this.getCurrency()
-    this.initWebsoket()
-    this.getMarketList()
-    this.getUTXO()
-
+    window.getCurrency = this.getCurrency //设置为全局化，方便刷新时调用
+    this.getSymbolExchange()
+    
     //一旦硬件断开，取消硬件连接状态，取消硬件登陆状态, 清除钱包数据
     window.setUnlinked = ()=>{
-      
-      alert('已断开连接')
+      console.log('Unlinked')
+      this.setUsbkeyStatus(false)
+      this.setIsInited(false)
+      this.setHasLogin(false)
+      this.setWalletList([])
+      this.$router.push({name:'page-init',params:{unlinkedShow:true}})
     }
+    // 一旦硬件连接，启用硬件连接函数
+    window.setLinked = this.connect
   },
   computed:{
     ...mapGetters(['getUsbkeyStatus','getHasLogin','getIsInited']),
   },
   methods:{
-    ...mapActions(['setCurrency','setBTCValuation','setUSDCNY','setBtcValues','setWalletList','setUTXO','setUsbkeyStatus','setHasLogin','setIsInited']),
+    ...mapActions(['setCurrency','setSymbolExchange','setWalletList','setUTXO','setERC20','setUsbkeyStatus','setHasLogin','setIsInited','setContractAddr','setIconUrls']),
     initRouter(){ 
       if(this.getHasLogin){
         if(this.$route.name == 'index'){
@@ -50,51 +53,56 @@ export default {
       }
     },
     connect(key){ //连接硬件设备，全程检测连接状态
-      try{
-        cordova.exec((res)=>{
-          res = JSON.parse(res)
-          if(res.code=='-1'){
-            if(this.getUsbkeyStatus){ //断开连接清除状态数据
-              this.setUsbkeyStatus(false)
-              this.setIsInited(false)
-              this.setHasLogin(false)
-              this.setWalletList([])
-              this.$router.push({name:'page-init'})
-            }
+      console.log('Linked')
+      cordova.exec((res)=>{
+        res = JSON.parse(res)
+        if(res.code!='-1'){
+          this.setUsbkeyStatus(true)
+          if(res.code=='-2'){
+            this.setIsInited(true)
           } else {
-            this.setUsbkeyStatus(true)
-            if(res.code=='1'){
-              this.setIsInited(true)
-            } else {
-              this.setIsInited(false)
-            }
+            this.setIsInited(false)
           }
-        }, (error)=>{
-          console.log(error)
-        }, "WalletApi", "isImportAuthKey", [])
-      } catch(err){}
-      if(!key){
-        setTimeout(this.connect,5000)
-      }
+          this.$router.replace({name:'page-init'})
+        } else {
+          if(!key){
+            setTimeout(this.connect,1000)
+          }
+        }
+      }, (error)=>{
+        console.log(error)
+      }, "WalletApi", "isImportAuthKey", [])
     },
     getCurrency(){ //获取支持币种
-      var currency, _currencyobj = {}, currencySetting = JSON.parse(window.localStorage.getItem('currencySetting') || '{}')
-      api.getCurrency().then((res)=>{
-        for(let i=0, _temp, _active; i<res.data.data.length; i++){
-          _temp = (res.data.data[i]).toUpperCase()
-          _active = (_temp=='BTC' || _temp=='ETH')? true : false
-          _currencyobj[_temp] = _active
+      return api.getCurrency().then((res)=>{
+        if(res.data.rst==1){
+          //获取支持币种以及币种对应智能合约地址
+          var currency, _currencyobj = {}, contractAddr = {}, _iconUrls = {}, currencySetting = JSON.parse(window.localStorage.getItem('currencySetting') || '{}')
+          for(let i=0, _temp; i<res.data.data.support.length; i++){
+            _temp = (res.data.data.support[i].symbolSymbol).toUpperCase()
+            _currencyobj[_temp] = true
+            contractAddr[_temp] = res.data.data.support[i].contractAddr?res.data.data.support[i].contractAddr:''
+            _iconUrls[_temp] = res.data.data.support[i].iconUrl
+          }
+          currency = Object.assign(_currencyobj,currencySetting)
+          this.setCurrency(_currencyobj)
+          this.setContractAddr(contractAddr)
+          this.setIconUrls(_iconUrls)
+          //获取UTXO币种
+          var _UTXO = []
+          for(let i=0, _temp; i<res.data.data.utxo.length; i++){
+            _temp = (res.data.data.utxo[i].symbolSymbol).toUpperCase()
+            _UTXO.push(_temp)
+          }
+          this.setUTXO(_UTXO)
+          //获取ERC20币种
+          var _ERC20 = []
+          for(let i=0, _temp; i<res.data.data.erc20.length; i++){
+            _temp = (res.data.data.erc20[i].symbolSymbol).toUpperCase()
+            _ERC20.push(_temp)
+          }
+          this.setERC20(_ERC20)
         }
-        currency = Object.assign(_currencyobj,currencySetting)
-        this.setCurrency(_currencyobj)
-      }).catch((error)=>{ //启用模拟数据
-        _currencyobj = {
-          BTC:true,
-          ETH:true,
-          BARK:false
-        }
-        currency = Object.assign(_currencyobj,currencySetting)
-        this.setCurrency(_currencyobj)
       })
     },
     initWebsoket(){ 
@@ -112,24 +120,18 @@ export default {
         }
       })
     },
-    getMarketList(){
-      //获取市场列表并初始化BTC币种与其它币种最新交易价格
-      api.getMarketList().then((res)=>{
-        if (res.data.rst === 1) {
-          this.setBtcValues(res.data.data)
+    getSymbolExchange(key){
+      //获取币种汇率
+      api.getSymbolExchange().then((res)=>{
+        if (res.data.rst == 1) {
+          this.setSymbolExchange(res.data.data)
         }
       })
+      if(!key){
+        setTimeout(()=>{this.getSymbolExchange()},5*60*1000)
+      }
     },
-    getUTXO(){
-      //获取UTXO列表 所属币种加入ALL钱包选项
-      api.getUTXO().then((res)=>{
-        if (res.data.rst === 1) {
-          this.setUTXO(res.data.data)
-        }
-      }).catch((error)=>{ //启用模拟数据
-        this.setUTXO(['BTC','ZEC'])
-      })
-    },
+
   },
   components:{
 

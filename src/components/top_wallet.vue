@@ -11,8 +11,6 @@
   </div>
 </template>
 <script>
-import web3 from 'web3'
-import {Address} from 'bitcore-lib'
 import { mapGetters, mapActions } from 'vuex'
 import { Toast } from 'mint-ui'
 
@@ -34,9 +32,7 @@ export default {
   	}
   },
   mounted(){
-  	setTimeout(()=>{
-  		this.setUsbkeyStatus(true)
-  	},2000)
+  	
   },
   computed:{
   	...mapGetters(['getUsbkeyStatus']),
@@ -44,10 +40,10 @@ export default {
   methods:{
   	...mapActions(['setUsbkeyStatus']),
   	scanning(args){
-      this.$root.scanner((error,data)=>{
+      this.$root.scanner((data)=>{
       	console.log(data)
-        var QRdata = data.code.split('$$')
-        if(data.type=='QR_CODE' && QRdata.length==3){
+        var QRdata = data.text.split('$$')
+        if(data.format=='QR_CODE' && QRdata.length==3){
 	        var currency = QRdata[0]
 	        var amount = QRdata[1]
 	        var receiverAddress = QRdata[2]

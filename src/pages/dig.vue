@@ -6,11 +6,11 @@
               <div class="content">
                    <ul class="oneul">
                       <li>
-                        <p>在线时长</p>
+                        <p>{{$t('message.mining.online')}}</p>
                         <p>150:24:36</p>
                       </li>
                       <li>
-                        <p>预计挖到</p>
+                        <p>{{$t('message.mining.expectedMining')}}</p>
                         <p>150:24:36</p>
                       </li>
                    </ul>
@@ -19,21 +19,21 @@
                 </section>
                 <mt-progress class="setprogress" :value="30" :bar-height="10"></mt-progress>
 
-                <p class="two">挖矿中</p>
+                <p class="two">{{$t('message.mining.onmine')}}</p>
                 <hr>
                 <ul class="ultwo">
                   <li>
-                    <p>当前算力</p>
+                    <p>{{$t('message.mining.CurHashrate')}}</p>
                     <p>100</p>
                   </li>
                   <li>
-                    <p>已挖到</p>
+                    <p>{{$t('message.mining.tkyacquired')}}</p>
                     <p>600TKY</p>
                   </li>
                 </ul>
 
                 <p>
-                  <button class="c-button c-button-normal">暂停</button>
+                  <button class="c-button c-button-normal">{{$t('message.mining.Pause')}}</button>
                 </p>
 
               </div>

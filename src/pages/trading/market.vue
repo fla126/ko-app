@@ -2,29 +2,29 @@
   <div class="page">
     <comp-top-back>
       <span class="selected-title" v-tap="{methods:toggleMarketList}">{{symbol_display}}</span>
-      <router-link class="kline-btn" :to="{name:'kline', params:{market:business.market}}" tag="i"></router-link>
+      <router-link class="kline-btn" :to="{name:'page-kline', params:{market:business.market}}" tag="i"></router-link>
     </comp-top-back>
     <div class="page-main ">
       <section class="exchange-container clearfix">
         <div class="left">
           <div class="acBtns">
-            <button type="button" class="buy" :class="{active:isBuy}" v-tap="{methods:setStatus, status:true}">买入</button><button type="button" class="sell" :class="{active:!isBuy}" v-tap="{methods:setStatus, status:false}">卖出</button>
+            <button type="button" class="buy" :class="{active:isBuy}" v-tap="{methods:setStatus, status:true}">{{$t('message.trade.buy')}}</button><button type="button" class="sell" :class="{active:!isBuy}" v-tap="{methods:setStatus, status:false}">{{$t('message.trade.sell')}}</button>
           </div>
           <div class="trust-type-choice">
-            <span v-tap="{methods:toggleChoice}">市价委托</span>
+            <span v-tap="{methods:toggleChoice}">{{$t('message.trade.Marketprice')}}</span>
             <transition enter-active-class="animated short fadeIn" leave-active-class="animated short fadeOut">
               <ul class="choices" v-show="isTrustChioce">
-                <li v-tap="{methods:toggleChoice, type:'limit'}">限价委托</li>
-                <li v-tap="{methods:toggleChoice, type:'market'}">市价委托</li>
+                <li v-tap="{methods:toggleChoice, type:'limit'}">{{$t('message.trade.limitorder')}}</li><!--限价委托-->
+                <li v-tap="{methods:toggleChoice, type:'market'}">{{$t('message.trade.Marketprice')}}</li><!--市价委托-->
               </ul>
             </transition>
           </div>
           <cp-adjust :val="business.price" @callback="priceAdjust" v-show="business.trustType=='limit'"></cp-adjust>
-          <p class="price-placeholder" v-show="business.trustType=='market'">市价</p>
+          <p class="price-placeholder" v-show="business.trustType=='market'">{{$t('message.trade.market')}}</p><!--市价-->
 
           <p class="fabi">301.90</p>
           <cp-adjust style="margin-top: 0.6rem;" :val="business.originAmount" @callback="amountAdjust"></cp-adjust>
-          <p class="btc-tip">可用BTC:  0.01234567 </p>
+          <p class="btc-tip">{{$t('message.trade.available')}}BTC:  0.01234567 </p><!--可用-->
           <div class="range-percent">
             <p>{{business.rangeValue.toString()+'%'}}</p>
             <mt-range
@@ -35,119 +35,42 @@
           </div>
           <div class="ac-area">
             <div class="total-input" v-tap="{methods:setTargetAmountInput}" v-show="isBuy">
-              <span>金额</span>
+              <span>{{$t('message.trade.amount')}}</span><!--金额-->
               <div>
                 <input type="number" v-model="business.targetAmount" v-focus v-if="isTargetAmountInput">
                 <span v-show="!isTargetAmountInput">{{business.targetAmount}} ETH</span>
               </div>
             </div>
             <p class="fabi" style="margin-top: 0.3rem;" v-show="isBuy">301.90</p>
-            <button type="button" class="buyBtn" v-show="isBuy" v-tap="{methods:buy}">买入ETH</button>
-            <button type="button" class="sellBtn" v-show="!isBuy" v-tap="{methods:sell}">卖出ETH</button>
+            <button type="button" class="buyBtn" v-show="isBuy" v-tap="{methods:buy}">{{$t('message.trade.buy')}}ETH</button>
+            <button type="button" class="sellBtn" v-show="!isBuy" v-tap="{methods:sell}">{{$t('message.trade.sell')}}ETH</button>
           </div>
         </div>
         <div class="right">
           <transition enter-active-class="animated short slideInDown" leave-active-class="animated short slideOutUp">
             <div class="order-book" v-show="!showLatestDeal">
-              <div><span>价格(BTC)</span><span>数量(ETH)</span></div>
+              <div><span>{{$t('message.trade.price')}}(BTC)</span><span>{{$t('message.trade.aumont')}}(ETH)</span></div>
               <div>
-                <ul class="sell-list">
-                  <li :style="{'background-size':'30% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'10% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'5% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'25% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'55% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'65% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'75% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'85% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'95% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'45% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'30% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'10% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'5% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'25% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'55% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'65% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'75% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'85% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'95% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'45% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
+                <ul class="sell-list" id="sellList">
+                  <li v-for="item in business.depthData.asks" :style="{'background-size':`${item.percent}% 100%`}"><span>{{$root.toFixed(item.price,8)}}</span><span>{{$root.toFixed(item.avaliableAmount,2)}}</span> </li>
                 </ul>
               </div>
-              <div><p>0.908600<span>9086.50</span></p></div>
+              <div><p :class="{sell:(getLast24h.direction!=1)}">{{getLast24h.close}}<span>{{curPrice}} {{getCoinSign}}</span></p></div>
               <div>
                 <ul class="buy-list">
-                  <li :style="{'background-size':'30% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'10% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'5% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'25% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'55% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'65% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'75% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'85% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'95% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'45% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'30% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'10% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'5% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'25% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'55% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'65% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'75% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'85% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'95% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
-                  <li :style="{'background-size':'45% 100%'}"><span>0.90860000</span><span>9086.50</span> </li>
+                  <li v-for="item in business.depthData.bids" :style="{'background-size':`${item.percent}% 100%`}"><span>{{$root.toFixed(item.price,8)}}</span><span>{{$root.toFixed(item.avaliableAmount,2)}}</span> </li>
                 </ul>
               </div>
-              <div @click="showLatestDeal=!showLatestDeal"><p>最新成交</p></div>
+              <div @click="showLatestDeal=!showLatestDeal"><p>{{$t('message.trade.lasttrade')}}<!--最新成交--></p></div>
             </div>
           </transition>
           <transition enter-active-class="animated short slideInUp" leave-active-class="animated short slideOutDown">
             <div class="latest-deal" v-show="showLatestDeal">
-              <div @click="showLatestDeal=!showLatestDeal"><p>最新成交</p></div>
-              <div><span>编号</span><span>价格(BTC)</span><span>数量(ETH)</span></div>
+              <div @click="showLatestDeal=!showLatestDeal"><p>{{$t('message.trade.lasttrade')}}<!--最新成交--></p></div>
+              <div><span>{{$t('message.trade.Sernumber')}}<!--编号--></span><span>{{$t('message.trade.price')}}<!--价格-->(BTC)</span><span>{{$t('message.trade.aumont')}}<!--数量-->(ETH)</span></div>
               <div>
                 <ul class="deal-list">
-                  <li><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li class="buy"><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li class="buy"><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li class="buy"><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li class="buy"><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li class="buy"><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li class="buy"><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li class="buy"><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li class="buy"><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li class="buy"><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li class="buy"><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li class="buy"><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li class="buy"><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li class="buy"><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li class="buy"><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li class="buy"><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li class="buy"><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li class="buy"><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li class="buy"><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li class="buy"><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li><span>1</span><span>0.90860000</span><span>9086.50</span></li>
-                  <li class="buy"><span>1</span><span>0.90860000</span><span>9086.50</span></li>
+                  <li v-for="(item, index) in business.lastestTrades" :class="{buy:item.direction==1}"><span>{{index+1}}</span><span>{{$root.toFixed(item.price,8)}}</span><span>{{$root.toFixed(item.amount,3)}}</span></li>
                 </ul>
               </div>
               <div></div>
@@ -157,28 +80,28 @@
       </section>
       <section class="entrust-container">
         <mt-navbar v-model="trustTabActive">
-          <mt-tab-item id="currentTrust">当前委托</mt-tab-item>
-          <mt-tab-item id="historyTrust">历史委托</mt-tab-item>
+          <mt-tab-item id="currentTrust"><!--当前委托-->{{$t('message.trade.curentrust')}}</mt-tab-item>
+          <mt-tab-item id="historyTrust"><!--历史委托-->{{$t('message.trade.hisentrust')}}</mt-tab-item>
         </mt-navbar>
         <mt-tab-container v-model="trustTabActive" :swipeable="true">
           <mt-tab-container-item id="currentTrust">
             <div class="setting">
-              <div><cp-switch :val="business.hideOtherTrust" @callback="updateHideOtherSwitch">隐藏其他交易对</cp-switch></div>
-              <div class="f24">全部撤销</div>
+              <div><cp-switch :val="business.hideOtherTrust" @callback="updateHideOtherSwitch">{{$t('message.trade.othertrading')}}<!--隐藏其他交易对--></cp-switch></div>
+              <div class="f24">{{$t('message.trade.allcancel')}}<!--全部撤销--></div>
             </div>
             <ul class="trust-list">
               <li>
                 <div class="title">
-                  <span class="buy">买入</span>
+                  <span class="buy">{{$t('message.trade.buy')}}</span>
                   <span class="market">BTC/ETH</span>
                   <span class="time">13:14 5/20</span>
-                  <span class="cancel">撤销</span>
+                  <span class="cancel">{{$t('message.trade.cancel')}}<!--撤销--></span>
                 </div>
                 <div class="data">
                   <div class="data-title">
-                    <span>价格(BTC)</span>
-                    <span>数量(ETH)</span>
-                    <span>实际成交(ETH)</span>
+                    <span>{{$t('message.trade.price')}}<!--价格-->(BTC)</span>
+                    <span>{{$t('message.trade.aumont')}}<!--数量-->(ETH)</span>
+                    <span>{{$t('message.trade.actualdeal')}}<!--实际成交-->(ETH)</span>
                   </div>
                   <div class="data-info">
                     <span>0.06789500 </span>
@@ -189,16 +112,16 @@
               </li>
               <li>
                 <div class="title">
-                  <span class="sell">卖出</span>
+                  <span class="sell">{{$t('message.trade.sell')}}<!--卖出--></span>
                   <span class="market">BTC/ETH</span>
                   <span class="time">13:14 5/20</span>
-                  <span class="cancel">撤销</span>
+                  <span class="cancel">{{$t('message.trade.cancel')}}<!--撤销--></span>
                 </div>
                 <div class="data">
                   <div class="data-title">
-                    <span>价格(BTC)</span>
-                    <span>数量(ETH)</span>
-                    <span>实际成交(ETH)</span>
+                    <span>{{$t('message.trade.price')}}<!--价格-->(BTC)</span>
+                    <span>{{$t('message.trade.aumont')}}<!--数量-->(ETH)</span>
+                    <span>{{$t('message.trade.actualdeal')}}<!--实际成交-->(ETH)</span>
                   </div>
                   <div class="data-info">
                     <span>0.06789500 </span>
@@ -209,16 +132,16 @@
               </li>
               <li>
                 <div class="title">
-                  <span class="buy">买入</span>
+                  <span class="buy">{{$t('message.trade.buy')}}</span>
                   <span class="market">BTC/ETH</span>
                   <span class="time">13:14 5/20</span>
-                  <span class="cancel">撤销</span>
+                  <span class="cancel">{{$t('message.trade.cancel')}}</span>
                 </div>
                 <div class="data">
                   <div class="data-title">
-                    <span>价格(BTC)</span>
-                    <span>数量(ETH)</span>
-                    <span>实际成交(ETH)</span>
+                    <span>{{$t('message.trade.price')}}<!--价格-->(BTC)</span>
+                    <span>{{$t('message.trade.aumont')}}<!--数量-->(ETH)</span>
+                    <span>{{$t('message.trade.actualdeal')}}<!--实际成交-->(ETH)</span>
                   </div>
                   <div class="data-info">
                     <span>0.06789500 </span>
@@ -229,16 +152,16 @@
               </li>
               <li>
                 <div class="title">
-                  <span class="sell">卖出</span>
+                  <span class="buy">{{$t('message.trade.buy')}}</span>
                   <span class="market">BTC/ETH</span>
                   <span class="time">13:14 5/20</span>
-                  <span class="cancel">撤销</span>
+                  <span class="cancel">{{$t('message.trade.cancel')}}<!--撤销--></span>
                 </div>
                 <div class="data">
                   <div class="data-title">
-                    <span>价格(BTC)</span>
-                    <span>数量(ETH)</span>
-                    <span>实际成交(ETH)</span>
+                    <span>{{$t('message.trade.price')}}<!--价格-->(BTC)</span>
+                    <span>{{$t('message.trade.aumont')}}<!--数量-->(ETH)</span>
+                    <span>{{$t('message.trade.actualdeal')}}<!--实际成交-->(ETH)</span>
                   </div>
                   <div class="data-info">
                     <span>0.06789500 </span>
@@ -249,16 +172,16 @@
               </li>
               <li>
                 <div class="title">
-                  <span class="buy">买入</span>
+                  <span class="buy">{{$t('message.trade.buy')}}</span>
                   <span class="market">BTC/ETH</span>
                   <span class="time">13:14 5/20</span>
-                  <span class="cancel">撤销</span>
+                  <span class="cancel">{{$t('message.trade.cancel')}}<!--撤销--></span>
                 </div>
                 <div class="data">
                   <div class="data-title">
-                    <span>价格(BTC)</span>
-                    <span>数量(ETH)</span>
-                    <span>实际成交(ETH)</span>
+                    <span>{{$t('message.trade.price')}}<!--价格-->(BTC)</span>
+                    <span>{{$t('message.trade.aumont')}}<!--数量-->(ETH)</span>
+                    <span>{{$t('message.trade.actualdeal')}}<!--实际成交-->(ETH)</span>
                   </div>
                   <div class="data-info">
                     <span>0.06789500 </span>
@@ -269,16 +192,16 @@
               </li>
               <li>
                 <div class="title">
-                  <span class="sell">卖出</span>
+                  <span class="buy">{{$t('message.trade.buy')}}</span>
                   <span class="market">BTC/ETH</span>
                   <span class="time">13:14 5/20</span>
-                  <span class="cancel">撤销</span>
+                  <span class="cancel">{{$t('message.trade.cancel')}}<!--撤销--></span>
                 </div>
                 <div class="data">
                   <div class="data-title">
-                    <span>价格(BTC)</span>
-                    <span>数量(ETH)</span>
-                    <span>实际成交(ETH)</span>
+                    <span>{{$t('message.trade.price')}}<!--价格-->(BTC)</span>
+                    <span>{{$t('message.trade.aumont')}}<!--数量-->(ETH)</span>
+                    <span>{{$t('message.trade.actualdeal')}}<!--实际成交-->(ETH)</span>
                   </div>
                   <div class="data-info">
                     <span>0.06789500 </span>
@@ -291,22 +214,22 @@
           </mt-tab-container-item>
           <mt-tab-container-item id="historyTrust">
             <div class="setting">
-              <div><cp-switch :val="business.hideOtherHistoryTrust" @callback="updateHideOtherHistorySwitch">隐藏其他交易对</cp-switch></div>
-              <div><label class="hide-canceled"><input type="checkbox" /> <i></i>隐藏已撤销</label></div>
+              <div><cp-switch :val="business.hideOtherHistoryTrust" @callback="updateHideOtherHistorySwitch">{{$t('message.trade.othertrading')}}<!--隐藏其他交易对--></cp-switch></div>
+              <div><label class="hide-canceled"><input type="checkbox" /> <i></i>{{$t('message.trade.tradingcancel')}}<!--隐藏已撤销--></label></div>
             </div>
             <ul class="trust-list">
               <li>
                 <div class="title">
-                  <span class="buy">买入</span>
+                  <span class="buy">{{$t('message.trade.buy')}}</span>
                   <span class="market">BTC/ETH</span>
                   <span class="time">13:14 5/20</span>
-                  <span class="cancel">已撤销</span>
+                  <span class="cancel">{{$t('message.trade.trading')}}<!--已撤销--></span>
                 </div>
                 <div class="data">
                   <div class="data-title">
-                    <span>成交均价(BTC) </span>
-                    <span>成交量(ETH)</span>
-                    <span>成交金额(BTC)</span>
+                    <span>{{$t('message.trade.avgparice')}}<!--成交均价-->(BTC) </span>
+                    <span>{{$t('message.trade.volume')}}<!--成交量-->(ETH)</span>
+                    <span>{{$t('message.trade.transactionAmount')}}<!--成交金额-->(BTC)</span>
                   </div>
                   <div class="data-info">
                     <span>0.50744700</span>
@@ -317,16 +240,16 @@
               </li>
               <li>
                 <div class="title">
-                  <span class="sell">卖出</span>
+                  <span class="buy">{{$t('message.trade.buy')}}</span>
                   <span class="market">BTC/ETH</span>
                   <span class="time">13:14 5/20</span>
-                  <span class="cancel">已成交</span>
+                  <span class="cancel">{{$t('message.trade.trading')}}<!--已撤销--></span>
                 </div>
                 <div class="data">
                   <div class="data-title">
-                    <span>成交均价(BTC) </span>
-                    <span>成交量(ETH)</span>
-                    <span>成交金额(BTC)</span>
+                    <span>{{$t('message.trade.avgparice')}}<!--成交均价-->(BTC) </span>
+                    <span>{{$t('message.trade.volume')}}<!--成交量-->(ETH)</span>
+                    <span>{{$t('message.trade.transactionAmount')}}<!--成交金额-->(BTC)</span>
                   </div>
                   <div class="data-info">
                     <span>0.50744700</span>
@@ -337,16 +260,16 @@
               </li>
               <li>
                 <div class="title">
-                  <span class="buy">买入</span>
+                  <span class="buy">{{$t('message.trade.buy')}}</span>
                   <span class="market">BTC/ETH</span>
                   <span class="time">13:14 5/20</span>
-                  <span class="cancel">已撤销</span>
+                  <span class="cancel">{{$t('message.trade.trading')}}<!--已撤销--></span>
                 </div>
                 <div class="data">
                   <div class="data-title">
-                    <span>成交均价(BTC) </span>
-                    <span>成交量(ETH)</span>
-                    <span>成交金额(BTC)</span>
+                    <span>{{$t('message.trade.avgparice')}}<!--成交均价-->(BTC) </span>
+                    <span>{{$t('message.trade.volume')}}<!--成交量-->(ETH)</span>
+                    <span>{{$t('message.trade.transactionAmount')}}<!--成交金额-->(BTC)</span>
                   </div>
                   <div class="data-info">
                     <span>0.50744700</span>
@@ -357,16 +280,16 @@
               </li>
               <li>
                 <div class="title">
-                  <span class="sell">卖出</span>
+                  <span class="buy">{{$t('message.trade.buy')}}</span>
                   <span class="market">BTC/ETH</span>
                   <span class="time">13:14 5/20</span>
-                  <span class="cancel">已成交</span>
+                  <span class="cancel">{{$t('message.trade.trading')}}<!--已撤销--></span>
                 </div>
                 <div class="data">
                   <div class="data-title">
-                    <span>成交均价(BTC) </span>
-                    <span>成交量(ETH)</span>
-                    <span>成交金额(BTC)</span>
+                    <span>{{$t('message.trade.avgparice')}}<!--成交均价-->(BTC) </span>
+                    <span>{{$t('message.trade.volume')}}<!--成交量-->(ETH)</span>
+                    <span>{{$t('message.trade.transactionAmount')}}<!--成交金额-->(BTC)</span>
                   </div>
                   <div class="data-info">
                     <span>0.50744700</span>
@@ -377,16 +300,16 @@
               </li>
               <li>
                 <div class="title">
-                  <span class="buy">买入</span>
+                  <span class="buy">{{$t('message.trade.buy')}}</span>
                   <span class="market">BTC/ETH</span>
                   <span class="time">13:14 5/20</span>
-                  <span class="cancel">已撤销</span>
+                  <span class="cancel">{{$t('message.trade.trading')}}<!--已撤销--></span>
                 </div>
                 <div class="data">
                   <div class="data-title">
-                    <span>成交均价(BTC) </span>
-                    <span>成交量(ETH)</span>
-                    <span>成交金额(BTC)</span>
+                    <span>{{$t('message.trade.avgparice')}}<!--成交均价-->(BTC) </span>
+                    <span>{{$t('message.trade.volume')}}<!--成交量-->(ETH)</span>
+                    <span>{{$t('message.trade.transactionAmount')}}<!--成交金额-->(BTC)</span>
                   </div>
                   <div class="data-info">
                     <span>0.50744700</span>
@@ -397,16 +320,16 @@
               </li>
               <li>
                 <div class="title">
-                  <span class="sell">卖出</span>
+                  <span class="buy">{{$t('message.trade.buy')}}</span>
                   <span class="market">BTC/ETH</span>
                   <span class="time">13:14 5/20</span>
-                  <span class="cancel">已成交</span>
+                  <span class="cancel">{{$t('message.trade.trading')}}<!--已撤销--></span>
                 </div>
                 <div class="data">
                   <div class="data-title">
-                    <span>成交均价(BTC) </span>
-                    <span>成交量(ETH)</span>
-                    <span>成交金额(BTC)</span>
+                    <span>{{$t('message.trade.avgparice')}}<!--成交均价-->(BTC) </span>
+                    <span>{{$t('message.trade.volume')}}<!--成交量-->(ETH)</span>
+                    <span>{{$t('message.trade.transactionAmount')}}<!--成交金额-->(BTC)</span>
                   </div>
                   <div class="data-info">
                     <span>0.50744700</span>
@@ -421,7 +344,7 @@
 
       </section>
     </div>
-    <cp-mask :show="showMarkets" @hide="hideMarketList" :style="{'top': '0.8rem','background-color':'rgba(38,42,66,.8)'}">
+    <cp-mask :show="showMarkets" @hide="hideMarketList" :style="{'top': '0.8rem','background-color':'rgba(232, 232, 232, 0.8)'}">
       <ul class="wallet-list">
         <li v-for="market in getMarketList" v-tap="{methods:changeMarket, market:market, }">{{market.currencySymbol}}/{{market.baseSymbol}}</li>
       </ul>
@@ -436,6 +359,7 @@
   import cpSwitch from '@/components/switch'
   import cpMask from '@/components/common/mask' //遮罩组件
   import cpLoading from '@/components/common/loading' //加载组件
+  import DataWebSocket from '@/assets/js/websocket'
   import Data from '@/api/data'
   import { mapGetters, mapActions } from 'vuex'
   import numUtils from '@/assets/js/numberUtils'
@@ -457,12 +381,12 @@
 
   export default {
     name:'page-market',
-   components:{
-    cpAdjust,
+    components:{
+      cpAdjust,
       cpSwitch,
       cpMask,
-     cpLoading
-  },
+      cpLoading
+    },
     data(){
       return {
         loading:false,
@@ -472,6 +396,7 @@
         isTrustChioce:false,
         isTargetAmountInput:false,
         trustTabActive:'currentTrust',
+        dataSocket:null,
         business:{
           market:'',
           trustType:'limit',
@@ -481,12 +406,15 @@
           rangeValue:0,
           hideOtherTrust:false,
           hideOtherHistoryTrust:false,
-
+          depthData:{},
+          lastestTrades:[]
         }
       }
     },
     created(){
       this.business.market = this.$route.params.market || this.getInitMarket
+      this.isBuy = this.$route.params.action
+      this.InitDataSoket()
     },
     mounted(){
 
@@ -502,6 +430,14 @@
         // this.isFirstKline = true
         // this.InitKlineWebSoket()
       },
+      'business.depthData'(){
+        setTimeout(()=>{
+          if($('#sellList').scrollTop()==0){
+            $('#sellList').scrollTop(99999).addClass('active')
+          }
+        },100)
+
+      }
     },
     computed:{
       ...mapGetters(['getApiToken', 'getLast24h', 'getIconsConfig', 'getCoinSign', 'getUSDCNY', 'getBtcValues','getInitMarket','getMarketList']),
@@ -517,6 +453,15 @@
       symbol_display () {
         return this.business.market.replace('_','/')
       },
+      curPrice () {
+        if (this.getUSDCNY && this.getLast24h.close) {
+          let curMarketBtc = this.getBtcValues[this.baseSymbol]
+          let curMarketPrice = curMarketBtc ? numUtils.mul(curMarketBtc, this.getUSDCNY).toFixed(2) : this.getUSDCNY
+          return numUtils.mul(curMarketPrice, this.getLast24h.close).toFixed(2).toMoney()
+        } else {
+          return '0.00'
+        }
+      }
     },
     methods:{
       ...mapActions(['setLast24h', 'tiggerEvents','setMarketList']),
@@ -569,7 +514,74 @@
       updateHideOtherHistorySwitch(result){
         this.business.hideOtherHistoryTrust = result
       },
+      processDepthData(data){ //处理深度数据
+        var depthData = data, placeHolder = {avaliableAmount:'--',price:'--',percent:0}, asksAmountArray = [], bidsAmountArray = [], asksMax, bidsMax;
+        depthData.asks.forEach((item)=>{
+          asksAmountArray.push(Number(item.avaliableAmount))
+        })
+        depthData.bids.forEach((item)=>{
+          bidsAmountArray.push(Number(item.avaliableAmount))
+        })
+        asksMax = Math.max(...asksAmountArray)
+        bidsMax = Math.max(...bidsAmountArray)
+        for(let i in depthData.asks){
+          depthData.asks[i].percent = Math.round(asksAmountArray[i]/asksMax*100)
+        }
+        for(let i in depthData.bids){
+          depthData.bids[i].percent = Math.round(bidsAmountArray[i]/bidsMax*100)
+        }
+        if(depthData.asks.length<10){
+          var _len = 10 - depthData.asks.length, _arrayPlaceHolder = new Array(_len)
+          for(let i=0; i< _arrayPlaceHolder.length; i++){
+            _arrayPlaceHolder[i] = placeHolder
+          }
+          depthData.asks = depthData.asks.concat(_arrayPlaceHolder)
+        }
+        depthData.asks.reverse()
+        if(depthData.bids.length<10){
+          var _len = 10 - depthData.bids.length, _arrayPlaceHolder = new Array(_len)
+          for(let i=0; i< _arrayPlaceHolder.length; i++){
+            _arrayPlaceHolder[i] = placeHolder
+          }
+          depthData.bids = depthData.bids.concat(_arrayPlaceHolder)
+        }
+        this.business.depthData = depthData
+      },
+      InitDataSoket(){ //初始化数据websoket
+        this.dataSocket = DataWebSocket({
+          symbol: this.symbol,
+          period:'1m',
+          subscribe:['depth','market','last_price','new_transaction','user_new_orderbook','user_history_orderbook'],
+          callback: (res) => {
+            if (res.dataType === 'LastOrderBook') {
+              // 深度数据
+              this.processDepthData(res.data)
+            } else if (res.dataType === 'LastPrice') {
+              // 24小时最新信息
+              this.setLast24h(res.data)
+            } else if (res.dataType === 'LastAccounts') {
+              // 用户账户余额
+
+            } else if (res.dataType === 'LastUserOrderBook') {
+
+              // 当前委托
+            } else if (res.dataType === 'LastHistoryBook') {
+              // 历史委托
+            } else if (res.dataType === 'LastTrades') {
+              // 最新交易记录
+              this.business.lastestTrades = res.data
+            } else if (res.dataType === 'markets') {
+              // 市场信息
+              this.setMarketList(res.data)
+            }
+          }
+        })
+      },
+    },
+    beforeDestroy () {
+      this.dataSocket && this.dataSocket.close()
     }
+
   }
 
 </script>
@@ -600,10 +612,9 @@
   .wallet-list {
     width: 50%;
     margin:auto;
-    box-shadow: 0 .05rem 1rem #1b1e30;
     li {
       line-height: 0.9rem;
-      background-color: #262a42;
+      background-color: #f6f6f6;
       font-size: 0.32rem;
       text-align: center;
       border-bottom: .01rem solid #d4d4d4;
@@ -642,7 +653,7 @@
           }
           &.sell.active {
             color: #fff;
-            background-color: #e76d42;
+            background-color: #e02121;
           }
         }
       }
@@ -655,7 +666,7 @@
           display: inline-block;
           content: '';
           margin-left: 0.2rem;
-          border-top: 0.15rem  solid #cbd4ec;
+          border-top: 0.15rem  solid #666666;
           border-left: 0.13rem solid transparent;
           border-right: 0.13rem solid transparent;
         }
@@ -681,10 +692,9 @@
       .price-placeholder {
         margin-top: 0.4rem;
         height: 0.88rem;
-        background-color: #262a42;
+        background-color: #eaeaea;
         line-height: 0.88rem;
         text-align: center;
-        color: #fff;
         font-size: 0.3rem;
       }
       .fabi {
@@ -722,7 +732,7 @@
             z-index: 1;
             width: 0.3rem;
             height: 0.3rem;
-            background-color: #2b2f4a;
+            background-color: #e7e7e7;
             border-radius: 100%;
           }
           &.d1 span:nth-of-type(1){
@@ -764,7 +774,7 @@
       }
       .sellBtn {
         .actBtn;
-        background-color: #e76d42;
+        background-color: #e02121;
         &:active {
           background-color: #ff7342;
         }
@@ -824,7 +834,7 @@
           flex: 9;
           min-height: 0;
           font-size: 0.34rem;
-          color: #fff;
+          color: #666666;
           position: relative;
           p {
             position: absolute;
@@ -860,7 +870,7 @@
               position: absolute;
               right: 0;
               top: 0.1rem;
-              border-bottom: 0.15rem  solid #cbd4ec;
+              border-bottom: 0.15rem  solid #666666;
               border-left: 0.13rem solid transparent;
               border-right: 0.13rem solid transparent;
             }
@@ -871,7 +881,7 @@
           overflow-y: auto;
           li {
             line-height: 0.58rem;
-            background: url('../../assets/img/sell-list-bg.png') no-repeat right center;
+            background: url('../../assets/img/RED.png') no-repeat right center;
             background-size: 50% 100%;
             span {
               display: inline-block;
@@ -879,17 +889,17 @@
               font-size: 0.24rem;
               transform: scale(0.916);
               &:first-of-type {
-                color: #e76d42;
+                color: #e02121;
               }
               &:last-of-type {
-                color: #CBD4EC;
+                color: #666666;
                 text-align: right;
               }
             }
           }
         }
         .buy-list li:nth-of-type(n+2) {
-          background-image: url('../../assets/img/buy-list-bg.png');
+          background-image: url('../../assets/img/GREED.png');
           span:first-of-type {
             color: #00cc99;
           }
@@ -917,7 +927,7 @@
               position: absolute;
               right: 0;
               top: 0.1rem;
-              border-top: 0.15rem  solid #cbd4ec;
+              border-top: 0.15rem  solid #666666;
               border-left: 0.13rem solid transparent;
               border-right: 0.13rem solid transparent;
             }
@@ -962,7 +972,7 @@
                 color: #8089a3
               }
               &:nth-of-type(2) {
-                color: #e76d42;
+                color: #e02121;
               }
               &:nth-of-type(3) {
                 text-align: right;
@@ -978,33 +988,43 @@
   }
   .entrust-container {
     margin-top: 0.15rem;
+    padding-right: 0;
+    padding-left: 0;
   }
 </style>
 <style type="text/css" lang="less">
   .range-percent {
     .mt-range-runway {
-      border-top-color: #2b2f4a;
+      border-top-color: #e7e7e7;
     }
     .mt-range-thumb {
       border: 0.07rem solid #fff;
-      background-color: #409cf2;
+      background-color: #4d7bf3;
       z-index:2;
     }
   }
   .entrust-container {
     .mint-navbar {
       background-color: transparent;
+      text-align: left;
+      border-bottom: .01rem solid #ecedee;
+      padding: 0 .3rem;
+      .mint-tab-item:nth-of-type(2){
+        margin-left: .5rem;
+      }
       .mint-tab-item {
         color: #8089a3;
-        border-bottom: .02rem solid #262a42;
+        border-bottom: .02rem solid #ecedee;
         padding: 0.26rem 0;
+        flex: initial;
+        width: 1.4rem;
         .mint-tab-item-label{
           font-size: 0.32rem;
         }
       }
       .mint-tab-item.is-selected {
-        color: #409cf2;
-        border-bottom-color: #409cf2;
+        color: #4d7bf3;
+        border-bottom-color: #4d7bf3;
         margin-bottom:0;
       }
     }
@@ -1012,8 +1032,7 @@
       overflow: hidden;
       .setting {
         height: 1.1rem;
-        background-color: #1b1e2e;
-        padding-top: 0.4rem;
+        padding: .4rem .3rem 0;
         display: flex;
         > div:first-of-type {
           flex: 1;
@@ -1037,7 +1056,7 @@
             vertical-align: bottom;
           }
           input:checked + i {
-            background-image: url('../../assets/img/checkbox_icon_checked.png')
+            background-image: url('../../assets/img/selectedicon_i.png')
           }
         }
       }
@@ -1048,20 +1067,20 @@
     height: calc(~"100vh - 3.05rem");
     overflow-y: auto;
     li {
-      margin-top: 0.3rem;
-      padding-bottom: 0.35rem;
-      border-bottom: .01rem solid #262a42;
+      padding: .3rem .3rem .35rem;
+      border-bottom: .01rem solid #ffffff;
+      border-top: .01rem solid #e4e5e7;
       .title {
         font-size: 0.3rem;
         position: relative;
         .buy {
-          color: #00cc99;
+          color: #00cc33;
         }
         .sell {
-          color: #e76d42;
+          color: #e02121;
         }
         .market {
-          color: #fff;
+          color: #333333;
         }
         .time {
           color: #8089a3;
@@ -1107,6 +1126,9 @@
           }
         }
       }
+    }
+    li:first-child{
+      border-top: 0;
     }
   }
 </style>
