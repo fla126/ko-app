@@ -39,6 +39,7 @@ Vue.component(compTopBack.name, compTopBack)
 
 //请求加入随机参数
 var $ajax = axios.create({
+  contentType: "application/json;charset=utf-8",
   params: {
     _r: new Date().getTime()
   }

@@ -3,7 +3,7 @@ module.exports={
     start:"马上开始",
     compFooter:{
     	wallet:"钱包",
-    	command:"口令",
+    	command:"身份",
     	ucenter:"我的"
     },
     usbkeyStatus:{
@@ -132,6 +132,8 @@ module.exports={
         passcode:'口令',
         twofa :'二次身份验证',
         add:'添加',
+        keylogin :'一键登录',
+        login:'登录',
         edit:'编辑',
         delete:'删除',
         confirmTitle:'确认框',

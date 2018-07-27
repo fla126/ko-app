@@ -14,6 +14,9 @@
         <div class="command-container" v-tap="{methods:$root.routeTo, to:'page-command-add'}">
           <h1><i></i><span>{{$t('message.cmd.twofa')}}</span><i>+ {{$t('message.cmd.add')}}</i></h1>
         </div>
+        <div class="command-container">
+          <h1><i></i><span>{{$t('message.cmd.keylogin')}}</span><i>+ {{$t('message.cmd.login')}}</i></h1>
+        </div>
         <ul class="command-list unselected mt40" id="commandList" @touchstart="hideCP">
           <li v-for="(item,index) in comList"  @touchstart="activeLayer($event)" @touchend="clearLoop" :key="index">
             <div class="progress" :data-second="index"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+item.progress)%30}}</span></div>
@@ -404,6 +407,7 @@ import { Toast,MessageBox  } from 'mint-ui'
     }
     h1 {
       font-size: 0.6rem;
+      position: relative;
       span {
         font-size: 0.32rem;
         margin-left: .5rem;
@@ -420,7 +424,9 @@ import { Toast,MessageBox  } from 'mint-ui'
         margin-bottom: -0.08rem;
       }
       i:last-child{
-        margin-left: 1.3rem;
+        position: absolute;
+        right: 0.7rem;
+        bottom: 0.02rem;
         display: inline-block;
         height: 0.47rem;
         width: 1.2rem;

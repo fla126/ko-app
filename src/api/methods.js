@@ -4,7 +4,6 @@ import util from 'ethereumjs-util'
 
 export default {
 	test(){
-		
 	},
 	routeTo(args){ //自定义公共路由函数
 		if(args.replace){
@@ -84,10 +83,10 @@ export default {
 	  switch(currency){
 	    case 'BTC':
 	      if(publicKeys.constructor == String){
-	      	address = new bitcore.PublicKey(publicKeys).toAddress().toString()
+	      	address = new bitcore.PublicKey('04'+ publicKeys).toAddress().toString()
 	      } else {
 	        address = publicKeys.map((item)=>{
-		      	return new bitcore.PublicKey(item).toAddress().toString()
+		      	return new bitcore.PublicKey('04'+ item).toAddress().toString()
 	        }).join(',')
 	      }
 	      break

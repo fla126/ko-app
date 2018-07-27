@@ -3,6 +3,7 @@ import config from './config'
 
 //请求加入随机参数
 var $ajax = axios.create({
+	contentType: "application/json;charset=utf-8",
 	params: {
 		_r: new Date().getTime()
 	}
@@ -41,7 +42,7 @@ export default {
 		return callback(token,wallet,getData)
 	},
 	getTransList(address,page){
-		return $ajax.post(url.transList(page),{fromAddress:address })
+		return $ajax.post(url.transList(page),{operateAddressList:address })
 	},
 	getMessage(addrs, sign){
 		return $ajax.post(url.message,{
@@ -53,11 +54,6 @@ export default {
 		return $ajax.get(url.nonce(address))
 	},
 	createTrans(params){
-		return $ajax({
-		  method: 'post',
-		  url: url.createTrans,
-		  contentType: "application/json;charset=utf-8",
-		  data:params
-		})
+		return $ajax.post(url.createTrans,params)
 	},
 }

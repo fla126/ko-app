@@ -75,7 +75,7 @@ export default {
     this.setWalletList([{
       name:'',
       idx:'0',
-      publicKey:'040ba1ba3b8d8f7bd4a70828ec0e749dd26ee4cdd18d058c880afa121fad60e5b6f2ee1b72d9b9a57706e5de72acc1378f92269086c4964c073593bf92d28c647d',
+      publicKey:'0ba1ba3b8d8f7bd4a70828ec0e749dd26ee4cdd18d058c880afa121fad60e5b6f2ee1b72d9b9a57706e5de72acc1378f92269086c4964c073593bf92d28c647d',
       currency:{
         BTC:0.03529,
         ETH:15.234,
@@ -84,7 +84,7 @@ export default {
     },{
       name:'长期投资',
       idx:'3',
-      publicKey:'04ba2416481d6260e621d8f2b6aad3e9c51d438c1876b624303a16f2bcf8a06cd695cef87230180ceed5735e7bf6cb3f9db360f6fee50824c85f230a6bb3ca9573',
+      publicKey:'ba2416481d6260e621d8f2b6aad3e9c51d438c1876b624303a16f2bcf8a06cd695cef87230180ceed5735e7bf6cb3f9db360f6fee50824c85f230a6bb3ca9573',
       currency:{
         BTC:4.734857,
         ETH:105.321784,

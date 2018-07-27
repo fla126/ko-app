@@ -144,7 +144,7 @@ export default {
       if(this.wallet.length){
         console.log('loadBottom')
         let address = this.$root.getAddress(this.currency, this.wallet[this.wallet_idx].publicKey)
-        api.getTransList(address, this.page+1).then((res)=>{
+        api.getTransList([address], this.page+1).then((res)=>{
           if(res.data.rst==1){
             this.totalPage =Math.ceil(res.data.total/10)
             this.serverTime = new Date(res.data.timestamp.replace('-','/'))

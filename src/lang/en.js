@@ -34,7 +34,7 @@ module.exports={
       maxWallet:'Max add 32 wallets',
 	},
     addWalletDialog:{
-      enterPwd:'Enter Passcode'
+      enterPwd:'Enter PassWord'
     },
 	walletDetail:{
 	    send:'Send',
@@ -79,6 +79,8 @@ module.exports={
 		passcode:'Passcode',
 		twofa :'2FA ',
 		add:'Add',
+    keylogin :'Quick login',
+    login:'Login',
 		edit:'Edit',
 		delete:'Delete',
 		confirmTitle:'Confirm Dialog',
