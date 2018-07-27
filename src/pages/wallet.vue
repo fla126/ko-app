@@ -30,7 +30,8 @@
       </div>
     </div>
     <div class="refresh" id="refresh" :style="{top:refresh_y+'px'}">
-      <span><span :style="rotate(-180)"></span></span><span><span :style="rotate(-90)"></span></span>
+      <span><span :style="rotate(-180,true)"></span></span><span><span :style="rotate(-180)"></span></span>
+      <!-- <span><span ></span></span><span><span ></span></span> -->
       <i></i>
     </div>
     <guide-layer v-if="guide"></guide-layer>
@@ -69,7 +70,7 @@ export default {
     this.getAmountShowSetting() //获取金额显示、隐藏设置
     this.WFSetting = JSON.parse(localStorage.getItem('walletFrozenSetting') || '{}') //获取钱包冻结设置
 
-    this.setUsbkeyStatus(true)
+    /*this.setUsbkeyStatus(true)
     this.setHasLogin(true)
     this.setWalletList([{
       name:'',
@@ -89,7 +90,7 @@ export default {
         ETH:105.321784,
         // BARK:2018.1314
       }
-    }])
+    }])*/
   },
   mounted(){
     let fontSize = $('html').css('font-size')
@@ -141,8 +142,20 @@ export default {
   },
   methods:{
     ...mapActions(['setWalletList','setUsbkeyStatus','setHasLogin']),
-    rotate(deg){
-      (this.scroll_y-this.start_y) /(1.5*this.fontSize)
+    rotate(deg, key){
+      let dist = Math.round((this.scroll_y-this.start_y) /(1.5*this.fontSize)*180)
+      if(key){
+        if(Math.abs(dist)<180){
+          dist = 0
+        } else {
+          dist = dist-180
+          dist = Math.abs(dist)>90?90:dist
+        }
+      } else {
+        dist = dist <= 90 ? 90 : dist
+        dist = dist > 180 ? 180 : dist
+      }
+      deg += dist || 0
       return {
         '-webkit-transform':`rotate(${deg}deg)`,
         'transform':`rotate(${deg}deg)`,
@@ -218,10 +231,12 @@ export default {
           $('#refresh').addClass('transition')
           self.scroll_y = 1.5*self.fontSize
           $('#refresh').one("webkitTransitionEnd", function(e){
+            $(this).addClass('rotate')
             window.getCurrency().then(()=>{
               $('#refresh').one("webkitTransitionEnd", function(e){
                 $(this).removeClass('transition')
                 self.refresh_key=false
+                $(this).removeClass('rotate')
               })
               setTimeout(()=>{
                 self.scroll_y = 0
@@ -438,21 +453,22 @@ export default {
   height: 0.85rem;
   left: 50%;
   top: 0;
-  transform: translate(-50%, 150%);
+  margin-left: -0.425rem;
+  margin-top: -1rem;
   background-color: #fff;
   border-radius: 50%;
   overflow: hidden;
-  box-shadow: 0 2px 6px #b2b2b2;
+  box-shadow: 0 0 6px #b2b2b2;
   z-index: 99999999;
   &.transition {
-    transition: top ease-in 150ms;
+    transition: top ease-in 300ms;
   }
   > span {
     position: absolute;
     top: 50%;
     left: 50%;
-    height: 0.5rem;
-    width: 0.25rem;
+    height: 0.54rem;
+    width: 0.27rem;
     transform: translateY(-50%) translateX(-100%);
     overflow: hidden;
     &:last-of-type {
@@ -460,29 +476,40 @@ export default {
       span {
         right: 0;
         transform: rotate(-90deg);
-        clip:rect(0,auto,auto,0.25rem);
+        clip:rect(0,auto,auto,0.27rem);
       }
     }
     span {
       position: absolute;
-      width: 0.5rem;
-      height: 0.5rem;
-      background-color: blue;
+      width: 0.54rem;
+      height: 0.54rem;
+      background-color: #4d7bf3;
       border-radius: 50%;
       transform: rotate(-180deg);
-      clip:rect(0,0.25rem,auto,auto);
+      clip:rect(0,0.27rem,auto,auto);
     }
   }
   > i {
     position: absolute;
     width: 0.4rem;
     height: 0.4rem;
-    background-color: #ff0000;
-    left: 49.2%;
-    top: 49.4%;
+    background-color: #fff;
+    left: 49.8%;
+    top: 49.7%;
     border-radius: 50%;
     transform: translate(-50%, -50%);
     z-index: 1;
   }
  }
+.rotate {
+  animation: rotate linear 800ms infinite;
+}
+@-webkit-keyframes rotate{
+  0% {transform: rotate(0deg);}
+  100% {transform: rotate(360deg);}
+}
+@keyframes rotate{
+  0% {transform: rotate(0deg)}
+  100% {transform: rotate(360deg);}
+}
 </style>

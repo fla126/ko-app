@@ -4,21 +4,7 @@ import util from 'ethereumjs-util'
 
 export default {
 	test(){
-		var privateKey = new bitcore.PrivateKey('L1uyy5qTuGrVXrmrsvHWHgVzW9kKdrp27wBC7Vs6nZDTF2BRUVwy');
-		var utxo = {
-		  "txId" : "115e8f72f39fad874cfab0deed11a80f24f967a84079fb56ddf53ea02e308986",
-		  "outputIndex" : 0,
-		  "address" : "17XBj6iFEsf8kzDMGQk5ghZipxX49VXuaV",
-		  "script" : "76a91447862fe165e6121af80d5dde1ecb478ed170565b88ac",
-		  "satoshis" : 50000
-		};
-
-		var transaction = new bitcore.Transaction()
-		  .from(utxo)
-		  .to('1Gokm82v6DmtwKEB8AiVhm82hyFSsEvBDK', 15000)
-		  // .sign(privateKey);
-		console.log(transaction.toString())
-		console.log(new bitcore.Transaction('01000000018689302ea03ef5dd56fb7940a867f9240fa811eddeb0fa4c87ad9ff3728f5e110000000000ffffffff01983a0000000000001976a914ad618cf4333b3b248f9744e8e81db2964d0ae39788ac00000000').toString())
+		
 	},
 	routeTo(args){ //自定义公共路由函数
 		if(args.replace){
