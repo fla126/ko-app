@@ -4,18 +4,33 @@
     <div class="register-form">
       <h1 class="register-top">{{$t('message.register.register')}}</h1>
       <div class="form">
-        <p><i class="mobile"></i><input type="tel" name="mobile" v-model="account" maxlength="11" :placeholder="$t('message.register.phonePlaceholder')"></p>
-        <p><i class="password"></i><input type="password" name="password" v-model="password" maxlength="16" :placeholder="$t('message.register.passwordPlaceholder')"><i class="clear-password" v-tap="{methods:resetPW}"></i></p>
-        <p><i class="password"></i><input type="password" name="password2" v-model="password2" maxlength="16" :placeholder="$t('message.register.passwordAgainPlaceholder')"></p>
-        <p><i class="code"></i><input type="tel" name="code" v-model="smsCode" :placeholder="$t('message.register.CodeEnterPlaceholder')" maxlength="6"><mt-button type="primary" size="small">{{$t('message.register.acquire')}}</mt-button></p>
-        <div class="register-btn"><mt-button type="primary" size="large" v-tap="{methods:register}">{{$t('message.register.register')}}</mt-button></div>
+        <p>
+          <i class="mobile"></i>
+          <input type="tel" autofocus="autofocus" v-model="formData.phoneNumber" maxlength="11" :placeholder="$t('message.register.phonePlaceholder')">
+        </p>
+        <p>
+          <i class="password"></i>
+          <input type="password" v-model="formData.password" maxlength="16" :placeholder="$t('message.register.passwordPlaceholder')"><i class="clear-password" v-tap="{methods:resetPW}"></i>
+        </p>
+        <p>
+          <i class="password"></i>
+          <input type="password" v-model="formData.confirmPassword" maxlength="16" :placeholder="$t('message.register.passwordAgainPlaceholder')">
+        </p>
+        <p>
+          <i class="code"></i>
+          <input type="tel" v-model="formData.smsCode" :placeholder="$t('message.register.CodeEnterPlaceholder')" maxlength="6">
+          <mt-button type="primary" size="small" v-tap="{methods:sendSms}">{{$t('message.register.acquire')}}<template v-if="disabled">({{time}}s)</template></mt-button>
+        </p>
+        <div class="register-btn">
+          <mt-button type="primary" size="large" v-tap="{methods:register}">{{$t('message.register.register')}}</mt-button>
+        </div>
       </div>
     </div>
-    <p class="agreement">点击注册按钮，即同意凯欧琏<span @click="toggleAgreement">《用户协议》</span></p>
+    <p class="agreement">{{$t('message.register.agreeTip')}}<span @click="toggleAgreement">《{{$t('message.register.userProtocol')}}》</span></p>
     <mask-layer :isgray="true" :show="maskShow" @hide="hideFunction">
       <div class="content">
         <i class="close" v-tap="{methods:hideFunction}">×</i>
-        <p class="title">用户注册协议</p>
+        <p class="title">User register protocol</p>
         <div class="scroll">
           <p>用户协议</p>
         </div>
@@ -27,19 +42,40 @@
 <script>
 import maskLayer from '@/components/common/mask'
 import Data from '@/api/data'
-
+import userApi from '../api/user'
+import utils from '@/assets/js/utils'
+import Tip from '@/components/common/tip.js'
 
 export default {
   name:'register',
   data(){
   	return {
-  		password: "",
-      password2: "",
-      account: "",
-      smsCode: "",
+  		formData: {
+        registerType: 0,
+        email: '',
+        phoneNumberType: 1,
+        phoneNumber: '',
+        password: '',
+        confirmPassword: '',
+        invitedCode: '',
+        smsCode: ''
+      },
+      time: 60,
+      checked: true,
       disabled: false,
       maskShow:false,
   	}
+  },
+  computed: {
+    btnDisabled () {
+      if (!$.trim(this.formData.phoneNumber)) {
+        return true
+      } else if (!/^1(3|4|5|7|8)\d{9}$/.test($.trim(this.formData.phoneNumber))) {
+        return true
+      } else {
+        return this.disabled
+      }
+    }
   },
   created(){
   	
@@ -55,16 +91,93 @@ export default {
       //显示用户协议
       this.maskShow = true
     },
-    register(args){
-      //注册处理函数
-      
-
-    },
     hideFunction(){
       this.maskShow = false
     },
     resetPW(){
       this.password = ''
+    },
+    register () {
+      let formData = {}
+      for (let i in this.formData) {
+        formData[i] = this.formData[i]
+      }
+      if (formData.registerType === 1) {
+        delete formData.phoneNumber
+        delete formData.phoneNumberType
+        delete formData.smsCode
+      } else {
+        delete formData.email
+      }
+      if (!$.trim(formData.phoneNumber)) {
+        Tip({type:'danger', message:this.$t('message.register.phonePlaceholder')})
+        return
+      }
+      if (!/^1(3|4|5|7|8)\d{9}$/.test($.trim(formData.phoneNumber))) {
+        Tip({type:'danger', message:this.$t('message.register.validPhone')})
+        return
+      }
+      if (!formData.password) {
+        Tip({type:'danger', message:this.$t('message.register.passwordPlaceholder')})
+        return
+      }
+      if (!/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/.test(formData.password)) {
+        Tip({type:'danger', message:this.$t('message.register.passwordPlaceholder')})
+        return
+      }
+      if (!formData.confirmPassword) {
+        Tip({type:'danger', message:this.$t('message.register.passwordAgainPlaceholder')})
+        return
+      }
+      if (formData.password !== formData.confirmPassword) {
+        Tip({type:'danger', message:this.$t('message.register.differentPassword')})
+        return
+      }
+      if (!$.trim(formData.smsCode)) {
+        Tip({type:'danger', message:this.$t('message.register.CodeEnterPlaceholder')})
+        return
+      }
+      
+      formData.password = utils.encryptPwd(formData.password)
+      formData.confirmPassword = utils.encryptPwd(formData.confirmPassword)
+      userApi.registerUser(formData, (res) => {
+        Tip({type:'success', message:this.$t('message.register.regSuccess')})
+        this.$router.push({name: 'login'})
+      }, (msg) => {
+        Tip({type:'danger', message:this.$t(`message.error_code.${msg}`)})
+      })
+    },
+    sendSms () {
+      if (this.btnDisabled) {
+        return
+      }
+      if (this.formData.phoneNumber === '') {
+        Tip({type:'danger', message:this.$t(`message.register.first`)})
+        return
+      }
+      this.disabled = true
+      userApi.sendSmsUser({
+        phoneNumber: this.formData.phoneNumber,
+        phoneNumberType: this.formData.phoneNumberType
+      }, (res) => {
+        let timeOut = () => {
+          this.time--
+          if (this.time === 0) {
+            this.disabled = false
+            this.time = 60
+            return
+          }
+          setTimeout(timeOut, 1000)
+        }
+        setTimeout(timeOut, 1000)
+        Tip({type:'success', message:this.$t(`message.register.codeSuccess`)})
+      }, (msg) => {
+        this.disabled = false
+        Tip({type:'danger', message:this.$t(`message.error_code.${msg}`)})
+      })
+    },
+    login () {
+      this.$router.push({name: 'login'})
     }
   },
   components:{    
@@ -164,7 +277,7 @@ export default {
   right: 0.65rem;
   top:2.5rem;
   bottom: 2rem;
-  border-radius: 10px;
+  border-radius: 4px;
   background-color: #fff;
   .title {
     font-size: 0.32rem;

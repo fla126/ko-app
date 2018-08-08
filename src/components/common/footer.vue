@@ -116,5 +116,5 @@ export default {
   }
 
 }
-.red-dot {position: absolute; right: 0.4rem; top: 0.2rem; background-color: red; width: 0.1rem; height: 0.1rem; border-radius: 50%;}
+.red-dot {position: absolute; right: 0.4rem; top: 0.2rem; background-color: red; width: 5px; height: 5px; border-radius: 50%;}
 </style>

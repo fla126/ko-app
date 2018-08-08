@@ -3,7 +3,7 @@
     <comp-top-back :home="true">
       <span class="selected-title" v-tap="{methods:showWalletList}">{{displayName(wallet_idx)}}</span>
     </comp-top-back>
-    <div class="page-main">
+    <div class="page-main" id="walletDetailPage">
       <div class="amount-container">
         <h1>{{wallet[wallet_idx] && $root.toFixed(wallet[wallet_idx].currency[currency],8)}}<span> {{currency}} </span></h1>
         <p>≈ {{getCoinSign}}{{total}}</p>
@@ -24,7 +24,7 @@
               <div>1MzziGBa7tNN.......wRcvSGZu5<br /><span>2018.04.23</span></div>
               <div><span>{{$t('message.walletDetail.zipedFailed')}}</span></div>
             </li> -->
-            <li :class="[trans.direction===1?'in':'out']" v-for="(trans,index) in transList" :key="index" v-tap="{methods:visitBlock, txId:trans.txId}">
+            <li :class="[trans.direction===1?'in':'out']" v-for="(trans,index) in transList" :key="index" @click="visitBlock(trans.txId)">
               <div><i></i></div>
               <div>{{displayAdress(trans)}}<br /><span>{{trans.createdTime.split(' ')[0]}}</span></div>
               <div><span>{{$root.toFixed(trans.amount,4)}}{{trans.symbol }}</span></div>
@@ -50,6 +50,10 @@
         </div>
       </div>
     </mask-layer>
+    <div class="refresh" id="refresh" :style="{top:refresh_y+'px'}">
+      <span><span :style="rotate(-180,true)"></span></span><span><span :style="rotate(-180)"></span></span>
+      <i></i>
+    </div>
   </div>
 </template>
 
@@ -60,12 +64,12 @@ import { Progress } from 'mint-ui'
 import maskLayer from '@/components/common/mask'
 import { mapGetters, mapActions } from 'vuex'
 import numUtils from '@/assets/js/numberUtils'
+import Config from '@/api/config'
 
 export default {
   name:'page-wallet-detail',
   data(){
     return {
-      scroll:false,
       currency:'',
       show:false,
       showUnlinked:true,
@@ -77,7 +81,13 @@ export default {
       allLoaded:false,
       serverTime:new Date(),
       timer:0,
-      key:false
+      key:false,
+      walletAddress:'',
+      start_y:0,
+      scroll_y:0,
+      refresh_key:false,
+      canTouch:true,
+      fontSize:0,
     }
   },
   created(){
@@ -85,15 +95,35 @@ export default {
     this.currency = this.$route.params.currency || 'BTC'
     this.wallet_idx = Number(this.$route.params.idx) || 0
     this.WFSetting = JSON.parse(localStorage.getItem('walletFrozenSetting') || '{}') //获取钱包冻结设置
-    this.getTransList()
+    this.getWalletAddress()
   },
   mounted(){
+    let fontSize = $('html').css('font-size')
+    this.fontSize = Number(fontSize.slice(0,fontSize.length-2))
+    this.initRefresh()
     setInterval(()=>{
       this.timer += 1
     },1000)
   },
+  watch:{
+    wallet_idx(n, o){
+      this.getWalletAddress()
+    },
+    walletAddress(n, o){
+      this.refreshTransList()
+    },
+  },
   computed:{
     ...mapGetters(['getUsbkeyStatus','getCoinSign','getSymbolExchange','getFiat','getWalletList','getUTXO','getFactoryCode','getERC20']),
+    refresh_y(){
+      var dist = this.scroll_y - this.start_y
+      if(dist<0){
+        return 0
+      } else {
+        return dist < 1.5*this.fontSize?dist:1.5*this.fontSize+ (dist-1.5*this.fontSize)/3
+      }
+      
+    },
     wallet(){ 
       var _publicKeys = [], _total = 0, _all, _wallets = JSON.parse(JSON.stringify(this.getWalletList))
       // 过滤已冻结钱包
@@ -126,10 +156,117 @@ export default {
     },
   },
   methods:{
-    visitBlock(args){
+    refreshTransList(){
+      this.page = 0
+      this.transList = []
+      this.allLoaded = false
+      this.getTransList()
+    },
+    initRefresh(){
+      var self = this, $body = $('#walletDetailPage'),  $scroll = $('#scroll')
+      
+      $body.on('touchstart',(e)=>{
+        this.canTouch = $scroll.scrollTop()<5?true:false
+        if (e.targetTouches.length == 1 && !this.refresh_key && this.canTouch) {
+          var touch = e.targetTouches[0]
+            this.start_y = touch.pageY
+        }
+        return true
+      }).on('touchmove',(e)=>{
+        // e.preventDefault()
+        // e.stopPropagation()
+        if (e.targetTouches.length == 1 && !this.refresh_key && this.canTouch) {
+          var touch = e.targetTouches[0]
+          if(touch.pageY-this.start_y>0){
+            this.scroll_y = touch.pageY
+          }
+        }
+        return true
+      }).on('touchend',()=>{
+        if(!this.refresh_key && this.canTouch && this.scroll_y-this.start_y>=1.5*this.fontSize){
+          this.refresh_key = true
+          $('#refresh').addClass('transition')
+          this.scroll_y = 1.5*this.fontSize + this.start_y
+          $('#refresh').one("webkitTransitionEnd", function(e){
+            $(this).addClass('rotate')
+            window.getSymbolExchange(true).then(()=>{
+              $('#refresh').one("webkitTransitionEnd", function(e){
+                $(this).removeClass('transition')
+                self.refresh_key=false
+                $(this).removeClass('rotate')
+              })
+              setTimeout(()=>{
+                self.scroll_y = 0
+              },1000)
+            })
+            self.refreshTransList()
+            window['getWalletList'] && window.getWalletList()
+          })
+        } else if(!self.refresh_key && this.canTouch && self.scroll_y-self.start_y>=0) {
+          $('#refresh').one("webkitTransitionEnd", function(e){
+            $(this).removeClass('transition')
+          })
+          $('#refresh').addClass('transition')
+          self.scroll_y = 0
+        }
+      })
+      return true
+    },
+    rotate(deg, key){
+      let dist = this.scroll_y-this.start_y
+      dist = (dist>0?dist:0)
+      dist = Math.round(dist /(1.5*this.fontSize)*270)
+      if(key){
+        if(Math.abs(dist)<180){
+          dist = 0
+        } else {
+          dist = dist-180
+          dist = Math.abs(dist)>90?90:dist
+        }
+      } else {
+        dist = dist <= 90 ? 90 : dist
+        dist = dist > 180 ? 180 : dist
+      }
+      deg += dist || 0
+      return {
+        '-webkit-transform':`rotate(${deg}deg)`,
+        'transform':`rotate(${deg}deg)`,
+      }
+    },
+    getWalletAddress(){
+      if(this.wallet.length===0){
+        return
+      }
+      //开发模式下btc币种获取测试网络地址
+      if(this.currency==='BTC' && Config.env==='dev'){
+        var publicKeys
+        if(this.wallet[this.wallet_idx].publicKey.constructor == String){
+          publicKeys = [this.wallet[this.wallet_idx].publicKey]
+        } else {
+          publicKeys = this.wallet[this.wallet_idx].publicKey
+        }
+        var PromiseArray = [], addresStr = ''
+        for(let key of publicKeys){
+          PromiseArray.push(
+            api.getBTCTestAddress(key).then((res)=>{
+              if(addresStr){
+                addresStr = addresStr+','+res.data.data
+              } else {
+                addresStr = res.data.data
+              }
+            })
+          )
+        }
+        Promise.all(PromiseArray).then(()=>{
+          this.walletAddress = addresStr
+        })
+      } else {
+        this.walletAddress = this.$root.getAddress(this.currency, this.wallet[this.wallet_idx].publicKey)
+      }
+    },
+    visitBlock(txId){
       if(this.currency==='ETH' || this.getERC20.includes(this.currency)){
-        //location.href = `https://etherscan.io/tx/${args.txId}`
-        this.$router.push({name:'page-visitblock',params:{txId:args.txId}})
+        window.open(`https://etherscan.io/tx/${txId}`,'_blank')
       }
     },
     displayTime(trans){
@@ -141,10 +278,10 @@ export default {
       return address.slice(0,12)+'.......'+address.slice(address.length-9)
     },
     getTransList(){ //获取交易记录
-      if(this.wallet.length){
+      if(this.walletAddress){
         console.log('loadBottom')
-        let address = this.$root.getAddress(this.currency, this.wallet[this.wallet_idx].publicKey)
-        api.getTransList([address], this.page+1).then((res)=>{
+        let address = this.walletAddress.split(',')
+        api.getTransList(address, this.page+1).then((res)=>{
           if(res.data.rst==1){
             this.totalPage =Math.ceil(res.data.total/10)
             this.serverTime = new Date(res.data.timestamp.replace('-','/'))
@@ -399,7 +536,7 @@ export default {
 
 .wallet-list {
   width: 50%;
-  height: 100%;
+  max-height: 100%;
   margin:auto;
   overflow-y: auto;
   li {
@@ -464,5 +601,71 @@ export default {
       color: #4D7BF3;
     }
   }
+}
+
+.refresh {
+  position: fixed;
+  width: 42px;
+  height: 42px;
+  left: 50%;
+  top: 0;
+  margin-left: -21px;
+  margin-top: -45px;
+  background-color: #fff;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 0 6px #b2b2b2;
+  z-index: 99999999;
+  &.transition {
+    transition: top ease-in 300ms;
+  }
+  > span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 28px;
+    width: 14px;
+    transform: translateY(-50%) translateX(-100%);
+    overflow: hidden;
+    &:last-of-type {
+      transform: translateY(-50%) translateX(0%);
+      span {
+        right: 0;
+        transform: rotate(-90deg);
+        clip:rect(0,auto,auto,14px);
+      }
+    }
+    span {
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      background-color: #4d7bf3;
+      border-radius: 50%;
+      transform: rotate(-180deg);
+      clip:rect(0,14px,auto,auto);
+    }
+  }
+  > i {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    left: 50%;
+    top: 50%;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+ }
+.rotate {
+  animation: rotate linear 800ms infinite;
+}
+@-webkit-keyframes rotate{
+  0% {transform: rotate(0deg);}
+  100% {transform: rotate(360deg);}
+}
+@keyframes rotate{
+  0% {transform: rotate(0deg)}
+  100% {transform: rotate(360deg);}
 }
 </style>

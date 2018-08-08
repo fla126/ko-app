@@ -6,7 +6,7 @@
         <li>
           <h1>{{$t('message.cmd.addPasscode')}}</h1>
           <p>{{$t('message.cmd.account')}}</p>
-          <p><input id="account" maxlength="25" :placeholder="$t('message.cmd.inputAmount')" type="text" v-model="account"></p>
+          <p><input id="account" maxlength="25" :placeholder="$t('message.cmd.inputAmount')" type="text" v-model="account"><i class="scanning" v-tap="{methods:scanning}"></i></p>
         </li>
         <li>
           <p>{{$t('message.cmd.privateKey')}}</p>
@@ -21,7 +21,7 @@
 </template>
 <script>
 import Tip from '@/components/common/tip.js'
-import  commandApi from '@/api/command'
+import api from '@/api/data'
 import { Toast,MessageBox  } from 'mint-ui'
 export default {
   name:'page-command-add',
@@ -60,15 +60,26 @@ export default {
           keycode:this.key
         }
         commandApi.save(com, (data) => {
-             MessageBox.alert('保存成功').then(action => {
-                this.$router.push({name:'page-command'})
-              });
+           MessageBox.alert('保存成功').then(action => {
+              this.$router.push({name:'page-command'})
+            });
         }, (msg) => { })
       }
     },
     saveCmd(){
 
-    }
+    },
+    scanning(args){
+      this.$root.scanner((data)=>{
+        console.log(data)
+        var QRdata = data.text.split('$$')
+        if(data.format=='QR_CODE'){
+          
+        } else {
+          Toast(this.$t('message.walletDetail.invalidQRAddress'))
+        }
+      })
+    },
   },
 }
 
@@ -149,5 +160,13 @@ export default {
     margin-left: 0;
     margin-right: 0;
   }
+}
+.scanning {
+  position: absolute;
+  width: 0.5rem;
+  height: 0.5rem;
+  right: 0;
+  background: url('../../assets/img/SAOYISAO_ICON@3x.png') no-repeat center;
+  background-size: auto 100%;
 }
 </style>

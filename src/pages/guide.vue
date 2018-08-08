@@ -6,7 +6,7 @@
       <mt-swipe-item></mt-swipe-item>
     </mt-swipe>
     <transition enter-active-class="animated fadeInUp">
-      <mt-button type="primary" size="large" v-show="isBtn" v-tap="{methods:start}">{{$t('message.start')}}</mt-button>
+      <mt-button type="primary" size="large" v-show="isBtn" @click="start">{{$t('message.start')}}</mt-button>
     </transition>
   </div>
 </template>

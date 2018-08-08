@@ -6,16 +6,16 @@
         <li>
           <h1 v-if="$i18n.locale=='en'">{{$t('message.walletDetail.receive')}} {{currency}}<span>{{name}}</span></h1>
           <h1 v-if="$i18n.locale=='zhCHS'">{{currency}}{{$t('message.walletDetail.receive')}}<span>{{name}}</span></h1>
-          <p>{{$t('message.walletDetail.receiveAmount')}}</p>
-          <p><input id="gatherInput" :placeholder="$t('message.walletDetail.enterAmount')" type="number" v-model="amount"></p>
+          <p>{{$t('message.walletDetail.receiveAddress')}}</p>
+          <!-- <p><input id="gatherInput" :placeholder="$t('message.walletDetail.enterAmount')" type="number" v-model="amount"></p> -->
         </li>
         <li class="text-center">
           <p>{{address}}</p>
           <p><canvas id="canvas"></canvas></p>
         </li>
       </ul>
-      <div class="step-next" :class="{fixed:collapsed}">
-        <mt-button type="primary" size="large" :class="'btn-copy'" :data-clipboard-text="address">{{$t('message.walletDetail.copyAddress')}}</mt-button>
+      <div class="step-next fixed">
+        <mt-button type="primary" size="large" class="btn-copy" :data-clipboard-text="address">{{$t('message.walletDetail.copyAddress')}}</mt-button>
       </div>
     </div>
   </div>
@@ -23,11 +23,12 @@
 
 <script>
 import Vue from 'vue'
-import data from '@/api/data'
+import api from '@/api/data'
 import ClipboardJS from 'clipboard'
 import QRCode from 'qrcode'
 import { Toast } from 'mint-ui'
 import { mapGetters, mapActions } from 'vuex'
+import Config from '@/api/config'
 
 export default {
   name:'page-wallet-gather',
@@ -37,33 +38,35 @@ export default {
       name:'',
       publicKey:'',
       amount:'0',
-      collapsed:true,
+      address:'None'
     }
   },
   created(){
     this.currency = this.$route.params.currency
     this.name = this.$route.params.name
     this.publicKey = this.$route.params.key
-    this.setFAddr()
+    //开发模式下btc币种获取测试网络地址
+    if(this.currency==='BTC' && Config.env==='dev'){
+      api.getBTCTestAddress(this.publicKey).then((res)=>{
+        this.address = res.data.data
+        this.setFAddr()
+      })
+    } else {
+      this.address = this.$root.getAddress(this.currency, this.publicKey)
+      this.setFAddr()
+    }
   },
   mounted(){
     this.initQRCode()
     this.initCopy()
-    this.initFocusEvent()
   },
   watch:{
-    amount(n,o){
+    address(n,o){
       this.initQRCode()
-    }
+    },
   },
   computed:{
     ...mapGetters(['getFactoryCode']),
-    address(){
-      return this.$root.getAddress(this.currency, this.publicKey)
-    },
-    QRAddress(){
-      return `${this.currency}$$${this.amount}$$${this.address}`
-    }
   },
   methods:{
     setFAddr(){ //统计收款地址使用情况
@@ -94,7 +97,7 @@ export default {
     },
     initQRCode(){
       //初始化二维码
-      QRCode.toCanvas(document.getElementById('canvas'), this.QRAddress, {
+      QRCode.toCanvas(document.getElementById('canvas'), this.address, {
         color: {
           dark: '#000',  // Black dots
           light: '#0000' // Transparent background
@@ -102,16 +105,6 @@ export default {
         width:Math.round(window.innerWidth*0.6)
       }, function (error) {
         if (error) console.error(error)
-      })
-    },
-    initFocusEvent(){
-      $('#gatherInput').focus(()=>{
-        this.collapsed = false
-      })
-      $('#gatherInput').blur(()=>{
-        setTimeout(()=>{
-          this.collapsed = true
-        },100)
       })
     },
   },

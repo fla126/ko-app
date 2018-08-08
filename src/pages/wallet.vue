@@ -4,34 +4,32 @@
     <transition enter-active-class="animated short fadeIn">
       <div class="search-container fixed" v-show="isSearchFixed">
         <input type="search" :class="{active:searchText.length}" :placeholder="$t('message.wallet.currencySearch')" v-model="searchTopText" @keydown="hideKeyboard($event)">
-        <i class="close" v-tap="{methods:delSearch}" v-show="searchText.length>0">+</i>
+        <i class="close" @click="delSearch" v-show="searchText.length>0">+</i>
       </div>
     </transition>
-    <div class="page-main" id="scroll" @click="setBlur($event)">
+    <div class="page-main" id="walletPage" >
       <div>
         <div class="bg-white">
           <div class="amount-container">
             <h2>{{$t('message.wallet.amount')}}</h2>
-            <h1><template v-if="amountShow">{{total.btc}}</template><template v-else>****</template><span> BTC </span><i :class="{hide:!amountShow}" v-tap="{methods:setAmountShow}"></i></h1>
+            <h1><template v-if="amountShow">{{total.btc}}</template><template v-else>****</template><span> BTC </span><i :class="{hide:!amountShow}" @click="setAmountShow"></i></h1>
             <p>≈ {{getCoinSign}}<template v-if="amountShow">{{total.fabi}}</template><template v-else>****</template></p>
           </div>
         </div>
         <div class="search-container" id="searchContainer">
           <input type="search" :class="{active:searchText.length, hidden:isSearchFixed}"  :placeholder="$t('message.wallet.currencySearch')" v-model="searchText" @keydown="hideKeyboard($event)">
-          <i class="close" v-tap="{methods:delSearch}" v-show="searchText.length>0">+</i>
+          <i class="close" @click="delSearch" v-show="searchText.length>0">+</i>
         </div>
         <ul class="currency-list">
-          <li :data-type="item" v-tap="{methods:goWalletDetail,t:item}" v-for="item in filterCurrency(getShowCurrency)">
+          <li :data-type="item" @click="goWalletDetail(item, $event)" v-for="item in filterCurrency(getShowCurrency)">
             <div><i :style="{'background-image':`url(${getIconUrls[item]})`}"></i><strong>{{item}}</strong></div>
             <div><span>{{displayAmount(item)}}</span><br /><span>≈ {{getCoinSign}}{{displayFabi(item)}}</span></div>
           </li>
         </ul>
-        <div style="height: 100vh"></div>
       </div>
     </div>
     <div class="refresh" id="refresh" :style="{top:refresh_y+'px'}">
       <span><span :style="rotate(-180,true)"></span></span><span><span :style="rotate(-180)"></span></span>
-      <!-- <span><span ></span></span><span><span ></span></span> -->
       <i></i>
     </div>
     <guide-layer v-if="guide"></guide-layer>
@@ -42,7 +40,6 @@ import guideLayer from '@/pages/guide'
 import compWalletTop from '@/components/top_wallet'
 import { mapGetters, mapActions } from 'vuex'
 import numUtils from '@/assets/js/numberUtils'
-var isfirst = localStorage.getItem('firstWalletView')
 
 export default {
   name:'page-wallet',
@@ -53,10 +50,10 @@ export default {
       searchTopText:'',
       initSearchPos:0,
       currentSearchPos:0,
-      scroll:false,
       start_y:0,
       scroll_y:0,
       refresh_key:false,
+      canTouch:true,
       amountShow:true,
       currency:[],
       WFSetting:{},
@@ -64,6 +61,7 @@ export default {
     }
   },
   created(){
+    var isfirst = localStorage.getItem('firstWalletView')
     if(!isfirst){ //第一次使用本app转到引导页
       this.guide = true
     }
@@ -74,7 +72,7 @@ export default {
     this.setHasLogin(true)
     this.setWalletList([{
       name:'',
-      idx:'0',
+      idx:0,
       publicKey:'0ba1ba3b8d8f7bd4a70828ec0e749dd26ee4cdd18d058c880afa121fad60e5b6f2ee1b72d9b9a57706e5de72acc1378f92269086c4964c073593bf92d28c647d',
       currency:{
         BTC:0.03529,
@@ -83,7 +81,7 @@ export default {
       }
     },{
       name:'长期投资',
-      idx:'3',
+      idx:3,
       publicKey:'ba2416481d6260e621d8f2b6aad3e9c51d438c1876b624303a16f2bcf8a06cd695cef87230180ceed5735e7bf6cb3f9db360f6fee50824c85f230a6bb3ca9573',
       currency:{
         BTC:4.734857,
@@ -94,9 +92,9 @@ export default {
   },
   mounted(){
     let fontSize = $('html').css('font-size')
-    this.fontSize = fontSize.slice(0,fontSize.length-2)
+    this.fontSize = Number(fontSize.slice(0,fontSize.length-2))
     this.initSearchPos = $('#searchContainer').position().top + $('#searchContainer').height()
-    setTimeout(this.initScroll,1000)
+    this.initRefresh()
   },
   watch:{
     searchTopText(_new,_old){
@@ -106,10 +104,11 @@ export default {
   computed:{
     ...mapGetters(['getCurrency','getShowCurrency','getCoinSign','getSymbolExchange','getWalletList','getFactoryCode','getFiat','getIconUrls']),
     refresh_y(){
-      if(this.start_y<0){
+      var dist = this.scroll_y - this.start_y
+      if(dist<0){
         return 0
       } else {
-        return this.scroll_y < 1.5*this.fontSize?this.scroll_y:1.5*this.fontSize+ (this.scroll_y-1.5*this.fontSize)/3
+        return dist < 1.5*this.fontSize?dist:1.5*this.fontSize+ (dist-1.5*this.fontSize)/3
       }
       
     },
@@ -142,8 +141,59 @@ export default {
   },
   methods:{
     ...mapActions(['setWalletList','setUsbkeyStatus','setHasLogin']),
+    initRefresh(){
+      var self = this, $body = $('#walletPage'),  $scroll = $('#walletPage')
+      
+      $body.on('touchstart',(e)=>{
+        this.canTouch = $scroll.scrollTop()<5?true:false
+        if (e.targetTouches.length == 1 && !this.refresh_key && this.canTouch) {
+          var touch = e.targetTouches[0]
+            this.start_y = touch.pageY
+        }
+        return true
+      }).on('touchmove',(e)=>{
+        // e.preventDefault()
+        // e.stopPropagation()
+        if (e.targetTouches.length == 1 && !this.refresh_key && this.canTouch) {
+          var touch = e.targetTouches[0]
+          if(touch.pageY-this.start_y>0){
+            this.scroll_y = touch.pageY
+          }
+        }
+        return true
+      }).on('touchend',()=>{
+        if(!this.refresh_key && this.canTouch && this.scroll_y-this.start_y>=1.5*this.fontSize){
+          this.refresh_key = true
+          $('#refresh').addClass('transition')
+          this.scroll_y = 1.5*this.fontSize + this.start_y
+          $('#refresh').one("webkitTransitionEnd", function(e){
+            $(this).addClass('rotate')
+            window.getSymbolExchange(true).then(()=>{
+              $('#refresh').one("webkitTransitionEnd", function(e){
+                $(this).removeClass('transition')
+                self.refresh_key=false
+                $(this).removeClass('rotate')
+              })
+              setTimeout(()=>{
+                self.scroll_y = 0
+              },1000)
+            })
+            window['getWalletList'] && window.getWalletList()
+          })
+        } else if(!self.refresh_key && this.canTouch && self.scroll_y-self.start_y>=0) {
+          $('#refresh').one("webkitTransitionEnd", function(e){
+            $(this).removeClass('transition')
+          })
+          $('#refresh').addClass('transition')
+          self.scroll_y = 0
+        }
+      })
+      return true
+    },
     rotate(deg, key){
-      let dist = Math.round((this.scroll_y-this.start_y) /(1.5*this.fontSize)*180)
+      let dist = this.scroll_y-this.start_y
+      dist = (dist>0?dist:0)
+      dist = Math.round(dist /(1.5*this.fontSize)*270)
       if(key){
         if(Math.abs(dist)<180){
           dist = 0
@@ -202,56 +252,6 @@ export default {
       this.amountShow = !this.amountShow
       localStorage.setItem('amount_show',this.amountShow)
     },
-    initScroll(){
-      //初始化滚动条
-      var self = this
-      this.scroll = new IScroll('#scroll',{
-        mouseWheel:true,
-        click:true,
-        probeType:2,
-      });
-      this.scroll.on('scrollStart',function(){
-        if(!self.refresh_key){
-          self.start_y = this.y
-        }
-      })
-      this.scroll.on('scroll',function(){
-        self.currentSearchPos = this.y
-        console.log(this.y-self.start_y)
-        if(!self.refresh_key && this.y-self.start_y>0){
-          self.scroll_y = this.y*1.5
-        }
-      })
-      this.scroll.on('scrollEnd',function(){
-        self.currentSearchPos = this.y
-      })
-      $('#scroll').on('touchend',()=>{
-        if(!self.refresh_key && self.scroll_y-self.start_y>=1.5*self.fontSize){
-          self.refresh_key = true
-          $('#refresh').addClass('transition')
-          self.scroll_y = 1.5*self.fontSize
-          $('#refresh').one("webkitTransitionEnd", function(e){
-            $(this).addClass('rotate')
-            window.getCurrency().then(()=>{
-              $('#refresh').one("webkitTransitionEnd", function(e){
-                $(this).removeClass('transition')
-                self.refresh_key=false
-                $(this).removeClass('rotate')
-              })
-              setTimeout(()=>{
-                self.scroll_y = 0
-              },1000)
-            })
-          })
-        } else if(!self.refresh_key && self.scroll_y-self.start_y>=0) {
-          $('#refresh').one("webkitTransitionEnd", function(e){
-            $(this).removeClass('transition')
-          })
-          $('#refresh').addClass('transition')
-          self.scroll_y = 0
-        }
-      })
-    },
     setBlur(e){
       if(e.target.tagName!='input'){
         $('.search-container input').blur()
@@ -260,10 +260,10 @@ export default {
     delSearch(){
       this.searchText = ''
     },
-    goWalletDetail(args){
-      $(args.event.currentTarget).addClass('active')
+    goWalletDetail(t, event){
+      $(event.currentTarget).addClass('active')
       setTimeout(()=>{
-        this.$router.push({ name: 'page-wallet-detail', params:{currency:args.t}})
+        this.$router.push({ name: 'page-wallet-detail', params:{currency:t}})
       },200)
     },
     hideKeyboard(event){
@@ -281,7 +281,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .page-main {
-  overflow-y: hidden;
+  overflow-y: auto;
   background-color: #F9F9F9;
 }
 .bg-white {background-color: #fff;}
@@ -319,7 +319,7 @@ export default {
     transform: rotate(45deg);
   }
   h1 {
-    font-size: 0.6rem;
+    font-size: 0.55rem;
     margin-top: 0.2rem;
     position: relative;
     z-index: 1;
@@ -342,6 +342,7 @@ export default {
   }
   h2 {
     font-size: 0.32rem;
+    margin-top: 0.1rem;
   }
   p{
     margin-top: 0.1rem;
@@ -449,12 +450,12 @@ export default {
  }
  .refresh {
   position: fixed;
-  width: 0.85rem;
-  height: 0.85rem;
+  width: 42px;
+  height: 42px;
   left: 50%;
   top: 0;
-  margin-left: -0.425rem;
-  margin-top: -1rem;
+  margin-left: -21px;
+  margin-top: -45px;
   background-color: #fff;
   border-radius: 50%;
   overflow: hidden;
@@ -467,8 +468,8 @@ export default {
     position: absolute;
     top: 50%;
     left: 50%;
-    height: 0.54rem;
-    width: 0.27rem;
+    height: 28px;
+    width: 14px;
     transform: translateY(-50%) translateX(-100%);
     overflow: hidden;
     &:last-of-type {
@@ -476,26 +477,26 @@ export default {
       span {
         right: 0;
         transform: rotate(-90deg);
-        clip:rect(0,auto,auto,0.27rem);
+        clip:rect(0,auto,auto,14px);
       }
     }
     span {
       position: absolute;
-      width: 0.54rem;
-      height: 0.54rem;
+      width: 28px;
+      height: 28px;
       background-color: #4d7bf3;
       border-radius: 50%;
       transform: rotate(-180deg);
-      clip:rect(0,0.27rem,auto,auto);
+      clip:rect(0,14px,auto,auto);
     }
   }
   > i {
     position: absolute;
-    width: 0.4rem;
-    height: 0.4rem;
+    width: 20px;
+    height: 20px;
     background-color: #fff;
-    left: 49.8%;
-    top: 49.7%;
+    left: 50%;
+    top: 50%;
     border-radius: 50%;
     transform: translate(-50%, -50%);
     z-index: 1;

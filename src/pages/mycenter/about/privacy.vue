@@ -168,7 +168,7 @@
       initScroll(){
         var self = this
         this.scroll = new IScroll('#scroll',{
-          mouseWheel:true,
+          // mouseWheel:true,
           tap:true
         });
       }

@@ -16,9 +16,9 @@
       <div class="page-rec" v-if="isModifyPassword">
         <div class="form init-form">
           <h1>{{$t('message.init.modifyPasswordTitle')}}</h1>
-          <p class="mt30"><i class="password"></i><input type="password"  maxlength="6" v-model="password" :placeholder="$t('message.init.oldPassword')"></p>
-          <p><i class="password"></i><input type="password" v-model="initPassword" maxlength="6" :placeholder="$t('message.init.enterPassword')"><i class="clear-password" v-tap="{methods:resetPW}" v-show="showPWClear"></i></p>
-          <p><i class="password"></i><input type="password" v-model="confirmPassword" maxlength="6" :placeholder="$t('message.init.confirmPassword')"></p>
+          <p class="mt30"><i class="password"></i><input type="tel" class="disc-input"  maxlength="6" v-model="password" :placeholder="$t('message.init.oldPassword')"></p>
+          <p><i class="password"></i><input type="tel" class="disc-input" v-model="initPassword" maxlength="6" :placeholder="$t('message.init.enterPassword')"><i class="clear-password" v-tap="{methods:resetPW}" v-show="showPWClear"></i></p>
+          <p><i class="password"></i><input type="tel" class="disc-input" v-model="confirmPassword" maxlength="6" :placeholder="$t('message.init.confirmPassword')"></p>
           <mt-button type="primary"  @touchstart="" :disabled="initPassword.length!=6 || password.length!=6" class="mt150" size="large" v-tap="{methods:modifyPassword}">{{$t('message.register.confirm')}}</mt-button>
         </div>
       </div>
@@ -64,29 +64,50 @@ export default {
     },
     modifyPassword(){ //修改交易密码
       if(this.initPassword === this.confirmPassword){
-        var reg = new RegExp(/^(?![^a-zA-Z]+$)(?!\D+$)/)
+        var reg = new RegExp(/^\w+$/)
         if(reg.test(this.initPassword)){
-          cordova.exec((res)=>{
-            res = JSON.parse(res)
-            if(res.code=='0'){
-              Tip({type:'success', title:this.$t('message.login.success'), message:this.$t('message.init.modifySuccess')})
-              localStorage.setItem('firstWalletLogin',1)
-              this.setHasLogin(false)
-              this.setWalletList([])
-              this.$router.replace({name:'page-init'})
+          this.checkLogin(this.password).then((status)=>{
+            if(status){ //密码验证成功
+              cordova.exec((res)=>{
+                console.log('updateAuthKey=====',res)
+                res = JSON.parse(res)
+                if(res.code=='0'){
+                  Tip({type:'success', title:this.$t('message.login.success'), message:this.$t('message.init.modifySuccess')})
+                  localStorage.setItem('firstWalletLogin',1) //是否第一次使用app操作值
+                  localStorage.setItem('needBackup',1) //提示需要备份操作值
+                  this.setHasLogin(false)
+                  this.setWalletList([])
+                  this.$router.replace({name:'page-init'})
+                }
+              }, (error)=>{
+                console.log(error)
+              }, 'WalletApi', 'updateAuthKey', [this.password, this.initPassword])
             } else {
               this.password = ''
               Tip({type:'danger', title:this.$t('message.login.error'), message:this.$t('message.init.modifyFailure')})
             }
-          }, (error)=>{
-            console.log(error)
-          }, 'WalletApi', 'updateAuthKey', [this.password, this.initPassword])
+          })
         } else {
           Tip({type:'danger', title:this.$t('message.login.error'), message:this.$t('message.init.nonstandardPassword')})
         }
       } else {
         Tip({type:'danger', title:this.$t('message.login.error'), message:this.$t('message.register.differentPassword')})
       }
+    },
+    checkLogin(password){ //验证密码正确性
+      return new Promise(function(resolve, reject){
+        cordova.exec((res)=>{
+          res = JSON.parse(res)
+          console.log('login=====',res)
+          if(res.code=='0'){
+            resolve(true)
+          } else {
+            resolve(false)
+          }
+        }, (error)=>{
+          console.log(error)
+        }, 'WalletApi', 'login', [password])
+      })
     },
   }
 }

@@ -41,7 +41,7 @@
           <h3>{{$t('message.walletDetail.total')}}<span>{{totalDisplay}} {{currency}}</span></h3>
         </li>
       </ul>
-      <div class="step-next" :class="{fixed:collapsed && isBlur}">
+      <div class="step-next fixed">
         <mt-button type="primary" size="large" v-tap="{methods:checkPayment}">{{$t('message.walletDetail.next')}}</mt-button>
       </div>
     </div>
@@ -54,8 +54,7 @@ import { Toast } from 'mint-ui'
 import { mapGetters, mapActions } from 'vuex'
 import numUtils from '@/assets/js/numberUtils'
 import Tip from '@/components/common/tip'
-import util from 'ethereumjs-util'
-import {Address} from 'bitcore-lib'
+import Config from '@/api/config'
 
 export default {
   name:'page-wallet-payment',
@@ -63,8 +62,8 @@ export default {
     return {
       currency:'',
       collapsed:true,
-      isBlur:true,
       receiverAddress:'',
+      senderAddress:'',
       amount:'',
       tag:'',
       wallet_idx:0,
@@ -85,7 +84,6 @@ export default {
 
     this.currency = this.$route.params.currency || 'BTC'
     this.wallet_idx = this.$route.params.idx || 0
-    this.amount = this.$route.params.amount || ''
     this.receiverAddress = this.$route.params.address || ''
     
     if(payment && this.currency == payment.currency){ //读取缓存数据
@@ -94,40 +92,42 @@ export default {
       this.amount = payment.amount
       this.tag = payment.tag
       this.sixteenDecimalData = payment.sixteenDecimalData
-      setTimeout(()=>{
-        this.GasPrice = payment.GasPrice
-        this.GasNumber = payment.GasNumber
-      },100)
     }
 
     api.getFeeRange(this.currency).then((res)=>{ //回去推荐矿工费
       this.feeRange = res.data.data
-      if(payment){
-        this.miningFee = (payment.miningFee - this.feeRange.min)/(this.feeRange.max - this.feeRange.min)*100
-      } else {
-        this.miningFee = (this.feeRange.default - this.feeRange.min)/(this.feeRange.max - this.feeRange.min)*100
-      }
+      this.miningFee = (this.feeRange.default - this.feeRange.min)/(this.feeRange.max - this.feeRange.min)*100
     }).catch((error)=>{ //启用模拟数据
       this.feeRange = {
-        default:0.000403,
+        default:this.currency==="BTC"?0.00003:0.000403,
         min:0.0000252,
         max:0.00252,
       }
-      if(payment){
-        this.miningFee = (payment.miningFee - this.feeRange.min)/(this.feeRange.max - this.feeRange.min)*100
+      this.miningFee = (this.feeRange.default - this.feeRange.min)/(this.feeRange.max - this.feeRange.min)*100
+    })
+    //开发模式下btc币种获取测试网络地址
+    if(this.currency==='BTC' && Config.env==='dev'){
+      var publicKeys
+      if(this.wallet[this.wallet_idx].publicKey.constructor == String){
+        publicKeys = [this.wallet[this.wallet_idx].publicKey]
       } else {
-        this.miningFee = (this.feeRange.default - this.feeRange.min)/(this.feeRange.max - this.feeRange.min)*100
+        publicKeys = this.wallet[this.wallet_idx].publicKey
       }
-    })
+      for(let key of publicKeys){
+        api.getBTCTestAddress(key).then((res)=>{
+          if(this.senderAddress){
+            this.senderAddress = this.senderAddress+','+res.data.data
+          } else {
+            this.senderAddress = res.data.data
+          }
+          
+        })
+      }
+    } else {
+      this.senderAddress = this.$root.getAddress(this.currency, this.wallet[this.wallet_idx].publicKey)
+    }
   },
-  mounted(){
-    $('.payment-detail input,.payment-detail textarea').focus(()=>{
-      this.isBlur = false
-    })
-    $('.payment-detail input,.payment-detail textarea').blur(()=>{
-      this.isBlur = true
-    })
-  },
+
   watch:{
     miningFee(){
       this.parseGas(this.currency, this.feeSign, this.miningFeeDisplay)
@@ -190,36 +190,32 @@ export default {
       this.GasNumber = GasNumber
     },
     checkPayment(){ //检测转账输入各项参数是否正确
-      console.log('wallets=========',this.wallet)
+      $('.payment-detail input').blur()
       if($.trim(this.receiverAddress).length==0){ //判断地址是否为空
-        Tip({type:'warning', title:'提醒', message:this.$t('message.walletDetail.blankReceiverAddress')})
-        $('#receiverAddress').focus()
+        Tip({type:'warning', title:this.$t('message.login.warning'), message:this.$t('message.walletDetail.blankReceiverAddress')})
         return
       }
-      if(!this.isAddress(this.currency, this.receiverAddress)){ //收款方地址是否符合当前币种的规则
-        Tip({type:'danger', title:'错误', message:this.$t('message.walletDetail.errorReceiverAddress')})
-        $('#receiverAddress').focus()
+      if(!this.$root.isAddress(this.currency, this.receiverAddress)){ //收款方地址是否符合当前币种的规则
+        Tip({type:'danger', title:this.$t('message.login.error'), message:this.$t('message.walletDetail.errorReceiverAddress')})
         return
       }
       if($.trim(this.amount).length==0 || Number(this.amount)==0){ //判断转账金额是否为空或0
-        Tip({type:'warning', title:'提醒', message:this.$t('message.walletDetail.blankAmount')})
-        $('#amount').focus()
+        Tip({type:'warning', title:this.$t('message.login.warning'), message:this.$t('message.walletDetail.blankAmount')})
         return
       }
       if(Number(this.amount) > Number(this.$root.toFixed(this.wallet[this.wallet_idx].currency[this.currency],8))){ //判断输入是否大于该钱包币种最大可用值
-        Tip({type:'danger', title:'错误', message:this.$t('message.walletDetail.overAmount')})
-        $('#amount').focus()
+        Tip({type:'danger', title:this.$t('message.login.error'), message:this.$t('message.walletDetail.overAmount')})
         return
       }
       if(Number(this.miningFeeDisplay)==0){
-        Tip({type:'warning', title:'提醒', message:this.$t('message.walletDetail.blankMiningFee')})
+        Tip({type:'warning', title:this.$t('message.login.warning'), message:this.$t('message.walletDetail.blankMiningFee')})
         return
       }
       var params = {
         currency: this.currency,
         idx:this.wallet[this.wallet_idx].idx,
         receiverAddress: this.receiverAddress,
-        senderAddress: this.$root.getAddress(this.currency, this.wallet[this.wallet_idx].publicKey),
+        senderAddress: this.senderAddress,
         amount: this.amount,
         tag: this.tag,
         miningFee: this.miningFeeDisplay,
@@ -235,9 +231,6 @@ export default {
         receiverAddress: this.receiverAddress,
         amount: this.amount,
         tag: this.tag,
-        miningFee: this.miningFeeDisplay,
-        GasPrice: this.GasPrice,
-        GasNumber: this.GasNumber,
         sixteenDecimalData: this.sixteenDecimalData,
       }
       localStorage.setItem('confirm',JSON.stringify(params)) //缓存备用数据，用于确认页面刷新重载数据
@@ -247,34 +240,16 @@ export default {
     scanning(args){
       this.$root.scanner((data)=>{
         console.log(data)
-        var QRdata = data.text.split('$$')
-        if(data.format=='QR_CODE' && QRdata.length==3){
-          if(this.currency==QRdata[0]){
-            this.amount = QRdata[1]
-            this.receiverAddress = QRdata[2]
-          } else {
-            Toast(this.$t('message.walletDetail.mismatchingCurrency'))
-          }
+        var QRdata = data.text
+        if(data.format=='QR_CODE' && this.$root.isAddress(this.currency, QRdata)){
+          this.receiverAddress = QRdata
         } else {
-          Toast(this.$t('message.walletDetail.invalidQRAddress'))
+          Toast(this.$t('message.walletDetail.mismatchingCurrency'))
         }
       })
     },
     collapse(args){
       this.collapsed = !this.collapsed
-    },
-    isAddress(currency, address){ //验证收款方地址是否符合当前币种的规则
-      var result = false
-      switch(currency){
-        case 'BTC':
-          result = Address.isValid(address)
-          break
-        default:
-          result = util.isValidAddress(address)
-          break
-
-      }
-      return result
     },
     
   },

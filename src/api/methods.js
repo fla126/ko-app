@@ -6,12 +6,13 @@ export default {
 	test(){
 	},
 	routeTo(args){ //自定义公共路由函数
-		if(args.replace){
-			this.$router.replace({ name: args.to, query:args.params})
-		} else {
-			this.$router.push({ name: args.to, query:args.params})
-		}
-    	
+		setTimeout(()=>{
+			if(args.replace){
+				this.$router.replace({ name: args.to, query:args.params})
+			} else {
+				this.$router.push({ name: args.to, query:args.params})
+			}
+		},200)
     },
     trim(str,len){ //去除空格并验证数据是否达到指定字符串长度
 	    var string=str.replace(/^\s+|\s+$/g,"");
@@ -28,6 +29,10 @@ export default {
 	        return t.test(str);
         }
     },
+	isemail(str){ //验证是否为合法邮箱
+	var regEmail = /^([a-zA-Z0-9]+[_|\-|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\-|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+	return regEmail.test(str);
+	},
     getPhonePlatform(){ //获取前端系统环境
     	var u = navigator.userAgent;
     	var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
@@ -62,10 +67,7 @@ export default {
 		    config.formats = config.formats.replace(/\s+/g, '');
 		}
 		config = [ config ]
-		console.log(config)
-
     	cordova.exec((res)=>{
-    	  console.log(res)
           !res.cancelled && success && success(res)
     	}, (error)=>{
     	  console.log(error)
@@ -137,6 +139,30 @@ export default {
       result = minutes>0 ? `${minutes_f}分`+result:result;
       result = hours  >0 ? `${hours_f}小时`+result:result;
       result = days   >0 ? `${days_f}天`+result:result;
+      return result
+    },
+    isAddress(currency, address){ //验证收款方地址是否符合当前币种的规则
+      var result = false
+      switch(currency){
+        case 'BTC':
+          result = Address.isValid(address)
+          break
+        default:
+          result = util.isValidAddress(address)
+          break
+
+      }
+      return result
+    },
+    getAddressToken(address){ //从收款地址判断出币种
+      var result = ''
+      if(Address.isValid(address)){
+      	result = 'BTC'
+      } else if(util.isValidAddress(address)){
+      	result = 'ETH'
+      } else {
+      	result = 'ETH'
+      }
       return result
     },
 }

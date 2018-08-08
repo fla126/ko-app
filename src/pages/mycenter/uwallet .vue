@@ -2,7 +2,7 @@
   <div  class="page">
     <comp-top-back :class="'line'" :back="true" >
       {{$t('message.mycenter.wallet')}}
-      <span class="header-right"><img v-tap="{methods:$root.routeTo, to:'page-addwallet'}" class="uwallet-right-img" src="../../assets/img/mycenter/i_nav_add.png"/></span>
+      <span class="header-right"><img v-if="getUsbkeyStatus" v-tap="{methods:$root.routeTo, to:'page-addwallet'}" class="uwallet-right-img" src="../../assets/img/mycenter/i_nav_add.png"/></span>
     </comp-top-back>
 
     <div class="page-main" id="scroll" v-show="getWalletList.length">
@@ -48,7 +48,7 @@ export default {
     setTimeout(this.initScroll,700);
   },
   computed:{
-    ...mapGetters(['getWalletList','getShowCurrency','getFactoryCode']),
+    ...mapGetters(['getUsbkeyStatus','getWalletList','getShowCurrency','getFactoryCode']),
   },
   methods:{
     ...mapActions(['setWalletList']),
@@ -74,7 +74,7 @@ export default {
     initScroll(){
       var self = this
       this.scroll = new IScroll('#scroll',{
-        mouseWheel:true,
+        // mouseWheel:true,
         tap:true
       });
      },

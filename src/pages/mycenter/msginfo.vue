@@ -43,7 +43,6 @@
   import { Button } from 'mint-ui';
   import { Cell } from 'mint-ui';
   import { Header } from 'mint-ui';
-  import  centerApi from '@/api/mycenter'
   import  utils from '@/assets/js/utils'
   Vue.component(Button.name, Button);
   Vue.component(Header.name, Header);
@@ -64,11 +63,7 @@
     },
     methods:{
       msgsinfo(id){
-        centerApi.getmsginfo(id, (data) => {
-          console.log(data)
-          this.msginfo = data
-        }, (msg) => {
-        })
+
       }
     }
   }

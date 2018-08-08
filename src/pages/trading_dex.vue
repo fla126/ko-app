@@ -14,9 +14,9 @@
         <section class="coin_tab">
           <ul >
             <li :class="[active==='tab-container1'?'activation':'']" @click="whickTabFun('tab-container1')"><span>{{$t('message.trade.optional')}}</span></li>
-            <li :class="[active==='tab-container2'?'activation':'']" @click="whickTabFun('tab-container2')"><span>BTC</span></li>
-            <li :class="[active==='tab-container3'?'activation':'']" @click="whickTabFun('tab-container3')"><span>ETH</span></li>
-            <li :class="[active==='tab-container4'?'activation':'']" @click="whickTabFun('tab-container4')"><span>BARK</span><i></i></li>
+            <li :class="[active==='tab-container2'?'activation':'']" @click="whickTabFun('tab-container2')"><span>WETH</span></li>
+            <li></li>
+            <li></li>
           </ul>
         </section>
         <section class="coin_header">
@@ -40,123 +40,33 @@
                   <div class="inner">
                     <ul class="item">
                       <li>
-                        <h1 ><span>BTC</span>/<i>BTC</i></h1>
+                        <h1 ><span>ETH</span>/<i>WETH</i></h1>
                         <h2>24H 256735</h2>
                       </li>
                       <li>
-                        <h1>0.00003469</h1>
-                        <h2>=<span>2.07CNY</span></h2>
+                        <h1>1.0000</h1>
+                        <h2>=<span>3020.25CNY</span></h2>
                       </li>
                       <li>
-                        <button class="c-button c-button-normal c-button-orange">+4.32%</button>
+                        <button class="c-button c-button-normal c-button-green">+0.0%</button>
                       </li>
                     </ul>
 
                     <ul class="item">
                       <li>
-                        <h1 ><span>ETH</span>/<i>BTC</i></h1>
-                        <h2>24H 256735</h2>
+                        <h1 ><span>TKY</span>/<i>WETH</i></h1>
+                        <h2>24H 38756</h2>
                       </li>
                       <li>
-                        <h1>0.00003469</h1>
+                        <h1>0.000685</h1>
                         <h2>=<span>2.07CNY</span></h2>
                       </li>
                       <li>
-                        <button class="c-button c-button-normal c-button-green">+4.32%</button>
+                        <button class="c-button c-button-normal c-button-green">+4.5%</button>
                       </li>
                     </ul>
 
-                    <ul class="item">
-                      <li>
-                        <h1 ><span>ETH</span>/<i>BTC</i></h1>
-                        <h2>24H 256735</h2>
-                      </li>
-                      <li>
-                        <h1>0.00003469</h1>
-                        <h2>=<span>2.07CNY</span></h2>
-                      </li>
-                      <li>
-                        <button class="c-button c-button-normal c-button-orange">+4.32%</button>
-                      </li>
-                    </ul>
-                    <ul class="item">
-                      <li>
-                        <h1 ><span>ETH</span>/<i>BTC</i></h1>
-                        <h2>24H 256735</h2>
-                      </li>
-                      <li>
-                        <h1>0.00003469</h1>
-                        <h2>=<span>2.07CNY</span></h2>
-                      </li>
-                      <li>
-                        <button class="c-button c-button-normal c-button-orange">+4.32%</button>
-                      </li>
-                    </ul>
-                    <ul class="item">
-                      <li>
-                        <h1 ><span>ETH</span>/<i>BTC</i></h1>
-                        <h2>24H 256735</h2>
-                      </li>
-                      <li>
-                        <h1>0.00003469</h1>
-                        <h2>=<span>2.07CNY</span></h2>
-                      </li>
-                      <li>
-                        <button class="c-button c-button-normal c-button-orange">+4.32%</button>
-                      </li>
-                    </ul>
-                    <ul class="item">
-                      <li>
-                        <h1 ><span>ETH</span>/<i>BTC</i></h1>
-                        <h2>24H 256735</h2>
-                      </li>
-                      <li>
-                        <h1>0.00003469</h1>
-                        <h2>=<span>2.07CNY</span></h2>
-                      </li>
-                      <li>
-                        <button class="c-button c-button-normal c-button-orange">+4.32%</button>
-                      </li>
-                    </ul>
-                    <ul class="item">
-                      <li>
-                        <h1 ><span>ETH</span>/<i>BTC</i></h1>
-                        <h2>24H 256735</h2>
-                      </li>
-                      <li>
-                        <h1>0.00003469</h1>
-                        <h2>=<span>2.07CNY</span></h2>
-                      </li>
-                      <li>
-                        <button class="c-button c-button-normal c-button-orange">+4.32%</button>
-                      </li>
-                    </ul>
-                    <ul class="item">
-                      <li>
-                        <h1 ><span>ETH</span>/<i>BTC</i></h1>
-                        <h2>24H 256735</h2>
-                      </li>
-                      <li>
-                        <h1>0.00003469</h1>
-                        <h2>=<span>2.07CNY</span></h2>
-                      </li>
-                      <li>
-                        <button class="c-button c-button-normal c-button-orange">+4.32%</button>
-                      </li>
-                    </ul>
-                    <ul class="item">
-                      <li>
-                        <h1 ><span>ETH</span>/<i>BTC</i></h1>
-                        <h2>24H 256735</h2>
-                      </li>
-                      <li>
-                        <h1>0.00003469</h1>
-                        <h2>=<span>2.07CNY</span></h2>
-                      </li>
-                      <li>
-                        <button class="c-button c-button-normal c-button-orange">+4.32%</button>
-                      </li>
-                    </ul>
+                    
                     <div class="lastspace"></div>
                   </div>
                 </div>
@@ -172,121 +82,29 @@
                   <div class="inner">
                     <ul class="item">
                       <li>
-                        <h1 ><span>BTC</span>/<i>BTC</i></h1>
+                        <h1 ><span>ETH</span>/<i>WETH</i></h1>
                         <h2>24H 256735</h2>
                       </li>
                       <li>
-                        <h1>0.00003469</h1>
-                        <h2>=<span>2.07CNY</span></h2>
+                        <h1>1.0000</h1>
+                        <h2>=<span>3020.25CNY</span></h2>
                       </li>
                       <li>
-                        <button class="c-button c-button-normal c-button-orange">+4.32%</button>
+                        <button class="c-button c-button-normal c-button-green">+0.0%</button>
                       </li>
                     </ul>
 
                     <ul class="item">
                       <li>
-                        <h1 ><span>ETH</span>/<i>BTC</i></h1>
-                        <h2>24H 256735</h2>
+                        <h1 ><span>TKY</span>/<i>WETH</i></h1>
+                        <h2>24H 38756</h2>
                       </li>
                       <li>
-                        <h1>0.00003469</h1>
+                        <h1>0.000685</h1>
                         <h2>=<span>2.07CNY</span></h2>
                       </li>
                       <li>
-                        <button class="c-button c-button-normal c-button-green">+4.32%</button>
-                      </li>
-                    </ul>
-
-                    <ul class="item">
-                      <li>
-                        <h1 ><span>ETH</span>/<i>BTC</i></h1>
-                        <h2>24H 256735</h2>
-                      </li>
-                      <li>
-                        <h1>0.00003469</h1>
-                        <h2>=<span>2.07CNY</span></h2>
-                      </li>
-                      <li>
-                        <button class="c-button c-button-normal c-button-orange">+4.32%</button>
-                      </li>
-                    </ul>
-                    <ul class="item">
-                      <li>
-                        <h1 ><span>ETH</span>/<i>BTC</i></h1>
-                        <h2>24H 256735</h2>
-                      </li>
-                      <li>
-                        <h1>0.00003469</h1>
-                        <h2>=<span>2.07CNY</span></h2>
-                      </li>
-                      <li>
-                        <button class="c-button c-button-normal c-button-orange">+4.32%</button>
-                      </li>
-                    </ul>
-                    <ul class="item">
-                      <li>
-                        <h1 ><span>ETH</span>/<i>BTC</i></h1>
-                        <h2>24H 256735</h2>
-                      </li>
-                      <li>
-                        <h1>0.00003469</h1>
-                        <h2>=<span>2.07CNY</span></h2>
-                      </li>
-                      <li>
-                        <button class="c-button c-button-normal c-button-orange">+4.32%</button>
-                      </li>
-                    </ul>
-                    <ul class="item">
-                      <li>
-                        <h1 ><span>ETH</span>/<i>BTC</i></h1>
-                        <h2>24H 256735</h2>
-                      </li>
-                      <li>
-                        <h1>0.00003469</h1>
-                        <h2>=<span>2.07CNY</span></h2>
-                      </li>
-                      <li>
-                        <button class="c-button c-button-normal c-button-orange">+4.32%</button>
-                      </li>
-                    </ul>
-                    <ul class="item">
-                      <li>
-                        <h1 ><span>ETH</span>/<i>BTC</i></h1>
-                        <h2>24H 256735</h2>
-                      </li>
-                      <li>
-                        <h1>0.00003469</h1>
-                        <h2>=<span>2.07CNY</span></h2>
-                      </li>
-                      <li>
-                        <button class="c-button c-button-normal c-button-orange">+4.32%</button>
-                      </li>
-                    </ul>
-                    <ul class="item">
-                      <li>
-                        <h1 ><span>ETH</span>/<i>BTC</i></h1>
-                        <h2>24H 256735</h2>
-                      </li>
-                      <li>
-                        <h1>0.00003469</h1>
-                        <h2>=<span>2.07CNY</span></h2>
-                      </li>
-                      <li>
-                        <button class="c-button c-button-normal c-button-orange">+4.32%</button>
-                      </li>
-                    </ul>
-                    <ul class="item">
-                      <li>
-                        <h1 ><span>ETH</span>/<i>BTC</i></h1>
-                        <h2>24H 256735</h2>
-                      </li>
-                      <li>
-                        <h1>0.00003469</h1>
-                        <h2>=<span>2.07CNY</span></h2>
-                      </li>
-                      <li>
-                        <button class="c-button c-button-normal c-button-orange">+4.32%</button>
+                        <button class="c-button c-button-normal c-button-green">+4.5%</button>
                       </li>
                     </ul>
                     <div class="lastspace"></div>
@@ -607,7 +425,7 @@
       initScroll(){
         var self = this
         this.scroll = new IScroll('#scroll',{
-          mouseWheel:true,
+          // mouseWheel:true,
           tap:true
         });
       }

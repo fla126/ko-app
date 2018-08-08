@@ -1,7 +1,7 @@
 <template>
 	<div class="price-adjust">
 	  <div><i class="deduct" v-tap="{methods:deduct}"></i></div>
-	  <div><input type="number" v-model="data"></div>
+	  <div><input type="number" v-model="data" @blur="blur"></div>
 	  <div><i class="add" v-tap="{methods:add}"></i></div>
 	</div>
 </template>
@@ -27,6 +27,9 @@
 	  	this.precision = _array[1]?_array[1].length:0
 	  },
 	  methods:{
+	  	blur(){
+	  		this.$emit('callback',this.data)
+	  	},
 	  	deduct(args){
 	  		var $_tar = $(args.event.currentTarget)
 	  		$_tar.addClass('active')
@@ -45,6 +48,9 @@
 	  	},
 	  	adjust(key){
 	  		var _data = this.data*10**this.precision + (key?1:-1)
+	  		if(_data<0){
+	  			_data = 0
+	  		}
 	  		this.data = (_data/(10**this.precision)).toFixed(this.precision)
 	  		this.$emit('callback',this.data)
 	  	}

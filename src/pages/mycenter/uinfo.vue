@@ -8,11 +8,14 @@
         <div class="inner">
           <div class="box-cont " >
             <div class="item"><span class="f30">{{$t('message.uinfo.account')}}</span></div>
-            <div class="item"><span class="f30">{{$t('message.mycenter.unknown')}}</span></div>
+            <div class="item"><span class="f30">{{getUserInfo.username}}</span></div>
           </div>
           <div class="box-cont " >
             <div class="item"><span class="f30">{{$t('message.uinfo.tinkeyId')}}</span></div>
-            <div class="item"><span class="f30">{{getFactoryCode}}</span></div>
+            <div class="item">
+              <span class="f30" v-if="getUsbkeyStatus">{{displayFactoryCode}}</span>
+              <span class="f30" v-else>{{$t('message.usbkeyStatus.disconnect')}}</span>
+            </div>
           </div>
           <div class="box-cont " >
             <div class="item"><span class="f30">{{$t('message.uinfo.walletNum')}}</span></div>
@@ -34,10 +37,10 @@
       </transition>
       <div  class="common-content bg-white  ft-c-gray " :class="[isdown ? 'mt10' : 'mt40']">
         <div class="inner">
-          <div class="box-cont " >
+          <div class="box-cont" v-tap="{methods:$root.routeTo, to:'reset-password'}">
             <div class="item"><span class="f30 ft-c-blue">{{$t('message.uinfo.updatePwd')}}</span></div>
           </div>
-          <div class="box-cont " >
+          <div class="box-cont" v-tap="{methods:loginOut}">
             <div class="item"><span class="f30 ft-c-blue">{{$t('message.uinfo.logOut')}}</span></div>
           </div>
         </div>
@@ -77,9 +80,18 @@ export default {
     this.initCopy()
   },
   computed:{
-    ...mapGetters(['getFactoryCode','getWalletList']),
+    ...mapGetters(['getUsbkeyStatus','getFactoryCode','getWalletList','getUserInfo']),
+    displayFactoryCode(){
+      return this.getFactoryCode.slice(0,13)+'****'+this.getFactoryCode.slice(this.getFactoryCode.length-6)
+    }
   },
   methods:{
+    ...mapActions(['setApiToken','setUserInfo']),
+    loginOut(){
+      this.setApiToken('')
+      this.setUserInfo({})
+      this.$router.replace({name:'page-wallet'})
+    },
     displayAdress(address){
       return address.slice(0,12)+'.......'+address.slice(address.length-9)
     },

@@ -30,7 +30,7 @@
       <div class="login-top"><i></i></div>
       <div class="login-form">
         <h4>{{$t('message.init.inputPassword')}}</h4>
-        <input type="password" id="password"  v-model="password" maxlength="6" @keydown="checkInput($event)" v-focus>
+        <input type="tel" id="password"  v-model="password" maxlength="6" @keydown="checkInput($event)" v-focus>
         <div class="password-display" v-tap="{methods:setFocus}"><span :class="{active:getActive(1)}">&nbsp;</span><span :class="{active:getActive(2)}">&nbsp;</span><span :class="{active:getActive(3)}">&nbsp;</span><span :class="{active:getActive(4)}">&nbsp;</span><span :class="{active:getActive(5)}">&nbsp;</span><span :class="{active:getActive(6)}">&nbsp;</span></div>
         <!-- <mt-button type="primary" @touchstart="" :disabled="password.length!=6" class="login-btn" size="large" v-tap="{methods:login}">{{$t('message.login.login')}}</mt-button> -->
       </div>
@@ -55,12 +55,17 @@
       <comp-top-back :back="false"><span class="btn-back" v-tap="{methods:()=>{isSetPassword=false,isActionSheet=true}}"></span></comp-top-back>
       <div class="form init-form">
         <h1>{{$t('message.init.passwordTitle')}}</h1>
-        <p class="mt30"><i class="password"></i><input type="password"  maxlength="6" v-model="initPassword" :placeholder="$t('message.init.enterPassword')"><i class="clear-password" v-tap="{methods:resetPW}" v-show="showPWClear"></i></p>
-        <p><i class="password"></i><input type="password" v-model="confirmPassword" maxlength="6" :placeholder="$t('message.init.confirmPassword')"></p>
+        <p class="mt30"><i class="password"></i><input type="tel" class="disc-input"  maxlength="6" v-model="initPassword" :placeholder="$t('message.init.enterPassword')"><i class="clear-password" v-tap="{methods:resetPW}" v-show="showPWClear"></i></p>
+        <p><i class="password"></i><input type="tel" class="disc-input" v-model="confirmPassword" maxlength="6" :placeholder="$t('message.init.confirmPassword')"></p>
         <mt-button type="primary"  @touchstart="" :disabled="initPassword.length!=6" class="mt150" size="large" v-tap="{methods:initDevice}">{{$t('message.register.confirm')}}</mt-button>
       </div>
     </div>
     </transition>
+    <mt-actionsheet
+      :actions="actions"
+      :cancelText="$t('message.init.cancel')"
+      v-model="sheetVisible">
+    </mt-actionsheet>
   </div>
 </template>
 
@@ -71,9 +76,16 @@ import { Toast,MessageBox  } from 'mint-ui'
 import Tip from '@/components/common/tip'
 import maskLayer from '@/components/common/mask'
 import api from '@/api/data'
+import Config from '@/api/config'
 
 export default {
   name:'page-init',
+  props:{
+    unlinked:{
+      type: Boolean,
+      default:false
+    }
+  },
   data(){
     return {
       isfirst:true, //是否第一次使用本APP
@@ -84,24 +96,46 @@ export default {
       password:'',
       initPassword:'',
       confirmPassword:'',
+      actions:[],
+      sheetVisible:false,
+      isImport:false, //是否进入导入操作
     }
   },
   created(){
     this.isfirst = localStorage.getItem('firstWalletLogin')?false:true
     this.unlinkedShow = this.$route.params.unlinkedShow || false
-    
-    this.$root.test()
+    window.getWalletList = this.getWalletList //全局化获取钱包，方便刷新调用
+    this.actions = [
+      // {name:this.$t('message.init.fromYUN'), method:()=>{}},
+      {name:this.$t('message.init.fromQR'), method:()=>{this.$router.push({name:'page-importQR'})}},
+      // {name:this.$t('message.init.fromABKEY'), method:()=>{}},
+    ]
+
+    // this.setIsInited(true)
+    // this.setUsbkeyStatus(true)
+    // this.$root.test()
+    // setTimeout(()=>{
+    //   this.getWalletList()
+    // },1000)
   },
   mounted(){
-
+    if(this.unlinkedShow){
+      setTimeout(()=>{
+        this.$router.replace({name:'page-wallet'})
+      },2000)
+    }
+    console.log(this.unlinked)
   },
   computed:{
-    ...mapGetters(['getUsbkeyStatus','getShowCurrency','getIsInited']),
+    ...mapGetters(['getUsbkeyStatus','getShowCurrency','getIsInited','getContractAddr','getFactoryCode']),
     showPWClear(){
       return this.initPassword.length > 0  || this.confirmPassword.length > 0 ? true : false
     }
   },
   watch:{
+    unlinked(n, o ){
+      this.unlinkedShow = n
+    },
     getUsbkeyStatus(n, o){
       if(n){this.unlinkedShow = false}
     },
@@ -121,7 +155,7 @@ export default {
   },
   methods:{
     ...mapActions(['setUsbkeyStatus','setHasLogin','setIsInited','setFactoryCode','setWalletList']),
-    getFactoryCode(){ //获取usbkey硬件ID号
+    getFacCode(){ //获取usbkey硬件ID号
       cordova.exec((res)=>{
         res = JSON.parse(res)
         console.log(res)
@@ -135,36 +169,23 @@ export default {
     guideWallet(){ //引导新建或修改
       if(this.getUsbkeyStatus){
         if(this.isfirst && this.getIsInited){ //第一次登陆如果已初始化，提示是否需要改密
-          MessageBox({
-            title:this.$t('message.cmd.confirmTitle'),
-            message:this.$t('message.init.isModifyPassword'),
-            showCancelButton: true,
-            showConfirmButton:true,
+          MessageBox.confirm(this.$t('message.init.isModifyPassword'),this.$t('message.cmd.confirmTitle'),{
             cancelButtonText:this.$t('message.cmd.no'),
             confirmButtonText:this.$t('message.cmd.yes'),
           }).then(action => {
-            
-            if(action=='confirm'){
-              this.$router.push({name:'page-modify-password'})
-            } else {
-              localStorage.setItem('firstWalletLogin',1)
-              this.isfirst = false
-            }
+            this.$router.push({name:'page-modify-password'})
+          }).catch((action)=>{
+            localStorage.setItem('firstWalletLogin',1)
+            this.isfirst = false
           })
         } else {
-          MessageBox({
-            title:this.$t('message.cmd.confirmTitle'),
-            message:this.$t('message.init.isSetPassword'),
-            showCancelButton: true,
-            showConfirmButton:true,
+          MessageBox.confirm(this.$t('message.init.isSetPassword'),this.$t('message.cmd.confirmTitle'),{
             cancelButtonText:this.$t('message.cmd.no'),
             confirmButtonText:this.$t('message.cmd.yes'),
           }).then(action => {
-            if(action=='confirm'){
-              this.isActionSheet = false
-              this.isRiskTip = true
-              localStorage.setItem('firstWalletLogin',1)
-            } 
+            this.isActionSheet = false
+            this.isRiskTip = true
+            localStorage.setItem('firstWalletLogin',1)
           })
           
         }
@@ -183,7 +204,21 @@ export default {
         if(res.code=='0'){
           this.setHasLogin(true)
           this.getWalletList()
-          this.getFactoryCode()
+          this.getFacCode()
+          let needBackup = localStorage.getItem('needBackup')
+          if(needBackup){
+            MessageBox.confirm(this.$t('message.init.backupMessage'),this.$t('message.cmd.confirmTitle'),{
+              cancelButtonText:this.$t('message.cmd.no'),
+              confirmButtonText:this.$t('message.cmd.yes'),
+            }).then(action => {
+              this.$router.push({name:'page-backup'})
+            }).catch(action =>{
+              this.$router.replace({name:'page-wallet'})
+            })
+            localStorage.removeItem('needBackup')
+          } else {
+            this.$router.replace({name:'page-wallet'})
+          }
         } else {
           this.password = ''
           Tip({type:'danger', title:this.$t('message.login.error'), message:this.$t('message.init.invalidPassword')})
@@ -205,19 +240,28 @@ export default {
     },
     initDevice(args){ //初始化硬件钱包
       if(this.initPassword === this.confirmPassword){
-        var reg = new RegExp(/^(?![^a-zA-Z]+$)(?!\D+$)/)
+        var reg = new RegExp(/^\w+$/)
         if(reg.test(this.initPassword)){
           cordova.exec((res)=>{
             res = JSON.parse(res)
             console.log(res)
-            if(res.code=='0'){ //初始化完成并登陆成功
-              this.setHasLogin(true)
-              this.getWalletList()
-              this.getFactoryCode()
-            } else if(res.code=='-5'){ //初始化完成但登陆失败,显示登陆界面
-              this.isSetPassword = false
-              this.getIsInited =true
-            } else{ //初始化失败
+            if(res.code=='0'){
+              if(this.isImport){ //如果是导入操作进入的初始化，则进入初始化成功后的导入操作跳转
+                this.$router.push({name:'page-importQR'})
+              } else{ //初始化完成并登陆成功
+                this.setHasLogin(true)
+                this.getWalletList()
+                this.getFacCode()
+                MessageBox.confirm(this.$t('message.init.backupMessage'),this.$t('message.cmd.confirmTitle'),{
+                  cancelButtonText:this.$t('message.cmd.no'),
+                  confirmButtonText:this.$t('message.cmd.yes'),
+                }).then(action => {
+                  this.$router.push({name:'page-backup'})
+                }).catch(action =>{
+                  this.$router.replace({name:'page-wallet'})
+                })
+              }
+            }else{ //初始化失败
               Tip({type:'danger', title:this.$t('message.login.error'), message:this.$t('message.init.initializeFailure')})
             }
           }, (error)=>{
@@ -232,7 +276,18 @@ export default {
     },
     importWallet(args){ //导入已初始化钱包
       if(this.getUsbkeyStatus){
-        alert('此功能有待完善')
+        if(this.getIsInited){
+          this.sheetVisible = true
+        } else {
+          MessageBox.confirm(this.$t('message.init.isSetPassword'),this.$t('message.cmd.confirmTitle'),{
+            cancelButtonText:this.$t('message.cmd.no'),
+            confirmButtonText:this.$t('message.cmd.yes'),
+          }).then(action => {
+            this.isActionSheet = false
+            this.isRiskTip = true
+            this.isImport = true
+          })
+        }
       } else {
         this.unlinkedShow = true
       }
@@ -244,6 +299,7 @@ export default {
         console.log(res)
         if(res.code=='0'){
           var publicKeys = JSON.parse(res.msg), walletList = [], walletNames = JSON.parse(localStorage.getItem('walletNames') || '{}')
+          // var publicKeys = ['0ba1ba3b8d8f7bd4a70828ec0e749dd26ee4cdd18d058c880afa121fad60e5b6f2ee1b72d9b9a57706e5de72acc1378f92269086c4964c073593bf92d28c647d','ba2416481d6260e621d8f2b6aad3e9c51d438c1876b624303a16f2bcf8a06cd695cef87230180ceed5735e7bf6cb3f9db360f6fee50824c85f230a6bb3ca9573'], walletList = [], walletNames = JSON.parse(localStorage.getItem('walletNames') || '{}')
           //解析钱包列表
           for(let i=0; i<publicKeys.length;  i++){ 
             if(publicKeys[i]){
@@ -258,20 +314,20 @@ export default {
           this.setWalletList(walletList)
           //解析钱包列表里每种币种的数量
           for(var wallet of walletList){
-            for(let token of this.getShowCurrency){
-              var address = this.$root.getAddress(token, wallet.publicKey)
-              api.getBalance(token,address,wallet,function(token, wallet, getData){
-                getData.then((res)=>{
-                  var balance = 0
-                  if(res.data.rst){
-                    balance = res.data.data.balance && res.data.data.balance
-                  }
-                  Vue.set(wallet.currency, token, balance)
-                })
+            for(var token of this.getShowCurrency){
+              this.getTestAddress(token, wallet).then((res)=>{
+                api.getBalance(res.token,res.address,res.wallet,function(rtoken, rwallet, getData){
+                  getData.then((res)=>{
+                    var balance = 0
+                    if(res.data.rst){
+                      balance = res.data.data.balance && res.data.data.balance
+                    }
+                    Vue.set(rwallet.currency, rtoken, balance)
+                  })
+                },this.getContractAddr[res.token],this.getFactoryCode.replace('Tinkey',''))
               })
             }
           }
-          this.$router.replace({name:'page-wallet'})
         } else {
           this.setHasLogin(false)
           this.$router.replace({name:'page-init'})
@@ -280,7 +336,20 @@ export default {
         console.log(error)
       }, 'WalletApi', 'GetAllEccPubKey', [])
     },
-
+    getTestAddress(token, wallet){ //开发模式下btc币种获取测试网络地址
+      var self = this, address
+      return new Promise(function(resolve, reject){
+        if(token==='BTC' && Config.env==='dev'){
+          api.getBTCTestAddress(wallet.publicKey).then((res)=>{
+            address = res.data.data
+            resolve({token:token, wallet:wallet, address:address})
+          })
+        } else {
+          address = self.$root.getAddress(token, wallet.publicKey)
+          resolve({token:token, wallet:wallet, address:address})
+        }
+      })
+    } 
   },
   components:{
     maskLayer,

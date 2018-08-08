@@ -1,7 +1,9 @@
 <template>
-  <div class="mask" :class="{gray:isgray}" v-if="show" @click.self="$emit('hide')">
-    <slot></slot>
-  </div>
+  <transition enter-active-class="animated short fadeIn" leave-active-class="animated short fadeOut">
+    <div class="mask" :class="{gray:isgray}" v-if="show" @click.self="$emit('hide')">
+      <slot></slot>
+    </div>
+  </transition>
 </template>
 <script>
 

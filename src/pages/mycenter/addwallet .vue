@@ -30,7 +30,7 @@
         <mt-button class="mt20" size="large" type="primary">{{$t('message.wallet.add')}}</mt-button>
       </div>
     </div>
-    <password-confirm :show="showPWCLayer" :hideFunction="hidePWCLayer" :submitFunction="addWallet"></password-confirm>
+    <password-confirm ref="pconfirm" :show="showPWCLayer" :hideFunction="hidePWCLayer" :submitFunction="addWallet"></password-confirm>
   </div>
 </template>
 
@@ -68,7 +68,7 @@ export default {
   methods:{
     ...mapActions(['setWalletList']),
     pwconfirm(){ //最多添加32个钱包
-      if(this.getWalletList.length>=32){
+      if(this.getIdx()===-1){
         Tip({type:'warning',title:this.$t('message.login.warning'), message:this.$t('message.wallet.maxWallet')})
         return
       }
@@ -81,28 +81,35 @@ export default {
     hidePWCLayer(){
       this.showPWCLayer = false
     },
+    getIdx(){ //获取未占用钱包位置，总共32个钱包位置
+      var idxArray = []
+      for(var i=0; i<32; i++){
+        idxArray.push(i)
+      }
+      for(var wallet of this.getWalletList){
+        if(idxArray.includes(wallet.idx)){
+          idxArray.splice(idxArray.indexOf(wallet.idx),1)
+        }
+      }
+      console.log('idxArray=======',idxArray)
+      return idxArray.length?idxArray[0]:-1
+    },
     addWallet(password){
       cordova.exec((res)=>{
         res = JSON.parse(res)
         if(res.code=='0'){ //密码正确，创建钱包
-          var idx = this.getWalletList.length
+          var idx = this.getIdx()
           cordova.exec((res)=>{
             res = JSON.parse(res)
             console.log(res)
             if(res.code=='0'){
-              var wallet = {}
-              wallet.name = this.wname
-              wallet.publicKey = res.msg
-              wallet.idx = idx
-              wallet.currency = {}
-              this.setWalletList(this.getWalletList.push(wallet))
-              console.log(this.getWalletList)
               Tip({type:'success', title:this.$t('message.login.success'), message:this.$t('message.wallet.savesucc')})
               //本地保存钱包名称
               var walletNames = JSON.parse(localStorage.getItem('walletNames') || '{}')
               walletNames[res.msg] = this.wname
               localStorage.setItem('walletNames', JSON.stringify(walletNames))
-              this.$router.raplace({name:'page-uwallet'})
+              window.getWalletList()
+              this.$router.replace({name:'page-uwallet'})
             } else {
               console.log(res.msg)
             }
@@ -111,10 +118,11 @@ export default {
           }, 'WalletApi', 'CreateWallet', [idx])
         } else {
           Tip({type:'danger', title:this.$t('message.login.error'), message:this.$t('message.init.invalidPassword')})
+          this.$refs.pconfirm.password = ''
         }
       }, (error)=>{
         console.log(error)
-      }, 'WalletApi', 'login', [this.password])
+      }, 'WalletApi', 'login', [password])
     }
   },
 }

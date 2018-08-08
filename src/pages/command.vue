@@ -18,60 +18,19 @@
           <h1><i></i><span>{{$t('message.cmd.keylogin')}}</span><i>+ {{$t('message.cmd.login')}}</i></h1>
         </div>
         <ul class="command-list unselected mt40" id="commandList" @touchstart="hideCP">
-          <li v-for="(item,index) in comList"  @touchstart="activeLayer($event)" @touchend="clearLoop" :key="index">
+          <!-- <li v-for="(item,index) in comList"  @touchstart="activeLayer($event)" @touchend="clearLoop" :key="index">
             <div class="progress" :data-second="index"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+item.progress)%30}}</span></div>
             <div>{{item.comname}}</div>
             <div><i v-tap="{methods:showControlButton,query:item.id,comname:item.comname}"></i><span class="f36">{{item.keycode}}</span></div>
             <div><i class="btn-copy" :data-clipboard-text="item.comname"></i></div>
-          </li>
-          <!--<li @touchstart="activeLayer($event)" @touchend="clearLoop">
-            <div class="progress" data-second="10"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+10)%30}}</span></div>
-            <div>Sjafh3793rdkgvf</div>
-            <div><i v-tap="{methods:showControlButton}"></i><span class="f36">123111</span></div>
-            <div><i class="btn-copy" :data-clipboard-text="'i love you '"></i></div>
-          </li>
-          <li @touchstart="activeLayer($event)" @touchend="clearLoop">
-            <div class="progress" data-second="15"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+15)%30}}</span></div>
-            <div>Sjafh3793rdkgvf</div>
-            <div><i v-tap="{methods:showControlButton}"></i><span class="f36">123111</span></div>
-            <div><i class="btn-copy" :data-clipboard-text="'i love you '"></i></div>
-          </li>
-          <li @touchstart="activeLayer($event)" @touchend="clearLoop">
-            <div class="progress" data-second="5"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+5)%30}}</span></div>
-            <div>Sjafh3793rdkgvf</div>
-            <div><i v-tap="{methods:showControlButton}"></i><span class="f36">123111</span></div>
-            <div><i class="btn-copy" :data-clipboard-text="'i love you '"></i></div>
-          </li>
+          </li> -->
           <li @touchstart="activeLayer($event)" @touchend="clearLoop">
             <div class="progress" data-second="10"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+10)%30}}</span></div>
-            <div>Sjafh3793rdkgvf</div>
-            <div><i v-tap="{methods:showControlButton}"></i><span class="f36">123111</span></div>
-            <div><i class="btn-copy" :data-clipboard-text="'i love you '"></i></div>
+            <div>binance.com</div>
+            <div><i v-tap="{methods:showControlButton}"></i><span class="f36">123 456</span></div>
+            <div><i class="btn-copy" :data-clipboard-text="'123456'"></i></div>
           </li>
-          <li @touchstart="activeLayer($event)" @touchend="clearLoop">
-            <div class="progress" data-second="15"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+15)%30}}</span></div>
-            <div>Sjafh3793rdkgvf</div>
-            <div><i v-tap="{methods:showControlButton}"></i><span class="f36">123111</span></div>
-            <div><i class="btn-copy" :data-clipboard-text="'i love you '"></i></div>
-          </li>
-          <li @touchstart="activeLayer($event)" @touchend="clearLoop">
-            <div class="progress" data-second="5"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+5)%30}}</span></div>
-            <div>Sjafh3793rdkgvf</div>
-            <div><i v-tap="{methods:showControlButton}"></i><span class="f36">123111</span></div>
-            <div><i class="btn-copy" :data-clipboard-text="'i love you '"></i></div>
-          </li>
-          <li @touchstart="activeLayer($event)" @touchend="clearLoop">
-            <div class="progress" data-second="10"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+10)%30}}</span></div>
-            <div>Sjafh3793rdkgvf</div>
-            <div><i v-tap="{methods:showControlButton}"></i><span class="f36">123111</span></div>
-            <div><i class="btn-copy" :data-clipboard-text="'i love you '"></i></div>
-          </li>
-          <li @touchstart="activeLayer($event)" @touchend="clearLoop">
-            <div class="progress" data-second="15"><span></span><span class="left"><i></i></span><span class="right"><i></i></span><span>{{(timer+15)%30}}</span></div>
-            <div>Sjafh3793rdkgvf</div>
-            <div><i v-tap="{methods:showControlButton}"></i><span class="f36">123111</span></div>
-            <div><i class="btn-copy" :data-clipboard-text="'i love you '"></i></div>
-          </li>-->
+          
         </ul>
         <div class="pb40"></div>
         <transition enter-active-class="animated short fadeIn" leave-active-class="animated short fadeOut">
@@ -88,7 +47,6 @@
 </template>
 <script>
 import commandEditor from '@/components/common/command_editor'
-import  commandApi from '@/api/command'
 import ClipboardJS from 'clipboard'
 import { Toast,MessageBox  } from 'mint-ui'
 
@@ -151,22 +109,10 @@ import { Toast,MessageBox  } from 'mint-ui'
     },
     methods:{
       submitfun(cname){
-        let obj={
-           id:this.selectid,
-           comname:cname
-        }
-        commandApi.update(obj,(data) => {
-          Toast('更新成功！');
-          this.getlist()
-        }, (msg) => {
-          Toast('更新失败！');
-        })
+        
       },
       getlist(){//获取数据列表
-        commandApi.getlist((data) => {
-          this.comList = data
-        }, (msg) => {
-        })
+       
       },
       initPos(){ //初始化滚动前的各项初始参数
         this.init.init_CL_y = $('#commandList').offset().top
@@ -177,7 +123,7 @@ import { Toast,MessageBox  } from 'mint-ui'
       initScroll(){ //初始化滚动条
         var self = this
         this.scroll = new IScroll('#scroll',{
-          mouseWheel:true,
+          // mouseWheel:true,
           tap:true,
           click:true
         });

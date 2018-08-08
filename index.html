@@ -14,9 +14,22 @@
   </head>
   <body>
     <div id="app"></div>
+    <!-- <script type="text/javascript">
+      if (!/http(s)?:/.test(location.protocol)) {
+        let _appendChild = Element.prototype.appendChild
+        Element.prototype.appendChild = function (el) {
+          if (el.tagName === 'SCRIPT' && /api.geetest.com|static.geetest.com/.test(el.src)) {
+            el.src = el.src.replace(/api.geetest.com|static.geetest.com/, 'dev.koall.io/api/geetest')
+          }
+          return _appendChild.apply(this, arguments)
+        }
+      }
+    </script> -->
     <!-- built files will be auto injected -->
+    <!-- <script type="text/javascript" src="./static/js/gt.js"></script> -->
+    <script type="text/javascript" src="./static/js/jsencrypt.min.js"></script>
     <script type="text/javascript" src="./static/js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="./static/js/iscroll.min.js"></script>
-    <!-- <script type="text/javascript" src="./static/js/cordova.js"></script> -->
+    <script type="text/javascript" src="./static/js/cordova.js"></script>
   </body>
 </html>

@@ -35,6 +35,7 @@ import api from '@/api/data'
 import Tip from '@/components/common/tip'
 import { mapGetters, mapActions } from 'vuex'
 import { Indicator } from 'mint-ui'
+import Config from '@/api/config'
 
 export default {
   name:'page-wallet-payment-confirm',
@@ -128,8 +129,9 @@ export default {
         position:this.wallet_idx,
         toAddress:this.receiverAddress,
         fromAddress:this.senderAddress,
+        network:Config.env==='dev'?'testnet':'livenet',
         value:String(this.amount),
-        miningFee:this.miningFee,
+        mineFee:this.miningFee,
         feeSign:this.feeSign,
         tag:this.tag,
         gasPrice:this.GasPrice,
@@ -153,7 +155,7 @@ export default {
                 direction:2,
                 gasLimit:Number(params.gasLimit),
                 gasPrice:Number(params.gasPrice),
-                minerFee:Number(params.miningFee),
+                mineFee:Number(params.mineFee),
                 smartContractAddress:this.getContractAddr[params.currency],
                 signData:res.msg
               }
@@ -197,7 +199,21 @@ export default {
       return new Promise(function(resolve, reject){
         switch(params.currency){
           case 'BTC':
-            
+            api.getUtxo(params.fromAddress).then((res)=>{
+              params.utxos = res.data.data
+              console.log('utxos=====',params.utxos)
+              cordova.exec((res)=>{
+                res = JSON.parse(res)
+                console.log('bitcoinjSign=====',res)
+                if(res.code=='0'){
+                  resolve({status:true, msg:res.msg})
+                } else {
+                  resolve({status:false, msg:res.msg})
+                }
+              }, (error)=>{
+                console.log(error)
+              }, 'WalletApi', 'bitcoinjSign', [JSON.stringify(params)])
+            })
             break
           case 'ETH':
             api.getNonce(params.fromAddress).then((res)=>{

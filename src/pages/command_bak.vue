@@ -96,7 +96,7 @@ import { Toast,MessageBox  } from 'mint-ui'
       initScroll(){
         var self = this
         this.scroll = new IScroll('#scroll',{
-          mouseWheel:true,
+          // mouseWheel:true,
           tap:true,
           click:true
         });
@@ -544,7 +544,7 @@ import { Toast,MessageBox  } from 'mint-ui'
       initScroll(){
         var self = this
         this.scroll = new IScroll('#scroll',{
-          mouseWheel:true,
+          // mouseWheel:true,
           tap:true,
           click:true
         });

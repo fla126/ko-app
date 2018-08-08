@@ -37,8 +37,8 @@ export default {
     }
   },
   created(){
-    this.getMsgList()
-    this.getLocalMsg()
+    // this.getMsgList()
+    // this.getLocalMsg()
   },
   mounted(){
     setTimeout(this.initScroll,700)
@@ -52,7 +52,7 @@ export default {
     initScroll(){
       var self = this
       this.scroll = new IScroll('#scroll',{
-        mouseWheel:true,
+        // mouseWheel:true,
         tap:true
       });
     },

@@ -88,9 +88,9 @@ export default {
     initScroll(){
       var self = this
       this.scroll = new IScroll('#scroll',{
-        mouseWheel:true,
+        // mouseWheel:true,
         click:true,
-        probeType:2,
+        // probeType:2,
       });
       this.scroll.on('scroll',function(){
         self.currencyCurrentSearchPos = this.y

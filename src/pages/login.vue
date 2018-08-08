@@ -1,12 +1,13 @@
 <template>
   <div class="page">
+    <comp-top-back></comp-top-back>
     <div class="login-top"><i></i></div>
     <div class="login-form">
       <div>
-        <p><i class="mobile"></i><input type="tel" name="account" v-model="account" maxlength="11" :placeholder="$t('message.login.phonePlaceholder')"></p>
-        <p><i class="password"></i><input type="password" name="password" v-model="password" maxlength="16" :placeholder="$t('message.login.passwordPlaceholder')"><i class="clear-password" v-tap="{methods:resetPW}"></i></p>
+        <p><i class="mobile"></i><input type="text" name="username" v-model="username" maxlength="20" :placeholder="$t('message.login.usernamePlaceholder')"></p>
+        <p><i class="password"></i><input type="password" name="password" v-model="password" maxlength="20" :placeholder="$t('message.login.passwordPlaceholder')"><i class="clear-password" v-tap="{methods:resetPW}"></i></p>
         <div class="findpw"><router-link :to="{name:'reset-password'}" tag="span">{{$t('message.login.forgot')}}</router-link></div>
-        <div class="login-btn"><mt-button type="primary" size="large" v-tap="{methods:$root.routeTo,to:'page-wallet'}">{{$t('message.login.login')}}</mt-button></div>
+        <div class="login-btn"><mt-button type="primary" size="large" v-tap="{methods:login}">{{$t('message.login.login')}}</mt-button></div>
         <div class="reg-btn">{{$t('message.login.noAccount')}} <router-link :to="{name:'register'}">{{$t('message.login.register')}}</router-link></div>
       </div>
     </div>
@@ -15,41 +16,79 @@
 
 <script>
 import Tip from '@/components/common/tip.js'
-import Data from '@/api/data'
-
+import api from '@/api/data'
+import utils from '@/assets/js/utils'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name:'login',
   data(){
   	return {
-      account:'',
+      locked: false,//锁
+      username:'',
   		password:'',
+      hurl:'' //回调地址
   	}
   },
   created(){
-  	
+    this.hurl = decodeURIComponent(this.$route.query.hurl || '')
   },
-  mounted(){
-  	
-  },
-  updated(){
-  	
+  computed:{
+    ...mapGetters([]),
   },
   methods:{
+    ...mapActions(['setApiToken','setUserInfo']),
     resetPW(){
       this.password = ''
     },
     login(args){
-      if(!this.$root.ismobile(this.account)){
-        Tip({type:'danger',title:this.$t('message.login.error'), message:this.$t('message.login.phoneEnterError')})
-        $('.login-form input[name=account]').focus()
+      $('.login-form input').blur()
+      this.username = $.trim(this.username)
+      this.password = $.trim(this.password)
+      if(!this.$root.ismobile(this.username) && !this.$root.isemail(this.username)){
+        Tip({type:'danger',title:this.$t('message.login.error'), message:this.$t('message.login.accountError')})
+        $('.login-form input[name=username]').focus()
         return
       }
       if(!this.$root.trim(this.password,1)){
-        Tip({type:'danger',title:this.$t('message.login.error'), message:this.$t('message.login.passwordEnterError')})
+        Tip({type:'danger',title:this.$t('message.login.error'), message:this.$t('message.login.passwordError')})
         $('.login-form input[name=password]').focus()
         return
       }
+      if (this.locked) {
+        return
+      }
+      // utils.gtValidate((gtParams) => {
+      //   this.locked = true
+      //   let formData = new FormData()
+      //   formData.append('username', this.username)
+      //   formData.append('password', utils.encryptPwd(this.password))
+      //   for (var i in gtParams) {
+      //     formData.append(i, gtParams[i])
+      //   }
+        this.locked = true
+        let formData = new FormData()
+        formData.append('username', this.username)
+        formData.append('password', utils.encryptPwd(this.password))
+        formData.append('requestType', 'mobile')
+        api.login(formData).then((res) => {
+          this.locked = false
+          if (res.data.rst===1) {
+            let apiToken = res.data.data.Authorization
+            this.setApiToken(apiToken)
+            this.setUserInfo({username:this.username})
+            if(this.hurl){
+              this.$router.replace(this.hurl)
+            } else {
+              this.$router.replace({name:'page-wallet'})
+            }
+          } else {
+            this.password = ''
+            Tip({type:'danger',title:this.$t('message.login.error'), message:this.$t('message.init.invalidPassword')})
+          }
+        })
+      // })
+
 
     }
   },

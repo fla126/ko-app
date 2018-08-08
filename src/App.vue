@@ -1,8 +1,9 @@
 <template>
   <div id="app">
       <transition enter-active-class="animated short myFadeIn" leave-active-class="animated short fadeOut">
-      	<router-view></router-view>
+      	<router-view :unlinked="unlinked"></router-view>
       </transition>
+      <span v-if="isDev" style="position: fixed; z-index: 999999; bottom: 15vh; left: 0; background-color: red;" @click="()=>{$router.push({name:'page-importQR'})}">导入钱包</span>
   </div>
 </template>
 
@@ -12,19 +13,21 @@ import GlobalWebSocket from '@/assets/js/websocket'
 import numUtils from '@/assets/js/numberUtils'
 import utils from '@/assets/js/utils'
 import { mapGetters, mapActions } from 'vuex'
+import Config from '@/api/config'
 
 export default {
   name: 'app',
   data(){
     return {
       gws: null,
+      unlinked:false
     }
   },
   created(){
     this.initRouter()
     this.getCurrency()
-    window.getCurrency = this.getCurrency //设置为全局化，方便刷新时调用
     this.getSymbolExchange()
+    window.getSymbolExchange = this.getSymbolExchange //设置为全局化，方便刷新时调用
     
     //一旦硬件断开，取消硬件连接状态，取消硬件登陆状态, 清除钱包数据
     window.setUnlinked = ()=>{
@@ -33,6 +36,15 @@ export default {
       this.setIsInited(false)
       this.setHasLogin(false)
       this.setWalletList([])
+      if(this.$route.name == 'page-init'){
+        this.unlinked = true
+        setTimeout(()=>{
+          this.$router.replace({name:'page-wallet'})
+        },2000)
+        setTimeout(()=>{
+          this.unlinked = false
+        },3000)
+      }
       this.$router.push({name:'page-init',params:{unlinkedShow:true}})
     }
     // 一旦硬件连接，启用硬件连接函数
@@ -40,22 +52,22 @@ export default {
   },
   computed:{
     ...mapGetters(['getUsbkeyStatus','getHasLogin','getIsInited']),
+    isDev(){
+      return Config.env==='dev'
+    },
   },
   methods:{
     ...mapActions(['setCurrency','setSymbolExchange','setWalletList','setUTXO','setERC20','setUsbkeyStatus','setHasLogin','setIsInited','setContractAddr','setIconUrls']),
     initRouter(){ 
-      if(this.getHasLogin){
-        if(this.$route.name == 'index'){
-          this.$router.replace({name:'page-wallet'})
-        }
-      } else {
-        this.$router.replace({name:'page-init'})
+      if(this.$route.name == 'index'){
+        this.$router.replace({name:'page-wallet'})
       }
     },
     connect(key){ //连接硬件设备，全程检测连接状态
       console.log('Linked')
       cordova.exec((res)=>{
         res = JSON.parse(res)
+		    console.log('ret: '+res.code)
         if(res.code!='-1'){
           this.setUsbkeyStatus(true)
           if(res.code=='-2'){
@@ -74,7 +86,7 @@ export default {
       }, "WalletApi", "isImportAuthKey", [])
     },
     getCurrency(){ //获取支持币种
-      return api.getCurrency().then((res)=>{
+      api.getCurrency().then((res)=>{
         if(res.data.rst==1){
           //获取支持币种以及币种对应智能合约地址
           var currency, _currencyobj = {}, contractAddr = {}, _iconUrls = {}, currencySetting = JSON.parse(window.localStorage.getItem('currencySetting') || '{}')
@@ -122,14 +134,14 @@ export default {
     },
     getSymbolExchange(key){
       //获取币种汇率
-      api.getSymbolExchange().then((res)=>{
+      return api.getSymbolExchange().then((res)=>{
         if (res.data.rst == 1) {
           this.setSymbolExchange(res.data.data)
         }
+        if(!key){
+          setTimeout(()=>{this.getSymbolExchange()},5*60*1000)
+        }
       })
-      if(!key){
-        setTimeout(()=>{this.getSymbolExchange()},5*60*1000)
-      }
     },
 
   },

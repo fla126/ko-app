@@ -42,12 +42,11 @@ export default {
   	scanning(args){
       this.$root.scanner((data)=>{
       	console.log(data)
-        var QRdata = data.text.split('$$')
-        if(data.format=='QR_CODE' && QRdata.length==3){
-	        var currency = QRdata[0]
-	        var amount = QRdata[1]
-	        var receiverAddress = QRdata[2]
-	        this.$router.push({name:'page-wallet-payment', params:{currency:currency,amount:amount,address:receiverAddress}})
+        var QRdata = data.text
+        if(data.format=='QR_CODE'){
+	        var currency = this.$root.getAddressToken(QRdata)
+	        var receiverAddress = QRdata
+	        this.$router.push({name:'page-wallet-payment', params:{currency:currency,address:receiverAddress}})
         } else {
         	Toast(this.$t('message.walletDetail.invalidQRAddress'))
         }

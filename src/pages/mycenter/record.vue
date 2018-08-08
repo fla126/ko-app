@@ -95,7 +95,7 @@
     },
     mounted(){
       setTimeout(this.initScroll,700);
-      this.getList(this.captcha);
+      // this.getList(this.captcha);
     },
     methods:{
       chooseIcon(v){
@@ -130,7 +130,7 @@
       initScroll(){
         var self = this
         this.scroll = new IScroll('#scroll',{
-          mouseWheel:true,
+          // mouseWheel:true,
           tap:true
         });
       }

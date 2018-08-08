@@ -18,6 +18,7 @@ import uinfo from '@/pages/mycenter/uinfo'
 import message from '@/pages/mycenter/message'
 import msginfo from '@/pages/mycenter/msginfo'// 交易记录详细
 import backup from '@/pages/mycenter/backup'
+import Qrbak from '@/pages/qr_backup'
 import setup from '@/pages/mycenter/setup'
 import monUnit from '@/pages/mycenter/setup/monUnit'
 import record from '@/pages/mycenter/record'
@@ -34,7 +35,21 @@ import agreement  from '@/pages/mycenter/about/agreement'/*用户协议*/
 import privacy  from '@/pages/mycenter/about/privacy'/*隐私条款*/
 import join  from '@/pages/mycenter/about/join'/*隐私条款*/
 import ModifyPW  from '@/pages/mycenter/modifyPW' //修改密码
-import Lang  from '@/pages/mycenter/setup/lang'
+import Lang  from '@/pages/mycenter/setup/lang' //语言设置
+import ImportQR from '@/pages/importQR' //从二维码导入备份钱包
+
+// 活动页面导入
+import InvitePoster from '@/pages/activity/invite/poster' //邀请活动海报
+import InviteRule from '@/pages/activity/invite/rule' //邀请活动规则
+import InviteMall from '@/pages/activity/invite/mall' //支付选择
+import InviteNodes from '@/pages/activity/invite/nodes' //超级节点选择
+import InviteOrder from '@/pages/activity/invite/order' //微信、支付宝订单
+import InviteQrpayment from '@/pages/activity/invite/qrpayment' //二维码付款
+import InviteMytinkey from '@/pages/activity/invite/mytinkey' //我的Tinkey
+import InviteOrderEth from '@/pages/activity/invite/orderEth' //ETH支付订单
+import InviteEthpayment from '@/pages/activity/invite/ethpayment' //ETH二维码付款
+
+
 // import webthree  from '@/pages/mycenter/setup/webthree'/*web3设置*/
 /*交易信息*/
 import trading from '@/pages/trading'
@@ -91,7 +106,8 @@ const router = new Router({
     { path: '/uinfo', name:uinfo.name, component: uinfo }, // 个人中心--信息
     { path: '/message', name:message.name, component: message }, // 个人中心--消息
     { path: '/msginfo', name:msginfo.name, component: msginfo }, // 个人中心--消息
-    { path: '/backup', name:backup.name, component: backup }, // 个人中心--备份
+    { path: '/backup', name:backup.name, component: backup, }, // 个人中心--备份
+    { path: '/backup/qr', name:Qrbak.name, component: Qrbak },/*二维码备份*/
     { path: '/setup', name:setup.name, component: setup }, // 个人中心--设置
     { path: '/monUnit', name:monUnit.name, component: monUnit }, // 个人中心--设置--货币单位
     // { path: '/webthree', name:webthree.name, component: webthree }, // 个人中心--设置--web3设置
@@ -159,6 +175,18 @@ const router = new Router({
     },
     {path: '/lang', name: Lang.name, component: Lang },
     {path: '/modify-password', name: ModifyPW.name, component: ModifyPW },
+    {path: '/importQR', name: ImportQR.name, component: ImportQR },
+
+    //以下为活动路由
+    { path: '/activity/invite/mytinkey', name:InviteMytinkey.name, component: InviteMytinkey },/*我的Tinkey*/
+    { path: '/activity/invite/poster', name:InvitePoster.name, component: InvitePoster },/*活动海报*/
+    { path: '/activity/invite/rule', name:InviteRule.name, component: InviteRule },/*活动规则*/
+    { path: '/activity/invite/mall', name:InviteMall.name, component: InviteMall },/*支付选择*/
+    { path: '/activity/invite/nodes', name:InviteNodes.name, component: InviteNodes },/*超级节点*/
+    { path: '/activity/invite/order', name:InviteOrder.name, component: InviteOrder },/*微信、支付宝支付订单*/
+    { path: '/activity/invite/qrpayment', name:InviteQrpayment.name, component: InviteQrpayment },/*微信、支付宝二维码付款*/
+    { path: '/activity/invite/ordereth', name:InviteOrderEth.name, component: InviteOrderEth },/*ETH支付订单*/
+    { path: '/activity/invite/ethpayment', name:InviteEthpayment.name, component: InviteEthpayment },/*ETH二维码付款*/
 
     {path: '*', redirect:{ name: 'page-wallet' } },
   ]

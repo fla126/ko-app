@@ -3,7 +3,7 @@
     <div class="pwconfirm-layer" >
       <i class="close" v-tap="{methods:hideFunction}">×</i>
       <h3>{{$t('message.walletDetail.payPassword')}}</h3>
-      <input type="password" id="password"  v-model="password" maxlength="6" @keydown="checkInput($event)" v-focus>
+      <input type="tel" id="password"  v-model="password" maxlength="6" @keydown="checkInput($event)" v-focus>
       <div class="password-display" v-tap="{methods:setFocus}"><span :class="{active:getActive(1)}">&nbsp;</span><span :class="{active:getActive(2)}">&nbsp;</span><span :class="{active:getActive(3)}">&nbsp;</span><span :class="{active:getActive(4)}">&nbsp;</span><span :class="{active:getActive(5)}">&nbsp;</span><span :class="{active:getActive(6)}">&nbsp;</span></div>
       <div class="step-next">
         <mt-button type="primary" size="large" :disabled="password.length!=6" v-tap="{methods:pwconfirm}">{{$t('message.walletDetail.ok')}}</mt-button>
